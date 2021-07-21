@@ -28,8 +28,8 @@
     </insert>
 
     <update id="userModify" parameterType="MemberDto">
-        update users
-        set password=#{password},phone=#{phone},email=#{email}, postcode=#{postcode},address=#{address},extraAddress=#{extraAddress}
+        update user
+        set profileImg=#{profileImg},nickname=#{nickname},addr=#{addr}, intro=#{intro}
         where userId = #{userId}
     </update>
 

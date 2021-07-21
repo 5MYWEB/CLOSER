@@ -44,66 +44,72 @@ public class UserController {
         return mav;
     }
 
-    @ApiOperation(value = "로그인.", response = MemberDto.class)
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> loginInfo,
-                                                     HttpServletResponse response) {
-        logger.debug("login 정보 - " + loginInfo);
-        try {
-            Map<String, String> user = userService.login(loginInfo);
+//    @ApiOperation(value = "로그인.", response = MemberDto.class)
+//    @PostMapping("/login")
+//    public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> loginInfo,
+//                                                     HttpServletResponse response) {
+//        logger.debug("login 정보 - " + loginInfo);
+//        try {
+//            Map<String, String> user = userService.login(loginInfo);
+//
+//            // 로그인에 성공했다면 토큰을 만듭시당.
+//            if (user != null) {
+//                logger.debug(user.toString());
+//                String token = jwtService.create(user);
+//                user.put("token", token);
+//
+//                // 토큰 정보는 response의 헤더로 보내자
+//                response.setHeader("jwt-auth-token", token);
+//                return new ResponseEntity<Map<String, String>>(user, HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity(HttpStatus.NO_CONTENT);
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return new ResponseEntity(HttpStatus.NO_CONTENT);
+//        }
+//    }
 
-            // 로그인에 성공했다면 토큰을 만듭시당.
-            if (user != null) {
-                logger.debug(user.toString());
-                String token = jwtService.create(user);
-                user.put("token", token);
+//    @ApiOperation(value = "회원가입", response = String.class)
+//    @PostMapping("/regist")
+//    public ResponseEntity<String> register(@RequestBody MemberDto memberDto) {
+//        try {
+//            logger.debug("회원가입 : " + memberDto);
+//            int n = userService.userRegister(memberDto);
+//
+//            if (n > 0) {
+//                return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+//        }
+//    }
 
-                // 토큰 정보는 response의 헤더로 보내자
-                response.setHeader("jwt-auth-token", token);
-                return new ResponseEntity<Map<String, String>>(user, HttpStatus.OK);
-            } else {
-                return new ResponseEntity(HttpStatus.NO_CONTENT);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
-        }
-    }
-
-    @ApiOperation(value = "회원가입", response = String.class)
-    @PostMapping("/regist")
-    public ResponseEntity<String> register(@RequestBody MemberDto memberDto) {
-        try {
-            logger.debug("회원가입 : " + memberDto);
-            int n = userService.userRegister(memberDto);
-
-            if (n > 0) {
-                return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-        }
-    }
-
-    @ApiOperation(value = "로그아웃")
-    @GetMapping("/logout")
-    public ResponseEntity<String> logout(HttpSession session) {
-        logger.debug("로그아웃");
-        return new ResponseEntity<String>("ok", HttpStatus.OK);
-    }
+//    @ApiOperation(value = "로그아웃")
+//    @GetMapping("/logout")
+//    public ResponseEntity<String> logout(HttpSession session) {
+//        logger.debug("로그아웃");
+//        return new ResponseEntity<String>("ok", HttpStatus.OK);
+//    }
 
 
-    @ApiOperation(value = "개인정보 수정", response = MemberDto.class)
+    @ApiOperation(value = "프로필 수정", notes = "사용자의 <big> 프로필 사진, 닉네임, 위치, 한줄소개</big>를 수정합니다.", response = MemberDto.class)
     @PutMapping(value = "/mypage")
     public ResponseEntity<String> modify(@RequestBody MemberDto updateInfo) {
         logger.debug("수정정보 : " + updateInfo);
 
+        MemberDto memberDto = new MemberDto();
+        memberDto.setProfileImg(updateInfo.getProfileImg());
+        memberDto.setNickname(updateInfo.getNickname());
+        memberDto.setAddr(updateInfo.getAddr());
+        memberDto.setIntro(updateInfo.getIntro());
+
         try {
-            int n = userService.userModify(updateInfo);
+            int n = userService.userModify(memberDto);
             if (n > 0) {
                 return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
             } else {
@@ -115,22 +121,22 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "회원 탈퇴", response = MemberDto.class)
-    @DeleteMapping("/")
-    public ResponseEntity<String> delete(@RequestParam String userid) {
-        logger.debug("회원 탈퇴 : 아이디 " + userid);
-        try {
-            int n = userService.userDelete(userid);
-            if (n > 0) {
-                return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-        }
-    }
+//    @ApiOperation(value = "회원 탈퇴", response = MemberDto.class)
+//    @DeleteMapping("/")
+//    public ResponseEntity<String> delete(@RequestParam String userid) {
+//        logger.debug("회원 탈퇴 : 아이디 " + userid);
+//        try {
+//            int n = userService.userDelete(userid);
+//            if (n > 0) {
+//                return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+//        }
+//    }
 
 //    @ApiOperation(value = "팔로우")
 //    @PostMapping("/follow")

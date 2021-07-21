@@ -68,7 +68,7 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title(title)
-                .description("<h4>HappyHouse API Reference for Developers</h4><h1>CLOSER Swagger API<h1><br>")
+                .description("<h4>Closer API Reference for Developers</h4><h1>CLOSER Swagger API<h1><br>")
                 .contact(new Contact("SSAFY", "https://edu.ssafy.com", "ssafy@ssafy.com"))
                 .license("SSAFY License")
                 .licenseUrl("https://www.ssafy.com/ksp/jsp/swp/etc/swpPrivacy.jsp")

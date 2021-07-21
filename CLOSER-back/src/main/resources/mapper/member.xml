@@ -27,7 +27,6 @@
         values (#{userId}, #{password}, #{name}, #{phone}, #{email}, #{postcode},#{address}, #{extraAddress})
     </insert>
 
-    <!-- 머지 요청 test -->
     <update id="userModify" parameterType="MemberDto">
         update user
         set profileImg=#{profileImg},nickname=#{nickname},addr=#{addr}, intro=#{intro}

@@ -29,23 +29,26 @@ function Login(props) {
   )
 
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        type="text"
-        name="userId"
-        value={userId}
-        onChange={onChange}
-      />
-      <input
-        type="password"
-        name="password"
-        value={password}
-        onChange={onChange}
-      />
-      <button type="submit">
-        Login
-      </button>
-    </form>
+    <>
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          name="userId"
+          value={userId}
+          onChange={onChange}
+        />
+        <input
+          type="password"
+          name="password"
+          value={password}
+          onChange={onChange}
+        />
+        <button type="submit">
+          Login
+        </button>
+      </form>
+      <button>회원가입</button>
+    </>
   )
 }
 

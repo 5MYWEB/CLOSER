@@ -16,11 +16,11 @@
         order by joindate desc;
     </select>
 
-    <select id="userInfo" parameterType="String" resultType="memberdto">
+    <select id="userInfo" parameterType="String" resultType="MemberDto">
         select userid, userpwd, username, email, address, date_format(joindate, '%y.%m.%d') joindate
         from ssafy_member
         where userid = #{userid}
-    </select> -->
+    </select>  -->
 
     <insert id="userRegister" parameterType="MemberDto">
         insert into users (userId, password, name, phone, email, postcode, address, extraAddress)

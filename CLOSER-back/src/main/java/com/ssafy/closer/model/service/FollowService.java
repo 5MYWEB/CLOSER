@@ -9,6 +9,8 @@ public interface FollowService {
     void follow(FollowDto follow);
     void unfollow(FollowDto follow);
     int isFollow(FollowDto follow);
-    List<FollowDto> activeUserList(String activeUser);
+    int countActiveUser(FollowDto follow);
+    int countPassiveUser(FollowDto followDto);
+    List<FollowDto> activeUserList(String passiveUser);
     List<FollowDto> passiveUserList(String passiveUser);
 }

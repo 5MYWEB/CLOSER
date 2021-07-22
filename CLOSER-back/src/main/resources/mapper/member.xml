@@ -23,10 +23,25 @@
     </select> -->
 
     <insert id="userRegister" parameterType="MemberDto">
-        insert into users (userId, password, name, phone, email, postcode, address, extraAddress)
-        values (#{userId}, #{password}, #{name}, #{phone}, #{email}, #{postcode},#{address}, #{extraAddress})
+        insert into user (userId, nickname, password, email, addr, homeAlone, intro, profileImg, profilePriv, addrPriv)
+        values (#{userId}, #{nickname}, #{password}, #{email}, #{addr}, #{homeAlone},#{intro}, #{profileImg}, #{profilePriv}, #{addrPriv})
     </insert>
 
+    <!-- 아아디 중복 체크 -->
+    <select id="userIdCheck" parameterType="String" resultType="int">
+        select count(*)
+        from user
+        where userId = #{userId}
+    </select>
+
+    <!-- 닉네임 중복 체크 -->
+    <select id="userNicknameCheck" parameterType="String" resultType="int">
+        select count(*)
+        from user
+        where nickname = #{nickname}
+    </select>
+
+    <!-- 프로필 수정 -->
     <update id="userModify" parameterType="MemberDto">
         update user
         set profileImg=#{profileImg},nickname=#{nickname},addr=#{addr}, intro=#{intro}
@@ -34,7 +49,7 @@
     </update>
 
     <delete id="userDelete" parameterType="String">
-        delete from users
+        delete from user
         where userId = #{userId}
     </delete>
 

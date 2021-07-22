@@ -1,5 +1,6 @@
 package com.ssafy.closer.model.service;
 
+import org.apache.catalina.User;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +35,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public MemberDto userInfo(String userid) {
-        return sqlSession.getMapper(UserMapper.class).userInfo(userid);
+    public MemberDto userInfo(String userId) {
+        return sqlSession.getMapper(UserMapper.class).userInfo(userId);
     }
 
     @Override
@@ -49,7 +50,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int userDelete(String userid) {
-        return sqlSession.getMapper(UserMapper.class).userDelete(userid);
+    public int userDelete(String userId) {
+        return sqlSession.getMapper(UserMapper.class).userDelete(userId);
+    }
+
+    @Override
+    public int userIdCheck(String userId) {
+        return sqlSession.getMapper(UserMapper.class).userIdCheck(userId);
+    }
+
+    @Override
+    public int userNicknameCheck(String nickname) {
+        return sqlSession.getMapper(UserMapper.class).userNicknameCheck(nickname);
     }
 }

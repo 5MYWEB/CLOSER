@@ -14,8 +14,10 @@ public interface UserMapper {
 
     //	REST
     public List<MemberDto> userList();
-    public MemberDto userInfo(String userid);
+    public MemberDto userInfo(String userId);
     public int userRegister(MemberDto memberDto);
     public int userModify(MemberDto memberDto);
-    public int userDelete(String userid);
+    public int userDelete(String userId);
+    public int userIdCheck(String userId);
+    public int userNicknameCheck(String nickname);
 }

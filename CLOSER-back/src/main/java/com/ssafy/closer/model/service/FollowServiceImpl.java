@@ -33,8 +33,18 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public List<FollowDto> activeUserList(String activeUser){
-        return sqlSession.getMapper(FollowMapper.class).activeUserList(activeUser);
+    public int countActiveUser(FollowDto followDto){
+        return sqlSession.getMapper(FollowMapper.class).countActiveUser(followDto);
+    }
+
+    @Override
+    public int countPassiveUser(FollowDto followDto){
+        return sqlSession.getMapper(FollowMapper.class).countPassiveUser(followDto);
+    }
+
+    @Override
+    public List<FollowDto> activeUserList(String passiveUser){
+        return sqlSession.getMapper(FollowMapper.class).activeUserList(passiveUser);
     }
 
     @Override

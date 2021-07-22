@@ -4,17 +4,6 @@
 
 <mapper namespace="com.ssafy.closer.model.mapper.FollowMapper">
 
-    <resultMap id="FollowResultMap" type="com.ssafy.closer.model.dto.FollowDto">
-        <id property="follow_pk" column="follow_pk" />
-        <result property="activeUser" column="activeUser" />
-        <result property="passiveUser" column="passiveUser" />
-
-        <result property="activeUserNickname" column="activeUserNickname" />
-        <result property="passiveUserNickname" column="passiveUserNickname" />
-
-        <result property="profileImg" column="profileImg" />
-    </resultMap>
-
     <insert id="follow" parameterType="FollowDto">
         insert into user_follow(activeUser, passiveUser) values (#{activeUser}, #{passiveUser})
     </insert>
@@ -30,20 +19,32 @@
         where activeUser=#{activeUser} and passiveUser=#{passiveUser}
     </select>
 
-    <select id="activeUserList" parameterType="String" resultMap="FollowResultMap">
-        select activeUser, passiveUser, U.nickname as passiveUserNickname, U.profileImg as profileImg
+    <select id="countActiveUser" parameterType="FollowDto" resultType="int">
+        select count(*)
+        from user_follow
+        where activeUser=#{passiveUser}
+    </select>
+
+    <select id="countPassiveUser" parameterType="FollowDto" resultType="int">
+        select count(*)
+        from user_follow
+        where passiveUser=#{passiveUser}
+    </select>
+
+    <select id="activeUserList" parameterType="String" resultType="FollowDto">
+        select follow_pk, activeUser, passiveUser, U.nickname as nickname, U.profileImg as profileImg
         from user_follow F
         left join user U
-        on (F.passiveUser = U.user_id)
-        where F.activeUser=#{activeUser}
+        on (F.passiveUser = U.userId)
+        where F.activeUser=#{passiveUser}
         order by F.follow_pk desc
     </select>
 
-    <select id="passiveUserList" parameterType="String" resultMap="FollowResultMap">
-        select activeUser, passiveUser, U.nickname as activeUserNickname, U.profileImg as profileImg
+    <select id="passiveUserList" parameterType="String" resultType="FollowDto">
+        select follow_pk, activeUser, passiveUser, U.nickname as nickname, U.profileImg as profileImg
         from user_follow F
         left join user U
-        on (F.activeUser = U.user_id)
+        on (F.activeUser = U.userId)
         where F.passiveUser=#{passiveUser}
         order by F.follow_pk desc
     </select>

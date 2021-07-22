@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.closer.model.mapper.FollowMapper">
+
+    <resultMap id="FollowResultMap" type="com.ssafy.closer.model.dto.FollowDto">
+        <id property="follow_pk" column="follow_pk" />
+        <result property="activeUser" column="activeUser" />
+        <result property="passiveUser" column="passiveUser" />
+
+        <result property="activeUserNickname" column="activeUserNickname" />
+        <result property="passiveUserNickname" column="passiveUserNickname" />
+
+        <result property="profileImg" column="profileImg" />
+    </resultMap>
+
+    <insert id="follow" parameterType="FollowDto">
+        insert into user_follow(activeUser, passiveUser) values (#{activeUser}, #{passiveUser})
+    </insert>
+
+    <delete id="unfollow" parameterType="FollowDto">
+        delete from user_follow
+        where activeUser=#{activeUser} and passiveUser=#{passiveUser}
+    </delete>
+
+    <select id="isFollow" parameterType="FollowDto" resultType="int">
+        select count(*)
+        from user_follow
+        where activeUser=#{activeUser} and passiveUser=#{passiveUser}
+    </select>
+
+    <select id="activeUserList" parameterType="String" resultMap="FollowResultMap">
+        select activeUser, passiveUser, U.nickname as passiveUserNickname, U.profileImg as profileImg
+        from user_follow F
+        left join user U
+        on (F.passiveUser = U.user_id)
+        where F.activeUser=#{activeUser}
+        order by F.follow_pk desc
+    </select>
+
+    <select id="passiveUserList" parameterType="String" resultMap="FollowResultMap">
+        select activeUser, passiveUser, U.nickname as activeUserNickname, U.profileImg as profileImg
+        from user_follow F
+        left join user U
+        on (F.activeUser = U.user_id)
+        where F.passiveUser=#{passiveUser}
+        order by F.follow_pk desc
+    </select>
+
+</mapper>

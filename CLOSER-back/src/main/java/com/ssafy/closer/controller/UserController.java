@@ -132,11 +132,4 @@ public class UserController {
         }
     }
 
-//    @ApiOperation(value = "팔로우")
-//    @PostMapping("/follow")
-//    public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> followInfo,
-//                                                     HttpServletResponse response) {
-////        logger.debug(followInfo);
-//
-////    }
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.closer.model.mapper.UserMapper">
+
+    <select id="login" parameterType="map" resultType="map">
+        select *
+        from user
+        where userId = #{userId} and password = #{password}
+    </select>
+
+    <!-- <select id="userList" resultType="memberDto">
+        select userid, userpwd, username, email, address, date_format(joindate, '%y.%m.%d') joindate
+        from ssafy_member
+        order by joindate desc;
+    </select> -->
+
+    <select id="userInfo" parameterType="String" resultType="MemberDto">
+        select *
+        from user
+        where userid = #{userid}
+    </select>
+
+    <insert id="userRegister" parameterType="MemberDto">
+        insert into user (userId, password, nickname, phone, email, addr, homeAlone)
+        values (#{userId}, #{password}, #{nickname}, #{phone}, #{email}, #{addr}, #{homeAlone})
+    </insert>
+
+    <!-- 아아디 중복 체크 -->
+    <select id="userIdCheck" parameterType="String" resultType="int">
+        select count(*)
+        from user
+        where userId = #{userId}
+    </select>
+
+    <!-- 닉네임 중복 체크 -->
+    <select id="userNicknameCheck" parameterType="String" resultType="int">
+        select count(*)
+        from user
+        where nickname = #{nickname}
+    </select>
+
+    <!-- 프로필 수정 -->
+    <update id="userModify" parameterType="MemberDto">
+        update user
+        set profileImg=#{profileImg},nickname=#{nickname},addr=#{addr}, intro=#{intro}
+        where userId = #{userId}
+    </update>
+
+    <delete id="userDelete" parameterType="String">
+        delete from users
+        where userId = #{userId}
+    </delete>
+
+</mapper>

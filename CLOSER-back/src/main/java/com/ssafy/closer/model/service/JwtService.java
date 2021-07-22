@@ -1,5 +1,7 @@
 package com.ssafy.closer.model.service;
 
+import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,13 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Map;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
@@ -30,10 +25,10 @@ public class JwtService {
     /**
      * 로그인 성공시 사용자 정보를 기반으로 JWTToken을 생성해서 반환.
      *
-     * @param user
+     * @param userId
      * @return
      */
-    public String create(final Map<String, String> user) {
+    public String create(final String userId) {
         logger.debug("JWT token create start");
 
         // 1. JWT토큰을 만들어줄 빌더를 선언.
@@ -45,7 +40,7 @@ public class JwtService {
 
         // 3. Payload 설정 - claim 정보 포함
         builder.setSubject("로그인 토큰").setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * expireMin))
-                .claim("User", user);
+                .claim("UserId", userId); // 토큰 payload에 유저 아이디만 넣는다.
 
         // 4. Signature - Secret Key를 이용해 암호화한다
         builder.signWith(SignatureAlgorithm.HS256, salt.getBytes());

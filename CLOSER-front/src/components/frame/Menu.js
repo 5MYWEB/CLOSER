@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
-import { Home, About, Login, SignUp, Profile, Newsfeed } from '../../pages';
+import { Home, About, Login, SignUp, Profile, Newsfeed, Board } from '../../pages';
 
 const Menu = () => {
   return (
@@ -17,6 +17,9 @@ const Menu = () => {
         {/* 내비게이션바 */}
         <li>
           <Link to="/newsfeed">뉴스피드</Link>
+        </li>
+        <li>
+          <Link to="/board">게시판</Link>
         </li>
         {/* 여기부터 사이드바 */}
         <li>
@@ -39,6 +42,7 @@ const Menu = () => {
       <Route path="/signup" component={SignUp} />
       <Route path="/profile" component={Profile} />
       <Route path="/newsfeed" component={Newsfeed} />
+      <Route path="/board" component={Board} />
 
       {/* <Login setIsLoggedIn={setIsLoggedIn} />
       {isLoggedIn && <div>로그인 성공(&&)!</div>}

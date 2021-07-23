@@ -12,7 +12,7 @@ public class MemberDto {
     private String password;
     private String email;
     private String addr;
-    private Integer homeAlone;
+    private int homeAlone;
     private String intro;
     private String profileImg;
     private String phone;

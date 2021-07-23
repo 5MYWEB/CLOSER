@@ -28,7 +28,7 @@ function Login(props) {
 
   // 데이터 빈 값 검사
   const checkExistData = (value, name) => {
-    console.log(value)
+    console.log('빈값인지검사', value)
     if (value === '') {
       alert(name + " 입력해주세요!")
       return false;
@@ -96,7 +96,7 @@ function Login(props) {
       if (checkAll() === true) {
         axios.post('http://localhost:8080/user/login', userInputs )
           .then((response) =>{
-            console.log(response)
+            console.log('응답',response)
             const jwtAuthToken = response.headers["jwt-auth-token"]
             dispatch(loginAction({ jwtAuthToken }));
           })

@@ -24,6 +24,9 @@ function App() {
           <Link to="/login">로그인</Link>
         </li>
         <li>
+          <Link to="/logout">로그아웃</Link>
+        </li>
+        <li>
           <Link to="/signup">회원가입</Link>
         </li>
         <li>
@@ -34,6 +37,7 @@ function App() {
       <Route path="/" exact={true} component={Home} />
       <Route path="/about" component={About} />
       <Route path="/login" component={Login} />
+      {/* <router-link class="nav-link" @click.native="deleteJWT" to="#">Logout</router-link> */}
       <Route path="/signup" component={SignUp} />
       <Route path="/profile" component={Profile} />
 

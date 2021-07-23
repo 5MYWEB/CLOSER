@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
+
 import FollowerList from '../components/profile/FollowerList';
 import FollowingList from '../components/profile/FollowingList';
 import UserFeed from '../components/profile/UserFeed';

@@ -1,7 +1,12 @@
 import React, { useState, useCallback } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux'
+import { loginAction } from '../modules/user'
 
 function Login(props) {
+  // Redux store 접근 시 사용
+  const dispatch = useDispatch();
+
   const [userInputs, setUserInputs] = useState({
     userId: '',
     password: ''
@@ -12,7 +17,7 @@ function Login(props) {
   const onChange=useCallback(
     e => {
       const { name, value } = e.target;
-      console.log(name, value);
+      // console.log(name, value);
       setUserInputs({
         ...userInputs,
         [name]: value
@@ -23,7 +28,7 @@ function Login(props) {
 
   // 데이터 빈 값 검사
   const checkExistData = (value, name) => {
-    console.log(value)
+    console.log('빈값인지검사', value)
     if (value === '') {
       alert(name + " 입력해주세요!")
       return false;
@@ -71,23 +76,32 @@ function Login(props) {
   }
 
   // 검사 통과 후 진행되는 로그인
-  const login = () => {
-    const request = axios.post('http://localhost:8080/user/login', userInputs )
-      .then((response) =>{
-        console.log(response)
-        console.log(request)
-      })
-    return null
-  };
+  // const login = () => {
+  //   // React Hook "useDispatch"은 콜백에서 부를 수 없음
+  //   const dispatch = useDispatch();
+  //   axios.post('http://localhost:8080/user/login', userInputs )
+  //     .then((response) =>{
+  //       console.log(response)
+  //       const jwtAuthToken = response.headers["jwt-auth-token"]
+  //       dispatch(loginAction({ jwtAuthToken }));
+  //     })
+  //   return null
+  // };
     
   // 제출 시 검사 함수 실행 후 로그인 함수 실행
   const onSubmit=(
     e => {
       e.preventDefault();
+      // 검사 함수로 확인
       if (checkAll() === true) {
-        login();
+        axios.post('http://localhost:8080/user/login', userInputs )
+          .then((response) =>{
+            console.log('응답',response)
+            const jwtAuthToken = response.headers["jwt-auth-token"]
+            dispatch(loginAction({ jwtAuthToken }));
+          })
+        // return null
       }
-      props.setIsLoggedIn(true);
     }
   )
 

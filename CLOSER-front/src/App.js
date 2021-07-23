@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
+// import React, { useState } from 'react';
 import { Route, Link } from 'react-router-dom';
-import Home from './pages/Home';
-import About from './pages/About';
-import Login from './pages/Login';
-import SignUp from './pages/Signup';
-import Profile from './pages/Profile';
+import { Home, About, Login, SignUp, Profile, Newsfeed } from './pages';
 
 function App() {
-  const [ isLoggedIn, setIsLoggedIn ] = useState(false)
-  const [ isSignedUp, setIsSignedUp ] = useState(false)
+  // const [ isLoggedIn, setIsLoggedIn ] = useState(false)
+  // const [ isSignedUp, setIsSignedUp ] = useState(false)
 
   return (
     <div>
@@ -20,7 +17,13 @@ function App() {
           <Link to="/about">소개</Link>
         </li>
         <li>
+          <Link to="/newsfeed">뉴스피드</Link>
+        </li>
+        <li>
           <Link to="/login">로그인</Link>
+        </li>
+        <li>
+          <Link to="/logout">로그아웃</Link>
         </li>
         <li>
           <Link to="/signup">회원가입</Link>
@@ -35,12 +38,13 @@ function App() {
       <Route path="/login" component={Login} />
       <Route path="/signup" component={SignUp} />
       <Route path="/profile" component={Profile} />
+      <Route path="/newsfeed" component={Newsfeed} />
 
-      <Login setIsLoggedIn={setIsLoggedIn} />
+      {/* <Login setIsLoggedIn={setIsLoggedIn} />
       {isLoggedIn && <div>로그인 성공(&&)!</div>}
       {isLoggedIn ? <div>로그인 성공(삼항)!</div> : <div>로그인 실패!</div>}
       <SignUp setIsSignedUp={setIsSignedUp}/>
-      {isSignedUp && <div>회원가입 성공(&&)!</div>}
+      {isSignedUp && <div>회원가입 성공(&&)!</div>} */}
     </div>
   );
 }

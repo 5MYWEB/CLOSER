@@ -1,7 +1,6 @@
 import React from 'react';
 // import React, { useState } from 'react';
-import { Route, Link } from 'react-router-dom';
-import { Home, About, Login, SignUp, Profile, Newsfeed, Board } from './pages';
+import { Menu } from './components/frame/index';
 
 function App() {
   // const [ isLoggedIn, setIsLoggedIn ] = useState(false)
@@ -9,46 +8,7 @@ function App() {
 
   return (
     <div>
-      <ul>
-        <li>
-          <Link to="/">홈</Link>
-        </li>
-        <li>
-          <Link to="/about">소개</Link>
-        </li>
-        <li>
-          <Link to="/newsfeed">뉴스피드</Link>
-        </li>
-        <li>
-          <Link to="/board">게시판</Link>
-        </li>
-        <li>
-          <Link to="/login">로그인</Link>
-        </li>
-        <li>
-          <Link to="/logout">로그아웃</Link>
-        </li>
-        <li>
-          <Link to="/signup">회원가입</Link>
-        </li>
-        <li>
-          <Link to="/profile">프로필</Link>
-        </li>
-      </ul>
-      <hr />
-      <Route path="/" exact={true} component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/login" component={Login} />
-      <Route path="/signup" component={SignUp} />
-      <Route path="/profile" component={Profile} />
-      <Route path="/newsfeed" component={Newsfeed} />
-      <Route path="/board" component={Board} />
-
-      {/* <Login setIsLoggedIn={setIsLoggedIn} />
-      {isLoggedIn && <div>로그인 성공(&&)!</div>}
-      {isLoggedIn ? <div>로그인 성공(삼항)!</div> : <div>로그인 실패!</div>}
-      <SignUp setIsSignedUp={setIsSignedUp}/>
-      {isSignedUp && <div>회원가입 성공(&&)!</div>} */}
+      <Menu />
     </div>
   );
 }

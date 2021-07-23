@@ -58,7 +58,7 @@ function SignUp(props) {
         });
       }
     },
-    [userInfo]
+    [userInfo, addr]
   );
   
     // 데이터 빈 값 검사

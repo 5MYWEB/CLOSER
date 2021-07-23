@@ -1,7 +1,7 @@
 import React from 'react';
 // import React, { useState } from 'react';
 import { Route, Link } from 'react-router-dom';
-import { Home, About, Login, SignUp, Profile, Newsfeed } from './pages';
+import { Home, About, Login, SignUp, Profile, Newsfeed, Board } from './pages';
 
 function App() {
   // const [ isLoggedIn, setIsLoggedIn ] = useState(false)
@@ -18,6 +18,9 @@ function App() {
         </li>
         <li>
           <Link to="/newsfeed">뉴스피드</Link>
+        </li>
+        <li>
+          <Link to="/board">게시판</Link>
         </li>
         <li>
           <Link to="/login">로그인</Link>
@@ -39,6 +42,7 @@ function App() {
       <Route path="/signup" component={SignUp} />
       <Route path="/profile" component={Profile} />
       <Route path="/newsfeed" component={Newsfeed} />
+      <Route path="/board" component={Board} />
 
       {/* <Login setIsLoggedIn={setIsLoggedIn} />
       {isLoggedIn && <div>로그인 성공(&&)!</div>}

@@ -28,6 +28,9 @@ function App() {
         <li>
           <Link to="/profile">프로필</Link>
         </li>
+        <li>
+          <Link to="/newsfeed">뉴스피드</Link>
+        </li>
       </ul>
       <hr />
       <Route path="/" exact={true} component={Home} />
@@ -36,6 +39,7 @@ function App() {
       {/* <router-link class="nav-link" @click.native="deleteJWT" to="#">Logout</router-link> */}
       <Route path="/signup" component={SignUp} />
       <Route path="/profile" component={Profile} />
+      <Route path="/newsfeed" component={Newsfeed} />
 
       {/* <Login setIsLoggedIn={setIsLoggedIn} />
       {isLoggedIn && <div>로그인 성공(&&)!</div>}

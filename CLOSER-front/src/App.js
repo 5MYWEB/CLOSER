@@ -1,6 +1,7 @@
 import React from 'react';
 // import React, { useState } from 'react';
-import { Menu } from './components/frame/index';
+import { Menu, TopAppBar, Navbar } from './components/frame/index';
+
 
 function App() {
   // const [ isLoggedIn, setIsLoggedIn ] = useState(false)
@@ -8,6 +9,8 @@ function App() {
 
   return (
     <div>
+      <TopAppBar />
+      <Navbar />
       <Menu />
     </div>
   );

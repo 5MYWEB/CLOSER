@@ -2,6 +2,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,intellij,windows,macos,visualstudiocode,git,react,database,eclipse,maven
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,intellij,windows,macos,visualstudiocode,git,react,database,eclipse,maven
 
+.idea/
+application.properties
+
 ### Database ###
 *.accdb
 *.db

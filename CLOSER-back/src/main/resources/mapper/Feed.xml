@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.closer.model.mapper.FeedMapper">
+
+    <!-- DB엔 update_at 컬럼있는데 피드는 수정 기능없어서 뺐습니다. 추후 feed DB에서 update_at 컬럼 삭제해야 함-->
+    <insert id="feedWrite" parameterType="feedDto">
+        insert into feed (feed_pk, userId, title, content, create_at, location)
+        values (#{feed_pk}, #{userId}, #{title}, #{content}, #{create_at}, #{location})
+    </insert>
+
+    <!-- 나와 동일한 위치인 사람들의 피드 목록 -->
+    <select id="feedNear" parameterType="map" resultType="map">
+        select *
+        from feed
+        where location = #{location}
+    </select>
+
+    <!-- CLOSER 전체 유저의 피드 목록 -->
+    <select id="feedNow" parameterType="map" resultType="map">
+        select *
+        from feed
+    </select>
+
+    <!-- 내가 팔로우 한 사람들의 피드 목록 -->
+<!--    <select id="feedFavorite" parameterType="map" resultType="map">-->
+<!--        select *-->
+<!--        from feed F join user_follow U-->
+<!--        on (F.userId = U.activeUser)-->
+<!--    </select>-->
+
+    <!-- 피드 삭제 -->
+    <delete id="feedDelete" parameterType="String">
+        delete from feed
+        where feed_pk = #{feed_pk}
+    </delete>
+
+</mapper>

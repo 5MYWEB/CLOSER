@@ -8,6 +8,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class FeedDto {
     private int feed_pk; // 글번호 (pk)
     private String userId; // 작성자
@@ -19,7 +20,6 @@ public class FeedDto {
 
 //    private int viewCnt; // 조회수 - 추후에 할 것 고려
 //    private String secretYn; // 비밀글 여부 - 추후에 할 것 고려
-
 
     // ---------------------- < 추후 할 것 고려시 변경될 코드 > -----------------------------
     /*

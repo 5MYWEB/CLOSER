@@ -159,13 +159,23 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "프로필 페이지 정보", response = MemberDto.class)
+    @ApiOperation(value = "프로필 페이지 정보")
     @PostMapping("/{id}/profileinfo")
-    public MemberDto profileInfo(@PathVariable String id){
+    public ResponseEntity profileInfo(@PathVariable String id){
         logger.debug("조회할 프로필 페이지 id : " + id);
 
-        MemberDto memberDto = userService.userInfo(id);
-        return memberDto;
+        try{
+            MemberDto memberDto = userService.userInfo(id);
+            if(memberDto!=null){
+                return new ResponseEntity(memberDto,HttpStatus.OK);
+            }else{
+                logger.debug("profile info fail");
+                return new ResponseEntity(HttpStatus.NO_CONTENT);
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

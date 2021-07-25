@@ -16,6 +16,7 @@ const store = createStore(rootReducer, composeWithDevTools()); // 스토어를 �
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+    {/* Provider를 사용하면 렌더링하는 그 어떤 컴포넌트던지 리덕스 스토어에 접근 가능해짐 */}
       <BrowserRouter>
         <App />
       </BrowserRouter>

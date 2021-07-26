@@ -2,7 +2,6 @@ package com.ssafy.closer.controller;
 
 import com.ssafy.closer.model.dto.FollowDto;
 import com.ssafy.closer.model.dto.FollowOutputDto;
-import com.ssafy.closer.model.dto.MemberDto;
 import com.ssafy.closer.model.service.FollowService;
 import com.ssafy.closer.model.service.UserService;
 import io.swagger.annotations.Api;
@@ -36,6 +35,7 @@ public class FollowController {
     private UserService userService;
 
     // post 확인해봐야함
+    // 팔로우 or 언팔로우 , 팔로잉 갯수, 팔로워 갯수
     @ApiOperation(value = "팔로우 or 언팔로우", response = FollowOutputDto.class)
 //    @RequestMapping("/{id}/follow")
     @PostMapping("/{id}/follow")

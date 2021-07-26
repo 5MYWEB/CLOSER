@@ -11,12 +11,10 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GlobalBoard {
-    private int Gboard_pk;
+public class CommentDto {
+    private int comment_pk;
+    private int kind_pk; // 보드 분류 pk
+    private int board_pk;
+    private String reply;
     private String userId;
-    private String title;
-    private String content;
-    private Date create_at;
-    private Date update_at;
-    private int category;
 }

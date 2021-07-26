@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Bookmark {
-    private int bookmark_pk;
+public class LikeDto {
+    private int like_pk;
     private int kind_pk; // 보드 분류 pk
     private int board_pk;
     private String userId;

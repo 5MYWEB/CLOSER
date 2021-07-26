@@ -1,23 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Link } from 'react-router-dom';
-import { Home } from '../../pages';
 import { Sidebar } from './'
+import { Home, About, Login, SignUp, Profile } from '../../pages';
 
-const Menu = () => {
+import './Sidebar.css';
+
+const TopAppBar = () => {
+  const [status, setStatus] = useState(false);
+
   return (
     <div>
       <h2>TopAppBar</h2>
       <ul>
         <li>
-          <Link to="/">홈</Link>
+          <p onClick={() => {setStatus(false)}}>홈</p>
         </li>
         <li>
-          <Link to="/sidebar">사이드바</Link>
+          <button onClick={() => {setStatus(!status)} }>사이드바</button>
         </li>
       </ul>
       <hr />
+      {status? <Sidebar class="sidebar-menu"/> : null }
       <Route path="/" exact={true} component={Home} />
-      <Route path="/sidebar" component={Sidebar} />
+      <Route path="/about" component={About} />
+      <Route path="/login" component={Login} />
+      <Route path="/signup" component={SignUp} />
+      <Route path="/profile" component={Profile} />
 
       {/* <Login setIsLoggedIn={setIsLoggedIn} />
       {isLoggedIn && <div>로그인 성공(&&)!</div>}
@@ -28,4 +36,4 @@ const Menu = () => {
 
   )
 }
-export default Menu;
+export default TopAppBar;

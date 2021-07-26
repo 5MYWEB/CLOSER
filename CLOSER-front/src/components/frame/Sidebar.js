@@ -7,9 +7,9 @@ const Menu = () => {
     <div>
       <h2>SideBar</h2>
       <ul>
-        <li>
+        {/* <li>
           <Link to="/">홈</Link>
-        </li>
+        </li> */}
         <li>
           <Link to="/about">소개</Link>
         </li>
@@ -17,7 +17,7 @@ const Menu = () => {
           <Link to="/login">로그인</Link>
         </li>
         <li>
-          <Link to="/logout">로그아웃</Link>
+          <Link to="/">로그아웃</Link>
         </li>
         <li>
           <Link to="/signup">회원가입</Link>
@@ -27,11 +27,6 @@ const Menu = () => {
         </li>
       </ul>
       <hr />
-      <Route path="/" exact={true} component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/login" component={Login} />
-      <Route path="/signup" component={SignUp} />
-      <Route path="/profile" component={Profile} />
 
       {/* <Login setIsLoggedIn={setIsLoggedIn} />
       {isLoggedIn && <div>로그인 성공(&&)!</div>}

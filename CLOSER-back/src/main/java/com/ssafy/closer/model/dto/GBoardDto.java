@@ -11,15 +11,12 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LocalBoard {
-    private int Lboard_pk;
+public class GBoardDto {
+    private int Gboard_pk;
     private String userId;
     private String title;
     private String content;
     private Date create_at;
     private Date update_at;
     private int category;
-    private int totalnum;
-    private int gathernum;
-    private String location;
 }

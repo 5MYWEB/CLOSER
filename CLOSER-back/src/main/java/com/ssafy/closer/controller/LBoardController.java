@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/post")
 @Api("Post Controller API V1")
 @CrossOrigin("*")
-public class PostController {
-    private static final Logger logger = LoggerFactory.getLogger(PostController.class);
+public class LBoardController {
+    private static final Logger logger = LoggerFactory.getLogger(LBoardController.class);
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
 

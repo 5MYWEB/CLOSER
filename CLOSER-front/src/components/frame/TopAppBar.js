@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Route, Link } from 'react-router-dom';
-import { Sidebar } from './'
+import React from 'react';
+import { Route } from 'react-router-dom';
+import { Sidebar } from './index'
 import { Home, About, Login, SignUp, Profile } from '../../pages';
 
 import './TopAppBar.css';

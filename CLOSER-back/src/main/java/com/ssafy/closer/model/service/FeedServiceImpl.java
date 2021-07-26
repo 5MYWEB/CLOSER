@@ -19,8 +19,18 @@ public class FeedServiceImpl implements FeedService{
     private SqlSession sqlSession;
 
     @Override
-    public List<FeedDto> FeedList() {
-        return null;
+    public List<FeedDto> feedListAll() {
+        return sqlSession.getMapper(FeedMapper.class).feedListAll();
+    }
+
+    @Override
+    public List<FeedDto> feedListNear(String location) {
+        return sqlSession.getMapper(FeedMapper.class).feedListNear(location);
+    }
+
+    @Override
+    public List<FeedDto> feedListFollow(String userId) {
+        return sqlSession.getMapper(FeedMapper.class).feedListFollow(userId);
     }
 
     @Override

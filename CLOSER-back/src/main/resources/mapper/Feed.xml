@@ -10,25 +10,27 @@
         values (#{feed_pk}, #{userId}, #{title}, #{content}, #{create_at}, #{location})
     </insert>
 
+    <!-- CLOSER 전체 유저의 피드 목록 -->
+    <select id="feedListAll" resultType="FeedDto">
+        select feed_pk, userId, title, content, created_at, updated_at, location
+        from feed
+    </select>
+
     <!-- 나와 동일한 위치인 사람들의 피드 목록 -->
-    <select id="feedNear" parameterType="map" resultType="map">
-        select *
+    <select id="feedListNear" parameterType="String" resultType="FeedDto">
+        select feed_pk, userId, title, content, created_at, updated_at, location
         from feed
         where location = #{location}
     </select>
 
-    <!-- CLOSER 전체 유저의 피드 목록 -->
-    <select id="feedNow" parameterType="map" resultType="map">
-        select *
-        from feed
-    </select>
-
     <!-- 내가 팔로우 한 사람들의 피드 목록 -->
-<!--    <select id="feedFavorite" parameterType="map" resultType="map">-->
-<!--        select *-->
-<!--        from feed F join user_follow U-->
-<!--        on (F.userId = U.activeUser)-->
-<!--    </select>-->
+    <select id="feedListFollow" parameterType="String" resultType="FeedDto">
+        select feed_pk, userId, title, content, created_at, updated_at, location
+        from user_follow U
+                 left join feed F
+                           on (U.passiveUser = F.userId)
+        where U.activeUser=#{passiveUser}
+    </select>
 
     <!-- 피드 삭제 -->
     <delete id="feedDelete" parameterType="String">

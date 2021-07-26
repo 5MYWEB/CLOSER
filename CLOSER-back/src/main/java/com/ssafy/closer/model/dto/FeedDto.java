@@ -12,7 +12,6 @@ import java.util.Date;
 public class FeedDto {
     private int feed_pk; // 글번호 (pk)
     private String userId; // 작성자
-    private String title; // 글 제목
     private String content; // 글 내용
     private Date create_at; // 글 작성일
     private Date update_at; // 글 수정일

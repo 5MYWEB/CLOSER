@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/post")
-@Api("Post Controller API V1")
+@RequestMapping("/gboard")
+@Api("Gboard Controller API V1")
 @CrossOrigin("*")
 public class GBoardController {
     private static final Logger logger = LoggerFactory.getLogger(GBoardController.class);

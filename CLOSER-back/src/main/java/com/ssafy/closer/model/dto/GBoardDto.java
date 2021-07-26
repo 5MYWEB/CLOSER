@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GlobalBoard {
+public class GBoardDto {
     private int Gboard_pk;
     private String userId;
     private String title;

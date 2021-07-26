@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Like {
+public class LikeDto {
     private int like_pk;
     private int kind_pk; // 보드 분류 pk
     private int board_pk;

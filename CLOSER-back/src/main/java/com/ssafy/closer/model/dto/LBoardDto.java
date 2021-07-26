@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LocalBoard {
+public class LBoardDto {
     private int Lboard_pk;
     private String userId;
     private String title;

@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment {
+public class CommentDto {
     private int comment_pk;
     private int kind_pk; // 보드 분류 pk
     private int board_pk;

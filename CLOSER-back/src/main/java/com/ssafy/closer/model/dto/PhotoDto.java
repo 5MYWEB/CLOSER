@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Photo {
+public class PhotoDto {
     private int photo_pk;
     private int kind_pk; // 보드 분류 pk
     private int board_pk;

@@ -42,7 +42,7 @@ public class GBoardController {
 
     // 5. Gboard 좋아요 (좋아요 or 좋아요 취소 , 좋아요 갯수)
     @ApiOperation(value="좋아요 정보")
-    @PostMapping("/{id}/like")
+    @PostMapping("/{id}/like-info")
     public ResponseEntity likeGboard(@PathVariable int id, HttpServletRequest request){
         logger.debug(id +"/like" + ": 좋아요 or 좋아요 취소 요청");
         logger.debug(request.getParameter("flag"));
@@ -77,6 +77,33 @@ public class GBoardController {
             }
 
             // 좋아요 수
+            likeOutput.put("countLike", likeService.countLike(likeDto));
+
+            return new ResponseEntity(likeOutput, HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    // 5-1. 좋아요 수만 (로그인 필요 없음)
+    // 7. Gboard 댓글 수 띄우기
+    // id: 해당 글 (board_pk)
+    @ApiOperation(value="Gboard 좋아요 수")
+    @PostMapping("/{id}/likes")
+    public ResponseEntity likeCntGboard(@PathVariable int id){
+        logger.debug(id +"/likes" + ": Gboard 좋아요 수");
+
+        try {
+            // 유저 정보가 담긴 likeDto 생성
+            LikeDto likeDto = new LikeDto();
+            likeDto.setKind_pk(1);
+            likeDto.setBoard_pk(id);
+
+            // 리턴할 값 선언 (좋아요 유무, 좋아요 수)
+            JSONObject likeOutput = new JSONObject();
+
+            // 댓글 수
             likeOutput.put("countLike", likeService.countLike(likeDto));
 
             return new ResponseEntity(likeOutput, HttpStatus.OK);

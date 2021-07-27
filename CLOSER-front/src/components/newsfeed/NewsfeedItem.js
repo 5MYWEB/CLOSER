@@ -1,23 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { useSelector } from 'react-redux';
 
 function NewsfeedItem({ feed }) {
 
   return (
-    <div>
-      {feed.feedPk}
-      <br />
-      {feed.userId}
-      <br />
-      {feed.content}
-      <br />
-      {feed.created_at}
-      <br />
-      {feed.updated_at}
-      <br />
-      {feed.location}
-    </div>
+    <>
+      <div>글 번호 : {feed.feedPk}</div>
+      <div>작성자 : {feed.userId}</div>
+      <div>내용 : {feed.content}</div>
+      <div>작성시간 : {feed.created_at}</div>
+      <div>위치: {feed.location}</div>
+      <hr />
+    </>
   )
 }
 
@@ -26,8 +20,7 @@ NewsfeedItem.propTypes = {
     feedPk: PropTypes.number,
     userId: PropTypes.string,
     content: PropTypes.string,
-    created_at: PropTypes.object,
-    updated_at: PropTypes.object,
+    created_at: PropTypes.string,
     location: PropTypes.string,
   }),
 };

@@ -1,40 +1,26 @@
 /* 초기 상태 선언 */
 const initialState = {
-  mainFeeds: [{
-    feedPk: 0,
-    userId: '이니셜유저',
-    content: '이니셜피드입니다.',
-    created_at: '어제',
-    updated_at: '오늘',
-    location: '서울',
-  }]
-  // feedPk: null,
-  // userId: '',
-  // title: '',
-  // content: '',
-  // created_at: '',
-  // updated_at: '',
-  // location: '',
-  // Comments, 
+  feedList: null,
+  feedCreated: false,
 };
 
 /* 액션 타입 만들기 */
-const CREATE_FEED = 'CREATE_FEED';
+const CREATE_FEED = 'CREATE_LIST';
+const GET_FEED_LIST = 'GET_FEED_LIST';
 
 /* 액션 생성함수 만들기 */
-export const createFeed = {
-  type: CREATE_FEED,
+export const createFeed = () => {
+  return {
+    type: CREATE_FEED,
+  }
 };
 
-// 더미 피드
-const dummyFeed = {
-  feedPk: 2,
-  userId: '더미유저',
-  content: '더미피드입니다.',
-  created_at: '어제',
-  updated_at: '오늘',
-  location: '대전',
-}
+export const getFeedList = (data) => {
+  return {
+    type: GET_FEED_LIST,
+    data
+  }
+};
 
 /* 리듀서 선언 */
 const reducer = (state = initialState, action) => {
@@ -42,8 +28,14 @@ const reducer = (state = initialState, action) => {
     case CREATE_FEED:
       return {
         ...state,
-        mainFeeds: [dummyFeed, ...state.mainFeeds]
-      }
+        feedCreated: true,
+      };
+    case GET_FEED_LIST:
+      return {
+        ...state,
+        feedList: action.data.data,
+        feedCreated: false,
+      };
     default:
       return state;
   }

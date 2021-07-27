@@ -101,7 +101,7 @@ public class FeedController {
     // 5. 피드 좋아요 (좋아요 or 좋아요 취소 , 좋아요 갯수)
     @ApiOperation(value="좋아요 정보")
     @PostMapping("/{id}/like")
-    public ResponseEntity likeFeed(@PathVariable String id, HttpServletRequest request){
+    public ResponseEntity likeFeed(@PathVariable int id, HttpServletRequest request){
         logger.debug(id +"/like" + ": 좋아요 or 좋아요 취소 요청");
         logger.debug(request.getParameter("flag"));
 
@@ -112,7 +112,7 @@ public class FeedController {
             // 유저 정보가 담긴 likeDto 생성
             LikeDto likeDto = new LikeDto();
             likeDto.setKind_pk(3);
-            likeDto.setBoard_pk(Integer.parseInt(id));
+            likeDto.setBoard_pk(id);
             likeDto.setUserId(userId);
 
             // 리턴할 값 선언 (좋아요 유무, 좋아요 수)

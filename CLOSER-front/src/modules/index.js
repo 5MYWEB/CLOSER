@@ -4,6 +4,7 @@ import newsfeed from './newsfeed';
 import gboard from './gboard';
 import lboard from './lboard';
 
+
 const rootReducer = combineReducers({
   user, // 유저
   newsfeed, // 뉴스피드

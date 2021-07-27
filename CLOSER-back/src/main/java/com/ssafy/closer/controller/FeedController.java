@@ -55,6 +55,8 @@ public class FeedController {
         return new ResponseEntity<List<FeedDto>>(feedService.feedListFollow(userId), HttpStatus.OK);
     }
 
+
+    
     // 3. 피드 사진 띄우기 <- PictureController
 
     @Autowired

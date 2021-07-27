@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
+
 import { Home, Newsfeed } from '../../pages';
 
 const Menu = () => {
@@ -18,6 +19,7 @@ const Menu = () => {
       <hr />
       <Route path="/" exact={true} component={Home} />
       <Route path="/newsfeed" component={Newsfeed} />
+      <Route path="/board" component={Board} />
 
       {/* <Login setIsLoggedIn={setIsLoggedIn} />
       {isLoggedIn && <div>로그인 성공(&&)!</div>}

@@ -8,23 +8,20 @@ import NewsfeedHot from './NewsfeedHot';
 function NewsfeedNavbar() {
   return (
     <div>
-      <nav className="Nav">
-        <div className="Nav__container">
-          <div className="Nav__right">
-            <ul className="Nav__item-wrapper">
-              <li className="Nav__item">
-                <Link className="Nav__link" to={ "/newsfeed/near" }>NEAR</Link>
+        <div>
+            <ul>
+              <li>
+                <Link to={"/newsfeed/near"}>NEAR</Link>
               </li>
-              <li className="Nav__item">
-                <Link className="Nav__link" to={"/newsfeed/favorite" }>FAVORITE</Link>
+              <li>
+                <Link to={"/newsfeed/favorite"}>FAVORITE</Link>
               </li>
-              <li className="Nav__item">
-                <Link className="Nav__link" to={"/newsfeed/hot" }>HOT</Link>
+              <li>
+                <Link to={"/newsfeed/hot"}>HOT</Link>
               </li>
             </ul>
-          </div>
         </div>
-      </nav>
+        
 
 
       <Route path="/newsfeed/near" component={NewsfeedNear}></Route>

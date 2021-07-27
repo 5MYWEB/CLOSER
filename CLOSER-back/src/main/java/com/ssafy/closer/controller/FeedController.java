@@ -12,8 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+
 
 @RestController
 @RequestMapping("/feed")
@@ -26,6 +27,35 @@ public class FeedController {
 
     @Autowired
     private FeedService feedService;
+
+    // 1. 피드 작성
+
+    // 2 - 1. 피드 전체 보기
+    @ApiOperation(value = "모든 유저들의 피드글 정보를 반환한다.", response = List.class)
+    @GetMapping("/total")
+    public ResponseEntity<List<FeedDto>> listFeedAll() throws Exception{
+        logger.debug("전체 피드글 - 호출");
+        return new ResponseEntity<>(feedService.feedListAll(), HttpStatus.OK);
+    }
+
+    // 2 - 2. 피드 같은 동네만 보기
+    @ApiOperation(value = "같은 동네 유저들의 피드글 정보를 반환한다.", response = List.class)
+    @GetMapping("/near")
+    public ResponseEntity<List<FeedDto>> listFeedNear(@RequestParam String location) {
+        logger.debug("동네 피드글 - 호출");
+        return new ResponseEntity<List<FeedDto>>(feedService.feedListNear(location), HttpStatus.OK);
+    }
+
+    // 2 - 3. 피드 팔로우한 사람들 것만 보기
+    // activeUser가 passiveUser를 팔로잉한다.
+    @ApiOperation(value = "팔로우 한 유저들의 피드글 정보를 반환한다.", response = List.class)
+    @GetMapping("/follow")
+    public ResponseEntity<List<FeedDto>> listFeedFollow(String userId) {
+        logger.debug("팔로우 피드글 - 호출");
+        return new ResponseEntity<List<FeedDto>>(feedService.feedListFollow(userId), HttpStatus.OK);
+    }
+
+    // 3. 피드 사진 띄우기 <- PictureController
 
     @Autowired
     private LikeService likeService;

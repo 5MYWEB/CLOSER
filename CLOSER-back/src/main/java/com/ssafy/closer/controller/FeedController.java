@@ -1,14 +1,11 @@
 package com.ssafy.closer.controller;
 
-import com.ssafy.closer.model.dto.BookmarkDto;
-import com.ssafy.closer.model.dto.FeedDto;
-import com.ssafy.closer.model.dto.LikeDto;
-import com.ssafy.closer.model.service.BookmarkService;
-import com.ssafy.closer.model.service.FeedService;
-import com.ssafy.closer.model.service.LikeService;
+import com.ssafy.closer.model.dto.*;
+import com.ssafy.closer.model.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
+import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +33,40 @@ public class FeedController {
     @Autowired
     private BookmarkService bookmarkService;
 
-    // 1. 피드 작성
+    @Autowired
+    private UserService userService;
 
+    @Autowired
+    private CommentService commentService;
+
+    // 1. 피드 작성
+//    @ApiOperation(value="피드 작성")
+//    @PostMapping()
+////    public ResponseEntity create(HttpServletRequest request) {
+//    public ResponseEntity create() {
+//        FeedDto feedDto = new FeedDto();
+////        String content = request.getParameter("content");
+////        String userId = request.getParameter("login_user");
+//        String content = "빼애애ㅐㄱ";
+//        String userId = "ssafy";
+//
+//        MemberDto memberDto = userService.userInfo(userId);
+//        feedDto.setUserId(userId);
+//        feedDto.setLocation(memberDto.getAddr());
+//        feedDto.setContent(content);
+//
+//        if(feedService.createFeed(feedDto)){
+//            return new ResponseEntity(SUCCESS, HttpStatus.OK);
+//        }
+//        return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
+//    }
 
     // 2. 피드 상세 보기
+    @ApiOperation(value = "피드 상세 보기")
+    @GetMapping("/{id}")
+    public ResponseEntity<FeedDto> detail(@PathVariable int id) throws Exception {
+        return new ResponseEntity<FeedDto>(feedService.readFeed(id), HttpStatus.OK);
+    }
 
     // 2-4. 피드 각각 하나씩 보기
     // 민지님꺼 합친 후에 보고 하는게 나을거 같음
@@ -61,6 +88,14 @@ public class FeedController {
 
 
     // 4. 피드 삭제
+    @ApiOperation(value = "해당 글 삭제")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable int id) {
+        if(feedService.deleteFeed(id)){
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+    }
 
 
     // 5. 피드 좋아요 (좋아요 or 좋아요 취소 , 좋아요 갯수)
@@ -112,18 +147,18 @@ public class FeedController {
     // 6. 피드 스크랩 수 띄우기 (스크랩 or 스크랩 취소, 스크랩 수)
     @ApiOperation(value="스크랩 정보")
     @PostMapping("/{id}/bookmark")
-    public ResponseEntity bookmarkFeed(@PathVariable String id, HttpServletRequest request){
+    public ResponseEntity bookmarkFeed(@PathVariable int id, HttpServletRequest request){
         logger.debug(id +"/bookmark" + ": 좋아요 or 좋아요 취소 요청");
         logger.debug(request.getParameter("flag"));
 
         try {
-            // 로그인 유저 정보 갖고 온다 => activeUser
+            // 로그인 유저 정보 갖고 온다 => userId
             String userId = request.getParameter("login_user");
 
             // 유저 정보가 담긴 likeDto 생성
             BookmarkDto bookmarkDto = new BookmarkDto();
             bookmarkDto.setKind_pk(3);
-            bookmarkDto.setBoard_pk(Integer.parseInt(id));
+            bookmarkDto.setBoard_pk(id);
             bookmarkDto.setUserId(userId);
 
             // 리턴할 값 선언 (좋아요 유무, 좋아요 수)
@@ -149,6 +184,31 @@ public class FeedController {
             bookmarkOutput.put("countLike", bookmarkService.countBookmark(bookmarkDto));
 
             return new ResponseEntity(bookmarkOutput, HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    // 7. 피드 댓글 수 띄우기
+    @ApiOperation(value="피드 댓글 수")
+    @PostMapping("/{id}/comment_cnt")
+    public ResponseEntity commentCntFeed(@PathVariable int id, HttpServletRequest request){
+        logger.debug(id +"/comment_cnt" + ": 피드 댓글 수");
+
+        try {
+            // 유저 정보가 담긴 likeDto 생성
+            CommentDto commentDto = new CommentDto();
+            commentDto.setKind_pk(3);
+            commentDto.setBoard_pk(id);
+
+            // 리턴할 값 선언 (좋아요 유무, 좋아요 수)
+            JSONObject commentOutput = new JSONObject();
+
+            // 댓글 수
+            commentOutput.put("countComment", commentService.countComment(commentDto));
+
+            return new ResponseEntity(commentOutput, HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);

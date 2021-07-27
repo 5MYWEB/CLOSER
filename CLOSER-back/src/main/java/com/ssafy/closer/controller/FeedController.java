@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/feed")
@@ -40,26 +41,28 @@ public class FeedController {
     private CommentService commentService;
 
     // 1. 피드 작성
-//    @ApiOperation(value="피드 작성")
-//    @PostMapping()
-////    public ResponseEntity create(HttpServletRequest request) {
-//    public ResponseEntity create() {
+    @ApiOperation(value="피드 작성")
+    @PostMapping()
+//    public ResponseEntity create(HttpServletRequest request) {
+    public ResponseEntity create(@RequestBody FeedDto feedDto) {
 //        FeedDto feedDto = new FeedDto();
-////        String content = request.getParameter("content");
-////        String userId = request.getParameter("login_user");
-//        String content = "빼애애ㅐㄱ";
-//        String userId = "ssafy";
+//        String content = request.getParameter("content");
+//        String userId = request.getParameter("login_user");
+
+        // 로그인 유저의 정보 받아오기 (주소찾기 위해서)
+        MemberDto memberDto = userService.userInfo(feedDto.getUserId());
 //
-//        MemberDto memberDto = userService.userInfo(userId);
+//        // FeedDto 값 넣기
+        feedDto.setLocation(memberDto.getAddr());
+        feedDto.setCreated_at(LocalDateTime.now());
 //        feedDto.setUserId(userId);
-//        feedDto.setLocation(memberDto.getAddr());
 //        feedDto.setContent(content);
-//
-//        if(feedService.createFeed(feedDto)){
-//            return new ResponseEntity(SUCCESS, HttpStatus.OK);
-//        }
-//        return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
-//    }
+
+        if(feedService.createFeed(feedDto)){
+            return new ResponseEntity(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
+    }
 
     // 2. 피드 상세 보기
     @ApiOperation(value = "피드 상세 보기")
@@ -67,22 +70,6 @@ public class FeedController {
     public ResponseEntity<FeedDto> detail(@PathVariable int id) throws Exception {
         return new ResponseEntity<FeedDto>(feedService.readFeed(id), HttpStatus.OK);
     }
-
-    // 2-4. 피드 각각 하나씩 보기
-    // 민지님꺼 합친 후에 보고 하는게 나을거 같음
-//    @ApiOperation(value="피드 상세 글 보기")
-//    @GetMapping("/{id}")
-//    public ResponseEntity detailFeed(@PathVariable String id){
-//        logger.debug(id + ": 피드 상세 글 보기");
-//
-//        try {
-//
-//
-//        } catch (Exception e){
-//            e.printStackTrace();
-//            return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
-//        }
-//    }
 
     // 3. 피드 사진 띄우기 (호영님이 aws 연결한 후에 하기로 함)
 

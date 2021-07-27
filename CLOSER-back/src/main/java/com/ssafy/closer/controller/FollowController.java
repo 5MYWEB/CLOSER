@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/follow")
 @Api("User Controller API V1")
 @CrossOrigin("*")
 public class FollowController {

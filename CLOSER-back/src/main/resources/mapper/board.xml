@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.closer.model.mapper.BoardMapper">
+
+    <!-- 자취 게시판 -->
+    <!-- 라이크, 댓글, 공유 수 합산이 높은 것으로 -->
+    <select id="gBoardList" resultType="GBoardDto">
+
+    </select>
+
+
+
+    <!-- 지역 게시판 : 나와 위치가 같은 사람들이 올린 모임 게시글-->
+    <select id="lBoardList" parameterType="String" resultType="LBoardDto">
+        select Lboard_pk, userId, title, content, created_at, updated_at, category, totalNum, gatherNum, location
+        from lboard
+        where location = #{location}
+    </select>
+
+</mapper>

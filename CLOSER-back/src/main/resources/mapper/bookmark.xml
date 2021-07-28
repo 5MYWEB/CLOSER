@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.closer.model.mapper.BookmarkMapper">
+
+    <insert id="addBookmark" parameterType="BookmarkDto">
+        insert into bookmark(kind_pk, board_pk, userId) values (#{kind_pk}, #{board_pk}, #{userId})
+    </insert>
+
+    <delete id="cancelBookmark" parameterType="BookmarkDto">
+        delete from bookmark
+        where kind_pk=#{kind_pk} and board_pk=#{board_pk} and userId=#{userId}
+    </delete>
+
+    <select id="isBookmark" parameterType="BookmarkDto" resultType="int">
+        select count(*)
+        from bookmark
+        where kind_pk=#{kind_pk} and board_pk=#{board_pk} and userId=#{userId}
+    </select>
+
+    <select id="countBookmark" parameterType="BookmarkDto" resultType="int">
+        select count(*)
+        from bookmark
+        where kind_pk=#{kind_pk} and board_pk=#{board_pk}
+    </select>
+
+    <delete id="deleteBookmark" parameterType="BookmarkDto">
+        delete from bookmark
+        where kind_pk=#{kind_pk} and board_pk=#{board_pk}
+    </delete>
+
+</mapper>

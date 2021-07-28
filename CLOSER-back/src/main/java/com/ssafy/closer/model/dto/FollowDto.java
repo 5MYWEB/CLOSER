@@ -15,4 +15,11 @@ public class FollowDto {
     private String passiveUser;
     private String nickname;
     private String profileImg;
+
+    public FollowDto(String activeUser, String passiveUser){
+        super();
+        this.activeUser = activeUser;
+        this.passiveUser = passiveUser;
+    }
 }
+

@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.ssafy.closer.model.mapper.FeedMapper;
 import com.ssafy.closer.model.dto.FeedDto;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FeedServiceImpl implements FeedService{
@@ -18,23 +19,37 @@ public class FeedServiceImpl implements FeedService{
     @Autowired
     private SqlSession sqlSession;
 
+    @Autowired
+    private FeedMapper feedMapper;
+
     @Override
-    public List<FeedDto> FeedList() {
-        return null;
+    public List<FeedDto> feedListAll() {
+        return sqlSession.getMapper(FeedMapper.class).feedListAll();
+    }
+
+    @Override
+    public List<FeedDto> feedListNear(String location) {
+        return sqlSession.getMapper(FeedMapper.class).feedListNear(location);
+    }
+
+    @Override
+    public List<FeedDto> feedListFollow(String userId) {
+        return sqlSession.getMapper(FeedMapper.class).feedListFollow(userId);
     }
 
     @Override
     public boolean createFeed(FeedDto feedDto) {
-        return false;
+        return feedMapper.createFeed(feedDto)==1;
     }
 
     @Override
     public FeedDto readFeed(int feed_pk) {
-        return null;
+        return sqlSession.getMapper(FeedMapper.class).readFeed(feed_pk);
     }
 
     @Override
+    @Transactional
     public boolean deleteFeed(int feed_pk) {
-        return false;
+        return feedMapper.deleteFeed(feed_pk) == 1;
     }
 }

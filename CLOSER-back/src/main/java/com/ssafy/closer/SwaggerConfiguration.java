@@ -27,6 +27,7 @@ public class SwaggerConfiguration {
 //	http://localhost:8000/{your-app-root}/v2/api-docs
 //	Swagger-UI 확인
 //	http://localhost:port/{your-app-root}/swagger-ui.html
+// http://localhost:8080/swagger-ui.html
 
     private String version = "V1";
     private String title = "CLOSER API " + version;

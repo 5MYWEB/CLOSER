@@ -1,15 +1,18 @@
 /* 초기 상태 선언 */
 const initialState = {
-  feedList: null,
+  boardList: null,
+  boardCreated: null,
+  boardUpdated: null,
+  boardDeleted: null,
 };
 
 /* 액션 타입 만들기 */
-const GET_FEED_LIST = 'GET_FEED_LIST';
+const GET_BOARD_LIST = 'GET_BOARD_LIST';
 
 /* 액션 생성함수 만들기 */
-export const getFeedList = (data) => {
+export const getBoardList = (data) => {
   return {
-    type: GET_FEED_LIST,
+    type: GET_BOARD_LIST,
     data
   }
 };
@@ -18,10 +21,10 @@ export const getFeedList = (data) => {
 /* 리듀서 선언 */
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_FEED_LIST:
+    case GET_BOARD_LIST:
       return {
         ...state,
-        feedList: action.data.data,
+        boardList: action.data.data,
       };
     default:
       return state;

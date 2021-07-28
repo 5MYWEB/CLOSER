@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
 import { Newsfeed } from '../../pages';
+import NewsfeedDetail from '../newsfeed/NewsfeedDetail'; // 뉴스피드 상세페이지
 
 const Menu = () => {
   return (
@@ -15,6 +16,7 @@ const Menu = () => {
       </ul>
       <hr />
       <Route path="/newsfeed" component={Newsfeed} />
+      <Route path="/newsfeed-detail/:id" component={NewsfeedDetail}></Route>
     </div>
 
   )

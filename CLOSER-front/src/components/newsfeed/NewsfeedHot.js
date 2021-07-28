@@ -23,7 +23,7 @@ const NewsfeedHot = () => {
     .catch((err) =>{
       console.log(err)
     })
-  }, [feedCreated, feedDeleted])
+  }, [dispatch, feedCreated, feedDeleted])
 
   return (
     <>

@@ -23,7 +23,8 @@ const NewsfeedHot = () => {
     .catch((err) =>{
       console.log(err)
     })
-  }, [dispatch, feedCreated, feedDeleted])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [feedCreated, feedDeleted])
 
   return (
     <>

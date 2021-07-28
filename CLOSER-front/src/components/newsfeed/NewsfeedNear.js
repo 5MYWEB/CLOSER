@@ -20,6 +20,7 @@ const NewsfeedNear = () => {
     .catch((err) =>{
       console.log(err)
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // 리덕스의 feedList 불러옴

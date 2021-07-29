@@ -7,6 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -16,10 +19,14 @@ public class CommentServiceImpl implements CommentService {
     private SqlSession sqlSession;
 
     @Override
-    public void addComment(CommentDto commentDto) { sqlSession.getMapper(CommentMapper.class).addComment(commentDto); }
+    public List<CommentDto> commentList(CommentDto commentDto) { return sqlSession.getMapper(CommentMapper.class).commentList(commentDto); }
 
     @Override
-    public void deleteComment(CommentDto commentDto) { sqlSession.getMapper(CommentMapper.class).deleteComment(commentDto); }
+    public boolean createComment(CommentDto commentDto) { return sqlSession.getMapper(CommentMapper.class).createComment(commentDto)==1; }
+
+    @Override
+    @Transactional
+    public boolean deleteComment(int comment_pk) { return sqlSession.getMapper(CommentMapper.class).deleteComment(comment_pk)==1; }
 
     @Override
     public int isComment(CommentDto commentDto) { return sqlSession.getMapper(CommentMapper.class).isComment(commentDto); }
@@ -28,5 +35,5 @@ public class CommentServiceImpl implements CommentService {
     public int countComment(CommentDto commentDto) { return sqlSession.getMapper(CommentMapper.class).countComment(commentDto); }
 
     @Override
-    public void deleteAllComment(CommentDto commentDto) { sqlSession.getMapper(CommentMapper.class).deleteAllComment(commentDto); }
+    public String findCommentUser(int comment_pk) { return sqlSession.getMapper(CommentMapper.class).findCommentUser(comment_pk); }
 }

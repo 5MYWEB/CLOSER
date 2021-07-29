@@ -6,36 +6,85 @@
 
     <!-- DB엔 update_at 컬럼있는데 피드는 수정 기능없어서 뺐습니다. 추후 feed DB에서 update_at 컬럼 삭제해야 함-->
     <insert id="feedWrite" parameterType="feedDto">
-        insert into feed (feed_pk, userId, title, content, create_at, location)
-        values (#{feed_pk}, #{userId}, #{title}, #{content}, #{create_at}, #{location})
+        insert into feed (feed_pk, userId, content, create_at, location)
+        values (#{feed_pk}, #{userId}, #{content}, #{create_at}, #{location})
     </insert>
 
     <!-- CLOSER 전체 유저의 피드 목록 -->
     <select id="feedListAll" resultType="FeedDto">
-        select feed_pk, userId, title, content, created_at, updated_at, location
+        select feed_pk, userId, content, created_at, location
         from feed
+        order by created_at desc
     </select>
 
     <!-- 나와 동일한 위치인 사람들의 피드 목록 -->
     <select id="feedListNear" parameterType="String" resultType="FeedDto">
-        select feed_pk, userId, title, content, created_at, updated_at, location
+        select feed_pk, userId, content, created_at, location
         from feed
         where location = #{location}
+        order by created_at desc
     </select>
 
     <!-- 내가 팔로우 한 사람들의 피드 목록 -->
     <select id="feedListFollow" parameterType="String" resultType="FeedDto">
-        select feed_pk, userId, title, content, created_at, updated_at, location
+        select feed_pk, userId,  content, created_at, location
         from user_follow U
                  left join feed F
                            on (U.passiveUser = F.userId)
         where U.activeUser=#{passiveUser}
+        order by created_at desc
     </select>
 
-    <!-- 피드 삭제 -->
-    <delete id="feedDelete" parameterType="String">
-        delete from feed
+
+    <!-- 피드 생성 -->
+    <insert id="createFeed" parameterType="FeedDto">
+        insert into feed(userId, content, location, created_at)
+        values (#{userId}, #{content}, #{location}, #{created_at})
+    </insert>
+
+    <!-- 피드 조회 -->
+    <select id="readFeed" parameterType="int" resultType="FeedDto">
+        select * from feed
         where feed_pk = #{feed_pk}
+    </select>
+
+    <!-- 피드 수정 -->
+    <update id="feedUpdate" parameterType="FeedDto">
+        update feed
+        set content=#{content}
+        where feed_pk = #{feed_pk}
+    </update>
+
+    <!-- 피드 삭제 -->
+    <delete id="deleteFeed" parameterType="int">
+        delete C
+        from feed F
+        join comments C
+        on F.feed_pk = C.board_pk
+        where (C.board_pk = #{board_pk} and C.kind_pk = #{kind_pk});
+
+        delete B
+        from feed F
+        join bookmark B
+        on F.feed_pk = B.board_pk
+        where (B.board_pk = #{board_pk} and B.kind_pk = #{kind_pk});
+
+        delete L
+        from feed F
+        join likes L
+        on F.feed_pk = L.board_pk
+        where (L.board_pk = #{board_pk} and L.kind_pk = #{kind_pk});
+
+        delete F
+        from feed F
+        where feed_pk = #{board_pk};
     </delete>
+
+    <!-- 해당 피드를 쓴 유저 찾기 -->
+    <select id="findFeedUser" parameterType="int" resultType="String">
+        select UserId
+        from feed
+        where feed_pk=#{feed_pk}
+    </select>
 
 </mapper>

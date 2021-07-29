@@ -1,31 +1,25 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
-import { Home } from '../../pages';
-import { Sidebar } from './'
+import { Route } from 'react-router-dom';
+import { Sidebar } from './index'
+import { Home, About, Login, SignUp, Profile } from '../../pages';
 
-const Menu = () => {
+import './TopAppBar.css';
+
+const TopAppBar = () => {
   return (
     <div>
-      <h2>TopAppBar</h2>
-      <ul>
-        <li>
-          <Link to="/">홈</Link>
-        </li>
-        <li>
-          <Link to="/sidebar">사이드바</Link>
-        </li>
-      </ul>
+      <h2>CLOSER</h2>
       <hr />
+      <Sidebar />
       <Route path="/" exact={true} component={Home} />
-      <Route path="/sidebar" component={Sidebar} />
+      <Route path="/about" component={About} />
+      <Route path="/login" component={Login} />
+      <Route path="/signup" component={SignUp} />
+      <Route path="/profile" component={Profile} />
 
-      {/* <Login setIsLoggedIn={setIsLoggedIn} />
-      {isLoggedIn && <div>로그인 성공(&&)!</div>}
-      {isLoggedIn ? <div>로그인 성공(삼항)!</div> : <div>로그인 실패!</div>}
-      <SignUp setIsSignedUp={setIsSignedUp}/>
-      {isSignedUp && <div>회원가입 성공(&&)!</div>} */}
+
     </div>
 
   )
 }
-export default Menu;
+export default TopAppBar;

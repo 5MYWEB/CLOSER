@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
-import { Newsfeed } from '../../pages';
+import { Newsfeed, Board } from '../../pages';
+import NewsfeedDetail from '../newsfeed/NewsfeedDetail'; // 뉴스피드 상세페이지
 
 const Menu = () => {
   return (
@@ -8,18 +9,15 @@ const Menu = () => {
       {/* 하단 바 */}
       <h2>Navbar</h2>
       <ul>
-        <li>
-          <Link to="/newsfeed">뉴스피드</Link>
-        </li>
+        <li><Link to="/newsfeed">뉴스피드</Link></li>
+        <li><Link to="/board">게시판</Link></li>
+        <li>알림</li>
+        <li>DM</li>
       </ul>
       <hr />
       <Route path="/newsfeed" component={Newsfeed} />
-
-      {/* <Login setIsLoggedIn={setIsLoggedIn} />
-      {isLoggedIn && <div>로그인 성공(&&)!</div>}
-      {isLoggedIn ? <div>로그인 성공(삼항)!</div> : <div>로그인 실패!</div>}
-      <SignUp setIsSignedUp={setIsSignedUp}/>
-      {isSignedUp && <div>회원가입 성공(&&)!</div>} */}
+      <Route path="/board" component={Board} />
+      <Route path="/newsfeed-detail/:id" component={NewsfeedDetail}></Route>
     </div>
 
   )

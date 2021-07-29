@@ -1,6 +1,6 @@
 import React from 'react';
 // import React, { useState } from 'react';
-import { Menu, TopAppBar, Navbar } from './components/frame/index';
+import { TopAppBar, Navbar } from './components/frame/index';
 
 
 function App() {
@@ -11,7 +11,6 @@ function App() {
     <div>
       <TopAppBar />
       <Navbar />
-      <Menu />
     </div>
   );
 }

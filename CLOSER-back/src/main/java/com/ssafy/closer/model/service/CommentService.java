@@ -2,10 +2,13 @@ package com.ssafy.closer.model.service;
 
 import com.ssafy.closer.model.dto.CommentDto;
 
+import java.util.List;
+
 public interface CommentService {
-    void addComment(CommentDto commentDto);
-    void deleteComment(CommentDto commentDto);
+    List<CommentDto> commentList(CommentDto commentDto);
+    boolean createComment(CommentDto commentDto);
+    boolean deleteComment(int comment_pk);
     int isComment(CommentDto commentDto);
     int countComment(CommentDto commentDto);
-    void deleteAllComment(CommentDto commentDto);
+    String findCommentUser(int comment_pk);
 }

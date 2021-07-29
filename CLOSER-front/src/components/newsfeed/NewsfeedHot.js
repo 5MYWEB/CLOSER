@@ -9,9 +9,8 @@ const NewsfeedHot = () => {
   
   const dispatch = useDispatch();
   
-  // 리덕스의 feedList 불러옴
-  const { feedList } = useSelector((state) => state.newsfeed);
-  const { feedCreated } = useSelector((state) => state.newsfeed);
+  // 리덕스의 feedList, feedCreated, feedDeleted 불러옴
+  const { feedList, feedCreated, feedDeleted } = useSelector((state) => state.newsfeed);
 
   // useEffect: 컴포넌트가 렌더될때 이 부분을 실행함
   // 전체 피드 리스트를 요청하고 응답을 액션함수로 보냄
@@ -24,7 +23,8 @@ const NewsfeedHot = () => {
     .catch((err) =>{
       console.log(err)
     })
-  }, [feedCreated]) // 마지막에 빈 리스트 안넣으면 계속 렌더링됨
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [feedCreated, feedDeleted])
 
   return (
     <>

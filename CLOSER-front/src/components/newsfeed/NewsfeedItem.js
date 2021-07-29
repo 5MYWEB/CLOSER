@@ -1,23 +1,25 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function NewsfeedItem({ feed }) {
 
   return (
     <>
-      <div>글 번호 : {feed.feedPk}</div>
-      <div>작성자 : {feed.userId}</div>
-      <div>내용 : {feed.content}</div>
-      <div>작성시간 : {feed.created_at}</div>
-      <div>위치: {feed.location}</div>
       <hr />
+        <div>작성자 : {feed.userId}</div>
+      <Link to={`/newsfeed-detail/${feed.feed_pk}`}>
+        <div>내용 : {feed.content}</div>
+      </Link>
+        <div>작성시간 : {feed.created_at}</div>
+        <div>위치: {feed.location}</div>
     </>
   )
 }
 
 NewsfeedItem.propTypes = {
   feed: PropTypes.shape({
-    feedPk: PropTypes.number,
+    feed_pk: PropTypes.number,
     userId: PropTypes.string,
     content: PropTypes.string,
     created_at: PropTypes.string,

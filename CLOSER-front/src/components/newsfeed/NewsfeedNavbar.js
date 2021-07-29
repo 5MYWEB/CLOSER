@@ -11,10 +11,10 @@ function NewsfeedNavbar() {
         <div>
             <ul>
               <li>
-                <Link to={"/newsfeed/near"}>NEAR</Link>
+                <Link to={"/newsfeed/near"}>NEAR(구현중 - 위치정보 필요)</Link>
               </li>
               <li>
-                <Link to={"/newsfeed/favorite"}>FAVORITE</Link>
+                <Link to={"/newsfeed/favorite"}>FAVORITE(구현중 - 유저정보 필요)</Link>
               </li>
               <li>
                 <Link to={"/newsfeed/hot"}>HOT</Link>
@@ -22,8 +22,6 @@ function NewsfeedNavbar() {
             </ul>
         </div>
         
-
-
       <Route path="/newsfeed/near" component={NewsfeedNear}></Route>
       <Route path="/newsfeed/favorite" component={NewsfeedFavorite}></Route>
       <Route path="/newsfeed/hot" component={NewsfeedHot}></Route>

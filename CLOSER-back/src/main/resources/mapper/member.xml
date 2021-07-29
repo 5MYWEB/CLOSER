@@ -22,6 +22,12 @@
         where userid = #{userid}
     </select>
 
+    <select id="userother" parameterType="String" resultType="map">
+        select nickname,profileImg,homeAlone,addr,intro,profilePriv,addrPriv
+        from user
+        where userId = #{userId}
+    </select>
+
     <insert id="userRegister" parameterType="MemberDto">
         insert into user (userId, password, nickname, phone, email, addr, homeAlone)
         values (#{userId}, #{password}, #{nickname}, #{phone}, #{email}, #{addr}, #{homeAlone})

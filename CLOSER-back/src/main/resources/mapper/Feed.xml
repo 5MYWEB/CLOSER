@@ -12,8 +12,9 @@
 
     <!-- CLOSER 전체 유저의 피드 목록 -->
     <select id="feedListAll" resultType="FeedDto">
-        select feed_pk, userId,content, created_at, location
+        select feed_pk, userId, content, created_at, location
         from feed
+        order by created_at desc
     </select>
 
     <!-- 나와 동일한 위치인 사람들의 피드 목록 -->
@@ -21,6 +22,7 @@
         select feed_pk, userId, content, created_at, location
         from feed
         where location = #{location}
+        order by created_at desc
     </select>
 
     <!-- 내가 팔로우 한 사람들의 피드 목록 -->
@@ -30,6 +32,7 @@
                  left join feed F
                            on (U.passiveUser = F.userId)
         where U.activeUser=#{passiveUser}
+        order by created_at desc
     </select>
 
 
@@ -54,8 +57,34 @@
 
     <!-- 피드 삭제 -->
     <delete id="deleteFeed" parameterType="int">
-        delete from feed
-        where feed_pk = #{feed_pk}
+        delete C
+        from feed F
+        join comments C
+        on F.feed_pk = C.board_pk
+        where (C.board_pk = #{board_pk} and C.kind_pk = #{kind_pk});
+
+        delete B
+        from feed F
+        join bookmark B
+        on F.feed_pk = B.board_pk
+        where (B.board_pk = #{board_pk} and B.kind_pk = #{kind_pk});
+
+        delete L
+        from feed F
+        join likes L
+        on F.feed_pk = L.board_pk
+        where (L.board_pk = #{board_pk} and L.kind_pk = #{kind_pk});
+
+        delete F
+        from feed F
+        where feed_pk = #{board_pk};
     </delete>
+
+    <!-- 해당 피드를 쓴 유저 찾기 -->
+    <select id="findFeedUser" parameterType="int" resultType="String">
+        select UserId
+        from feed
+        where feed_pk=#{feed_pk}
+    </select>
 
 </mapper>

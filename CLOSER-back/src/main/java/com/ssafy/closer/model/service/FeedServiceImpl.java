@@ -49,7 +49,10 @@ public class FeedServiceImpl implements FeedService{
 
     @Override
     @Transactional
-    public boolean deleteFeed(int feed_pk) {
-        return feedMapper.deleteFeed(feed_pk) == 1;
+    public boolean deleteFeed(int kind_pk, int board_pk) {
+        return feedMapper.deleteFeed(kind_pk, board_pk) == 1;
     }
+
+    @Override
+    public String findFeedUser(int feed_pk) { return feedMapper.findFeedUser(feed_pk); }
 }

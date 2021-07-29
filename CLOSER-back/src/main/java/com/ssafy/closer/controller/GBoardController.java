@@ -2,6 +2,7 @@ package com.ssafy.closer.controller;
 
 import com.ssafy.closer.model.dto.BookmarkDto;
 import com.ssafy.closer.model.dto.CommentDto;
+import com.ssafy.closer.model.dto.GBoardDto;
 import com.ssafy.closer.model.dto.LikeDto;
 import com.ssafy.closer.model.service.*;
 import io.swagger.annotations.Api;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/gboard")
@@ -36,6 +38,12 @@ public class GBoardController {
 
     @Autowired
     private CommentService commentService;
+
+//    @ApiOperation(value = "좋아요 + 댓글 + 북마크 순 높은 게시물 순서대로 반환한다", response = List.class)
+//    @GetMapping("/boardTotal")
+//    public ResponseEntity<List<GBoardDto>> listGBoardTop() {
+//        return new ResponseEntity<>();
+//    }
 
     // 1. Gboard 좋아요 수 띄우기
     // id: 해당 글 (board_pk)

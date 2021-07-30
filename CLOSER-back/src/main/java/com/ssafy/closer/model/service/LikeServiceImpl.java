@@ -1,6 +1,5 @@
 package com.ssafy.closer.model.service;
 
-import com.ssafy.closer.model.dto.LikeDto;
 import com.ssafy.closer.model.mapper.LikeMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;

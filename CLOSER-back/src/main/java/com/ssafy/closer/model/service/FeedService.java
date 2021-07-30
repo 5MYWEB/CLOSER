@@ -1,7 +1,6 @@
 package com.ssafy.closer.model.service;
 
 import java.util.List;
-import com.ssafy.closer.model.dto.FeedDto;
 
 public interface FeedService {
     public List<FeedDto> feedListAll(); // 피드 목록 - 전체

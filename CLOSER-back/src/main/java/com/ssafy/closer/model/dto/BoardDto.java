@@ -17,21 +17,25 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners({AuditingEntityListener.class})
-public class LBoardDto {
-    private int Lboard_pk;
+public class BoardDto {
+    private int board_pk;
     private String userId;
+    private int kind_pk;
+
     private String title;
     private String content;
 
     @CreatedDate
     @Column(updatable = false)
-    private Date create_at;
+    private Date created_at;
 
     @LastModifiedDate
-    private Date update_at;
+    private Date updated_at;
 
-    private int category;
     private int totalnum;
     private int gathernum;
     private String location;
+    private int cnt;
+
+    private String nickname;
 }

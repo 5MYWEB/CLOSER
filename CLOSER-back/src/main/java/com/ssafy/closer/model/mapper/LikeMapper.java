@@ -1,6 +1,5 @@
 package com.ssafy.closer.model.mapper;
 
-import com.ssafy.closer.model.dto.LikeDto;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

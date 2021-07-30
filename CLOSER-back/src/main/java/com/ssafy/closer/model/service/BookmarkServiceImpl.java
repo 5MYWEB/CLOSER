@@ -1,6 +1,5 @@
 package com.ssafy.closer.model.service;
 
-import com.ssafy.closer.model.dto.BookmarkDto;
 import com.ssafy.closer.model.mapper.BookmarkMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;

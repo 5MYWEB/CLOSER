@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import com.ssafy.closer.model.mapper.FeedMapper;
-import com.ssafy.closer.model.dto.FeedDto;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service

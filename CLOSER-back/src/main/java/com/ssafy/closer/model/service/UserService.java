@@ -17,4 +17,5 @@ public interface UserService {
     public int userDelete(String userid);
     public int userIdCheck(String userId);
     public int userNicknameCheck(String nickname);
+    Map<String, Object> userother(String userId);
 }

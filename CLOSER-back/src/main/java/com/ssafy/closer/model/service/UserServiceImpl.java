@@ -62,4 +62,9 @@ public class UserServiceImpl implements UserService {
     public int userNicknameCheck(String nickname) {
         return sqlSession.getMapper(UserMapper.class).userNicknameCheck(nickname);
     }
+
+    @Override
+    public Map<String, Object> userother(String userId) {
+        return sqlSession.getMapper(UserMapper.class).userother(userId);
+    }
 }

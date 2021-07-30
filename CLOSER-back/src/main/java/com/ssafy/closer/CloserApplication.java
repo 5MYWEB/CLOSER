@@ -27,8 +27,8 @@ public class CloserApplication implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         System.out.println(">>> 인터셉터 등록");
-        registry.addInterceptor(jwtInterceptor).addPathPatterns("/user/**") // 기본 적용 경로
-                .excludePathPatterns(Arrays.asList("/user/login"));// 적용 제외 경로
+//        registry.addInterceptor(jwtInterceptor).addPathPatterns("/user/**") // 기본 적용 경로
+//                .excludePathPatterns(Arrays.asList("/user/login"));// 적용 제외 경로
     }
 
     /**

@@ -160,16 +160,35 @@ public class UserController {
     }
 
     @ApiOperation(value = "프로필 페이지 정보")
-    @PostMapping("/{id}/profileinfo")
-    public ResponseEntity profileInfo(@PathVariable String id){
-        logger.debug("조회할 프로필 페이지 id : " + id);
+    @PostMapping("/profileinfo")
+    public ResponseEntity profileInfo(@RequestParam String userId){
+        logger.debug("조회할 프로필 페이지 id : " + userId);
 
         try{
-            MemberDto memberDto = userService.userInfo(id);
+            MemberDto memberDto = userService.userInfo(userId);
             if(memberDto!=null){
                 return new ResponseEntity(memberDto,HttpStatus.OK);
             }else{
                 logger.debug("profile info fail");
+                return new ResponseEntity(HttpStatus.NO_CONTENT);
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "프로필 페이지 정보")
+    @PostMapping("/otherprofile")
+    public ResponseEntity otherprofile(@RequestParam String userId){
+        logger.debug("조회할 프로필 페이지 id : " + userId);
+
+        try{
+            Map<String,Object> user = userService.userother(userId);
+            if(user!=null){
+                return new ResponseEntity(user,HttpStatus.OK);
+            }else{
+                logger.debug("otherprofile info fail");
                 return new ResponseEntity(HttpStatus.NO_CONTENT);
             }
         }catch(Exception e) {

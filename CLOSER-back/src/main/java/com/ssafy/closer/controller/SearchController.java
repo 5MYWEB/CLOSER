@@ -35,4 +35,8 @@ public class SearchController {
         logger.debug("검색결과 - 호출");
         return new ResponseEntity<>(searchService.searchList(), HttpStatus.OK);
     }
+
+
+
+
 }

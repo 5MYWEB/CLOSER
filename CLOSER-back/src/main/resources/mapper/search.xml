@@ -4,8 +4,29 @@
 
 <mapper namespace="com.ssafy.closer.model.mapper.SearchMapper">
 
-    <select id="searchList" resultType="searchDto">
+    <!-- 전체게시판 선택 시-->
+    <select id="searchListAll" parameterType="String" resultType="searchDto">
 
     </select>
+
+    <!-- 자취게시판(GBoard) 선택 시 - 한끼레시피 / 자취 팁 / 홈데코 -->
+
+
+    <!-- 자취게시판(GBoard) 중 '한끼레시피' 선택 시 -->
+
+    <!-- 자취게시판(GBoard) 중 '자취팁' 선택 시 -->
+
+    <!-- 자취게시판(GBoard) 중 '홈데코' 선택 시 -->
+
+
+    <!-- 지역게시판(LBoard) 선택 시 - 공동구매 / 클로저 모임 / 도와주세요 -->
+
+
+    <!-- 지역게시판(LBoard) 중 - '공동구매' 선택 시 -->
+
+    <!-- 지역게시판(LBoard) 중 - '클로저 모임' 선택 시 -->
+
+    <!-- 지역게시판(LBoard) 중 - '도와주세요' 선택 시 -->
+
 
 </mapper>

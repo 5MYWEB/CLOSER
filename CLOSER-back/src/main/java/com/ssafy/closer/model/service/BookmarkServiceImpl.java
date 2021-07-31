@@ -14,18 +14,18 @@ public class BookmarkServiceImpl implements BookmarkService{
     @Autowired
     private SqlSession sqlSession;
 
-    @Override
-    public void addBookmark(BookmarkDto bookmarkDto) { sqlSession.getMapper(BookmarkMapper.class).addBookmark(bookmarkDto); }
-
-    @Override
-    public void cancelBookmark(BookmarkDto bookmarkDto) { sqlSession.getMapper(BookmarkMapper.class).cancelBookmark(bookmarkDto); }
-
-    @Override
-    public int isBookmark(BookmarkDto bookmarkDto) { return sqlSession.getMapper(BookmarkMapper.class).isBookmark(bookmarkDto); }
-
-    @Override
-    public int countBookmark(BookmarkDto bookmarkDto) { return sqlSession.getMapper(BookmarkMapper.class).countBookmark(bookmarkDto); }
-
-    @Override
-    public void deleteBookmark(BookmarkDto bookmarkDto) { sqlSession.getMapper(BookmarkMapper.class).deleteBookmark(bookmarkDto); }
+//    @Override
+//    public void addBookmark(BookmarkDto bookmarkDto) { sqlSession.getMapper(BookmarkMapper.class).addBookmark(bookmarkDto); }
+//
+//    @Override
+//    public void cancelBookmark(BookmarkDto bookmarkDto) { sqlSession.getMapper(BookmarkMapper.class).cancelBookmark(bookmarkDto); }
+//
+//    @Override
+//    public int isBookmark(BookmarkDto bookmarkDto) { return sqlSession.getMapper(BookmarkMapper.class).isBookmark(bookmarkDto); }
+//
+//    @Override
+//    public int countBookmark(BookmarkDto bookmarkDto) { return sqlSession.getMapper(BookmarkMapper.class).countBookmark(bookmarkDto); }
+//
+//    @Override
+//    public void deleteBookmark(BookmarkDto bookmarkDto) { sqlSession.getMapper(BookmarkMapper.class).deleteBookmark(bookmarkDto); }
 }

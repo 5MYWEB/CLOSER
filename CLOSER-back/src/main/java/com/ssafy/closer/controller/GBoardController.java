@@ -18,21 +18,21 @@ import javax.servlet.http.HttpServletRequest;
 @Api("Gboard Controller API V1")
 @CrossOrigin("*")
 public class GBoardController {
-    private static final Logger logger = LoggerFactory.getLogger(GBoardController.class);
-    private static final String SUCCESS = "success";
-    private static final String FAIL = "fail";
-
-    @Autowired
-    private LikeService likeService;
-
-    @Autowired
-    private BookmarkService bookmarkService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private CommentService commentService;
+//    private static final Logger logger = LoggerFactory.getLogger(GBoardController.class);
+//    private static final String SUCCESS = "success";
+//    private static final String FAIL = "fail";
+//
+//    @Autowired
+//    private LikeService likeService;
+//
+//    @Autowired
+//    private BookmarkService bookmarkService;
+//
+//    @Autowired
+//    private UserService userService;
+//
+//    @Autowired
+//    private CommentService commentService;
 
 //    @ApiOperation(value = "좋아요 + 댓글 + 북마크 순 높은 게시물 순서대로 반환한다", response = List.class)
 //    @GetMapping("/boardTotal")

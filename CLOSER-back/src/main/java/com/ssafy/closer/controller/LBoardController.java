@@ -21,24 +21,24 @@ import javax.servlet.http.HttpServletRequest;
 @Api("Lboard Controller API V1")
 @CrossOrigin("*")
 public class LBoardController {
-    private static final Logger logger = LoggerFactory.getLogger(LBoardController.class);
-    private static final String SUCCESS = "success";
-    private static final String FAIL = "fail";
-
-    //@Autowired
-//    private LBoardService lBoardService;
-
-    @Autowired
-    private LikeService likeService;
-
-    @Autowired
-    private BookmarkService bookmarkService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private CommentService commentService;
+//    private static final Logger logger = LoggerFactory.getLogger(LBoardController.class);
+//    private static final String SUCCESS = "success";
+//    private static final String FAIL = "fail";
+//
+//    //@Autowired
+////    private LBoardService lBoardService;
+//
+//    @Autowired
+//    private LikeService likeService;
+//
+//    @Autowired
+//    private BookmarkService bookmarkService;
+//
+//    @Autowired
+//    private UserService userService;
+//
+//    @Autowired
+//    private CommentService commentService;
 
 //    // 5. Lboard 좋아요 (좋아요 or 좋아요 취소 , 좋아요 갯수)
 //    @ApiOperation(value="좋아요 정보")

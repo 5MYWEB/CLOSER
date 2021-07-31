@@ -4,30 +4,30 @@
 
 <mapper namespace="com.ssafy.closer.model.mapper.LikeMapper">
 
-    <insert id="addLike" parameterType="LikeDto">
-        insert into likes(kind_pk, board_pk, userId) values (#{kind_pk}, #{board_pk}, #{userId})
-    </insert>
+<!--    <insert id="addLike" parameterType="LikeDto">-->
+<!--        insert into likes(kind_pk, board_pk, userId) values (#{kind_pk}, #{board_pk}, #{userId})-->
+<!--    </insert>-->
 
-    <delete id="cancelLike" parameterType="LikeDto">
-        delete from likes
-        where kind_pk=#{kind_pk} and board_pk=#{board_pk} and userId=#{userId}
-    </delete>
+<!--    <delete id="cancelLike" parameterType="LikeDto">-->
+<!--        delete from likes-->
+<!--        where kind_pk=#{kind_pk} and board_pk=#{board_pk} and userId=#{userId}-->
+<!--    </delete>-->
 
-    <select id="isLike" parameterType="LikeDto" resultType="int">
-        select count(*)
-        from likes
-        where kind_pk=#{kind_pk} and board_pk=#{board_pk} and userId=#{userId}
-    </select>
+<!--    <select id="isLike" parameterType="LikeDto" resultType="int">-->
+<!--        select count(*)-->
+<!--        from likes-->
+<!--        where kind_pk=#{kind_pk} and board_pk=#{board_pk} and userId=#{userId}-->
+<!--    </select>-->
 
-    <select id="countLike" parameterType="LikeDto" resultType="int">
-        select count(*)
-        from likes
-        where kind_pk=#{kind_pk} and board_pk=#{board_pk}
-    </select>
+<!--    <select id="countLike" parameterType="LikeDto" resultType="int">-->
+<!--        select count(*)-->
+<!--        from likes-->
+<!--        where kind_pk=#{kind_pk} and board_pk=#{board_pk}-->
+<!--    </select>-->
 
-    <delete id="deleteLike" parameterType="LikeDto">
-        delete from likes
-        where kind_pk=#{kind_pk} and board_pk=#{board_pk}
-    </delete>
+<!--    <delete id="deleteLike" parameterType="LikeDto">-->
+<!--        delete from likes-->
+<!--        where kind_pk=#{kind_pk} and board_pk=#{board_pk}-->
+<!--    </delete>-->
 
 </mapper>

@@ -27,7 +27,7 @@ public class BoardController {
     private BoardService boardService;
 
     // 자취 게시판 메인
-    @ApiOperation(value = "자취 게시판 cnt 많은 순으로 게시글 보여줌.", response = List.class)
+    @ApiOperation(value = "자취 게시판 cnt 많은 순으로 게시글 보여줌(완료)", response = List.class)
     @PostMapping("/gBoard/all")
     public ResponseEntity<List<BoardDto>> gBoardList() {
         logger.debug("인기많은 자취 게시글 - 호출");
@@ -35,7 +35,7 @@ public class BoardController {
     }
 
     // 자취 게시판 - 한끼레시피 이번주 best
-    @ApiOperation(value = "자취게시판 - 한끼레시피 한주 인기글", response = List.class)
+    @ApiOperation(value = "자취게시판 - 한끼레시피 한주 인기글(완료)", response = List.class)
     @PostMapping("/gBoard/recipe/weekbest")
     public ResponseEntity<List<BoardDto>> gBoardWeekBestList1() {
         logger.debug("한끼레시피 - 주간 인기");
@@ -43,7 +43,7 @@ public class BoardController {
     }
 
     // 자취 게시판 - 한끼레시피 최신글
-    @ApiOperation(value = "자취게시판 - 한끼레시피 최신글", response = List.class)
+    @ApiOperation(value = "자취게시판 - 한끼레시피 최신글(완료)", response = List.class)
     @PostMapping("/gBoard/recipe/new")
     public ResponseEntity<List<BoardDto>> gBoardNewList1() {
         logger.debug("한끼레시피 - 최신");
@@ -113,25 +113,25 @@ public class BoardController {
     // 지역 게시판 - 공동구매 최신순
     @ApiOperation(value = "지역게시판 - 공동구매 최신글", response = List.class)
     @PostMapping("lboard/purchase")
-    public ResponseEntity<List<BoardDto>> lBoardList1() {
+    public ResponseEntity<List<BoardDto>> lBoardList1(@RequestParam String location) {
         logger.debug("공동구매 - 최신");
-        return new ResponseEntity<>(boardService.lBoardList1(), HttpStatus.OK);
+        return new ResponseEntity<>(boardService.lBoardList1(location), HttpStatus.OK);
     }
 
     // 자취 게시판 - 클로저모임 최신순
     @ApiOperation(value = "지역게시판 - 클로저모임 최신글", response = List.class)
     @PostMapping("lboard/getter")
-    public ResponseEntity<List<BoardDto>> lBoardList2() {
+    public ResponseEntity<List<BoardDto>> lBoardList2(@RequestParam String location) {
         logger.debug("클로저모임 - 최신");
-        return new ResponseEntity<>(boardService.lBoardList2(), HttpStatus.OK);
+        return new ResponseEntity<>(boardService.lBoardList2(location), HttpStatus.OK);
     }
 
     // 자취 게시판 - 도와주세요 최신술
     @ApiOperation(value = "지역게시판 - 도와주세요 최신글", response = List.class)
     @PostMapping("lboard/sos")
-    public ResponseEntity<List<BoardDto>> lBoardList3() {
+    public ResponseEntity<List<BoardDto>> lBoardList3(@RequestParam String location) {
         logger.debug("도와주세요 - 최신");
-        return new ResponseEntity<>(boardService.lBoardList3(), HttpStatus.OK);
+        return new ResponseEntity<>(boardService.lBoardList3(location), HttpStatus.OK);
     }
 
 }

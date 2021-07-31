@@ -20,7 +20,7 @@ public interface BoardMapper {
     List<BoardDto> gBoardNewList3(); // 자취 게시판 - 자취팁 최신순
     List<BoardDto> gBoardBestList3(); // 자취 게시판 - 자취팁 인기글
 
-    List<BoardDto> lBoardList1(); // 지역 게시판 - 공동구매 최신순
-    List<BoardDto> lBoardList2(); // 지역 게시판 - 클로저모임 최신순
-    List<BoardDto> lBoardList3(); // 지역 게시판 - 도와주세요 최신순
+    List<BoardDto> lBoardList1(String location); // 지역 게시판 - 공동구매 최신순
+    List<BoardDto> lBoardList2(String location); // 지역 게시판 - 클로저모임 최신순
+    List<BoardDto> lBoardList3(String location); // 지역 게시판 - 도와주세요 최신순
 }

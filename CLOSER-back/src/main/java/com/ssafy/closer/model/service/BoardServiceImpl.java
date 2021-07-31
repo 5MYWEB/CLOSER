@@ -68,17 +68,17 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardDto> lBoardList1() {
-        return sqlSession.getMapper(BoardMapper.class).lBoardList1();
+    public List<BoardDto> lBoardList1(String location) {
+        return sqlSession.getMapper(BoardMapper.class).lBoardList1(location);
     }
 
     @Override
-    public List<BoardDto> lBoardList2() {
-        return sqlSession.getMapper(BoardMapper.class).lBoardList2();
+    public List<BoardDto> lBoardList2(String location) {
+        return sqlSession.getMapper(BoardMapper.class).lBoardList2(location);
     }
 
     @Override
-    public List<BoardDto> lBoardList3() {
-        return sqlSession.getMapper(BoardMapper.class).lBoardList3();
+    public List<BoardDto> lBoardList3(String location) {
+        return sqlSession.getMapper(BoardMapper.class).lBoardList3(location);
     }
 }

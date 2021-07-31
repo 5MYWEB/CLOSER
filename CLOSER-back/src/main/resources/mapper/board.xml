@@ -4,39 +4,118 @@
 
 <mapper namespace="com.ssafy.closer.model.mapper.BoardMapper">
 
-<!--    &lt;!&ndash; 자취 게시판 &ndash;&gt;-->
-<!--    &lt;!&ndash; 라이크, 댓글, 공유 수 합산이 높은 것으로 &ndash;&gt;-->
-<!--    <select id="gBoardList" resultType="GBoardDto">-->
+    <!--                             자취 게시판                         -->
+
+    <!-- 전체 인기글 -->
+    <!-- 라이크, 공유 수 합산이 높은 것으로 -->
+    <select id="gBoardList" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, location
+        from board
+        order by cnt desc;
+    </select>
+
+    <!-- 자취 게시판 - 한끼레시피(이번 주(달)) best -->
+    <select id="gBoardWeekBestList1" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, location
+        from board
+        where kind_pk = 1 and created_at;
+        order by cnt desc;
+    </select>
+
+    <!-- 자취 게시판 - 한끼레시피 (최신순) -->
+    <select id="gBoardNewList1" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, location
+        from board
+        where kind_pk = 1;
+    </select>
+
+    <!-- 자취 게시판 - 한끼레시피 (인기순) -->
+    <!-- 일요일이 일주일 시작이라고 가정하고 일요일 ~ 현재 요일까지 등록된 게시글 중 좋아요, 북마크 높은 순 -->
+    <select id="gBoardBestList1" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, location
+        from board
+        where kind_pk = 1 and created_at >= (SELECT DATE_SUB(NOW(), INTERVAL(DAYOFWEEK(NOW()) - 1) DAY));
+        order by cnt desc;
+    </select>
+
+    <!-- 자취 게시판 - 자취팁(이번 주(달)) best -->
+    <select id="gBoardWeekBestList2" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, location
+        from board
+        where kind_pk = 2 and created_at;
+        order by cnt desc;
+    </select>
+
+    <!-- 자취 게시판 - 자취팁 (최신순) -->
+    <select id="gBoardNewList2" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, location
+        from board
+        where kind_pk = 2;
+    </select>
+
+    <!-- 자취 게시판 - 자취팁 (인기순) -->
+    <!-- 일요일이 일주일 시작이라고 가정하고 일요일 ~ 현재 요일까지 등록된 게시글 중 좋아요, 북마크 높은 순 -->
+    <select id="gBoardBestList2" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, location
+        from board
+        where kind_pk = 2 and created_at >= (SELECT DATE_SUB(NOW(), INTERVAL(DAYOFWEEK(NOW()) - 1) DAY));
+        order by cnt desc;
+    </select>
+
+    <!-- 자취 게시판 - 홈데코(이번 주(달)) best -->
+    <select id="gBoardWeekBestList3" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, location
+        from board
+        where kind_pk = 3 and created_at;
+        order by cnt desc;
+    </select>
+
+    <!-- 자취 게시판 - 홈데코 (최신순) -->
+    <select id="gBoardNewList3" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, location
+        from board
+        where kind_pk = 3;
+    </select>
+
+    <!-- 자취 게시판 - 홈데코 (인기순) -->
+    <!-- 일요일이 일주일 시작이라고 가정하고 일요일 ~ 현재 요일까지 등록된 게시글 중 좋아요, 북마크 높은 순 -->
+    <select id="gBoardBestList3" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, location
+        from board
+        where kind_pk = 3 and created_at >= (SELECT DATE_SUB(NOW(), INTERVAL(DAYOFWEEK(NOW()) - 1) DAY));
+        order by cnt desc;
+    </select>
 
 
-<!--    </select>-->
 
-<!--    &lt;!&ndash; 지역 게시판 : 나와 위치가 같은 사람들이 올린 모임 게시글&ndash;&gt;-->
-<!--    <select id="lBoardList" parameterType="String" resultType="LBoardDto">-->
-<!--        select Lboard_pk, userId, title, content, created_at, updated_at, category, totalNum, gatherNum, location-->
-<!--        from lboard-->
-<!--        where location = #{location}-->
-<!--    </select>-->
+    <!--                             지역 게시판                         -->
+    <!-- 지역 게시판 : 나와 위치가 같은 사람들이 올린 모임 게시글-->
 
-<!--    <select id="likeCount" resultType="GBoardDto">-->
-<!--        select board_pk, count(*) as '해당 글의 좋아요 수'-->
-<!--        from likes-->
-<!--        group by board_pk, kind_pk-->
-<!--        having kind_pk = 1;-->
-<!--    </select>-->
 
-<!--    <select id="commentCount" resultType="GBoardDto">-->
-<!--        select board_pk, count(*) as '해당 글의 댓글 수'-->
-<!--        from comment-->
-<!--        group by board_pk, kind_pk-->
-<!--        having kind_pk = 1;-->
-<!--    </select>-->
 
-<!--    <select id="bookmarkCount" resultType="GBoardDto">-->
-<!--        select board_pk, count(*) as '해당 글의 북마크 수'-->
-<!--        from bookmark-->
-<!--        group by board_pk, kind_pk-->
-<!--        having kind_pk = 1;-->
-<!--    </select>-->
+    <!-- 지역게시판 - 공동 구매 -->
+    <!-- 처음 눌렀을 때 - 공동구매 tab이 default -->
+    <select id="lBoardList1" parameterType="String" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, totalNum, gatherNum, location
+        from board
+        where location = #{location} and kind_pk = 4;
+        order by create_at desc;
+    </select>
 
+    <!-- 지역게시판 - 클로저모임(모임) -->
+    <select id="lBoardList2" parameterType="String" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, totalNum, gatherNum, location
+        from board
+        where location = #{location} and kind_pk = 5;
+        order by create_at desc;
+    </select>
+
+    <!-- 지역게시판 - 도와주세요(응급상황) -->
+    <select id="lBoardList1" parameterType="String" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, totalNum, gatherNum, location
+        from board
+        where location = #{location} and kind_pk = 6;
+        order by create_at desc;
+    </select>
+    
 </mapper>

@@ -11,6 +11,7 @@
     <select id="gBoardList" resultType="BoardDto">
         select board_pk, userId, title, content, created_at, location
         from board
+        where kind_pk = 1 or kind_pk = 2 or kind_pk = 3
         order by cnt desc;
     </select>
 

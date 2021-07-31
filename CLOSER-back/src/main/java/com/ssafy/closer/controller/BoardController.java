@@ -61,7 +61,7 @@ public class BoardController {
     }
 
     // 자취 게시판 - 자취팁 이번주 best
-    @ApiOperation(value = "자취게시판 - 자취팁 한주 인기글", response = List.class)
+    @ApiOperation(value = "자취게시판 - 자취팁 한주 인기글(완료)", response = List.class)
     @PostMapping("/gBoard/tip/weekbest")
     public ResponseEntity<List<BoardDto>> gBoardWeekBestList2() {
         logger.debug("자취팁 - 주간 인기");
@@ -86,7 +86,7 @@ public class BoardController {
     }
 
     // 자취 게시판 - 홈데코 이번주 best
-    @ApiOperation(value = "자취게시판 - 홈데코 한주 인기글", response = List.class)
+    @ApiOperation(value = "자취게시판 - 홈데코 한주 인기글(완료)", response = List.class)
     @PostMapping("/gBoard/deco/weekbest")
     public ResponseEntity<List<BoardDto>> gBoardWeekBestList3() {
         logger.debug("홈데코 - 주간 인기");
@@ -94,7 +94,7 @@ public class BoardController {
     }
 
     // 자취 게시판 - 홈데코 최신글
-    @ApiOperation(value = "자취게시판 - 홈데코 최신글", response = List.class)
+    @ApiOperation(value = "자취게시판 - 홈데코 최신글(완료)", response = List.class)
     @PostMapping("/gBoard/deco/new")
     public ResponseEntity<List<BoardDto>> gBoardNewList3() {
         logger.debug("홈데코 - 최신");
@@ -111,7 +111,7 @@ public class BoardController {
     }
 
     // 지역 게시판 - 공동구매 최신순
-    @ApiOperation(value = "지역게시판 - 공동구매 최신글", response = List.class)
+    @ApiOperation(value = "지역게시판 - 공동구매 최신글(완료)", response = List.class)
     @PostMapping("lboard/purchase")
     public ResponseEntity<List<BoardDto>> lBoardList1(@RequestParam String location) {
         logger.debug("공동구매 - 최신");
@@ -119,7 +119,7 @@ public class BoardController {
     }
 
     // 자취 게시판 - 클로저모임 최신순
-    @ApiOperation(value = "지역게시판 - 클로저모임 최신글", response = List.class)
+    @ApiOperation(value = "지역게시판 - 클로저모임 최신글(완료)", response = List.class)
     @PostMapping("lboard/getter")
     public ResponseEntity<List<BoardDto>> lBoardList2(@RequestParam String location) {
         logger.debug("클로저모임 - 최신");
@@ -127,7 +127,7 @@ public class BoardController {
     }
 
     // 자취 게시판 - 도와주세요 최신술
-    @ApiOperation(value = "지역게시판 - 도와주세요 최신글", response = List.class)
+    @ApiOperation(value = "지역게시판 - 도와주세요 최신글(완료)", response = List.class)
     @PostMapping("lboard/sos")
     public ResponseEntity<List<BoardDto>> lBoardList3(@RequestParam String location) {
         logger.debug("도와주세요 - 최신");

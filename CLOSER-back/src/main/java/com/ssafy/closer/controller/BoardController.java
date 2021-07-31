@@ -28,7 +28,7 @@ public class BoardController {
 
     // 자취 게시판 메인
     @ApiOperation(value = "자취 게시판 cnt 많은 순으로 게시글 보여줌.", response = List.class)
-    @PostMapping("/total")
+    @PostMapping("/gBoard/all")
     public ResponseEntity<List<BoardDto>> gBoardList() {
         logger.debug("인기많은 자취 게시글 - 호출");
         return new ResponseEntity<>(boardService.gBoardList(), HttpStatus.OK);
@@ -36,7 +36,7 @@ public class BoardController {
 
     // 자취 게시판 - 한끼레시피 이번주 best
     @ApiOperation(value = "자취게시판 - 한끼레시피 한주 인기글", response = List.class)
-    @PostMapping()
+    @PostMapping("/gBoard/recipe/weekbest")
     public ResponseEntity<List<BoardDto>> gBoardWeekBestList1() {
         logger.debug("한끼레시피 - 주간 인기");
         return new ResponseEntity<>(boardService.gBoardWeekBestList1(), HttpStatus.OK);
@@ -44,7 +44,7 @@ public class BoardController {
 
     // 자취 게시판 - 한끼레시피 최신글
     @ApiOperation(value = "자취게시판 - 한끼레시피 최신글", response = List.class)
-    @PostMapping()
+    @PostMapping("/gBoard/recipe/new")
     public ResponseEntity<List<BoardDto>> gBoardNewList1() {
         logger.debug("한끼레시피 - 최신");
         return new ResponseEntity<>(boardService.gBoardNewList1(), HttpStatus.OK);
@@ -52,8 +52,9 @@ public class BoardController {
 
     // 자취 게시판 - 한끼레시피 인기글
     // todo. 현재 전체 기간 중 인기글로 되어있는데 today 기준으로 정렬 해야 함 (2021.08.03 수정 예정)
+    // todo. cnt 인식 안되어서 현재 create_at desc 순으로 뜸 - 수정 예정 (2021.08.03)
     @ApiOperation(value = "자취게시판 - 한끼레시피 인기글", response = List.class)
-    @PostMapping()
+    @PostMapping("/gBoard/recipe/best")
     public ResponseEntity<List<BoardDto>> gBoardBestList1() {
         logger.debug("한끼레시피 - 인기");
         return new ResponseEntity<>(boardService.gBoardBestList1(), HttpStatus.OK);
@@ -61,15 +62,15 @@ public class BoardController {
 
     // 자취 게시판 - 자취팁 이번주 best
     @ApiOperation(value = "자취게시판 - 자취팁 한주 인기글", response = List.class)
-    @PostMapping()
+    @PostMapping("/gBoard/tip/weekbest")
     public ResponseEntity<List<BoardDto>> gBoardWeekBestList2() {
         logger.debug("자취팁 - 주간 인기");
         return new ResponseEntity<>(boardService.gBoardWeekBestList2(), HttpStatus.OK);
     }
 
     // 자취 게시판 - 자취팁 최신글
-    @ApiOperation(value = "자취게시판 - 자취팁 최신글", response = List.class)
-    @PostMapping()
+    @ApiOperation(value = "자취게시판 - 자취팁 최신글(완료)", response = List.class)
+    @PostMapping("/gBoard/tip/new")
     public ResponseEntity<List<BoardDto>> gBoardNewList2() {
         logger.debug("자취팁 - 최신");
         return new ResponseEntity<>(boardService.gBoardNewList2(), HttpStatus.OK);
@@ -77,8 +78,8 @@ public class BoardController {
 
     // 자취 게시판 - 자취팁 인기글
     // todo. 현재 전체 기간 중 인기글로 되어있는데 today 기준으로 정렬 해야 함 (2021.08.03 수정 예정)
-    @ApiOperation(value = "자추게시판 - 자취팁 인기글", response = List.class)
-    @PostMapping()
+    @ApiOperation(value = "자취게시판 - 자취팁 인기글", response = List.class)
+    @PostMapping("/gBoard/tip/best")
     public ResponseEntity<List<BoardDto>> gBoardBestList2() {
         logger.debug("자취팁 - 인기");
         return new ResponseEntity<>(boardService.gBoardBestList2(), HttpStatus.OK);
@@ -86,7 +87,7 @@ public class BoardController {
 
     // 자취 게시판 - 홈데코 이번주 best
     @ApiOperation(value = "자취게시판 - 홈데코 한주 인기글", response = List.class)
-    @PostMapping()
+    @PostMapping("/gBoard/deco/weekbest")
     public ResponseEntity<List<BoardDto>> gBoardWeekBestList3() {
         logger.debug("홈데코 - 주간 인기");
         return new ResponseEntity<>(boardService.gBoardWeekBestList3(), HttpStatus.OK);
@@ -94,7 +95,7 @@ public class BoardController {
 
     // 자취 게시판 - 홈데코 최신글
     @ApiOperation(value = "자취게시판 - 홈데코 최신글", response = List.class)
-    @PostMapping()
+    @PostMapping("/gBoard/deco/new")
     public ResponseEntity<List<BoardDto>> gBoardNewList3() {
         logger.debug("홈데코 - 최신");
         return new ResponseEntity<>(boardService.gBoardNewList3(), HttpStatus.OK);
@@ -103,7 +104,7 @@ public class BoardController {
     // 자취 게시판 - 홈데코 인기글
     // todo. 현재 전체 기간 중 인기글로 되어있는데 today 기준으로 정렬 해야 함 (2021.08.03 수정 예정)
     @ApiOperation(value = "자취게시판 - 홈데코 인기글", response = List.class)
-    @PostMapping()
+    @PostMapping("/gBoard/deco/best")
     public ResponseEntity<List<BoardDto>> gBoardBestList3() {
         logger.debug("홈데코 - 인기");
         return new ResponseEntity<>(boardService.gBoardBestList3(), HttpStatus.OK);
@@ -111,7 +112,7 @@ public class BoardController {
 
     // 지역 게시판 - 공동구매 최신순
     @ApiOperation(value = "지역게시판 - 공동구매 최신글", response = List.class)
-    @PostMapping()
+    @PostMapping("lboard/purchase")
     public ResponseEntity<List<BoardDto>> lBoardList1() {
         logger.debug("공동구매 - 최신");
         return new ResponseEntity<>(boardService.lBoardList1(), HttpStatus.OK);
@@ -119,7 +120,7 @@ public class BoardController {
 
     // 자취 게시판 - 클로저모임 최신순
     @ApiOperation(value = "지역게시판 - 클로저모임 최신글", response = List.class)
-    @PostMapping()
+    @PostMapping("lboard/getter")
     public ResponseEntity<List<BoardDto>> lBoardList2() {
         logger.debug("클로저모임 - 최신");
         return new ResponseEntity<>(boardService.lBoardList2(), HttpStatus.OK);
@@ -127,7 +128,7 @@ public class BoardController {
 
     // 자취 게시판 - 도와주세요 최신술
     @ApiOperation(value = "지역게시판 - 도와주세요 최신글", response = List.class)
-    @PostMapping()
+    @PostMapping("lboard/sos")
     public ResponseEntity<List<BoardDto>> lBoardList3() {
         logger.debug("도와주세요 - 최신");
         return new ResponseEntity<>(boardService.lBoardList3(), HttpStatus.OK);

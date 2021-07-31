@@ -27,7 +27,8 @@
     <select id="gBoardNewList1" resultType="BoardDto">
         select board_pk, userId, title, content, created_at, location
         from board
-        where kind_pk = 1;
+        where kind_pk = 1
+        order by created_at desc;
     </select>
 
     <!-- 자취 게시판 - 한끼레시피 (인기순) -->
@@ -52,7 +53,8 @@
     <select id="gBoardNewList2" resultType="BoardDto">
         select board_pk, userId, title, content, created_at, location
         from board
-        where kind_pk = 2;
+        where kind_pk = 2
+        order by created_at desc;
     </select>
 
     <!-- 자취 게시판 - 자취팁 (인기순) -->
@@ -77,7 +79,8 @@
     <select id="gBoardNewList3" resultType="BoardDto">
         select board_pk, userId, title, content, created_at, location
         from board
-        where kind_pk = 3;
+        where kind_pk = 3
+        order by created_at desc;
     </select>
 
     <!-- 자취 게시판 - 홈데코 (인기순) -->
@@ -102,7 +105,7 @@
         select board_pk, userId, title, content, created_at, totalNum, gatherNum, location
         from board
         where location = #{location} and kind_pk = 4
-        order by create_at desc;
+        order by created_at desc;
     </select>
 
     <!-- 지역게시판 - 클로저모임(모임) -->
@@ -110,7 +113,7 @@
         select board_pk, userId, title, content, created_at, totalNum, gatherNum, location
         from board
         where location = #{location} and kind_pk = 5
-        order by create_at desc;
+        order by created_at desc;
     </select>
 
     <!-- 지역게시판 - 도와주세요(응급상황) -->
@@ -118,7 +121,7 @@
         select board_pk, userId, title, content, created_at, totalNum, gatherNum, location
         from board
         where location = #{location} and kind_pk = 6
-        order by create_at desc;
+        order by created_at desc;
     </select>
     
 </mapper>

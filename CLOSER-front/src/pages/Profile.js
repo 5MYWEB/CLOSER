@@ -8,15 +8,12 @@ import UserPost from '../components/profile/UserPost';
 import UserBookmark from '../components/profile/UserBookmark';
 
 function Profile() {
-  // 유저아이디, 팔로워, 팔로잉 더미데이터
-  const userId = 'minsu'
-  const followerList = [{ key: 2, nickname: '혜인'}, { key: 1, nickname: '지윤'}]
-  const followingList = [{ key: 0, nickname: '호영'}, { key: 1, nickname: '민지'}]
+
 
   return (
     <div>
       {/* 뒤로가기 */}
-      <button>뒤로가기</button>
+      <a href="javascript:history.back();">뒤로가기</a>
       <div>
         {/* 프로필 사진 */}
         <img src="" alt="프로필 사진"></img>
@@ -46,10 +43,10 @@ function Profile() {
         <button>DM</button>
 
         {/* 팔로워 => 컴포넌트 */}
-        <FollowerList header="팔로워 목록" data={followerList} />
+        {/* <FollowerList header="팔로워 목록" data={followerList} /> */}
 
         {/* 팔로잉 => 컴포넌트 */}
-        <FollowingList header="팔로잉 목록" data={followingList} />
+        {/* <FollowingList header="팔로잉 목록" data={followingList} /> */}
 
         {/* 프로필 공유 */}
         <button>프로필 공유</button>
@@ -58,13 +55,13 @@ function Profile() {
         <ul>
           <li>
             {/* html속성에 상수와 variable을 같이 쓰는 방법입니다.*/}
-            <Link to={ "/profile/userfeed/" + userId }>피드</Link>
+            {/* <Link to={ "/profile/userfeed/" + userId }>피드</Link> */}
           </li>
           <li>
-            <Link to={"/profile/userpost/" + userId }>포스트</Link>
+            {/* <Link to={"/profile/userpost/" + userId }>포스트</Link> */}
           </li>
           <li>
-            <Link to={"/profile/userbookmark/" + userId }>북마크</Link>
+            {/* <Link to={"/profile/userbookmark/" + userId }>북마크</Link> */}
           </li>
         </ul>
 

@@ -20,7 +20,7 @@ const NewsfeedFavorite = () => {
     .catch((err) =>{
       console.log(err)
     })
-  }, [dispatch])
+  }, [])
 
   // 리덕스의 feedList 불러옴
   const { feedList } = useSelector((state) => state.newsfeed);

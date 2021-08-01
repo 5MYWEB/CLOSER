@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -27,10 +28,10 @@ public class BoardDto {
 
     @CreatedDate
     @Column(updatable = false)
-    private Date created_at;
+    private LocalDateTime created_at;
 
     @LastModifiedDate
-    private Date updated_at;
+    private LocalDateTime updated_at;
 
     private int totalnum;
     private int gathernum;

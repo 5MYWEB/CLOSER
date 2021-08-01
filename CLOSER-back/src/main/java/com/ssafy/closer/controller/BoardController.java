@@ -211,7 +211,7 @@ public class BoardController {
                     return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
                 }
             }else if(kind_pk <= 6){ // lboard인 경우
-                boardDto.setTotalnum(Integer.parseInt(info.get("totalNum")));
+                boardDto.setTotalNum(Integer.parseInt(info.get("totalNum")));
                 if(boardService.lBoardUpdate(boardDto)){
                     return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
                 }
@@ -270,7 +270,7 @@ public class BoardController {
     // 로그인했을 때 본인이 좋아요, 북마크를 클릭한 상태인지 아닌지를 나타냄
     @ApiOperation(value="좋아요, 북마크 클릭 및 정보")
     @PostMapping("/{board_pk}/info")
-    public ResponseEntity likeBoard(@PathVariable int board_pk, @RequestBody Map<String, String> info){
+    public ResponseEntity infoBoard(@PathVariable int board_pk, @RequestBody Map<String, String> info){
         try {
             // 로그인 유저 정보 갖고 온다
             String userId = info.get("userId");
@@ -294,11 +294,13 @@ public class BoardController {
                     output.put("clicked", false);
                 }
             }else if(flag.equals("true")){ // 클릭시
-                if(infoService.isClicked(infoDto) > 0){ // 좋아요(북마크)한 경우 => 좋아요(북마크) 취소
+                if(infoService.isClicked(infoDto) > 0){ // 좋아요(북마크)한 경우 => 좋아요(북마크) 취소, cnt 감소
                     infoService.cancelInfo(infoDto);
+                    boardService.decreaseCount(board_pk);
                     output.put("clicked", false);
-                }else{ // 좋아요(북마크)를 하지 않은 경우 => 좋아요(북마크) 클릭
+                }else{ // 좋아요(북마크)를 하지 않은 경우 => 좋아요(북마크) 클릭, cnt 증가
                     infoService.addInfo(infoDto);
+                    boardService.increaseCount(board_pk);
                     output.put("clicked", true);
                 }
             }else{

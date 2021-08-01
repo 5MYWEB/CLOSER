@@ -10,17 +10,17 @@
 <!--        where userId = #{userId} and password = #{password}-->
 <!--    </select>-->
 
-<!--    &lt;!&ndash; <select id="userList" resultType="memberDto">-->
-<!--        select userid, userpwd, username, email, address, date_format(joindate, '%y.%m.%d') joindate-->
-<!--        from ssafy_member-->
-<!--        order by joindate desc;-->
-<!--    </select> &ndash;&gt;-->
+    <!-- <select id="userList" resultType="memberDto">
+        select userid, userpwd, username, email, address, date_format(joindate, '%y.%m.%d') joindate
+        from ssafy_member
+        order by joindate desc;
+    </select> -->
 
-<!--    <select id="userInfo" parameterType="String" resultType="MemberDto">-->
-<!--        select *-->
-<!--        from user-->
-<!--        where userid = #{userid}-->
-<!--    </select>-->
+    <select id="userInfo" parameterType="String" resultType="MemberDto">
+        select *
+        from user
+        where userId = #{userId}
+    </select>
 
 <!--    <select id="userother" parameterType="String" resultType="map">-->
 <!--        select nickname,profileImg,homeAlone,addr,intro,profilePriv,addrPriv-->

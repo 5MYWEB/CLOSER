@@ -4,49 +4,49 @@
 
 <mapper namespace="com.ssafy.closer.model.mapper.FollowMapper">
 
-<!--    <insert id="follow" parameterType="FollowDto">-->
-<!--        insert into user_follow(activeUser, passiveUser) values (#{activeUser}, #{passiveUser})-->
-<!--    </insert>-->
+    <insert id="follow" parameterType="FollowDto">
+        insert into user_follow(activeUser, passiveUser) values (#{activeUser}, #{passiveUser})
+    </insert>
 
-<!--    <delete id="unfollow" parameterType="FollowDto">-->
-<!--        delete from user_follow-->
-<!--        where activeUser=#{activeUser} and passiveUser=#{passiveUser}-->
-<!--    </delete>-->
+    <delete id="unfollow" parameterType="FollowDto">
+        delete from user_follow
+        where activeUser=#{activeUser} and passiveUser=#{passiveUser}
+    </delete>
 
-<!--    <select id="isFollow" parameterType="FollowDto" resultType="int">-->
-<!--        select count(*)-->
-<!--        from user_follow-->
-<!--        where activeUser=#{activeUser} and passiveUser=#{passiveUser}-->
-<!--    </select>-->
+    <select id="isFollow" parameterType="FollowDto" resultType="int">
+        select count(*)
+        from user_follow
+        where activeUser=#{activeUser} and passiveUser=#{passiveUser}
+    </select>
 
-<!--    <select id="countActiveUser" parameterType="FollowDto" resultType="int">-->
-<!--        select count(*)-->
-<!--        from user_follow-->
-<!--        where activeUser=#{passiveUser}-->
-<!--    </select>-->
+    <select id="countActiveUser" parameterType="FollowDto" resultType="int">
+        select count(*)
+        from user_follow
+        where activeUser=#{passiveUser}
+    </select>
 
-<!--    <select id="countPassiveUser" parameterType="FollowDto" resultType="int">-->
-<!--        select count(*)-->
-<!--        from user_follow-->
-<!--        where passiveUser=#{passiveUser}-->
-<!--    </select>-->
+    <select id="countPassiveUser" parameterType="FollowDto" resultType="int">
+        select count(*)
+        from user_follow
+        where passiveUser=#{passiveUser}
+    </select>
 
-<!--    <select id="activeUserList" parameterType="String" resultType="FollowDto">-->
-<!--        select follow_pk, activeUser, passiveUser, U.nickname as nickname, U.profileImg as profileImg-->
-<!--        from user_follow F-->
-<!--        left join user U-->
-<!--        on (F.passiveUser = U.userId)-->
-<!--        where F.activeUser=#{passiveUser}-->
-<!--        order by F.follow_pk desc-->
-<!--    </select>-->
+    <select id="activeUserList" parameterType="String" resultType="FollowDto">
+        select follow_pk, activeUser, passiveUser, U.nickname as nickname, U.profileImg as profileImg
+        from user_follow F
+        left join user U
+        on (F.passiveUser = U.userId)
+        where F.activeUser=#{passiveUser}
+        order by F.follow_pk desc
+    </select>
 
-<!--    <select id="passiveUserList" parameterType="String" resultType="FollowDto">-->
-<!--        select follow_pk, activeUser, passiveUser, U.nickname as nickname, U.profileImg as profileImg-->
-<!--        from user_follow F-->
-<!--        left join user U-->
-<!--        on (F.activeUser = U.userId)-->
-<!--        where F.passiveUser=#{passiveUser}-->
-<!--        order by F.follow_pk desc-->
-<!--    </select>-->
+    <select id="passiveUserList" parameterType="String" resultType="FollowDto">
+        select follow_pk, activeUser, passiveUser, U.nickname as nickname, U.profileImg as profileImg
+        from user_follow F
+        left join user U
+        on (F.activeUser = U.userId)
+        where F.passiveUser=#{passiveUser}
+        order by F.follow_pk desc
+    </select>
 
 </mapper>

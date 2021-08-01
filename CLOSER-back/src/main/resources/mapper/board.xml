@@ -124,5 +124,66 @@
         where location = #{location} and kind_pk = 6
         order by created_at desc;
     </select>
-    
+
+
+    <!-- 게시글 CRUD -->
+
+    <!-- Create -->
+    <!-- gboard 생성 -->
+    <insert id="gBoardCreate" parameterType="BoardDto">
+        insert into board(kind_pk, userId, title, content, created_at, updated_at, nickname)
+        values (#{kind_pk}, #{userId}, #{title}, #{content}, #{created_at}, #{updated_at}, #{nickname})
+    </insert>
+
+    <!-- lboard 생성 -->
+    <insert id="lBoardCreate" parameterType="BoardDto">
+        insert into board(kind_pk, userId, title, content, created_at, updated_at, totalNum, GatherNum, location, nickname)
+        values (#{kind_pk}, #{userId}, #{title}, #{content}, #{created_at}, #{updated_at}, #{totalNum}, 1, #{location}, #{nickname})
+    </insert>
+
+    <!-- 피드 생성 -->
+    <insert id="feedCreate" parameterType="BoardDto">
+        insert into board(kind_pk, userId, content, location, created_at, nickname)
+        values (#{kind_pk}, #{userId}, #{content}, #{location}, #{created_at}, #{nickname})
+    </insert>
+
+    <!-- Read -->
+    <!-- Gboard, Lboard, Feed 상세 조회 -->
+    <select id="read" parameterType="int" resultType="BoardDto">
+        select *
+        from board
+        where board_pk = #{board_pk}
+    </select>
+
+    <!-- update -->
+    <!-- gboard 수정 -->
+    <update id="gBoardUpdate" parameterType="BoardDto">
+        update board
+        set title=#{title}, content=#{content}, updated_at=#{updated_at}
+        where board_pk = #{board_pk}
+    </update>
+
+    <!-- lboard 수정 -->
+    <update id="lBoardUpdate" parameterType="BoardDto">
+        update board
+        set title=#{title}, content=#{content}, updated_at=#{updated_at}, totalNum=#{totalNum}
+        where board_pk = #{board_pk}
+    </update>
+
+    <!-- delete -->
+    <!-- Gboard, Lboard, Feed 삭제 -->
+    <delete id="delete" parameterType="int">
+        delete
+        from board
+        where board_pk = #{board_pk}
+    </delete>
+
+    <!-- 유저 find   -->
+    <!-- 해당 gboard, lboard, feed 쓴 유저 찾기 -->
+    <select id="findUser" parameterType="int" resultType="String">
+        select userId
+        from board
+        where board_pk = #{board_pk}
+    </select>
+
 </mapper>

@@ -2,11 +2,13 @@ package com.ssafy.closer.model.service;
 
 import com.ssafy.closer.model.dto.BoardDto;
 import com.ssafy.closer.model.mapper.BoardMapper;
+import com.ssafy.closer.model.mapper.GBoardMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -81,4 +83,46 @@ public class BoardServiceImpl implements BoardService {
     public List<BoardDto> lBoardList3(String location) {
         return sqlSession.getMapper(BoardMapper.class).lBoardList3(location);
     }
+
+    @Override
+    public boolean gBoardCreate(BoardDto boardDto) {
+        return sqlSession.getMapper(BoardMapper.class).gBoardCreate(boardDto)==1;
+    }
+
+    @Override
+    public boolean lBoardCreate(BoardDto boardDto) {
+        return sqlSession.getMapper(BoardMapper.class).lBoardCreate(boardDto)==1;
+    }
+
+    @Override
+    public boolean feedCreate(BoardDto boardDto) {
+        return sqlSession.getMapper(BoardMapper.class).feedCreate(boardDto)==1;
+    }
+
+    @Override
+    public BoardDto read(int board_pk) {
+        return sqlSession.getMapper(BoardMapper.class).read(board_pk);
+    }
+
+    @Override
+    public boolean gBoardUpdate(BoardDto boardDto) {
+        return sqlSession.getMapper(BoardMapper.class).gBoardUpdate(boardDto)==1;
+    }
+
+    @Override
+    public boolean lBoardUpdate(BoardDto boardDto) {
+        return sqlSession.getMapper(BoardMapper.class).lBoardUpdate(boardDto)==1;
+    }
+
+    @Override
+    @Transactional
+    public boolean delete(int board_pk) {
+        return sqlSession.getMapper(BoardMapper.class).delete(board_pk)==1;
+    }
+
+    @Override
+    public String findUser(int board_pk) {
+        return sqlSession.getMapper(BoardMapper.class).findUser(board_pk);
+    }
+
 }

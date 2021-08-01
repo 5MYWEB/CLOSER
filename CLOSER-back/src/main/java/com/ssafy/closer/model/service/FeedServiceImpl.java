@@ -14,29 +14,29 @@ import com.ssafy.closer.model.mapper.FeedMapper;
 
 @Service
 public class FeedServiceImpl implements FeedService{
-    private static final Logger logger = LoggerFactory.getLogger(FeedServiceImpl.class);
-
-    @Autowired
-    private SqlSession sqlSession;
-
-    @Autowired
-    private FeedMapper feedMapper;
-
-
-    @Override
-    public List<BoardDto> feedListAll() {
-        return sqlSession.getMapper(FeedMapper.class).feedListAll();
-    }
-
-    @Override
-    public List<BoardDto> feedListNear(String location) {
-        return sqlSession.getMapper(FeedMapper.class).feedListNear(location);
-    }
-
-    @Override
-    public List<BoardDto> feedListFollow(String userId) {
-        return sqlSession.getMapper(FeedMapper.class).feedListFollow(userId);
-    }
+//    private static final Logger logger = LoggerFactory.getLogger(FeedServiceImpl.class);
+//
+//    @Autowired
+//    private SqlSession sqlSession;
+//
+//    @Autowired
+//    private FeedMapper feedMapper;
+//
+//
+//    @Override
+//    public List<BoardDto> feedListAll() {
+//        return sqlSession.getMapper(FeedMapper.class).feedListAll();
+//    }
+//
+//    @Override
+//    public List<BoardDto> feedListNear(String location) {
+//        return sqlSession.getMapper(FeedMapper.class).feedListNear(location);
+//    }
+//
+//    @Override
+//    public List<BoardDto> feedListFollow(String userId) {
+//        return sqlSession.getMapper(FeedMapper.class).feedListFollow(userId);
+//    }
 
 //    @Override
 //    public boolean createFeed(BoardDto feedDto) {

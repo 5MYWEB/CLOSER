@@ -33,8 +33,8 @@ public class BoardDto {
     @LastModifiedDate
     private LocalDateTime updated_at;
 
-    private int totalnum;
-    private int gathernum;
+    private int totalNum;
+    private int gatherNum;
     private String location;
     private int cnt;
 

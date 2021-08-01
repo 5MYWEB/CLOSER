@@ -36,4 +36,7 @@ public interface BoardMapper {
     int delete(int board_pk); // gboard, lboard, feed 삭제
 
     String findUser(int board_pk); // 해당 gboard, lboard, feed 글을 쓴 유저 id 찾기
+
+    int increaseCount(int board_pk); // 좋아요 or 북마크 클릭 시 갯수 증가
+    int decreaseCount(int board_pk); // 좋아요 or 북마크 취소 시 갯수 감소
 }

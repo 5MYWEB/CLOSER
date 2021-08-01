@@ -166,7 +166,7 @@
     <!-- lboard 수정 -->
     <update id="lBoardUpdate" parameterType="BoardDto">
         update board
-        set title=#{title}, content=#{content}, updated_at=#{updated_at}, totalNum=#{totalNum}
+        set title=#{title}, content=#{content}, updated_at=#{updated_at}, totalNum=if(#{totalNum} >= gatherNum, #{totalNum}, totalNum)
         where board_pk = #{board_pk}
     </update>
 
@@ -185,5 +185,19 @@
         from board
         where board_pk = #{board_pk}
     </select>
+
+    <!-- 좋아요 or 북마크 클릭시 갯수 증가 -->
+    <update id="increaseCount" parameterType="int">
+        update board
+        set cnt = cnt+1
+        where board_pk=#{board_pk}
+    </update>
+
+    <!-- 좋아요 or 북마크 취소시 갯수 감소 -->
+    <update id="decreaseCount" parameterType="int">
+        update board
+        set cnt = cnt-1
+        where board_pk=#{board_pk}
+    </update>
 
 </mapper>

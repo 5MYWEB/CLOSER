@@ -125,4 +125,14 @@ public class BoardServiceImpl implements BoardService {
         return sqlSession.getMapper(BoardMapper.class).findUser(board_pk);
     }
 
+    @Override
+    public boolean increaseCount(int board_pk) {
+        return sqlSession.getMapper(BoardMapper.class).increaseCount(board_pk)==1;
+    }
+
+    @Override
+    public boolean decreaseCount(int board_pk) {
+        return sqlSession.getMapper(BoardMapper.class).decreaseCount(board_pk)==1;
+    }
+
 }

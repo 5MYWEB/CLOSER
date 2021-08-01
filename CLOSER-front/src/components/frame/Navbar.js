@@ -5,7 +5,7 @@ import NewsfeedDetail from '../newsfeed/NewsfeedDetail'; // 뉴스피드 상세�
 
 const Menu = () => {
   return (
-    <div>
+    <div className="fixed-bottom">
       {/* 하단 바 */}
       <h2>Navbar</h2>
       <ul>
@@ -14,7 +14,6 @@ const Menu = () => {
         <li>알림</li>
         <li>DM</li>
       </ul>
-      <hr />
       <Route path="/newsfeed" component={Newsfeed} />
       <Route path="/board" component={Board} />
       <Route path="/newsfeed-detail/:id" component={NewsfeedDetail}></Route>

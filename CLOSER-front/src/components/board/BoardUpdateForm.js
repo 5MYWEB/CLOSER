@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 import { updateBoard } from '../../modules/board';
 
@@ -10,6 +11,8 @@ const BoardUpdateForm = ({match}) => {
   const pk = match.params.id;
 
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   // 리덕스 user에서 userId 받아옴 
   const { userId } = useSelector((state) => state.user.userInfo);
@@ -53,8 +56,8 @@ const BoardUpdateForm = ({match}) => {
         content: content,
       })
     .then((res) => {
-      console.log(res)
       dispatch(updateBoard())
+      history.push(`/board-detail/${pk}/`)
     })
     .catch((err) =>{
       console.log(err)

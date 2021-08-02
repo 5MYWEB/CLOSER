@@ -9,7 +9,7 @@ const NewsfeedDetail = ({match}) => {
   
   // 현재 피드의 정보
   const [feed, setFeed] = useState({
-    feed_pk: '',
+    board_pk: '',
     userId: '',
     content: '',
     created_at: '',
@@ -20,7 +20,7 @@ const NewsfeedDetail = ({match}) => {
   const pk = match.params.id;
 
   // 현재 로그인한 사용자의 아이디 가져오기
-  const { userId } = useSelector((state) => state.user);
+  const { userId } = useSelector((state) => state.user.userInfo);
 
   useEffect(() => {
     axios.get(`http://localhost:8080/board/${pk}`)
@@ -28,7 +28,7 @@ const NewsfeedDetail = ({match}) => {
       console.log(res)
       setFeed({
         ...feed,
-        feed_pk: res.data.feed_pk,
+        board_pk: res.data.board_pk,
         userId: res.data.userId,
         content: res.data.content,
         created_at: res.data.created_at,
@@ -44,7 +44,11 @@ const NewsfeedDetail = ({match}) => {
   const onClickDelete = () => {
     // 삭제 의사 확인
     if(window.confirm('정말로 피드를 삭제하시겠습니까?')){
-      axios.delete(`http://localhost:8080/board/${feed.feed_pk}`)
+      axios.delete(`http://localhost:8080/board/${feed.board_pk}/`, {
+        data: {
+          userId: userId
+        }
+      })
       .then((res) => {
         console.log(res);
         dispatch(deleteFeed())
@@ -61,7 +65,7 @@ const NewsfeedDetail = ({match}) => {
 
   return (
     <>
-      <div>글 번호 : {feed.feed_pk}</div>
+      <div>글 번호 : {feed.board_pk}</div>
       <div>작성자 : {feed.userId}</div>
       <div>내용 : {feed.content}</div>
       <div>작성시간 : {feed.created_at}</div>

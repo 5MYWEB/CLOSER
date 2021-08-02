@@ -11,10 +11,10 @@ function NewsfeedNavbar() {
         <div>
             <ul>
               <li>
-                <Link to={"/newsfeed/near"}>NEAR(구현중 - 위치정보 필요)</Link>
+                <Link to={"/newsfeed/near"}>NEAR</Link>
               </li>
               <li>
-                <Link to={"/newsfeed/favorite"}>FAVORITE(구현중 - 유저정보 필요)</Link>
+                <Link to={"/newsfeed/favorite"}>FAVORITE</Link>
               </li>
               <li>
                 <Link to={"/newsfeed/hot"}>HOT</Link>

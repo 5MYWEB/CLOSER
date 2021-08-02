@@ -41,7 +41,6 @@ const BoardForm = () => {
       })
     .then((res) => {
       dispatch(createBoard())
-      console.log('생성은됨')
       history.push(`/board-detail/${res.data.board_pk}/`)
     })
     .catch((err) => {

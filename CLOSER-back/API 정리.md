@@ -479,8 +479,91 @@
 
 
 
-
 ## Alarm
 
+> 1. 댓글
+> 2. 좋아요
+> 3. 북마크
+> 4. 팔로우
+> 5. 클로저봇
+
+### 1. [POST] /alarm : 알람 리스트
+
+- input
+
+  ```
+  {
+    "userId": "hyein"
+  }
+  ```
+
+- output
+
+  ```
+  [
+    {
+      "alarm_pk": 1,
+      "userId": "ssafy",
+      "category_pk": 4,
+      "otherUserId": "admin",
+      "content": "admin1님이 팔로우를 시작했습니다.",
+      "visited": false,
+      "kind_pk": 0,
+      "board_pk": 0,
+      "bot_pk": 0,
+      "created_at": "2021-08-02"
+    },
+    {
+      "alarm_pk": 3,
+      "userId": "ssafy",
+      "category_pk": 1,
+      "otherUserId": "hyein",
+      "content": "hyein1님이 댓글을 남겼습니다.",
+      "visited": false,
+      "kind_pk": 2,
+      "board_pk": 22,
+      "bot_pk": 0,
+      "created_at": "2021-08-02"
+    }
+  ]
+  ```
+
+  
+
+### 2. [POST] /alarm/unreadCount : 안읽은 알람 갯수
+
+- input
+
+  ```
+  {
+    "userId": "hyein"
+  }
+  ```
+
+- output
+
+  ```
+  {
+    "countAlarm": 2
+  }
+  ```
 
 
+
+### 3. [POST] /alarm/read-all : 모두 읽음 표시
+
+- input
+
+  ```
+  {
+    "userId": "hyein"
+  }
+  ```
+
+- output
+
+  ```
+  SUCCESS
+  ```
+
+  

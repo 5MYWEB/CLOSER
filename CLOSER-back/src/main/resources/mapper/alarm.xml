@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.closer.model.mapper.AlarmMapper">
+    <select id="alarmList" parameterType="String" resultType="List">
+        select *
+        from user_alarm
+        where userId=#{userId}
+    </select>
+
+    <insert id="alarmCreate" parameterType="AlarmDto" useGeneratedKeys="true" keyProperty="alarm_pk" keyColumn="alarm_pk">
+        insert into user_alarm(userId, othercontent, created_at)
+        values (#{userId}, #{content}, #{created_at})
+    </insert>
+
+
+
+</mapper>

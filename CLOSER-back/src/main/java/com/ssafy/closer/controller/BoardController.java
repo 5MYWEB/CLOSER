@@ -238,8 +238,11 @@ public class BoardController {
     // 게시글 삭제
     @ApiOperation(value = "해당 게시글 삭제")
     @DeleteMapping("/{board_pk}")
-    public ResponseEntity<String> delete(@PathVariable int board_pk, @RequestBody String userId) {
+    public ResponseEntity<String> delete(@PathVariable int board_pk, @RequestBody Map<String, String> info) {
         // 로그인한 유저와 해당 글을 쓴 유저가 같은지 확인해야함
+        // 로그인 유저
+        String userId = info.get("userId");
+        // 글을 쓴 유저
         String user = boardService.findUser(board_pk);
         if(userId.equals(user)){
             if(boardService.delete(board_pk)) { // 지우는 걸 성공한 경우
@@ -369,8 +372,10 @@ public class BoardController {
     // D: 댓글 삭제
     @ApiOperation(value = "특정 댓글 삭제")
     @DeleteMapping("/{board_pk}/comment/{info_pk}")
-    public ResponseEntity<String> commentDelete(@PathVariable int board_pk, @PathVariable int info_pk, @RequestBody String userId) {
+    public ResponseEntity<String> commentDelete(@PathVariable int board_pk, @PathVariable int info_pk, @RequestBody Map<String, String> info) {
         // 로그인한 유저와 해당 댓글을 쓴 유저가 같은지 확인해야함
+        // 로그인한 유저
+        String userId = info.get("userId");
         // 해당 댓글 쓴 유저 정보 데려오기
         String user = infoService.findCommentUser(info_pk);
 

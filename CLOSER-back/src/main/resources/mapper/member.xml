@@ -16,22 +16,27 @@
         order by joindate desc;
     </select>
 
+    <!-- 회원 정보 보기 -->
     <select id="userInfo" parameterType="String" resultType="MemberDto">
         select *
         from user
         where userId = #{userId}
     </select>
 
-    <select id="userother" parameterType="String" resultType="map">
-        select nickname,profileImg,homeAlone,addr,intro,profilePriv,addrPriv
-        from user
-        where userId = #{userId}
-    </select>
-
+    <!-- 회원가입 -->
     <insert id="userRegister" parameterType="MemberDto">
         insert into user (userId, password, nickname, phone, email, addr, homeAlone)
         values (#{userId}, #{password}, #{nickname}, #{phone}, #{email}, #{addr}, #{homeAlone})
     </insert>
+
+    <!-- 뱃지 담아 보내기 -->
+    <select id="userbadge" parameterType="String" resultType="int">
+        select ub.kind_pk As badge
+        from user As u
+        left join user_badge AS ub
+        on u.userId = ub.userId
+        where u.userId = #{userId}
+    </select>
 
     <!-- 아아디 중복 체크 -->
     <select id="userIdCheck" parameterType="String" resultType="int">

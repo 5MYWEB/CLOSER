@@ -17,5 +17,5 @@ public interface UserService {
     int userDelete(String userid);
     int userIdCheck(String userId);
     int userNicknameCheck(String nickname);
-    Map<String, Object> userother(String userId);
+    List<Integer> userbadge(String userId);
 }

@@ -1,13 +1,7 @@
 package com.ssafy.closer.controller;
 
-import com.ssafy.closer.model.dto.BoardDto;
-import com.ssafy.closer.model.dto.InfoDto;
-import com.ssafy.closer.model.dto.JoinDto;
-import com.ssafy.closer.model.dto.MemberDto;
-import com.ssafy.closer.model.service.BoardService;
-import com.ssafy.closer.model.service.FeedService;
-import com.ssafy.closer.model.service.InfoService;
-import com.ssafy.closer.model.service.UserService;
+import com.ssafy.closer.model.dto.*;
+import com.ssafy.closer.model.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
@@ -18,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +34,9 @@ public class BoardController {
 
     @Autowired
     private InfoService infoService;
+
+    @Autowired
+    private AlarmService alarmService;
 
     // 자취 게시판 메인
     @ApiOperation(value = "자취 게시판 cnt 많은 순으로 게시글 보여줌(완료)", response = List.class)
@@ -320,12 +318,19 @@ public class BoardController {
             // 로그인 유저 정보 갖고 온다
             String userId = info.get("userId");
 
+            // 해당 글을 쓴 유저 정보
+            BoardDto boardDto = boardService.read(board_pk);
+            String user = boardDto.getUserId();
+
             // 현재 로드 상태인지 클릭 상태인지 갖고 온다
             String flag = info.get("flag");
 
+            // kind_pk
+            int kind_pk = Integer.parseInt(info.get("kind_pk"));
+
             // 유저 정보가 담긴 infoDto 생성
             InfoDto infoDto = new InfoDto();
-            infoDto.setKind_pk(Integer.parseInt(info.get("kind_pk"))); // 2: 좋아요, 3: 북마크
+            infoDto.setKind_pk(kind_pk); // 2: 좋아요, 3: 북마크
             infoDto.setBoard_pk(board_pk); // 게시글 pk
             infoDto.setUserId(userId); // 로그인한 유저 정보
 
@@ -347,6 +352,31 @@ public class BoardController {
                     infoService.addInfo(infoDto);
                     boardService.increaseCount(board_pk);
                     output.put("clicked", true);
+
+                    // 알람
+                    // 로그인한 유저가 좋아요(북마크) 하면 -> 상대방 기준으로 alarm이 생성
+                    AlarmDto alarmDto = new AlarmDto();
+                    alarmDto.setUserId(user); // 상대
+                    alarmDto.setCategory_pk(kind_pk); // 2: 좋아요, 3: 북마크
+                    alarmDto.setOtherUserId(userId); // 로그인유저가 좋아요(북마크)를 클릭했다
+                    alarmDto.setCreated_at(LocalDate.now());
+
+                    // 알림내용
+                    // nickname 구하기
+                    MemberDto memberDto = userService.userInfo(userId); // 로그인 유저의 정보
+                    String nickname = memberDto.getNickname(); // 로그인 유저의 닉네임
+                    String content;
+                    if(kind_pk == 2){
+                        content = nickname + "님이 좋아요를 눌렀습니다.";
+                    }else { // kind_pk == 3
+                        content = nickname + "님이 북마크를 눌렀습니다.";
+                    }
+                    alarmDto.setContent(content);
+
+                    alarmDto.setKind_pk(boardDto.getKind_pk()); // 게시글 종류
+                    alarmDto.setBoard_pk(board_pk); // 게시글 pk
+
+                    alarmService.alarmBoardCreate(alarmDto);
                 }
             }else{
                 return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
@@ -389,6 +419,28 @@ public class BoardController {
         infoDto.setBoard_pk(board_pk);
 
         if(infoService.createComment(infoDto)){ // 댓글 생성 성공
+            // 알림창
+            MemberDto memberDto = userService.userInfo(infoDto.getUserId()); // 로그인 유저의 정보
+            BoardDto boardDto = boardService.read(board_pk); // 해당 게시글 정보
+
+            // 로그인한 유저가 좋아요(북마크) 하면 -> 상대방 기준으로 alarm이 생성
+            AlarmDto alarmDto = new AlarmDto();
+            alarmDto.setUserId(boardDto.getUserId()); // 상대
+            alarmDto.setCategory_pk(1); // 1: 댓글
+            alarmDto.setOtherUserId(infoDto.getUserId()); // 로그인유저가 댓글을 클릭했다
+            alarmDto.setCreated_at(LocalDate.now());
+
+            // 알림내용
+            // nickname 구하기
+            String nickname = memberDto.getNickname(); // 로그인 유저의 닉네임
+            String content = nickname + "님이 댓글을 남겼습니다.";
+            alarmDto.setContent(content);
+
+            alarmDto.setKind_pk(boardDto.getKind_pk()); // 게시글 종류
+            alarmDto.setBoard_pk(board_pk); // 게시글 pk
+
+            alarmService.alarmBoardCreate(alarmDto);
+
             return new ResponseEntity(SUCCESS, HttpStatus.OK);
         }
         // 댓글 생성 실패

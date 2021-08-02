@@ -149,7 +149,7 @@
 
     <!-- CLOSER 전체 유저의 피드 목록 -->
     <select id="feedListAll" resultType="BoardDto">
-        select B.board_pk, B.userId, B.content, B.created_at, B.location
+        select B.board_pk as board_pk, B.userId as userId, B.content as content, B.created_at as created_at, B.location as location, B.nickname as nickname
         from board B join board_category BC on B.kind_pk = BC.kind_pk
         where BC.kind_pk = 7
         order by B.created_at desc;
@@ -157,7 +157,7 @@
 
     <!-- 나와 동일한 위치인 사람들의 피드 목록 -->
     <select id="feedListNear" parameterType="String" resultType="BoardDto">
-        select B.board_pk, B.userId, B.content, B.created_at, B.location
+        select B.board_pk as board_pk, B.userId as userId, B.content as content, B.created_at as created_at, B.location as location, B.nickname as nickname
         from board B join board_category BC on B.kind_pk = BC.kind_pk
         where BC.kind_pk = 7 and B.location = #{location}
         order by B.created_at desc;
@@ -165,7 +165,7 @@
 
     <!-- 내가 팔로우 한 사람들의 피드 목록 -->
     <select id="feedListFollow" parameterType="String" resultType="BoardDto">
-        select B.board_pk, B.userId, B.content, B.created_at, B.location
+        select B.board_pk as board_pk, B.userId as userId, B.content as content, B.created_at as created_at, B.location as location, B.nickname as nickname
         from user_follow U left join board B on (U.passiveUser = B.userId)
         where U.activeUser=#{passiveUser}
         order by B.created_at desc;

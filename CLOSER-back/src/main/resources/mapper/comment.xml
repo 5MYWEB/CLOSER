@@ -4,30 +4,37 @@
 
 <mapper namespace="com.ssafy.closer.model.mapper.CommentMapper">
 
-    <insert id="addComment" parameterType="CommentDto">
-        insert into comment(kind_pk, board_pk, userId, reply) values (#{kind_pk}, #{board_pk}, #{userId}, #{reply})
+    <select id="commentList" parameterType="CommentDto" resultType="CommentDto">
+        select *
+        from comments
+        where kind_pk=#{kind_pk} and board_pk=#{board_pk}
+    </select>
+
+    <insert id="createComment" parameterType="CommentDto">
+        insert into comments(kind_pk, board_pk, userId, reply) values (#{kind_pk}, #{board_pk}, #{userId}, #{reply})
     </insert>
 
-    <delete id="deleteComment" parameterType="CommentDto">
-        delete from comment
+    <delete id="deleteComment" parameterType="int">
+        delete from comments
         where comment_pk=#{comment_pk}
     </delete>
 
     <select id="isComment" parameterType="CommentDto" resultType="int">
         select count(*)
-        from comment
+        from comments
         where comment_pk=#{comment_pk} and userId=#{userId}
     </select>
 
     <select id="countComment" parameterType="CommentDto" resultType="int">
         select count(*)
-        from comment
+        from comments
         where kind_pk=#{kind_pk} and board_pk=#{board_pk}
     </select>
 
-    <delete id="deleteAllComment" parameterType="CommentDto">
-        delete from comment
-        where kind_pk=#{kind_pk} and board_pk=#{board_pk}
-    </delete>
+    <select id="findCommentUser" parameterType="int" resultType="String">
+        select userId
+        from comments
+        where comment_pk=#{comment_pk}
+    </select>
 
 </mapper>

@@ -1,6 +1,11 @@
 import React from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
 
 function BoardRecipe() {
+
+  // const dispatch = useDispatch();
+
+  // const { boardList, boardCreated, boardDeleted, boardUpdated } = useSelector((state) => state.gboard);
 
   return (
     <div>

@@ -1,20 +1,22 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux'
-import { loginAction } from '../modules/user'
+import { useDispatch, useSelector } from 'react-redux'
+import { getMyInfoAction, loginAction } from '../modules/user'
 import { RippleButton } from '../styles/index';
 import '../styles/theme.css'
 
 function Login(props) {
   // Redux store 접근 시 사용
   const dispatch = useDispatch();
-
+  
   const [userInputs, setUserInputs] = useState({
     userId: '',
     password: ''
   });
-
+  
   const { userId, password } = userInputs;
+
+  const { decodedToken } = useSelector((state) => state.user);
 
   const onChange=useCallback(
     e => {
@@ -30,7 +32,6 @@ function Login(props) {
 
   // 데이터 빈 값 검사
   const checkExistData = (value, name) => {
-    console.log('빈값인지검사', value)
     if (value === '') {
       alert(name + " 입력해주세요!")
       return false;
@@ -77,36 +78,41 @@ function Login(props) {
     return true;
   }
 
-  // 검사 통과 후 진행되는 로그인
-  // const login = () => {
-  //   // React Hook "useDispatch"은 콜백에서 부를 수 없음
-  //   const dispatch = useDispatch();
-  //   axios.post('http://localhost:8080/user/login', userInputs )
-  //     .then((response) =>{
-  //       console.log(response)
-  //       const jwtAuthToken = response.headers["jwt-auth-token"]
-  //       dispatch(loginAction({ jwtAuthToken }));
-  //     })
-  //   return null
-  // };
     
   // 제출 시 검사 함수 실행 후 로그인 함수 실행
   const onSubmit=(
     e => {
       e.preventDefault();
-      // 검사 함수로 확인
+      // 검사 함수로 확인,
       if (checkAll() === true) {
+        // 로그인 요청
         axios.post('http://localhost:8080/user/login', userInputs )
-          .then((response) =>{
-            console.log('응답',response)
+          .then((response) => {
             const jwtAuthToken = response.headers["jwt-auth-token"]
+            // response에 유저정보 들어있음
             dispatch(loginAction({ jwtAuthToken }));
           })
-        // return null
+          .catch((error) => {
+            console.log(error)
+          })
       }
     }
   )
 
+  // 로그인에 성공했으면 로그인 유저 정보 가져오기
+  useEffect(() => {
+    if (decodedToken.UserId !== null){
+      console.log('로그인했을때만')
+        axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
+          .then((response) => {
+            dispatch(getMyInfoAction(response.data))
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+        }
+      }, [decodedToken])
+        
   return (
     <> 
       <h2 className="phrase">클로저에서 자취<br></br>200퍼센트 즐기기</h2>

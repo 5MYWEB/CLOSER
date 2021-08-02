@@ -1,6 +1,5 @@
 package com.ssafy.closer.model.service;
 
-import com.ssafy.closer.model.dto.LikeDto;
 import com.ssafy.closer.model.mapper.LikeMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -15,18 +14,18 @@ public class LikeServiceImpl implements LikeService {
     @Autowired
     private SqlSession sqlSession;
 
-    @Override
-    public void addLike(LikeDto likeDto) { sqlSession.getMapper(LikeMapper.class).addLike(likeDto); }
-
-    @Override
-    public void cancelLike(LikeDto likeDto) { sqlSession.getMapper(LikeMapper.class).cancelLike(likeDto); }
-
-    @Override
-    public int isLike(LikeDto likeDto) { return sqlSession.getMapper(LikeMapper.class).isLike(likeDto); }
-
-    @Override
-    public int countLike(LikeDto likeDto) { return sqlSession.getMapper(LikeMapper.class).countLike(likeDto); }
-
-    @Override
-    public void deleteLike(LikeDto likeDto) { sqlSession.getMapper(LikeMapper.class).deleteLike(likeDto); }
+//    @Override
+//    public void addLike(LikeDto likeDto) { sqlSession.getMapper(LikeMapper.class).addLike(likeDto); }
+//
+//    @Override
+//    public void cancelLike(LikeDto likeDto) { sqlSession.getMapper(LikeMapper.class).cancelLike(likeDto); }
+//
+//    @Override
+//    public int isLike(LikeDto likeDto) { return sqlSession.getMapper(LikeMapper.class).isLike(likeDto); }
+//
+//    @Override
+//    public int countLike(LikeDto likeDto) { return sqlSession.getMapper(LikeMapper.class).countLike(likeDto); }
+//
+//    @Override
+//    public void deleteLike(LikeDto likeDto) { sqlSession.getMapper(LikeMapper.class).deleteLike(likeDto); }
 }

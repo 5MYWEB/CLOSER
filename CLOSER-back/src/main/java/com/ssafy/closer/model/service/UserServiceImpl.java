@@ -15,7 +15,6 @@ import com.ssafy.closer.model.mapper.UserMapper;
 
 @Service
 public class UserServiceImpl implements UserService {
-
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
@@ -34,8 +33,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public MemberDto userInfo(String userid) {
-        return sqlSession.getMapper(UserMapper.class).userInfo(userid);
+    public MemberDto userInfo(String userId) {
+        return sqlSession.getMapper(UserMapper.class).userInfo(userId);
     }
 
     @Override

@@ -30,14 +30,14 @@ export const getWeekBestList = (data) => {
 
 export const getBoardList = (data) => {
   return {
-    type: UPDATE_BOARD,
+    type: GET_BOARD_LIST,
     data
   }
 };
 
 export const updateBoard = (data) => {
   return {
-    type: DELETE_BOARD,
+    type: UPDATE_BOARD,
     data
   }
 };

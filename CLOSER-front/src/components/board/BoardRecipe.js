@@ -8,13 +8,12 @@ function BoardRecipe() {
 
   const dispatch = useDispatch();
 
-  const { boardList, boardCreated, boardDeleted, boardUpdated } = useSelector((state) => state.board);
+  const { weekBestList, boardList, boardCreated, boardDeleted, boardUpdated } = useSelector((state) => state.board);
 
   useEffect(() => {
     axios.post('http://localhost:8080/board/gBoard/recipe/weekbest')
     .then((res) => {
       dispatch(getWeekBestList(res));
-      console.log(res)
     })
     .catch((err) =>{
       console.log(err)
@@ -26,7 +25,6 @@ function BoardRecipe() {
     axios.post('http://localhost:8080/board/gBoard/recipe/new')
     .then((res) => {
       dispatch(getBoardList(res));
-      console.log(res)
     })
     .catch((err) =>{
       console.log(err)
@@ -39,9 +37,9 @@ function BoardRecipe() {
       <div>
         이번주 베스트 레시피
         {/* 피드가 비어있지 않다면 피드목록을 불러옴*/}
-        {boardList && 
+        {weekBestList && 
           <div>
-            {boardList.map((board) => {
+            {weekBestList.map((board) => {
               return (
                 <BoardItem key={board.board_pk} board={board} />
               );

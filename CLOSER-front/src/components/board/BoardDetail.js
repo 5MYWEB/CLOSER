@@ -20,7 +20,7 @@ const BoardDetail = ({match}) => {
   const pk = match.params.id;
 
   // 현재 로그인한 사용자의 아이디 가져오기
-  const { userId } = useSelector((state) => state.user);
+  const { userId } = useSelector((state) => state.user.userInfo);
 
   useEffect(() => {
     axios.get(`http://localhost:8080/board/${pk}`)
@@ -40,11 +40,20 @@ const BoardDetail = ({match}) => {
     })
   }, [])
 
+  // 수정 버튼을 클릭했을 때 실행되는 함수
+  const onClickUpdate = () => {
+
+  }
+
   // 삭제 버튼을 클릭했을 때 실행되는 함수
   const onClickDelete = () => {
     // 삭제 의사 확인
-    if(window.confirm('정말로 피드를 삭제하시겠습니까?')){
-      axios.delete(`http://localhost:8080/board/${board.board_pk}`)
+    if(window.confirm('정말 삭제하시겠습니까?')){
+      axios.delete(`http://localhost:8080/board/${board.board_pk}`, {
+        data: {
+          userId: userId,
+        }
+      })
       .then((res) => {
         console.log(res);
         dispatch(deleteBoard())
@@ -66,7 +75,10 @@ const BoardDetail = ({match}) => {
       <div>내용 : {board.content}</div>
       <div>작성시간 : {board.created_at}</div>
       { userId === board.userId &&
-        <button onClick={onClickDelete}>삭제</button>
+        <div>
+          <button onClick={onClickUpdate}>수정</button>
+          <button onClick={onClickDelete}>삭제</button>
+        </div>
       }
       <hr />
     </>

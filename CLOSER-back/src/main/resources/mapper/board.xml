@@ -9,7 +9,7 @@
     <!-- 전체 인기글 -->
     <!-- 라이크, 공유 수 합산이 높은 것으로 -->
     <select id="gBoardList" resultType="BoardDto">
-        select bd.board_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
         from board As bd
                  left join user_badge AS ub
                            on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
@@ -20,7 +20,7 @@
     <!-- 자취 게시판 - 한끼레시피(이번 주(달)) best -->
     <!-- 일요일이 일주일 시작이라고 가정하고 일요일 ~ 현재 요일까지 등록된 게시글 중 좋아요, 북마크 높은 순 -->
     <select id="gBoardWeekBestList1" resultType="BoardDto">
-        select bd.board_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
         from board As bd
                  left join user_badge AS ub
                            on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
@@ -30,7 +30,7 @@
 
     <!-- 자취 게시판 - 한끼레시피 (최신순) -->
     <select id="gBoardNewList1" resultType="BoardDto">
-        select bd.board_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
         from board As bd
                  left join user_badge AS ub
                            on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
@@ -41,7 +41,7 @@
     <!-- 자취 게시판 - 한끼레시피 (인기순) -->
 <!--    todo. (board.xml) 현재 전체 기간 중 인기글로 되어있는데 today 기준으로 정렬 해야 함 (2021.08.03 수정 예정) -->
     <select id="gBoardBestList1" resultType="BoardDto">
-        select bd.board_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
         from board As bd
                  left join user_badge AS ub
                            on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
@@ -52,7 +52,7 @@
     <!-- 자취 게시판 - 자취팁(이번 주(달)) best -->
     <!-- 일요일이 일주일 시작이라고 가정하고 일요일 ~ 현재 요일까지 등록된 게시글 중 좋아요, 북마크 높은 순 -->
     <select id="gBoardWeekBestList2" resultType="BoardDto">
-        select bd.board_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
         from board As bd
                  left join user_badge AS ub
                            on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
@@ -62,7 +62,7 @@
 
     <!-- 자취 게시판 - 자취팁 (최신순) -->
     <select id="gBoardNewList2" resultType="BoardDto">
-        select bd.board_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
         from board As bd
                  left join user_badge AS ub
                            on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
@@ -73,7 +73,7 @@
     <!-- 자취 게시판 - 자취팁 (인기순) -->
     <!--    todo. (board.xml) 현재 전체 기간 중 인기글로 되어있는데 today 기준으로 정렬 해야 함 (2021.08.03 수정 예정) -->
     <select id="gBoardBestList2" resultType="BoardDto">
-        select bd.board_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
         from board As bd
                  left join user_badge AS ub
                            on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
@@ -84,7 +84,7 @@
     <!-- 자취 게시판 - 홈데코(이번 주(달)) best -->
     <!-- 일요일이 일주일 시작이라고 가정하고 일요일 ~ 현재 요일까지 등록된 게시글 중 좋아요, 북마크 높은 순 -->
     <select id="gBoardWeekBestList3" resultType="BoardDto">
-        select bd.board_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
         from board As bd
                  left join user_badge AS ub
                            on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
@@ -94,7 +94,7 @@
 
     <!-- 자취 게시판 - 홈데코 (최신순) -->
     <select id="gBoardNewList3" resultType="BoardDto">
-        select bd.board_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
         from board As bd
                  left join user_badge AS ub
                            on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
@@ -105,7 +105,7 @@
     <!-- 자취 게시판 - 홈데코 (인기순) -->
     <!--    todo. (board.xml) 현재 전체 기간 중 인기글로 되어있는데 today 기준으로 정렬 해야 함 (2021.08.03 수정 예정) -->
     <select id="gBoardBestList3" resultType="BoardDto">
-        select bd.board_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
         from board As bd
                  left join user_badge AS ub
                            on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
@@ -123,7 +123,7 @@
     <!-- 지역게시판 - 공동 구매 -->
     <!-- 처음 눌렀을 때 - 공동구매 tab이 default -->
     <select id="lBoardList1" parameterType="String" resultType="BoardDto">
-        select board_pk, userId, title, content, created_at, totalNum, gatherNum, location
+        select board_pk, userId, title, content, created_at, totalNum, gatherNum, location, nickname
         from board
         where location = #{location} and kind_pk = 4
         order by created_at desc;
@@ -131,7 +131,7 @@
 
     <!-- 지역게시판 - 클로저모임(모임) -->
     <select id="lBoardList2" parameterType="String" resultType="BoardDto">
-        select board_pk, userId, title, content, created_at, totalNum, gatherNum, location
+        select board_pk, userId, title, content, created_at, totalNum, gatherNum, location, nickname
         from board
         where location = #{location} and kind_pk = 5
         order by created_at desc;
@@ -139,7 +139,7 @@
 
     <!-- 지역게시판 - 도와주세요(응급상황) -->
     <select id="lBoardList3" parameterType="String" resultType="BoardDto">
-        select board_pk, userId, title, content, created_at, totalNum, gatherNum, location
+        select board_pk, userId, title, content, created_at, totalNum, gatherNum, location, nickname
         from board
         where location = #{location} and kind_pk = 6
         order by created_at desc;

@@ -18,7 +18,6 @@ class Sidebar extends React.Component {
 
   // 메뉴를 닫을 때
   closeMenu () {
-    console.log('닫혀라...')
     this.setState({menuOpen : false})
   }
 

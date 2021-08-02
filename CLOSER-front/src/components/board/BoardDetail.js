@@ -25,13 +25,13 @@ const BoardDetail = ({match}) => {
   useEffect(() => {
     axios.get(`http://localhost:8080/board/${pk}`)
     .then((res) => {
-      console.log(res)
       setBoard({
         ...board,
         board_pk: res.data.board_pk,
         userId: res.data.userId,
         content: res.data.content,
         created_at: res.data.created_at,
+        updated_at: res.data.updated_at,
         location: res.data.location,
       })
     })
@@ -49,7 +49,11 @@ const BoardDetail = ({match}) => {
   const onClickDelete = () => {
     // 삭제 의사 확인
     if(window.confirm('정말 삭제하시겠습니까?')){
-      axios.delete(`http://localhost:8080/board/${board.board_pk}`, { userId: userId })
+      axios.delete(`http://localhost:8080/board/${board.board_pk}/`, {
+        data : {
+          userId: userId
+        }
+      })
       .then((res) => {
         console.log(res);
         dispatch(deleteBoard())
@@ -70,6 +74,7 @@ const BoardDetail = ({match}) => {
       <div>작성자 : {board.userId}</div>
       <div>내용 : {board.content}</div>
       <div>작성시간 : {board.created_at}</div>
+      <div>수정시간 : {board.updated_at}</div>
       { userId === board.userId &&
         <div>
           <button onClick={onClickUpdate}>수정</button>

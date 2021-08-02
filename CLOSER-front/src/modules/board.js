@@ -2,9 +2,9 @@
 const initialState = {
   weekBestList: null,
   boardList: null,
-  boardCreated: null,
-  boardUpdated: null,
-  boardDeleted: null,
+  boardCreated: false,
+  boardUpdated: false,
+  boardDeleted: false,
 };
 
 /* 액션 타입 만들기 */
@@ -60,6 +60,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         boardList: action.data.data,
+      };
+    case DELETE_BOARD:
+      return {
+        ...state,
+        boardDeleted: true,
       };
     default:
       return state;

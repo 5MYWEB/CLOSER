@@ -49,11 +49,7 @@ const BoardDetail = ({match}) => {
   const onClickDelete = () => {
     // 삭제 의사 확인
     if(window.confirm('정말 삭제하시겠습니까?')){
-      axios.delete(`http://localhost:8080/board/${board.board_pk}`, {
-        data: {
-          userId: userId,
-        }
-      })
+      axios.delete(`http://localhost:8080/board/${board.board_pk}`, { userId: userId })
       .then((res) => {
         console.log(res);
         dispatch(deleteBoard())

@@ -63,7 +63,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, Object> userother(String userId) {
-        return sqlSession.getMapper(UserMapper.class).userother(userId);
+    public List<Integer> userbadge(String userId) {
+        return sqlSession.getMapper(UserMapper.class).userbadge(userId);
+
     }
 }

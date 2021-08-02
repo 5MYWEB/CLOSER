@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -159,13 +160,16 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "프로필 페이지 정보")
+    @ApiOperation(value = "프로필 페이지 정보 (내 프로필, 다른사람 프로필 모두 사용)")
     @PostMapping("/profileinfo")
     public ResponseEntity profileInfo(@RequestParam String userId){
         logger.debug("조회할 프로필 페이지 id : " + userId);
 
         try{
             MemberDto memberDto = userService.userInfo(userId);
+            List<Integer> badge = userService.userbadge(userId);
+            memberDto.setBadge(badge);
+
             if(memberDto!=null){
                 return new ResponseEntity(memberDto,HttpStatus.OK);
             }else{
@@ -178,23 +182,5 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "프로필 페이지 정보")
-    @PostMapping("/otherprofile")
-    public ResponseEntity otherprofile(@RequestParam String userId){
-        logger.debug("조회할 프로필 페이지 id : " + userId);
-
-        try{
-            Map<String,Object> user = userService.userother(userId);
-            if(user!=null){
-                return new ResponseEntity(user,HttpStatus.OK);
-            }else{
-                logger.debug("otherprofile info fail");
-                return new ResponseEntity(HttpStatus.NO_CONTENT);
-            }
-        }catch(Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
 }

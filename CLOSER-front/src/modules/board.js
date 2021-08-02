@@ -11,13 +11,13 @@ const initialState = {
 const CREATE_BOARD = 'CREATE_BOARD';
 const GET_BOARD_LIST = 'GET_BOARD_LIST';
 const GET_WEEK_BEST_LIST = 'GET_WEEK_BEST_LIST';
+const UPDATE_BOARD = 'UPDATE_BOARD';
 const DELETE_BOARD = 'DELETE_BOARD';
 
 /* 액션 생성함수 만들기 */
-export const createBoard = (data) => {
+export const createBoard = () => {
   return {
     type: CREATE_BOARD,
-    data
   }
 };
 
@@ -30,15 +30,21 @@ export const getWeekBestList = (data) => {
 
 export const getBoardList = (data) => {
   return {
-    type: GET_BOARD_LIST,
+    type: UPDATE_BOARD,
     data
   }
 };
 
-export const deleteBoard = (data) => {
+export const updateBoard = (data) => {
   return {
     type: DELETE_BOARD,
     data
+  }
+};
+
+export const deleteBoard = () => {
+  return {
+    type: DELETE_BOARD,
   }
 };
   
@@ -60,6 +66,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         boardList: action.data.data,
+      };
+    case UPDATE_BOARD:
+      return {
+        ...state,
+        boardUpdated: true,
       };
     case DELETE_BOARD:
       return {

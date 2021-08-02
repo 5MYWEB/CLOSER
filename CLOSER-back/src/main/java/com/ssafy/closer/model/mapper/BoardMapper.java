@@ -1,6 +1,7 @@
 package com.ssafy.closer.model.mapper;
 
 import com.ssafy.closer.model.dto.BoardDto;
+import com.ssafy.closer.model.dto.JoinDto;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -39,4 +40,10 @@ public interface BoardMapper {
 
     int increaseCount(int board_pk); // 좋아요 or 북마크 클릭 시 갯수 증가
     int decreaseCount(int board_pk); // 좋아요 or 북마크 취소 시 갯수 감소
+
+    int addJoin(JoinDto joinDto); // 지역게시판 참가
+    int cancelJoin(JoinDto joinDto); // 지역게시판 참가 취소
+    int isJoin(JoinDto joinDto); // 지역게시판 참가 유무
+    int changeJoinCnt(int board_pk); // 지역게시판 참여 / 취소시 갯수 변경
+    int countJoin(int board_pk); // 지역게시판 참가자 수
 }

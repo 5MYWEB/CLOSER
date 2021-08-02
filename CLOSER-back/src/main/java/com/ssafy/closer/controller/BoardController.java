@@ -2,6 +2,7 @@ package com.ssafy.closer.controller;
 
 import com.ssafy.closer.model.dto.BoardDto;
 import com.ssafy.closer.model.dto.InfoDto;
+import com.ssafy.closer.model.dto.JoinDto;
 import com.ssafy.closer.model.dto.MemberDto;
 import com.ssafy.closer.model.service.BoardService;
 import com.ssafy.closer.model.service.FeedService;
@@ -161,17 +162,31 @@ public class BoardController {
         boardDto.setLocation(memberDto.getAddr()); // 주소
         boardDto.setNickname(memberDto.getNickname()); // 닉네임
 
+        // 리턴할 값 선언 (댓글 수, 좋아요 수, 북마크 수)
+        JSONObject output = new JSONObject();
+
         if(boardDto.getKind_pk() <= 3){ // Gboard인 경우
-            if(boardService.gBoardCreate(boardDto)){ // 생성 성공한 경우
-                return new ResponseEntity(SUCCESS, HttpStatus.OK);
+            int board_pk = boardService.gBoardCreate(boardDto);
+            if(board_pk > 0){ // 생성 성공한 경우
+                output.put("board_pk", board_pk);
+                return new ResponseEntity(output, HttpStatus.OK);
             }
         }else if(boardDto.getKind_pk() <= 6){ // Lboard인 경우
-            if(boardService.lBoardCreate(boardDto)){
-                return new ResponseEntity(SUCCESS, HttpStatus.OK);
+            int board_pk = boardService.lBoardCreate(boardDto);
+            if(board_pk > 0){
+                // joinDto 생성 및 본인 인원 추가
+                JoinDto joinDto = new JoinDto(board_pk, boardService.findUser(board_pk));
+                boardService.addJoin(joinDto);
+                boardService.changeJoinCnt(board_pk);
+
+                output.put("board_pk", board_pk);
+                return new ResponseEntity(output , HttpStatus.OK);
             }
         }else if(boardDto.getKind_pk() == 7){ // feed인 경우
-            if(boardService.feedCreate(boardDto)){
-                return new ResponseEntity(SUCCESS, HttpStatus.OK);
+            int board_pk = boardService.feedCreate(boardDto);
+            if(board_pk > 0){
+                output.put("board_pk", board_pk);
+                return new ResponseEntity(output, HttpStatus.OK);
             }
         }
         return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
@@ -367,6 +382,58 @@ public class BoardController {
         }
         // 댓글 삭제 실패
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+    }
+
+    // 지역게시판 모임 참가
+    @ApiOperation(value = "지역게시판 모임 참가")
+    @PostMapping("/{board_pk}/join")
+    public ResponseEntity<String> commentDelete(@PathVariable int board_pk, @RequestBody Map<String, String> info) {
+        try {
+            String user = boardService.findUser(board_pk); // 해당 글 쓴 유저 정보 데려오기
+            String userId = info.get("userId"); // 로그인 유저 정보 갖고 온다
+
+            // 현재 로드 상태인지 클릭 상태인지 갖고 온다
+            String flag = info.get("flag");
+
+            // joinDto 생성
+            JoinDto joinDto = new JoinDto(board_pk, userId);
+
+            // 리턴할 값 선언 (참가 유무, 참가 수)
+            JSONObject output = new JSONObject();
+
+            // 로그인한 유저와 해당 댓글을 쓴 유저가 같은지 확인해야함
+            // 본인이 누르면 안됨 (반드시 참가해야 하기 때문)
+            if(userId.equals(user)){
+                output.put("joined", true);
+            }
+            else if (flag.equals("false")){ // 로드시
+                if(boardService.isJoin(joinDto)) { // 참가한 경우
+                    output.put("joined", true);
+                }else{ // 참가하지 않은 경우
+                    output.put("joined", false);
+                }
+            }else if(flag.equals("true")){ // 클릭시
+                if(boardService.isJoin(joinDto)){ // 참가한 경우 => 참가 취소, 참가자 인원 수 감소
+                    boardService.cancelJoin(joinDto);
+                    boardService.changeJoinCnt(board_pk);
+                    output.put("joined", false);
+                }else{ // 참가를 하지 않은 경우 => 참가 클릭, 참가자 인원 수 증가
+                    boardService.addJoin(joinDto);
+                    boardService.changeJoinCnt(board_pk);
+                    output.put("joined", true);
+                }
+            }else{
+                return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
+            }
+
+            // 참가자 수
+            output.put("countJoin", boardService.countJoin(board_pk));
+
+            return new ResponseEntity(output, HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
+        }
     }
 
     // 게시글 사진 관련 (호영님이 aws 연결한 후에 하기로 함)

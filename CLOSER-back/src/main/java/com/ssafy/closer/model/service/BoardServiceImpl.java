@@ -1,6 +1,7 @@
 package com.ssafy.closer.model.service;
 
 import com.ssafy.closer.model.dto.BoardDto;
+import com.ssafy.closer.model.dto.JoinDto;
 import com.ssafy.closer.model.mapper.BoardMapper;
 import com.ssafy.closer.model.mapper.GBoardMapper;
 import org.apache.ibatis.session.SqlSession;
@@ -85,18 +86,21 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public boolean gBoardCreate(BoardDto boardDto) {
-        return sqlSession.getMapper(BoardMapper.class).gBoardCreate(boardDto)==1;
+    public int gBoardCreate(BoardDto boardDto) {
+        sqlSession.getMapper(BoardMapper.class).gBoardCreate(boardDto);
+        return boardDto.getBoard_pk();
     }
 
     @Override
-    public boolean lBoardCreate(BoardDto boardDto) {
-        return sqlSession.getMapper(BoardMapper.class).lBoardCreate(boardDto)==1;
+    public int lBoardCreate(BoardDto boardDto) {
+        sqlSession.getMapper(BoardMapper.class).lBoardCreate(boardDto);
+        return boardDto.getBoard_pk();
     }
 
     @Override
-    public boolean feedCreate(BoardDto boardDto) {
-        return sqlSession.getMapper(BoardMapper.class).feedCreate(boardDto)==1;
+    public int feedCreate(BoardDto boardDto) {
+        sqlSession.getMapper(BoardMapper.class).feedCreate(boardDto);
+        return boardDto.getBoard_pk();
     }
 
     @Override
@@ -135,4 +139,28 @@ public class BoardServiceImpl implements BoardService {
         return sqlSession.getMapper(BoardMapper.class).decreaseCount(board_pk)==1;
     }
 
+    @Override
+    public boolean addJoin(JoinDto joinDto) {
+        return sqlSession.getMapper(BoardMapper.class).addJoin(joinDto)==1;
+    }
+
+    @Override
+    public boolean cancelJoin(JoinDto joinDto) {
+        return sqlSession.getMapper(BoardMapper.class).cancelJoin(joinDto)==1;
+    }
+
+    @Override
+    public boolean isJoin(JoinDto joinDto) {
+        return sqlSession.getMapper(BoardMapper.class).isJoin(joinDto)==1;
+    }
+
+    @Override
+    public boolean changeJoinCnt(int board_pk) {
+        return sqlSession.getMapper(BoardMapper.class).changeJoinCnt(board_pk)==1;
+    }
+
+    @Override
+    public int countJoin(int board_pk){
+        return sqlSession.getMapper(BoardMapper.class).countJoin(board_pk);
+    }
 }

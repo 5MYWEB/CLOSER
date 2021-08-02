@@ -9,7 +9,7 @@ const NewsfeedForm = () => {
   const dispatch = useDispatch();
 
   // 리덕스 user에서 userId 받아옴 
-  const { userId } = useSelector((state) => state.user);
+  const { userId } = useSelector((state) => state.user.userInfo);
 
   const [text, setText] = useState('');
 
@@ -22,12 +22,13 @@ const NewsfeedForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     
-    axios.post('http://localhost:8080/feed/', {
+    axios.post('http://localhost:8080/board/', {
+        kind_pk: 7,
         userId: userId,
+        title: null,
         content: text,
       })
     .then((res) => {
-      console.log(res)
       dispatch(createFeed())
     })
     .catch((err) =>{

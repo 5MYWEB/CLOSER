@@ -132,7 +132,7 @@ public class BoardController {
         return new ResponseEntity<>(boardService.lBoardList1(location), HttpStatus.OK);
     }
 
-    // 자취 게시판 - 클로저모임 최신순
+    // 지역 게시판 - 클로저모임 최신순
     @ApiOperation(value = "지역게시판 - 클로저모임 최신글(완료)", response = List.class)
     @PostMapping("lboard/getter")
     public ResponseEntity<List<BoardDto>> lBoardList2(@RequestParam String location) {
@@ -140,13 +140,40 @@ public class BoardController {
         return new ResponseEntity<>(boardService.lBoardList2(location), HttpStatus.OK);
     }
 
-    // 자취 게시판 - 도와주세요 최신술
+    // 지역 게시판 - 도와주세요 최신술
     @ApiOperation(value = "지역게시판 - 도와주세요 최신글(완료)", response = List.class)
     @PostMapping("lboard/sos")
     public ResponseEntity<List<BoardDto>> lBoardList3(@RequestParam String location) {
         logger.debug("도와주세요 - 최신");
         return new ResponseEntity<>(boardService.lBoardList3(location), HttpStatus.OK);
     }
+
+    // 뉴스피드
+    // 피드 전체 보기
+    @ApiOperation(value = "모든 유저들의 피드글 정보를 반환한다.", response = List.class)
+    @GetMapping("/feed/total")
+    public ResponseEntity<List<BoardDto>> listFeedAll() {
+        logger.debug("전체 피드글 - 호출");
+        return new ResponseEntity<>(boardService.feedListAll(), HttpStatus.OK);
+    }
+
+    // 피드 같은 동네만 보기
+    @ApiOperation(value = "같은 동네 유저들의 피드글 정보를 반환한다.", response = List.class)
+    @GetMapping("/feed/near")
+    public ResponseEntity<List<BoardDto>> listFeedNear(@RequestParam String location) {
+        logger.debug("동네 피드글 - 호출");
+        return new ResponseEntity<>(boardService.feedListNear(location), HttpStatus.OK);
+    }
+
+    // 피드 팔로우한 사람들 것만 보기
+    // activeUser가 passiveUser를 팔로잉한다.
+    @ApiOperation(value = "팔로우 한 유저들의 피드글 정보를 반환한다.", response = List.class)
+    @GetMapping("/feed/follow")
+    public ResponseEntity<List<BoardDto>> listFeedFollow(String userId) {
+        logger.debug("팔로우 피드글 - 호출");
+        return new ResponseEntity<>(boardService.feedListFollow(userId), HttpStatus.OK);
+    }
+
 
     // 게시글 CRUD
     // 게시글 작성

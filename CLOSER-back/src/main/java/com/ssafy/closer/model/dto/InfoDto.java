@@ -9,9 +9,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PhotoDto {
-    private int photo_pk;
-    private int kind_pk; // 보드 분류 pk
+public class InfoDto {
+    private int info_pk;
     private int board_pk;
+    private int kind_pk; // 보드 분류 pk
+    private String userId;
+
+    private String reply;
     private String imgUrl;
 }

@@ -8,7 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface FollowMapper {
-
     // 팔로우
     void follow(FollowDto followDto);
 

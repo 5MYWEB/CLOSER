@@ -10,16 +10,16 @@
         where userId = #{userId} and password = #{password}
     </select>
 
-    <!-- <select id="userList" resultType="memberDto">
+    <select id="userList" resultType="memberDto">
         select userid, userpwd, username, email, address, date_format(joindate, '%y.%m.%d') joindate
         from ssafy_member
         order by joindate desc;
-    </select> -->
+    </select>
 
     <select id="userInfo" parameterType="String" resultType="MemberDto">
         select *
         from user
-        where userid = #{userid}
+        where userId = #{userId}
     </select>
 
     <select id="userother" parameterType="String" resultType="map">

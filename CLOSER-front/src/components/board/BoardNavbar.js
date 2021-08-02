@@ -7,7 +7,6 @@ import BoardSubNavbar2 from './BoardSubNavbar2';
 function BoardNavbar() {
   return (
       <div>
-        나는 보이니
         <ul>
           <li>
             <Link to={ "/board/subnav1/" }>자취 피플</Link>

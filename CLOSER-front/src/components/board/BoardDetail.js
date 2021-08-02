@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { deleteFeed } from '../../modules/newsfeed';
+import { deleteBoard } from '../../modules/board';
 import axios from 'axios';
 
-const NewsfeedDetail = ({match}) => {
+const BoardDetail = ({match}) => {
   const dispatch = useDispatch();
   
   // 현재 피드의 정보
-  const [feed, setFeed] = useState({
-    feed_pk: '',
+  const [board, setBoard] = useState({
+    board_pk: '',
     userId: '',
     content: '',
     created_at: '',
@@ -26,9 +26,9 @@ const NewsfeedDetail = ({match}) => {
     axios.get(`http://localhost:8080/board/${pk}`)
     .then((res) => {
       console.log(res)
-      setFeed({
-        ...feed,
-        feed_pk: res.data.feed_pk,
+      setBoard({
+        ...board,
+        board_pk: res.data.board_pk,
         userId: res.data.userId,
         content: res.data.content,
         created_at: res.data.created_at,
@@ -44,10 +44,10 @@ const NewsfeedDetail = ({match}) => {
   const onClickDelete = () => {
     // 삭제 의사 확인
     if(window.confirm('정말로 피드를 삭제하시겠습니까?')){
-      axios.delete(`http://localhost:8080/board/${feed.feed_pk}`)
+      axios.delete(`http://localhost:8080/board/${board.board_pk}`)
       .then((res) => {
         console.log(res);
-        dispatch(deleteFeed())
+        dispatch(deleteBoard())
         alert('게시물이 삭제되었습니다.')
         // 삭제 후 페이지 뒤로가기
         // eslint-disable-next-line no-script-url
@@ -61,12 +61,11 @@ const NewsfeedDetail = ({match}) => {
 
   return (
     <>
-      <div>글 번호 : {feed.feed_pk}</div>
-      <div>작성자 : {feed.userId}</div>
-      <div>내용 : {feed.content}</div>
-      <div>작성시간 : {feed.created_at}</div>
-      <div>위치: {feed.location}</div>
-      { userId === feed.userId &&
+      <div>글 번호 : {board.board_pk}</div>
+      <div>작성자 : {board.userId}</div>
+      <div>내용 : {board.content}</div>
+      <div>작성시간 : {board.created_at}</div>
+      { userId === board.userId &&
         <button onClick={onClickDelete}>삭제</button>
       }
       <hr />
@@ -74,4 +73,4 @@ const NewsfeedDetail = ({match}) => {
   )
 }
 
-export default NewsfeedDetail;
+export default BoardDetail;

@@ -1,5 +1,5 @@
 @font-face {
-  font-family: 'SqoqaHanSansNeo-Regular';
+  font-family: 'SqoqaHanSansNeo';
   src: url(./fonts/SpoqaHanSansNeo-Regular.ttf) format('truetype');
   /* normal */
   font-weight: 400; 
@@ -7,7 +7,7 @@
 }
 
 @font-face {
-  font-family: 'SqoqaHanSansNeo-Bold';
+  font-family: 'SqoqaHanSansNeo';
   src: url(./fonts/SpoqaHanSansNeo-Bold.ttf) format('truetype');
   /* bold */
   font-weight: 700;
@@ -15,7 +15,7 @@
 }
 
 @font-face {
-  font-family: 'SqoqaHanSansNeo-Medium';
+  font-family: 'SqoqaHanSansNeo';
   src: url(./fonts/SpoqaHanSansNeo-Medium.ttf) format('truetype');
   font-weight: 500;
   font-style: normal;
@@ -59,7 +59,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 400;
   color: #0b1f44;
   background-color: #ECECFF;
 }

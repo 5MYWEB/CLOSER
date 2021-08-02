@@ -102,6 +102,7 @@ function Login(props) {
   // 로그인에 성공했으면 로그인 유저 정보 가져오기
   useEffect(() => {
     if (decodedToken.UserId !== null){
+      console.log('로그인했을때만')
         axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
           .then((response) => {
             dispatch(getMyInfoAction(response.data))
@@ -116,7 +117,7 @@ function Login(props) {
     <> 
       <h2 className="phrase">클로저에서 자취<br></br>200퍼센트 즐기기</h2>
       <span>아이디</span>
-      <span className="necessary">*</span>
+      <span className="necessary unfollow">*</span>
       <form onSubmit={onSubmit}>
         <div>
           <input
@@ -149,8 +150,10 @@ function Login(props) {
         />
         <RippleButton type="submit" cclass="cbtn cbtn-lg cbtn-primary" children="로그인"/>
       </form>
-      <RippleButton type="button" cclass="cbtn cbtn-lg cbtn-secondary" children="회원가입"/>
-      <RippleButton type="button" cclass="cbtn cbtn-checked" children="!"/>
+      <div>
+        <RippleButton type="button" cclass="cbtn cbtn-lg cbtn-secondary" children="회원가입"/>
+        <RippleButton type="button" cclass="cbtn cbtn-checked" children="!"/>
+      </div>
     </>
   )
 }

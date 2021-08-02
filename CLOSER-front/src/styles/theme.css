@@ -77,11 +77,10 @@ p {
 }
 
 
-
 /* 입력창(input) */
 input {
   padding: 10px;
-  /* margin: 4px 0px; */
+  margin: 0.5rem 0;
   border: none;
   border-radius: 8px;
 }
@@ -106,7 +105,7 @@ input::placeholder {
 
 .ripple-button > .ripple {
   width: 20px;
-  height: 20px;991
+  height: 20px;
   position: absolute;
   background: #bebdfaad;
   display: block;
@@ -159,8 +158,8 @@ input::placeholder {
 }
 .cbtn-lg {
   padding: 9px 12px;
+  margin: 0.5rem auto;
   width: 80%;
-  height: 60%;
   font-family: Spoqa Han Sans Neo;
   font-style: normal;
   font-weight: bold;

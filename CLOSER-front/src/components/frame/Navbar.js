@@ -3,6 +3,7 @@ import { Route, Link } from 'react-router-dom';
 import { Newsfeed, Board } from '../../pages';
 import NewsfeedDetail from '../newsfeed/NewsfeedDetail'; // 뉴스피드 상세페이지
 import BoardDetail from '../board/BoardDetail'; // 게시판 상세페이지
+import BoardForm from '../board/BoardForm';
 
 const Menu = () => {
   return (
@@ -19,6 +20,7 @@ const Menu = () => {
       <Route path="/board" component={Board} />
       <Route path="/newsfeed-detail/:id" component={NewsfeedDetail}></Route>
       <Route path="/board-detail/:id" component={BoardDetail}></Route>
+      <Route path="/board-create-form/" component={BoardForm} />
     </div>
 
   )

@@ -100,7 +100,6 @@ function Login(props) {
   // 로그인에 성공했으면 로그인 유저 정보 가져오기
   useEffect(() => {
     if (decodedToken.UserId !== null){
-      console.log('로그인했을때만')
         axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
           .then((response) => {
             dispatch(getMyInfoAction(response.data))

@@ -19,7 +19,7 @@ function BoardRecipe() {
       console.log(err)
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [boardCreated, boardDeleted])
+  }, [boardCreated, boardDeleted, boardUpdated])
 
   useEffect(() => {
     axios.post('http://localhost:8080/board/gBoard/recipe/new')
@@ -30,7 +30,7 @@ function BoardRecipe() {
       console.log(err)
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [boardCreated, boardDeleted])
+  }, [boardCreated, boardDeleted, boardUpdated])
 
   return (
     <>

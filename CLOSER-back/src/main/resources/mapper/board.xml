@@ -130,19 +130,19 @@
 
     <!-- Create -->
     <!-- gboard 생성 -->
-    <insert id="gBoardCreate" parameterType="BoardDto">
+    <insert id="gBoardCreate" parameterType="BoardDto" useGeneratedKeys="true" keyProperty="board_pk" keyColumn="board_pk">
         insert into board(kind_pk, userId, title, content, created_at, updated_at, nickname)
         values (#{kind_pk}, #{userId}, #{title}, #{content}, #{created_at}, #{updated_at}, #{nickname})
     </insert>
 
     <!-- lboard 생성 -->
-    <insert id="lBoardCreate" parameterType="BoardDto">
+    <insert id="lBoardCreate" parameterType="BoardDto" useGeneratedKeys="true" keyProperty="board_pk" keyColumn="board_pk">
         insert into board(kind_pk, userId, title, content, created_at, updated_at, totalNum, GatherNum, location, nickname)
         values (#{kind_pk}, #{userId}, #{title}, #{content}, #{created_at}, #{updated_at}, #{totalNum}, 1, #{location}, #{nickname})
     </insert>
 
     <!-- 피드 생성 -->
-    <insert id="feedCreate" parameterType="BoardDto">
+    <insert id="feedCreate" parameterType="BoardDto" useGeneratedKeys="true" keyProperty="board_pk" keyColumn="board_pk">
         insert into board(kind_pk, userId, content, location, created_at, nickname)
         values (#{kind_pk}, #{userId}, #{content}, #{location}, #{created_at}, #{nickname})
     </insert>
@@ -199,5 +199,39 @@
         set cnt = cnt-1
         where board_pk=#{board_pk}
     </update>
+
+    <!-- 지역게시판 참여 -->
+    <insert id="addJoin" parameterType="JoinDto">
+        insert into board_join(board_pk, userId)
+        select * from (select #{board_pk}, #{userId}) as tmp
+        where exists (select * from board where board_pk=#{board_pk} and totalNum > gatherNum);
+    </insert>
+
+    <!-- 지역게시판 참여 취소 -->
+    <delete id="cancelJoin" parameterType="JoinDto">
+        delete from board_join
+        where board_pk=#{board_pk} and userId=#{userId}
+    </delete>
+
+    <!-- 지역 게시판 참가 유무 -->
+    <select id="isJoin" parameterType="JoinDto" resultType="int">
+        select count(*)
+        from board_join
+        where board_pk = #{board_pk} and userId=#{userId}
+    </select>
+
+    <!-- 지역게시판 참여 / 취소시 갯수 변경 -->
+    <update id="changeJoinCnt" parameterType="int">
+        update board
+        set gatherNum = (select count(*) from board_join where board_pk=#{board_pk})
+        where board_pk=#{board_pk}
+    </update>
+
+    <!-- 지역게시판 참여 참가자 수 -->
+    <select id="countJoin" parameterType="int" resultType="int">
+        select gatherNum
+        from board
+        where board_pk=#{board_pk}
+    </select>
 
 </mapper>

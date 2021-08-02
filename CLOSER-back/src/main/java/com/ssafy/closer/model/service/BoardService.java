@@ -1,6 +1,7 @@
 package com.ssafy.closer.model.service;
 
 import com.ssafy.closer.model.dto.BoardDto;
+import com.ssafy.closer.model.dto.JoinDto;
 
 import java.util.List;
 
@@ -22,9 +23,9 @@ public interface BoardService {
     List<BoardDto> lBoardList2(String location); // 지역 게시판 - 클로저모임 최신순
     List<BoardDto> lBoardList3(String location); // 지역 게시판 - 도와주세요 최신순
 
-    boolean gBoardCreate(BoardDto boardDto); // gboard 생성
-    boolean lBoardCreate(BoardDto boardDto); // lboard 생성
-    boolean feedCreate(BoardDto boardDto); // feed 생성
+    int gBoardCreate(BoardDto boardDto); // gboard 생성
+    int lBoardCreate(BoardDto boardDto); // lboard 생성
+    int feedCreate(BoardDto boardDto); // feed 생성
 
     BoardDto read(int board_pk); // gboard, lboard, feed 상세보기
 
@@ -37,4 +38,10 @@ public interface BoardService {
 
     boolean increaseCount(int board_pk); // 좋아요 or 북마크 클릭 시 갯수 증가
     boolean decreaseCount(int board_pk); // 좋아요 or 북마크 취소 시 갯수 감소
+
+    boolean addJoin(JoinDto joinDto); // 지역게시판 참가
+    boolean cancelJoin(JoinDto joinDto); // 지역게시판 참가 취소
+    boolean isJoin(JoinDto joinDto); // 지역게시판 참가 유무
+    boolean changeJoinCnt(int board_pk); // 지역게시판 참여 / 취소시 갯수 변경
+    int countJoin(int board_pk); // 지역게시판 참가자 수
 }

@@ -10,13 +10,13 @@ const NewsfeedHot = () => {
   const dispatch = useDispatch();
   
   // 리덕스의 feedList, feedCreated, feedDeleted 불러옴
-  const { feedList, feedCreated, feedDeleted } = useSelector((state) => state.newsfeed);
+  const { feedList } = useSelector((state) => state.newsfeed);
 
   // useEffect: 컴포넌트가 렌더될때 이 부분을 실행함
   // 전체 피드 리스트를 요청하고 응답을 액션함수로 보냄
   // 리덕스에 feedList가 state로 담김
   useEffect(() => {
-    axios.get('http://localhost:8080/feed/total')
+    axios.get('http://localhost:8080/board/feed/total')
     .then((res) => {
       dispatch(getFeedList(res));
     })
@@ -24,7 +24,7 @@ const NewsfeedHot = () => {
       console.log(err)
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [feedCreated, feedDeleted])
+  }, [])
 
   return (
     <>
@@ -34,7 +34,7 @@ const NewsfeedHot = () => {
         <div>
           {feedList.map((feed) => {
             return (
-              <NewsfeedItem key={feed.feed_pk} feed={feed} />
+              <NewsfeedItem key={feed.board_pk} feed={feed} />
             );
           })}
         </div>}

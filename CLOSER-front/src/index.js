@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import './index.css';
 import App from './App';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './modules';
 import { composeWithDevTools } from 'redux-devtools-extension'; // 리덕스 개발자 도구
-import reportWebVitals from './reportWebVitals'; 
+import reportWebVitals from './reportWebVitals';
+import './styles/bootstrap.min.css';
 
 const store = createStore(rootReducer, composeWithDevTools()); // 스토어를 만듭니다.
 // composeWithDevTools 를 사용하여 리덕스 개발자 도구 활성화

@@ -10,22 +10,33 @@
         where userId = #{userId} and password = #{password}
     </select>
 
-    <!-- <select id="userList" resultType="memberDto">
+    <select id="userList" resultType="memberDto">
         select userid, userpwd, username, email, address, date_format(joindate, '%y.%m.%d') joindate
         from ssafy_member
         order by joindate desc;
-    </select> -->
+    </select>
 
+    <!-- 회원 정보 보기 -->
     <select id="userInfo" parameterType="String" resultType="MemberDto">
         select *
         from user
-        where userid = #{userid}
+        where userId = #{userId}
     </select>
 
+    <!-- 회원가입 -->
     <insert id="userRegister" parameterType="MemberDto">
         insert into user (userId, password, nickname, phone, email, addr, homeAlone)
         values (#{userId}, #{password}, #{nickname}, #{phone}, #{email}, #{addr}, #{homeAlone})
     </insert>
+
+    <!-- 뱃지 담아 보내기 -->
+    <select id="userbadge" parameterType="String" resultType="int">
+        select ub.kind_pk As badge
+        from user As u
+        left join user_badge AS ub
+        on u.userId = ub.userId
+        where u.userId = #{userId}
+    </select>
 
     <!-- 아아디 중복 체크 -->
     <select id="userIdCheck" parameterType="String" resultType="int">

@@ -5,30 +5,30 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners({AuditingEntityListener.class})
-public class GBoardDto {
-    private int Gboard_pk;
-    private String userId;
-    private String title;
+public class AlarmDto {
+    private int alarm_pk;
+    private String userId; // 로그인한 사람
+    private int category_pk; // 댓글1, 좋아요2, 북마크3, 팔로우4, 클로저봇5
+    private String otherUserId; // 댓글 등을 남긴 사람
     private String content;
+    private boolean visited;
+
+    private int kind_pk; // 게시글 종류
+    private int board_pk; // 게시글 pk
+    private int bot_pk; // 봇 pk
 
     @CreatedDate
     @Column(updatable = false)
-    private Date create_at;
-
-    @LastModifiedDate
-    private Date update_at;
-
-    private int category;
+    private LocalDate created_at;
 }

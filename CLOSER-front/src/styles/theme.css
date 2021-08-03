@@ -1,0 +1,195 @@
+/* 그리드 */
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'SqoqaHanSansNeo';
+  font-weight: 700;
+  /* line-height: 1.1; */
+  color: inherit;
+}
+.h1,
+.h2,
+.h3,
+h1,
+h2,
+h3 {
+  margin-top: 2.5vh;
+  margin-bottom: 0px;
+}
+.h4,
+.h5,
+.h6,
+h4,
+h5,
+h6 {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.h1,
+h1 {
+  font-size: 2em;
+}
+.h2,
+h2 {
+  font-size: 1.5em;
+}
+.h3,
+h3 {
+  font-size: 1.17em;
+}
+.h4,
+h4 {
+  font-size: 1em;
+}
+.h5,
+h5 {
+  font-size: .83em;
+}
+.h6,
+h6 {
+  font-size: .67em
+}
+p {
+  margin: 1em auto 0;
+}
+
+.necessary {
+  color : #CC1F36;
+}
+
+
+/* 제목 */
+.phrase {
+  text-align: start;
+  line-height: 3.5vh;
+  margin-left: 8vw;
+  font-weight: 700;
+}
+
+
+/* 입력창(input) */
+input {
+  padding: 10px;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 8px;
+}
+
+input::placeholder {
+  font-size: .83em;
+  font-family: 'SqoqaHanSansNeo';
+  font-weight: 400; 
+  font-style: normal;
+}
+
+/* 버튼 */
+
+.ripple-button {
+  border: none;
+  margin: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.ripple-button > .ripple {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  background: #bebdfaad;
+  display: block;
+  content: "";
+  border-radius: 9999px;
+  opacity: 1;
+  animation: 0.9s ease 1 forwards ripple-effect;
+}
+
+@keyframes ripple-effect {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(10);
+    opacity: 0.375;
+  }
+  100% {
+    transform: scale(35);
+    opacity: 0;
+  }
+}
+
+.ripple-button > .content {
+  user-select: none;
+  position: relative;
+  z-index: 2;
+}
+
+/* =================================== */
+
+.cbtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-style: none;
+  font-family: inherit;
+}
+.cbtn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+  font-family: Spoqa Han Sans Neo;
+  font-style: normal;
+  font-weight: regular;
+}
+.cbtn-lg {
+  padding: 9px 12px;
+  margin: 0.5rem auto;
+  width: 80%;
+  font-family: Spoqa Han Sans Neo;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.cbtn-primary {
+  background: #5552FF;
+  /* 🌔 Shadow / Z-index 1 */
+  
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.cbtn-secondary {
+  background: #ECECFF;
+  color: #5552FF;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  border: 1px solid #9392FF;
+  
+}
+
+.cbtn-checked {
+  padding: 8px 24px;
+  background: rgba(84, 85, 229, 0.4);
+  color: #000000;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-family: Spoqa Han Sans Neo;
+  font-style: normal;
+  font-weight: bold;
+}

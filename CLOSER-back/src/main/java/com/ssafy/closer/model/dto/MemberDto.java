@@ -2,6 +2,8 @@ package com.ssafy.closer.model.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,4 +18,5 @@ public class MemberDto {
     private String intro;
     private String profileImg;
     private String phone;
+    private List<Integer> badge;
 }

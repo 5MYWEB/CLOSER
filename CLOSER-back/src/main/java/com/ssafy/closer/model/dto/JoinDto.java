@@ -9,9 +9,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PhotoDto {
-    private int photo_pk;
-    private int kind_pk; // 보드 분류 pk
+public class JoinDto {
+    private int join_pk;
     private int board_pk;
-    private String imgUrl;
+    private String userId;
+
+    public JoinDto(int board_pk, String userId){
+        super();
+        this.board_pk = board_pk;
+        this.userId = userId;
+    }
 }

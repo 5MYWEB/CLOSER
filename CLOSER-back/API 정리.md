@@ -566,4 +566,153 @@
   SUCCESS
   ```
 
+
+
+
+## Search
+
+> choice_pk
+>
+> - 1: 제목 + 내용
+> - 2: 닉네임
+
+### 1. 전체(Gboard + Lboard) 조회
+
+#### A. 최신순
+
+##### [GET] /search/{keyword}/popular/{choice_pk}
+
+- output
+
+  ```
+  [
+    {
+      "board_pk": 23,
+      "userId": "ssafy",
+      "kind_pk": 1,
+      "title": "aaaa",
+      "content": "bbbbbbbbbbbbbbbb",
+      "created_at": "2021-08-02T15:20:19",
+      "updated_at": "2021-08-02T15:20:19",
+      "totalNum": 0,
+      "gatherNum": 0,
+      "location": null,
+      "cnt": 0,
+      "badge": 0,
+      "nickname": "ssafy1"
+    },
+    # 생략
+  ]
+  ```
+
   
+
+#### B. 인기순
+
+##### [GET] /search/{keyword}/recent/{choice_pk}
+
+- output
+
+  ```
+  [
+    {
+      "board_pk": 23,
+      "userId": "ssafy",
+      "kind_pk": 1,
+      "title": "aaaa",
+      "content": "bbbbbbbbbbbbbbbb",
+      "created_at": "2021-08-02T15:20:19",
+      "updated_at": "2021-08-02T15:20:19",
+      "totalNum": 0,
+      "gatherNum": 0,
+      "location": null,
+      "cnt": 0,
+      "badge": 0,
+      "nickname": "ssafy1"
+    },
+    # 생략
+  ]
+  ```
+
+  
+
+### 2. GBoard 전체 조회
+
+#### A. 최신순
+
+##### [GET] /search/gboard/{keyword}/popular/{choice_pk}
+
+- output (위 결과들과 같음)
+
+  
+
+#### B. 인기순
+
+##### [GET] /search/gboard/{keyword}/recent/{choice_pk}
+
+- output (위 결과들과 같음)
+
+  
+
+### 3. LBoard 전체 조회
+
+#### A. 최신순
+
+##### [GET] /search/lboard/{keyword}/popular/{choice_pk}
+
+- output (위 결과들과 같음)
+
+  
+
+#### B. 인기순
+
+##### [GET] /search/lboard/{keyword}/recent/{choice_pk}
+
+- output (위 결과들과 같음)
+
+
+
+
+### 4. Feed 전체 조회
+
+#### A. 최신순
+
+##### [GET] /search/feed/{keyword}/popular/{choice_pk}
+
+- output (위 결과들과 같음)
+
+  
+
+#### B. 인기순
+
+##### [GET] /search/feed/{keyword}/recent/{choice_pk}
+
+- output (위 결과들과 같음)
+
+
+
+
+### 5. 특정 하나의 카테고리 조회
+
+> kind_pk
+>
+> - 1은 한끼 레시피
+> - 2는 자취팁
+> - 3은 홈데코
+> - 4는 공동구매
+> - 5는 모임
+> - 6은 응급상황
+
+#### A. 최신순
+
+##### [GET] /search/{kind_pk}/{keyword}/popular/{choice_pk}
+
+- output (위 결과들과 같음)
+
+  
+
+#### B. 인기순
+
+##### [GET] /search/{kind_pk}/{keyword}/recent/{choice_pk}
+
+- output (위 결과들과 같음)

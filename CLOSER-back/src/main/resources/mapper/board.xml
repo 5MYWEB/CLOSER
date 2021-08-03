@@ -205,14 +205,14 @@
     <!-- gboard 수정 -->
     <update id="gBoardUpdate" parameterType="BoardDto">
         update board
-        set title=#{title}, content=#{content}, updated_at=#{updated_at}
+        set kind_pk=#{kind_pk}, title=#{title}, content=#{content}, updated_at=#{updated_at}
         where board_pk = #{board_pk}
     </update>
 
     <!-- lboard 수정 -->
     <update id="lBoardUpdate" parameterType="BoardDto">
         update board
-        set title=#{title}, content=#{content}, updated_at=#{updated_at}, totalNum=if(#{totalNum} >= gatherNum, #{totalNum}, totalNum)
+        set kind_pk=#{kind_pk}, title=#{title}, content=#{content}, updated_at=#{updated_at}, totalNum=if(#{totalNum} >= gatherNum, #{totalNum}, totalNum)
         where board_pk = #{board_pk}
     </update>
 

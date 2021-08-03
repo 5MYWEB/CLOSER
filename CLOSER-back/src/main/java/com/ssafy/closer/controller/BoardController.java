@@ -236,15 +236,16 @@ public class BoardController {
         // 로그인한 유저와 해당 글을 쓴 유저가 같은지 확인해야함
         String userId = info.get("userId");
         String user = boardService.findUser(board_pk);
+        int kind_pk = Integer.parseInt(info.get("kind_pk"));
 
         if(userId.equals(user)){
             BoardDto boardDto = new BoardDto();
             boardDto.setBoard_pk(board_pk);
+            boardDto.setKind_pk(kind_pk);
             boardDto.setTitle(info.get("title"));
             boardDto.setContent(info.get("content"));
             boardDto.setUpdated_at(LocalDateTime.now());
 
-            int kind_pk = Integer.parseInt(info.get("kind_pk"));
             if (kind_pk <= 3){ // gboard인 경우
                 boardDto.setUpdated_at(LocalDateTime.now());
                 if(boardService.gBoardUpdate(boardDto)){ // 수정을 성공했다면

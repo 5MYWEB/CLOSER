@@ -1,23 +1,69 @@
-import React from 'react';
-import { Row, Col } from 'react-bootstrap';
-import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { followAction, getFollowInfoAction } from '../../modules/user';
+import { Row, Col } from 'react-bootstrap';
 
-// import FollowerList from '../components/profile/FollowerList';
-// import FollowingList from '../components/profile/FollowingList';
 // import UserFeed from '../components/profile/UserFeed';
 // import UserPost from '../components/profile/UserPost';
 // import UserBookmark from '../components/profile/UserBookmark';
 
 function OtherProfile({ id }) {
 
-  const { userInfo } = useSelector((state) => state.user); // id 기반으로 고치기
+  const dispatch = useDispatch();
+
+  const [userInfo, setUserInfo] = useState([])
+  const [isFollowed, setIsFollowed] = useState(false)
+
+  const { userId } = useSelector((state) => state.user.userInfo)
+  const { following } = useSelector((state) => state.user)
+
+  useEffect(() => {
+    // 타인의 정보 가져오기
+    axios.post(`http://localhost:8080/user/profileinfo?userId=${id}`)
+    .then((res) => {
+      setUserInfo(res.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
+    // 내가 팔로우하고 있는 사람인지 여부 가져오기
+    axios.post(`http://localhost:8080/follow/${id}/follow`, {
+      userId: userId,
+      flag: 'false',
+    })
+    .then((res) => {
+      setIsFollowed(res.data.followed)
+      dispatch(getFollowInfoAction())
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }, [following])
+
+  // 팔로우 / 팔로우 취소 버튼 클릭 시
+  const onClickFollow = () => {
+    axios.post(`http://localhost:8080/follow/${id}/follow`, {
+      userId: userId,
+      flag: 'true',
+    })
+    .then((res) => {
+      console.log(res)
+      dispatch(followAction())
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
 
   return (
     <div className="container">
       {/* Row-1 : 뒤로가기 */}
       <Row>
-        <Link to="/home">뒤로가기</Link>
+
       </Row>
       {/* Row-2 : 프로필사진, 닉네임, 자취기간, 위치, 프로필 수정 */}
       <Row>
@@ -38,7 +84,9 @@ function OtherProfile({ id }) {
           </Row>
         </Col>
         <Col xs={3}>
-          프로필 수정 라우터
+          {isFollowed ? <button onClick={onClickFollow}>팔로우 취소</button>
+            : <button onClick={onClickFollow}>팔로우</button>
+          }
         </Col>
       </Row>
       {/* Row-3 : 뱃지 */}
@@ -77,6 +125,10 @@ function OtherProfile({ id }) {
       
     </div>
   );
+}
+
+OtherProfile.propTypes = {
+  id: PropTypes.string,
 }
 
 export default OtherProfile;

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux'; 
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import FollowerItem from './FollowerItem';
 
-const FollowerList = () => {
+const FollowerList = ({match}) => {
 
-  const { userId } = useSelector((state) => state.user.userInfo)
+  const userId = match.params.id;
 
   const [followerList, setFollowerList] = useState([])
 
@@ -19,14 +18,12 @@ const FollowerList = () => {
     .catch((err) => {
       console.log(err)
     })
-
   }, [])
-
 
 
   return (
     <>
-      <Link to="/profile">뒤로가기</Link>
+      <Link to={`/profile/${userId}`}>뒤로가기</Link>
 
       {followerList.length !== 0 ? 
         <div>

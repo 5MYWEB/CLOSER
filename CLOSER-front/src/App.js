@@ -6,6 +6,7 @@ import { Home, About, Login, SignUp, Profile, Newsfeed, Board } from './pages';
 import NewsfeedDetail from './components/newsfeed/NewsfeedDetail'; // 뉴스피드 상세페이지
 import BoardDetail from './components/board/BoardDetail'; // 게시판 상세페이지
 import BoardForm from './components/board/BoardForm';
+import BoardUpdateForm from './components/board/BoardUpdateForm';
 
 import './App.css';
 

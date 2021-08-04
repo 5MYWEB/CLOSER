@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
 import { bubble as Menu } from 'react-burger-menu'
 import './Sidebar.css'
 

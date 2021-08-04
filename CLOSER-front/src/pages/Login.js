@@ -112,7 +112,7 @@ function Login({ history }) {
             console.log(error)
           })
         }
-      }, [decodedToken])
+      }, [decodedToken, dispatch, history])
         
   return (
     <> 

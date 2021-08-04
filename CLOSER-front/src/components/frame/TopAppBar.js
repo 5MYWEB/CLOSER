@@ -1,7 +1,7 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+// import { Route } from 'react-router-dom';
 import { Sidebar } from './index'
-import { Home, About, Login, SignUp, Profile } from '../../pages';
+// import { Home, About, Login, SignUp, Profile } from '../../pages';
 import { Container, Row, Col } from 'react-bootstrap';
 
 import './TopAppBar.css';

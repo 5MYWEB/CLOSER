@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // import { Newsfeed, Board } from '../../pages';
 // import NewsfeedDetail from '../newsfeed/NewsfeedDetail'; // 뉴스피드 상세페이지
 // import BoardDetail from '../board/BoardDetail'; // 게시판 상세페이지

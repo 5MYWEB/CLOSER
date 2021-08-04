@@ -8,7 +8,7 @@ class Sidebar extends React.Component {
   constructor(props) { // render 함수보다 먼저 실행이 되면서 그 컴포넌트를 초기화를 담당
     super(props);
     this.state = {
-      menuOpen: false
+      menuOpen: false,
     }
   }
 
@@ -48,7 +48,7 @@ class Sidebar extends React.Component {
               <Link to="/signup" onClick={() => this.closeMenu()}>회원가입</Link>
             </li>
             <li>
-              <Link to="/profile" onClick={() => this.closeMenu()}>프로필</Link>
+              <Link to='/profile' onClick={() => this.closeMenu()}>프로필</Link>
             </li>
           </ul>
         </Menu>
@@ -78,7 +78,7 @@ class Sidebar extends React.Component {
                 <Link to="/signup" onClick={this.handleStatus}>회원가입</Link>
               </li>
               <li>
-                <Link to="/profile" onClick={this.handleStatus}>프로필</Link>
+                <Link to='/profile' onClick={() => this.closeMenu()}>프로필</Link>
               </li>
             </ul>
           </Menu>

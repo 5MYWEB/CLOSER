@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-
 import FollowingItem from './FollowingItem';
+import { getFollowInfoAction } from '../../modules/user';
 
 const FollowingList = ({match}) => {
+  const dispatch = useDispatch();
 
   const userId = match.params.id;
 
+  const { following } = useSelector((state) => state.user)
+
   const [followingList, setFollowingList] = useState([])
 
+  // 내가 팔로잉하는 유저 목록 가져오기
   useEffect(() => {
     axios.post(`http://localhost:8080/follow/${userId}/following`)
     .then((res) => {
       setFollowingList(res.data)
+      dispatch(getFollowInfoAction())
     })
     .catch((err) => {
       console.log(err)
     })
-  }, [])
+  }, [following])
 
 
   return (

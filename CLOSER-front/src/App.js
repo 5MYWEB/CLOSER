@@ -9,6 +9,7 @@ import BoardForm from './components/board/BoardForm';
 import BoardUpdateForm from './components/board/BoardUpdateForm';
 import FollowingList from './components/profile/FollowingList';
 import FollowerList from './components/profile/FollowerList';
+import MyProfileUpdate from './components/profile/MyProfileUpdate';
 
 import './App.css';
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="/board-update-form/:id" component={BoardUpdateForm} />
         <Route path="/:id/following-list" component={FollowingList} />
         <Route path="/:id/follower-list" component={FollowerList} />
+        <Route path="/profile-update" component={MyProfileUpdate} />
       </div>
       <Navbar />
     </div>

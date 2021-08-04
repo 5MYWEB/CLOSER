@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { useSelector } from 'react-redux'
+import PropTypes from 'prop-types';
+
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 // import FollowerList from '../components/profile/FollowerList';
 // import FollowingList from '../components/profile/FollowingList';
@@ -11,7 +13,17 @@ import { Link } from 'react-router-dom';
 
 function OtherProfile({ id }) {
 
-  const { userInfo } = useSelector((state) => state.user); // id 기반으로 고치기
+  const [userInfo, setUserInfo] = useState([])
+
+  useEffect(() => {
+    axios.post(`http://localhost:8080/user/profileinfo?userId=${id}`)
+    .then((response) => {
+      setUserInfo(response.data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }, [])
 
   return (
     <div className="container">
@@ -38,7 +50,7 @@ function OtherProfile({ id }) {
           </Row>
         </Col>
         <Col xs={3}>
-          프로필 수정 라우터
+          <button>팔로우 신청</button>
         </Col>
       </Row>
       {/* Row-3 : 뱃지 */}
@@ -77,6 +89,10 @@ function OtherProfile({ id }) {
       
     </div>
   );
+}
+
+OtherProfile.propTypes = {
+  id: PropTypes.string,
 }
 
 export default OtherProfile;

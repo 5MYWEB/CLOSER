@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { Container, Row, Col } from 'react-bootstrap';
@@ -14,7 +14,7 @@ function FollowerItem({ follower }) {
             <img src="" alt="프로필 사진" />
           </Col>
           <Col xs={4}>
-            {follower.nickname}
+            <Link to={`/profile/${follower.activeUser}`}>{follower.nickname}</Link>
           </Col>
           <Col xs={{ span: 2, offset: 2 }}>
             <button>삭제</button>

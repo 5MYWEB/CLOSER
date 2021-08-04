@@ -24,7 +24,7 @@ function App() {
         <Route path="/about" component={About} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
-        <Route path="/profile" component={Profile} />
+        <Route path="/profile/:id" component={Profile} />
         <Route path="/newsfeed" component={Newsfeed} />
         <Route path="/board" component={Board} />
         <Route path="/newsfeed-detail/:id" component={NewsfeedDetail}></Route>

@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { useSelector } from 'react-redux'
 import { bubble as Menu } from 'react-burger-menu'
+import { connect } from 'react-redux';
 import './Sidebar.css'
+
+const mapStateToProps = (state) => ({
+  userInfo: state.user.userInfo,
+});
 
 class Sidebar extends React.Component {
   constructor(props) { // render 함수보다 먼저 실행이 되면서 그 컴포넌트를 초기화를 담당
@@ -23,6 +27,8 @@ class Sidebar extends React.Component {
   }
 
   render () {
+    const { userInfo } = this.props;
+    
     // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
     if (this.state.menuOpen) {return (
       <div>
@@ -48,7 +54,7 @@ class Sidebar extends React.Component {
               <Link to="/signup" onClick={() => this.closeMenu()}>회원가입</Link>
             </li>
             <li>
-              <Link to='/profile' onClick={() => this.closeMenu()}>프로필</Link>
+              <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
             </li>
           </ul>
         </Menu>
@@ -78,7 +84,7 @@ class Sidebar extends React.Component {
                 <Link to="/signup" onClick={this.handleStatus}>회원가입</Link>
               </li>
               <li>
-                <Link to='/profile' onClick={() => this.closeMenu()}>프로필</Link>
+                <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
               </li>
             </ul>
           </Menu>
@@ -88,4 +94,4 @@ class Sidebar extends React.Component {
   }
 }
 
-export default Sidebar;
+export default connect(mapStateToProps)(Sidebar);

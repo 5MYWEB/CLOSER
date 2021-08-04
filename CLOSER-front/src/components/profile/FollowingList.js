@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux'; 
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import FollowingItem from './FollowingItem';
 
-const FollowingList = () => {
+const FollowingList = ({match}) => {
 
-  const { userId } = useSelector((state) => state.user.userInfo)
+  const userId = match.params.id;
 
   const [followingList, setFollowingList] = useState([])
 
@@ -24,7 +23,7 @@ const FollowingList = () => {
 
   return (
     <>
-      <Link to="/profile">뒤로가기</Link>
+      <Link to={`/profile/${userId}`}>뒤로가기</Link>
 
       {followingList.length !== 0 ? 
         <div>

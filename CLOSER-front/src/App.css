@@ -1,0 +1,7 @@
+.view {
+  position: fixed;
+  display: block;
+  width: 100vw;
+  height: 80vh;
+  overflow: auto;
+}

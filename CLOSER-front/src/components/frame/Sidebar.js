@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux'
 import { bubble as Menu } from 'react-burger-menu'
 import './Sidebar.css'
 
@@ -60,7 +61,6 @@ class Sidebar extends React.Component {
             isOpen={false}
             onStateChange={(state) => this.handleStateChange(state)}
           >
-            <h2>SideBar</h2>
             <ul>
               <li>
                 <Link to="/" onClick={this.handleStatus}>홈</Link>

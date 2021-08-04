@@ -5,7 +5,7 @@ import { getMyInfoAction, loginAction } from '../modules/user'
 import { RippleButton } from '../styles/index';
 import '../styles/theme.css'
 
-function Login(props) {
+function Login({ history }) {
   // Redux store 접근 시 사용
   const dispatch = useDispatch();
   
@@ -106,6 +106,7 @@ function Login(props) {
         axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
           .then((response) => {
             dispatch(getMyInfoAction(response.data))
+            history.push('/home')
           })
           .catch((error) => {
             console.log(error)

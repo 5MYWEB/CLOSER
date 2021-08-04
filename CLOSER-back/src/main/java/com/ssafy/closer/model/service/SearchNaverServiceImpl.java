@@ -78,7 +78,7 @@ public class SearchNaverServiceImpl implements SearchNaverService {
             while ((line = lineReader.readLine()) != null) {
                 responseBody.append(line);
             }
-            
+
             return responseBody.toString();
         } catch (IOException e) {
             throw new RuntimeException("API 응답을 읽는데 실패했습니다.", e);

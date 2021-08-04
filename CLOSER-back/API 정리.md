@@ -580,7 +580,7 @@
 
 #### A. 최신순
 
-##### [GET] /search/{keyword}/popular/{choice_pk}
+##### [GET] /search/recent?keyword={keyword}&choice={choice_pk}
 
 - output
 
@@ -609,7 +609,7 @@
 
 #### B. 인기순
 
-##### [GET] /search/{keyword}/recent/{choice_pk}
+##### [GET] /search/popular?keyword={keyword}&choice={choice_pk}
 
 - output
 
@@ -640,7 +640,7 @@
 
 #### A. 최신순
 
-##### [GET] /search/gboard/{keyword}/popular/{choice_pk}
+##### [GET] /search/gboard/recent?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
 
@@ -648,7 +648,7 @@
 
 #### B. 인기순
 
-##### [GET] /search/gboard/{keyword}/recent/{choice_pk}
+##### [GET] /search/gboard/popular?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
 
@@ -658,7 +658,7 @@
 
 #### A. 최신순
 
-##### [GET] /search/lboard/{keyword}/popular/{choice_pk}
+##### [GET] /search/lboard/recent?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
 
@@ -666,7 +666,7 @@
 
 #### B. 인기순
 
-##### [GET] /search/lboard/{keyword}/recent/{choice_pk}
+##### [GET] /search/lboard/popular?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
 
@@ -677,7 +677,7 @@
 
 #### A. 최신순
 
-##### [GET] /search/feed/{keyword}/popular/{choice_pk}
+##### [GET] /search/feed/recent?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
 
@@ -685,7 +685,7 @@
 
 #### B. 인기순
 
-##### [GET] /search/feed/{keyword}/recent/{choice_pk}
+##### [GET] /search/feed/popular?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
 
@@ -705,7 +705,7 @@
 
 #### A. 최신순
 
-##### [GET] /search/{kind_pk}/{keyword}/popular/{choice_pk}
+##### [GET] /search/{kind_pk}/recent?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
 
@@ -713,7 +713,7 @@
 
 #### B. 인기순
 
-##### [GET] /search/{kind_pk}/{keyword}/recent/{choice_pk}
+##### [GET] /search/{kind_pk}/popular?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
 

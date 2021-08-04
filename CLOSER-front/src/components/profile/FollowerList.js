@@ -1,24 +1,44 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux'; 
+import axios from 'axios';
 
-const FollowerList = ({header, data}) => {
-  // Profile.js 에서 받아온 객체 타입 data를 매핑해주는 코드입니다.
-  const Iteration = () => {
-    const followers = data.map(follower => <li key={follower.key}>{follower.nickname}</li>);
-    return <ul>{followers}</ul>;
-  };
+import FollowerItem from './FollowerItem';
+
+const FollowerList = () => {
+
+  const { userId } = useSelector((state) => state.user.userInfo)
+
+  const [followerList, setFollowerList] = useState([])
+
+  useEffect(() => {
+    axios.post(`http://localhost:8080/follow/${userId}/follower`)
+    .then((res) => {
+      setFollowerList(res.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }, [])
+
 
   return (
-    <div>
-      <div>{header}</div>
-      {Iteration()}
-    </div>
+    <>
+      <a href="javascript:history.back();">뒤로가기</a>
+
+      {followerList.length !== 0 ? 
+        <div>
+          {followerList.map((follower) => {
+            return (
+              <FollowerItem key={follower.follow_pk} follower={follower} />
+            );
+          })}
+        </div> :
+        <div>
+          아직 나를 팔로우하는 사람이 없습니다:(
+        </div> }
+    </>
   )
 };
 
-FollowerList.propTypes = {
-  header: PropTypes.string.isRequired,
-  data: PropTypes.array.isRequired,
-};
 
 export default FollowerList;

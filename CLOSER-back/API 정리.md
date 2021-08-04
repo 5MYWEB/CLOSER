@@ -580,7 +580,7 @@
 
 #### A. 최신순
 
-##### [GET] /search/{keyword}/popular/{choice_pk}
+##### [GET] /search/recent?keyword={keyword}&choice={choice_pk}
 
 - output
 
@@ -609,7 +609,7 @@
 
 #### B. 인기순
 
-##### [GET] /search/{keyword}/recent/{choice_pk}
+##### [GET] /search/popular?keyword={keyword}&choice={choice_pk}
 
 - output
 
@@ -640,7 +640,7 @@
 
 #### A. 최신순
 
-##### [GET] /search/gboard/{keyword}/popular/{choice_pk}
+##### [GET] /search/gboard/recent?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
 
@@ -648,7 +648,7 @@
 
 #### B. 인기순
 
-##### [GET] /search/gboard/{keyword}/recent/{choice_pk}
+##### [GET] /search/gboard/popular?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
 
@@ -658,7 +658,7 @@
 
 #### A. 최신순
 
-##### [GET] /search/lboard/{keyword}/popular/{choice_pk}
+##### [GET] /search/lboard/recent?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
 
@@ -666,7 +666,7 @@
 
 #### B. 인기순
 
-##### [GET] /search/lboard/{keyword}/recent/{choice_pk}
+##### [GET] /search/lboard/popular?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
 
@@ -677,7 +677,7 @@
 
 #### A. 최신순
 
-##### [GET] /search/feed/{keyword}/popular/{choice_pk}
+##### [GET] /search/feed/recent?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
 
@@ -685,7 +685,7 @@
 
 #### B. 인기순
 
-##### [GET] /search/feed/{keyword}/recent/{choice_pk}
+##### [GET] /search/feed/popular?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
 
@@ -705,7 +705,7 @@
 
 #### A. 최신순
 
-##### [GET] /search/{kind_pk}/{keyword}/popular/{choice_pk}
+##### [GET] /search/{kind_pk}/recent?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
 
@@ -713,6 +713,43 @@
 
 #### B. 인기순
 
-##### [GET] /search/{kind_pk}/{keyword}/recent/{choice_pk}
+##### [GET] /search/{kind_pk}/popular?keyword={keyword}&choice={choice_pk}
 
 - output (위 결과들과 같음)
+
+
+
+### 6. 네이버 검색
+
+##### [GET] /search?keyword={keyword}
+
+> - 결과는 items 안에 있음
+> - 블로그 기준으로 상위 5개
+> - title(제목), link(해당 블로그 링크), description(미리보여지는 글 내용), bloggername(블로그 이름), bloggerlink(해당 블로거의 링크인데 쓸일 없을듯), postdate(글 작성일)
+
+- output
+
+  ```
+  {
+  lastBuildDate: "Wed, 04 Aug 2021 10:35:28 +0900",
+  total: 2282093,
+  start: 1,
+  display: 5,
+  items: [
+  {
+  	title: "신생아영아산통 개선하는 <b>꿀팁</b>",
+  	link: "https://blog.naver.com/yjhyjh5369?Redirect=Log&logNo=222442764922",
+  	description: "신생아 영아산통이 어떤 증상인지, 그리고 개선하는 <b>꿀팁</b>까지 전수해드릴게요. 보통 생후 4개월 이하의... 저도 신생아영아산통 개선하는 <b>꿀팁</b>으로 유산균을 들고 왔어요. 그렇지만 그냥 유산균이 아닌 신생아... ",
+  	bloggername: "노루궁뎅이의 블로그",
+  	bloggerlink: "https://blog.naver.com/yjhyjh5369",
+  	postdate: "20210723"
+  },
+  # 생략
+  ]
+  }
+  ```
+
+  
+
+
+

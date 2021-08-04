@@ -16,7 +16,10 @@ const initialState = {
     homeAlone: null,
     intro: '',
     profileImg: null,
-    phone: null 
+    phone: null,
+    badge: [
+      0
+    ],
   },
   following: false,
 };

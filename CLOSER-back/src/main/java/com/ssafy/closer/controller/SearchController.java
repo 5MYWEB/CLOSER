@@ -2,6 +2,7 @@ package com.ssafy.closer.controller;
 
 import com.ssafy.closer.model.dto.BoardDto;
 import com.ssafy.closer.model.dto.SearchDto;
+import com.ssafy.closer.model.service.SearchNaverService;
 import com.ssafy.closer.model.service.SearchService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +27,21 @@ public class SearchController {
 
     @Autowired
     private SearchService searchService;
+
+    @Autowired
+    private SearchNaverService searchNaverService;
+
+    @Autowired(required = false)
+    public SearchController(SearchNaverService searchNaverService) {
+        this.searchNaverService = searchNaverService;
+    }
+
+    @ApiOperation(value = "네이버 검색")
+    @RequestMapping(value="", method=RequestMethod.GET, produces="application/json; charset=UTF-8")
+    @ResponseBody
+    public String getApi(@RequestParam(defaultValue = "") String keyword) {
+        return searchNaverService.findKeyword(keyword);
+    }
 
     // [최신순] 전체게시판 선택 시
     @ApiOperation(value = "[최신순] 전체게시판 선택 시")
@@ -159,10 +175,4 @@ public class SearchController {
         return new ResponseEntity<List<BoardDto>>(searchService.popularSearchOne(searchDto), HttpStatus.OK);
     }
 
-//    @ApiOperation(value = "네이버 api 검색")
-//    @GetMapping("/{keyword}")
-//    public ResponseEntity searchNaver(@PathVariable String keyword) {
-//
-//        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-//    }
 }

@@ -16,7 +16,7 @@ const NewsfeedHot = () => {
   // 전체 피드 리스트를 요청하고 응답을 액션함수로 보냄
   // 리덕스에 feedList가 state로 담김
   useEffect(() => {
-    axios.get('http://localhost:8080/feed/total')
+    axios.get('http://localhost:8080/board/feed/total')
     .then((res) => {
       dispatch(getFeedList(res));
     })
@@ -34,7 +34,7 @@ const NewsfeedHot = () => {
         <div>
           {feedList.map((feed) => {
             return (
-              <NewsfeedItem key={feed.feed_pk} feed={feed} />
+              <NewsfeedItem key={feed.board_pk} feed={feed} />
             );
           })}
         </div>}

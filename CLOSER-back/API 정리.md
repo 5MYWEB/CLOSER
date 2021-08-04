@@ -479,8 +479,240 @@
 
 
 
-
 ## Alarm
 
+> 1. 댓글
+> 2. 좋아요
+> 3. 북마크
+> 4. 팔로우
+> 5. 클로저봇
+
+### 1. [POST] /alarm : 알람 리스트
+
+- input
+
+  ```
+  {
+    "userId": "hyein"
+  }
+  ```
+
+- output
+
+  ```
+  [
+    {
+      "alarm_pk": 1,
+      "userId": "ssafy",
+      "category_pk": 4,
+      "otherUserId": "admin",
+      "content": "admin1님이 팔로우를 시작했습니다.",
+      "visited": false,
+      "kind_pk": 0,
+      "board_pk": 0,
+      "bot_pk": 0,
+      "created_at": "2021-08-02"
+    },
+    {
+      "alarm_pk": 3,
+      "userId": "ssafy",
+      "category_pk": 1,
+      "otherUserId": "hyein",
+      "content": "hyein1님이 댓글을 남겼습니다.",
+      "visited": false,
+      "kind_pk": 2,
+      "board_pk": 22,
+      "bot_pk": 0,
+      "created_at": "2021-08-02"
+    }
+  ]
+  ```
+
+  
+
+### 2. [POST] /alarm/unreadCount : 안읽은 알람 갯수
+
+- input
+
+  ```
+  {
+    "userId": "hyein"
+  }
+  ```
+
+- output
+
+  ```
+  {
+    "countAlarm": 2
+  }
+  ```
 
 
+
+### 3. [POST] /alarm/read-all : 모두 읽음 표시
+
+- input
+
+  ```
+  {
+    "userId": "hyein"
+  }
+  ```
+
+- output
+
+  ```
+  SUCCESS
+  ```
+
+
+
+
+## Search
+
+> choice_pk
+>
+> - 1: 제목 + 내용
+> - 2: 닉네임
+
+### 1. 전체(Gboard + Lboard) 조회
+
+#### A. 최신순
+
+##### [GET] /search/{keyword}/popular/{choice_pk}
+
+- output
+
+  ```
+  [
+    {
+      "board_pk": 23,
+      "userId": "ssafy",
+      "kind_pk": 1,
+      "title": "aaaa",
+      "content": "bbbbbbbbbbbbbbbb",
+      "created_at": "2021-08-02T15:20:19",
+      "updated_at": "2021-08-02T15:20:19",
+      "totalNum": 0,
+      "gatherNum": 0,
+      "location": null,
+      "cnt": 0,
+      "badge": 0,
+      "nickname": "ssafy1"
+    },
+    # 생략
+  ]
+  ```
+
+  
+
+#### B. 인기순
+
+##### [GET] /search/{keyword}/recent/{choice_pk}
+
+- output
+
+  ```
+  [
+    {
+      "board_pk": 23,
+      "userId": "ssafy",
+      "kind_pk": 1,
+      "title": "aaaa",
+      "content": "bbbbbbbbbbbbbbbb",
+      "created_at": "2021-08-02T15:20:19",
+      "updated_at": "2021-08-02T15:20:19",
+      "totalNum": 0,
+      "gatherNum": 0,
+      "location": null,
+      "cnt": 0,
+      "badge": 0,
+      "nickname": "ssafy1"
+    },
+    # 생략
+  ]
+  ```
+
+  
+
+### 2. GBoard 전체 조회
+
+#### A. 최신순
+
+##### [GET] /search/gboard/{keyword}/popular/{choice_pk}
+
+- output (위 결과들과 같음)
+
+  
+
+#### B. 인기순
+
+##### [GET] /search/gboard/{keyword}/recent/{choice_pk}
+
+- output (위 결과들과 같음)
+
+  
+
+### 3. LBoard 전체 조회
+
+#### A. 최신순
+
+##### [GET] /search/lboard/{keyword}/popular/{choice_pk}
+
+- output (위 결과들과 같음)
+
+  
+
+#### B. 인기순
+
+##### [GET] /search/lboard/{keyword}/recent/{choice_pk}
+
+- output (위 결과들과 같음)
+
+
+
+
+### 4. Feed 전체 조회
+
+#### A. 최신순
+
+##### [GET] /search/feed/{keyword}/popular/{choice_pk}
+
+- output (위 결과들과 같음)
+
+  
+
+#### B. 인기순
+
+##### [GET] /search/feed/{keyword}/recent/{choice_pk}
+
+- output (위 결과들과 같음)
+
+
+
+
+### 5. 특정 하나의 카테고리 조회
+
+> kind_pk
+>
+> - 1은 한끼 레시피
+> - 2는 자취팁
+> - 3은 홈데코
+> - 4는 공동구매
+> - 5는 모임
+> - 6은 응급상황
+
+#### A. 최신순
+
+##### [GET] /search/{kind_pk}/{keyword}/popular/{choice_pk}
+
+- output (위 결과들과 같음)
+
+  
+
+#### B. 인기순
+
+##### [GET] /search/{kind_pk}/{keyword}/recent/{choice_pk}
+
+- output (위 결과들과 같음)

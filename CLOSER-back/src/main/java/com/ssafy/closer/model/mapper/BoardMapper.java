@@ -25,6 +25,10 @@ public interface BoardMapper {
     List<BoardDto> lBoardList2(String location); // 지역 게시판 - 클로저모임 최신순
     List<BoardDto> lBoardList3(String location); // 지역 게시판 - 도와주세요 최신순
 
+    List<BoardDto> feedListAll(); // 피드 목록 - 전체
+    List<BoardDto> feedListNear(String location); // 피드 목록 - 동네
+    List<BoardDto> feedListFollow(String userId); // 피드 목록 - 팔로우
+
     int gBoardCreate(BoardDto boardDto); // gboard 생성
     int lBoardCreate(BoardDto boardDto); // lboard 생성
     int feedCreate(BoardDto boardDto); // feed 생성

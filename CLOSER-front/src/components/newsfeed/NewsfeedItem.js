@@ -8,7 +8,7 @@ function NewsfeedItem({ feed }) {
     <>
       <hr />
         <div>작성자 : {feed.userId}</div>
-      <Link to={`/newsfeed-detail/${feed.feed_pk}`}>
+      <Link to={`/newsfeed-detail/${feed.board_pk}`}>
         <div>내용 : {feed.content}</div>
       </Link>
         <div>작성시간 : {feed.created_at}</div>

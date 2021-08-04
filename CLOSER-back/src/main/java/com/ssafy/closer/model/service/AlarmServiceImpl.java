@@ -23,8 +23,20 @@ public class AlarmServiceImpl implements AlarmService {
     }
 
     @Override
-    public int alarmCreate(AlarmDto alarmDto) {
-        sqlSession.getMapper(AlarmMapper.class).alarmCreate(alarmDto);
+    public int alarmBoardCreate(AlarmDto alarmDto) {
+        sqlSession.getMapper(AlarmMapper.class).alarmBoardCreate(alarmDto);
+        return alarmDto.getAlarm_pk();
+    }
+
+    @Override
+    public int alarmFollowCreate(AlarmDto alarmDto) {
+        sqlSession.getMapper(AlarmMapper.class).alarmFollowCreate(alarmDto);
+        return alarmDto.getAlarm_pk();
+    }
+
+    @Override
+    public int alarmBotCreate(AlarmDto alarmDto) {
+        sqlSession.getMapper(AlarmMapper.class).alarmBotCreate(alarmDto);
         return alarmDto.getAlarm_pk();
     }
 
@@ -34,7 +46,7 @@ public class AlarmServiceImpl implements AlarmService {
     }
 
     @Override
-    public boolean readAll(String userId) {
-        return sqlSession.getMapper(AlarmMapper.class).readAll(userId)==1;
+    public int readAll(String userId) {
+        return sqlSession.getMapper(AlarmMapper.class).readAll(userId);
     }
 }

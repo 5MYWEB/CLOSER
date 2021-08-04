@@ -27,6 +27,8 @@ function App() {
         <Route path="/newsfeed-detail/:id" component={NewsfeedDetail}></Route>
         <Route path="/board-detail/:id" component={BoardDetail}></Route>
         <Route path="/board-create-form/" component={BoardForm} />
+        <Route path="/board-update-form/:id" component={BoardUpdateForm} />
+
       </div>
       <Navbar />
     </div>

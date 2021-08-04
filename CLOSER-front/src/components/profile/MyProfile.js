@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 // import FollowerList from '../components/profile/FollowerList';
@@ -38,7 +38,7 @@ function MyProfile() {
           </Row>
         </Col>
         <Col xs={3}>
-          프로필 수정 라우터
+          <Link to="/profile-update">프로필 수정</Link>
         </Col>
       </Row>
       {/* Row-3 : 뱃지 */}

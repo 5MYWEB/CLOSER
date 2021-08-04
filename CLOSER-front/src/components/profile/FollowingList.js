@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'; 
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import FollowingItem from './FollowingItem';
 
@@ -23,7 +24,7 @@ const FollowingList = () => {
 
   return (
     <>
-      <a href="javascript:history.back();">뒤로가기</a>
+      <Link to="/profile">뒤로가기</Link>
 
       {followingList.length !== 0 ? 
         <div>

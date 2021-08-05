@@ -9,6 +9,9 @@ import { Link } from 'react-router-dom';
 // import UserPost from '../components/profile/UserPost';
 // import UserBookmark from '../components/profile/UserBookmark';
 
+/* eslint-disable no-script-url */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 function MyProfile() {
 
   const { userInfo } = useSelector((state) => state.user);
@@ -17,7 +20,7 @@ function MyProfile() {
     <div className="container">
       {/* Row-1 : 뒤로가기 */}
       <Row>
-        <Link to="/home">뒤로가기</Link>
+        <a href="javascript:history.back();">뒤로가기</a>
       </Row>
       {/* Row-2 : 프로필사진, 닉네임, 자취기간, 위치, 프로필 수정 */}
       <Row>

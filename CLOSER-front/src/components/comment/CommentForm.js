@@ -19,22 +19,32 @@ const CommentForm = ({board_pk}) => {
     setText(e.target.value)
   }
 
+  // 텍스트가 빈 값인지 검사하는 함수
+  const nullCheck = () => {
+    if(text === ''){
+      alert('내용을 입력해주세요!')
+      return false
+    }
+    return true
+  }
+
   // 댓글을 제출할때 작동하는 함수
   const onSubmit = (e) => {
     e.preventDefault();
-    
-    axios.post(`http://localhost:8080/board/${board_pk}/comment`, {
-        reply: text,
-        userId: userInfo.userId
+
+    if (nullCheck()){
+      axios.post(`http://localhost:8080/board/${board_pk}/comment`, {
+          reply: text,
+          userId: userInfo.userId
+        })
+      .then(() => {
+        dispatch(createComment())
       })
-    .then(() => {
-      dispatch(createComment())
-    })
-    .catch((err) =>{
-      console.log(err)
-    })
-    
-    setText('')
+      .catch((err) =>{
+        console.log(err)
+      })
+      setText('')
+    }
   };
 
   return (

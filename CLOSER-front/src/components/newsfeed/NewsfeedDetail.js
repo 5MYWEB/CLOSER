@@ -73,11 +73,7 @@ const NewsfeedDetail = ({match}) => {
     <>
       <a href="javascript:history.back();">뒤로가기</a>
       <div>글 번호 : {feed.board_pk}</div>
-<<<<<<< HEAD
-      <div>작성자 : {feed.userId}</div>
-=======
-      <div>작성자 : {feed.nickname}</div>
->>>>>>> 27c5bf57625a69e7d100c31377f7570f861880f0
+      <div>작성자 : {feed.nickname}</div>      
       <div>내용 : {feed.content}</div>
       <div>작성시간 : {feed.created_at}</div>
       <div>위치: {feed.location}</div>

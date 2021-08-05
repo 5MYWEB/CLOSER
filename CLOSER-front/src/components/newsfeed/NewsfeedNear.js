@@ -9,8 +9,8 @@ const NewsfeedNear = () => {
   
   const dispatch = useDispatch();
   
-  // 리덕스의 feedList, userId 불러옴
-  const { feedList } = useSelector((state) => state.newsfeed);
+  // 리덕스의 feedList, userId 불러옴  
+  const { feedList, feedCreated, feedDeleted } = useSelector((state) => state.newsfeed);
   const { addr } = useSelector((state) => state.user.userInfo);
 
   // useEffect: 컴포넌트가 렌더될때 이 부분을 실행함
@@ -29,7 +29,7 @@ const NewsfeedNear = () => {
       console.log(err)
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [feedCreated, feedDeleted])
 
   return (
     <>

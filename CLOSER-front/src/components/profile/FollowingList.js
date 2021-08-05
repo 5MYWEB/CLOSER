@@ -1,24 +1,52 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import FollowingItem from './FollowingItem';
+import { getFollowInfoAction } from '../../modules/user';
 
-const FollowingList = ({header, data}) => {
-  // Profile.js 에서 받아온 객체 타입 data를 매핑해주는 코드입니다.
-  const Iteration = () => {
-    const followings = data.map(following => <li key={following.key}>{following.nickname}</li>);
-    return <ul>{followings}</ul>;
-  };
+const FollowingList = ({match}) => {
+  const dispatch = useDispatch();
+
+  const userId = match.params.id;
+
+  const { following } = useSelector((state) => state.user)
+
+  const [followingList, setFollowingList] = useState([])
+
+  // 내가 팔로잉하는 유저 목록 가져오기
+  useEffect(() => {
+    axios.post(`http://localhost:8080/follow/${userId}/following`)
+    .then((res) => {
+      setFollowingList(res.data)
+      dispatch(getFollowInfoAction())
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [following])
+
 
   return (
-    <div>
-      <div>{header}</div>
-      {Iteration()}
-    </div>
+    <>
+      <Link to={`/profile/${userId}`}>뒤로가기</Link>
+
+      {followingList.length !== 0 ? 
+        <div>
+          {followingList.map((following) => {
+            return (
+              <FollowingItem key={following.follow_pk} following={following} />
+            );
+          })}
+        </div> :
+        <div>
+          아직 내가 팔로우하는 사람이 없습니다:(
+        </div> }
+    </>
   )
 };
 
-FollowingList.propTypes = {
-  header: PropTypes.string.isRequired,
-  data: PropTypes.array.isRequired,
-};
+
 
 export default FollowingList;

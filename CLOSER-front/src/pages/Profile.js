@@ -1,83 +1,21 @@
-import React from 'react';
-import { Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux'
-// import { Link, Route } from 'react-router-dom';
 
-// import FollowerList from '../components/profile/FollowerList';
-// import FollowingList from '../components/profile/FollowingList';
-// import UserFeed from '../components/profile/UserFeed';
-// import UserPost from '../components/profile/UserPost';
-// import UserBookmark from '../components/profile/UserBookmark';
-
-function Profile() {
-
-  const { userInfo } = useSelector((state) => state.user);
+import MyProfile from '../components/profile/MyProfile'
+import OtherProfile from '../components/profile/OtherProfile'
 
 
-  return (
-    <div className="container">
-      {/* Row-1 : 뒤로가기 */}
-      <Row>
-        <a href="javascript:history.back();">뒤로가기</a>
-      </Row>
-      {/* Row-2 : 프로필사진, 닉네임, 자취기간, 위치, 프로필 수정 */}
-      <Row>
-        <Col xs={3}>
-          <img src="" alt="프로필 사진"></img>
-        </Col>
-        <Col xs={6}>
-          <Row>
-            <Col>
-              {userInfo.nickname}
-            </Col>
-            <Col>
-              {userInfo.homeAlone}
-            </Col>
-          </Row>
-          <Row>
-            {userInfo.addr}
-          </Row>
-        </Col>
-        <Col xs={3}>
-          프로필 수정 라우터
-        </Col>
-      </Row>
-      {/* Row-3 : 뱃지 */}
-      <Row>
-        뱃지 컴포넌트, 라우터
-      </Row>
-      {/* Row-4 : 한줄소개 */}
-      <Row>
-        한줄소개
-      </Row>
-      {/* Row-5 : 팔로잉, 팔로워, 공유하기 */}
-      <Row>
-        <Col xs={3}>
-          팔로잉 컴포넌트, 라우터
-        </Col>
-        <Col xs={3}>
-          팔로워 컴포넌트, 라우터
-        </Col>
-        <Col xs={{ span: 3, offset: 3 }}>
-          공유하기 버튼
-        </Col>
-      </Row>
-      {/* Row-6 : 내피드, 내포스트, 북마크 */}
-      <Row>
-        <Col>
-          내피드 컴포넌트
-        </Col>
-        <Col>
-          내포스트 컴포넌트
-        </Col>
-        <Col>
-          북마크 컴포넌트
-        </Col>
-      </Row>
-      
-      
-    </div>
-  );
+function Profile({match}) {
+
+  // 프로필 페이지의 파라미터로 들어온 아이디
+  const id = match.params.id;
+
+  // 현재 로그인한 사람의 아이디
+  const { userId } = useSelector((state) => state.user.userInfo);
+
+  // 두개가 같으면 마이프로필 페이지, 다르면 타인프로필 페이지
+  if (userId === id) {
+    return <MyProfile />
+  } return <OtherProfile id={id} />
 }
 
 export default Profile;

@@ -3,17 +3,37 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.closer.model.mapper.AlarmMapper">
-    <select id="alarmList" parameterType="String" resultType="List">
+    <select id="alarmList" parameterType="String" resultType="AlarmDto">
         select *
         from user_alarm
         where userId=#{userId}
     </select>
 
-    <insert id="alarmCreate" parameterType="AlarmDto" useGeneratedKeys="true" keyProperty="alarm_pk" keyColumn="alarm_pk">
-        insert into user_alarm(userId, othercontent, created_at)
-        values (#{userId}, #{content}, #{created_at})
+    <insert id="alarmBoardCreate" parameterType="AlarmDto" useGeneratedKeys="true" keyProperty="alarm_pk" keyColumn="alarm_pk">
+        insert into user_alarm(userId, category_pk, content, created_at, otherUserId, kind_pk, board_pk)
+        values (#{userId}, #{category_pk}, #{content}, #{created_at}, #{otherUserId}, #{kind_pk}, #{board_pk});
     </insert>
 
+    <insert id="alarmFollowCreate" parameterType="AlarmDto" useGeneratedKeys="true" keyProperty="alarm_pk" keyColumn="alarm_pk">
+        insert into user_alarm(userId, category_pk, content, created_at, otherUserId)
+        values (#{userId}, #{category_pk}, #{content}, #{created_at}, #{otherUserId});
+    </insert>
 
+    <insert id="alarmBotCreate" parameterType="AlarmDto" useGeneratedKeys="true" keyProperty="alarm_pk" keyColumn="alarm_pk">
+        insert into user_alarm(userId, category_pk, content, created_at, bot_pk)
+        values (#{userId}, #{category_pk}, #{content}, #{created_at}, #{bot_pk});
+    </insert>
+
+    <select id="alarmUnread" parameterType="String" resultType="int">
+        select count(*)
+        from user_alarm
+        where userId=#{userId} and visited=false
+    </select>
+
+    <update id="readAll" parameterType="String">
+        update user_alarm
+        set visited=true
+        where userId=#{userId} and visited=false
+    </update>
 
 </mapper>

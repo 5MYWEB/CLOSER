@@ -1,7 +1,12 @@
 package com.ssafy.closer.controller;
 
+import com.ssafy.closer.model.dto.AlarmDto;
+import com.ssafy.closer.model.dto.BoardDto;
 import com.ssafy.closer.model.dto.FollowDto;
+import com.ssafy.closer.model.dto.MemberDto;
+import com.ssafy.closer.model.service.AlarmService;
 import com.ssafy.closer.model.service.FollowService;
+import com.ssafy.closer.model.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
@@ -12,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @RestController
@@ -25,6 +31,12 @@ public class FollowController {
 
     @Autowired
     private FollowService followService;
+
+    @Autowired
+    private AlarmService alarmService;
+
+    @Autowired
+    private UserService userService;
 
     // post 확인해봐야함
     // 팔로우 or 언팔로우 , 팔로잉 갯수, 팔로워 갯수
@@ -62,6 +74,22 @@ public class FollowController {
                     }else{ // 언팔로우인 경우 => 팔로우
                         followService.follow(followDto);
                         output.put("followed", true);
+
+                        // 알림창
+                        // 로그인한 유저가 좋아요(북마크) 하면 -> 상대방 기준으로 alarm이 생성
+                        AlarmDto alarmDto = new AlarmDto();
+                        alarmDto.setUserId(passiveUser); // 상대
+                        alarmDto.setCategory_pk(4); // 4: 팔로우
+                        alarmDto.setOtherUserId(activeUser); // 로그인유저가 팔로우를 클릭했다
+                        alarmDto.setCreated_at(LocalDate.now());
+
+                        // 알림내용
+                        // nickname 구하기
+                        MemberDto memberDto = userService.userInfo(activeUser);
+                        String content = memberDto.getNickname() + "님이 팔로우를 시작했습니다.";
+                        alarmDto.setContent(content);
+
+                        alarmService.alarmFollowCreate(alarmDto);
                     }
                 }
             }

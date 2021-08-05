@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 import { createBoard } from '../../modules/board';
 
 const BoardForm = () => {
 
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   // 리덕스 user에서 userId 받아옴 
   const { userId } = useSelector((state) => state.user.userInfo );
@@ -37,10 +40,10 @@ const BoardForm = () => {
         content: content,
       })
     .then((res) => {
-      console.log(res)
       dispatch(createBoard())
+      history.push(`/board-detail/${res.data.board_pk}/`)
     })
-    .catch((err) =>{
+    .catch((err) => {
       console.log(err)
     })
 

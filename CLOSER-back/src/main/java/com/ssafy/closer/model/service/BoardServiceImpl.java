@@ -86,6 +86,21 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public List<BoardDto> feedListAll() {
+        return sqlSession.getMapper(BoardMapper.class).feedListAll();
+    }
+
+    @Override
+    public List<BoardDto> feedListNear(String location) {
+        return sqlSession.getMapper(BoardMapper.class).feedListNear(location);
+    }
+
+    @Override
+    public List<BoardDto> feedListFollow(String userId) {
+        return sqlSession.getMapper(BoardMapper.class).feedListFollow(userId);
+    }
+
+    @Override
     public int gBoardCreate(BoardDto boardDto) {
         sqlSession.getMapper(BoardMapper.class).gBoardCreate(boardDto);
         return boardDto.getBoard_pk();

@@ -2,8 +2,10 @@ import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import { getMyInfoAction, loginAction } from '../modules/user'
+import { RippleButton } from '../styles/index';
+import '../styles/theme.css'
 
-function Login(props) {
+function Login({ history }) {
   // Redux store 접근 시 사용
   const dispatch = useDispatch();
   
@@ -100,36 +102,59 @@ function Login(props) {
   // 로그인에 성공했으면 로그인 유저 정보 가져오기
   useEffect(() => {
     if (decodedToken.UserId !== null){
+      console.log('로그인했을때만')
         axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
           .then((response) => {
             dispatch(getMyInfoAction(response.data))
+            history.push('/home')
           })
           .catch((error) => {
             console.log(error)
           })
         }
-      }, [decodedToken])
+      }, [decodedToken, dispatch, history])
         
   return (
-    <>
+    <> 
+      <h2 className="phrase">클로저에서 자취<br></br>200퍼센트 즐기기</h2>
+      <span>아이디</span>
+      <span className="necessary unfollow">*</span>
       <form onSubmit={onSubmit}>
+        <div>
+          <input
+            placeholder="아이디를 입력하세요"
+            onFocus={(e) => {
+              e.target.placeholder='';
+            }}
+            onBlur={(e) => {
+              e.target.placeholder='아이디를 입력하세요';
+            }}
+            type="text"
+            name="userId"
+            value={userId}
+            onChange={onChange}
+          />
+          <RippleButton type="button" cclass="cbtn cbtn-sm cbtn-primary" children="중복확인"/>
+        </div>
         <input
-          type="text"
-          name="userId"
-          value={userId}
-          onChange={onChange}
-        />
-        <input
+          placeholder="비밀번호를 입력하세요"
+          onFocus={(e) => {
+            e.target.placeholder='';
+          }}
+          onBlur={(e) => {
+            e.target.placeholder='비밀번호를 입력하세요';
+          }}
           type="password"
           name="password"
           value={password}
           onChange={onChange}
         />
-        <button type="submit">
-          Login
-        </button>
+        <RippleButton type="submit" cclass="cbtn cbtn-lg cbtn-primary" children="로그인"/>
       </form>
-      <button>회원가입</button>
+      <div>
+        <RippleButton type="button" cclass="cbtn cbtn-lg cbtn-secondary" children="회원가입"/>
+        <RippleButton type="button" cclass="cbtn cbtn-checked" children="!"/>
+      </div>
     </>
   )
 }

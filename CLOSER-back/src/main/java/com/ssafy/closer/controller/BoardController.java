@@ -1,13 +1,7 @@
 package com.ssafy.closer.controller;
 
-import com.ssafy.closer.model.dto.BoardDto;
-import com.ssafy.closer.model.dto.InfoDto;
-import com.ssafy.closer.model.dto.JoinDto;
-import com.ssafy.closer.model.dto.MemberDto;
-import com.ssafy.closer.model.service.BoardService;
-import com.ssafy.closer.model.service.FeedService;
-import com.ssafy.closer.model.service.InfoService;
-import com.ssafy.closer.model.service.UserService;
+import com.ssafy.closer.model.dto.*;
+import com.ssafy.closer.model.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
@@ -18,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +34,9 @@ public class BoardController {
 
     @Autowired
     private InfoService infoService;
+
+    @Autowired
+    private AlarmService alarmService;
 
     // 자취 게시판 메인
     @ApiOperation(value = "자취 게시판 cnt 많은 순으로 게시글 보여줌(완료)", response = List.class)
@@ -132,7 +130,7 @@ public class BoardController {
         return new ResponseEntity<>(boardService.lBoardList1(location), HttpStatus.OK);
     }
 
-    // 자취 게시판 - 클로저모임 최신순
+    // 지역 게시판 - 클로저모임 최신순
     @ApiOperation(value = "지역게시판 - 클로저모임 최신글(완료)", response = List.class)
     @PostMapping("lboard/getter")
     public ResponseEntity<List<BoardDto>> lBoardList2(@RequestParam String location) {
@@ -140,13 +138,40 @@ public class BoardController {
         return new ResponseEntity<>(boardService.lBoardList2(location), HttpStatus.OK);
     }
 
-    // 자취 게시판 - 도와주세요 최신술
+    // 지역 게시판 - 도와주세요 최신술
     @ApiOperation(value = "지역게시판 - 도와주세요 최신글(완료)", response = List.class)
     @PostMapping("lboard/sos")
     public ResponseEntity<List<BoardDto>> lBoardList3(@RequestParam String location) {
         logger.debug("도와주세요 - 최신");
         return new ResponseEntity<>(boardService.lBoardList3(location), HttpStatus.OK);
     }
+
+    // 뉴스피드
+    // 피드 전체 보기
+    @ApiOperation(value = "모든 유저들의 피드글 정보를 반환한다.", response = List.class)
+    @GetMapping("/feed/total")
+    public ResponseEntity<List<BoardDto>> listFeedAll() {
+        logger.debug("전체 피드글 - 호출");
+        return new ResponseEntity<>(boardService.feedListAll(), HttpStatus.OK);
+    }
+
+    // 피드 같은 동네만 보기
+    @ApiOperation(value = "같은 동네 유저들의 피드글 정보를 반환한다.", response = List.class)
+    @GetMapping("/feed/near")
+    public ResponseEntity<List<BoardDto>> listFeedNear(@RequestParam String location) {
+        logger.debug("동네 피드글 - 호출");
+        return new ResponseEntity<>(boardService.feedListNear(location), HttpStatus.OK);
+    }
+
+    // 피드 팔로우한 사람들 것만 보기
+    // activeUser가 passiveUser를 팔로잉한다.
+    @ApiOperation(value = "팔로우 한 유저들의 피드글 정보를 반환한다.", response = List.class)
+    @GetMapping("/feed/follow")
+    public ResponseEntity<List<BoardDto>> listFeedFollow(String userId) {
+        logger.debug("팔로우 피드글 - 호출");
+        return new ResponseEntity<>(boardService.feedListFollow(userId), HttpStatus.OK);
+    }
+
 
     // 게시글 CRUD
     // 게시글 작성
@@ -211,15 +236,16 @@ public class BoardController {
         // 로그인한 유저와 해당 글을 쓴 유저가 같은지 확인해야함
         String userId = info.get("userId");
         String user = boardService.findUser(board_pk);
+        int kind_pk = Integer.parseInt(info.get("kind_pk"));
 
         if(userId.equals(user)){
             BoardDto boardDto = new BoardDto();
             boardDto.setBoard_pk(board_pk);
+            boardDto.setKind_pk(kind_pk);
             boardDto.setTitle(info.get("title"));
             boardDto.setContent(info.get("content"));
             boardDto.setUpdated_at(LocalDateTime.now());
 
-            int kind_pk = Integer.parseInt(info.get("kind_pk"));
             if (kind_pk <= 3){ // gboard인 경우
                 boardDto.setUpdated_at(LocalDateTime.now());
                 if(boardService.gBoardUpdate(boardDto)){ // 수정을 성공했다면
@@ -293,12 +319,19 @@ public class BoardController {
             // 로그인 유저 정보 갖고 온다
             String userId = info.get("userId");
 
+            // 해당 글을 쓴 유저 정보
+            BoardDto boardDto = boardService.read(board_pk);
+            String user = boardDto.getUserId();
+
             // 현재 로드 상태인지 클릭 상태인지 갖고 온다
             String flag = info.get("flag");
 
+            // kind_pk
+            int kind_pk = Integer.parseInt(info.get("kind_pk"));
+
             // 유저 정보가 담긴 infoDto 생성
             InfoDto infoDto = new InfoDto();
-            infoDto.setKind_pk(Integer.parseInt(info.get("kind_pk"))); // 2: 좋아요, 3: 북마크
+            infoDto.setKind_pk(kind_pk); // 2: 좋아요, 3: 북마크
             infoDto.setBoard_pk(board_pk); // 게시글 pk
             infoDto.setUserId(userId); // 로그인한 유저 정보
 
@@ -320,6 +353,31 @@ public class BoardController {
                     infoService.addInfo(infoDto);
                     boardService.increaseCount(board_pk);
                     output.put("clicked", true);
+
+                    // 알람
+                    // 로그인한 유저가 좋아요(북마크) 하면 -> 상대방 기준으로 alarm이 생성
+                    AlarmDto alarmDto = new AlarmDto();
+                    alarmDto.setUserId(user); // 상대
+                    alarmDto.setCategory_pk(kind_pk); // 2: 좋아요, 3: 북마크
+                    alarmDto.setOtherUserId(userId); // 로그인유저가 좋아요(북마크)를 클릭했다
+                    alarmDto.setCreated_at(LocalDate.now());
+
+                    // 알림내용
+                    // nickname 구하기
+                    MemberDto memberDto = userService.userInfo(userId); // 로그인 유저의 정보
+                    String nickname = memberDto.getNickname(); // 로그인 유저의 닉네임
+                    String content;
+                    if(kind_pk == 2){
+                        content = nickname + "님이 좋아요를 눌렀습니다.";
+                    }else { // kind_pk == 3
+                        content = nickname + "님이 북마크를 눌렀습니다.";
+                    }
+                    alarmDto.setContent(content);
+
+                    alarmDto.setKind_pk(boardDto.getKind_pk()); // 게시글 종류
+                    alarmDto.setBoard_pk(board_pk); // 게시글 pk
+
+                    alarmService.alarmBoardCreate(alarmDto);
                 }
             }else{
                 return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
@@ -360,8 +418,31 @@ public class BoardController {
         // 유저 정보가 담긴 infoDto에 kind_pk, board_pk 세팅
         infoDto.setKind_pk(1);
         infoDto.setBoard_pk(board_pk);
+        infoDto.setCreated_at(LocalDateTime.now());
 
         if(infoService.createComment(infoDto)){ // 댓글 생성 성공
+            // 알림창
+            MemberDto memberDto = userService.userInfo(infoDto.getUserId()); // 로그인 유저의 정보
+            BoardDto boardDto = boardService.read(board_pk); // 해당 게시글 정보
+
+            // 로그인한 유저가 좋아요(북마크) 하면 -> 상대방 기준으로 alarm이 생성
+            AlarmDto alarmDto = new AlarmDto();
+            alarmDto.setUserId(boardDto.getUserId()); // 상대
+            alarmDto.setCategory_pk(1); // 1: 댓글
+            alarmDto.setOtherUserId(infoDto.getUserId()); // 로그인유저가 댓글을 클릭했다
+            alarmDto.setCreated_at(LocalDate.now());
+
+            // 알림내용
+            // nickname 구하기
+            String nickname = memberDto.getNickname(); // 로그인 유저의 닉네임
+            String content = nickname + "님이 댓글을 남겼습니다.";
+            alarmDto.setContent(content);
+
+            alarmDto.setKind_pk(boardDto.getKind_pk()); // 게시글 종류
+            alarmDto.setBoard_pk(board_pk); // 게시글 pk
+
+            alarmService.alarmBoardCreate(alarmDto);
+
             return new ResponseEntity(SUCCESS, HttpStatus.OK);
         }
         // 댓글 생성 실패

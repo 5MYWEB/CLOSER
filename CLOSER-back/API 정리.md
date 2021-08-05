@@ -1,5 +1,128 @@
 # API 정리
 
+## User
+
+### 1. 회원가입
+
+#### A. [POST] /user/regist : 회원가입
+
+#### B. [POST] /user/userIdCheck : 아이디 중복 확인
+
+#### C. [POST] /user/userNicknameCheck : 닉네임 중복 확인
+
+
+
+### 2. 로그인
+
+
+
+### 3. 로그아웃
+
+
+
+### 4. 프로필 페이지 정보
+
+#### A. [POST] /user/profileinfo : 프로필 페이지 정보
+
+- output
+
+  ```
+  {
+    "userId": "hyein",
+    "nickname": "hyein1",
+    "password": "hyein",
+    "email": "hyein@ssafy.com",
+    "addr": "인천광역시 연수구",
+    "homeAlone": 2018,
+    "intro": null,
+    "profileImg": "2",
+    "phone": "010-1234-5678",
+    "badge": [
+      null
+    ]
+  }
+  ```
+
+#### B. [GET] /user/board/{userId} : 내 포스트
+
+- output
+
+  ```
+  [
+    {
+      "board_pk": 23,
+      "userId": "ssafy",
+      "kind_pk": 1,
+      "title": "aaaa",
+      "content": "bbbbbbbbbbbbbbbb",
+      "created_at": "2021-08-02T15:20:19",
+      "updated_at": "2021-08-02T15:20:19",
+      "totalNum": 0,
+      "gatherNum": 0,
+      "location": null,
+      "cnt": 0,
+      "badge": 0,
+      "nickname": "ssafy1"
+    },
+    # 생략
+  ]
+  ```
+
+#### C. [GET] /user/feed/{userId} : 내 피드
+
+- output
+
+  ```
+  [
+    {
+      "board_pk": 26,
+      "userId": "minji",
+      "kind_pk": 7,
+      "title": null,
+      "content": "시간 순삭",
+      "created_at": "2021-08-05T15:03:13",
+      "updated_at": null,
+      "totalNum": 0,
+      "gatherNum": 0,
+      "location": "서울시 동작구 염리동",
+      "cnt": 0,
+      "badge": 0,
+      "nickname": "minji"
+    }
+  ]
+  ```
+
+#### D. [GET] /user/bookmark/{userId} : 내 북마크
+
+- output
+
+  ```
+  [
+    {
+      "board_pk": 20,
+      "userId": "admin",
+      "kind_pk": 2,
+      "title": "checkkkkkkkkkkkk",
+      "content": "뺑ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ",
+      "created_at": "2021-08-02T15:02:19",
+      "updated_at": "2021-08-02T15:02:19",
+      "totalNum": 0,
+      "gatherNum": 0,
+      "location": null,
+      "cnt": 0,
+      "badge": 0,
+      "nickname": "admin1"
+    },
+    # 생략
+  ]
+  ```
+
+  
+
+
+
+
+
 ## Board
 
 ### 1. 게시글 리스트 조회 (POST)
@@ -479,8 +602,277 @@
 
 
 
-
 ## Alarm
+
+> 1. 댓글
+> 2. 좋아요
+> 3. 북마크
+> 4. 팔로우
+> 5. 클로저봇
+
+### 1. [POST] /alarm : 알람 리스트
+
+- input
+
+  ```
+  {
+    "userId": "hyein"
+  }
+  ```
+
+- output
+
+  ```
+  [
+    {
+      "alarm_pk": 1,
+      "userId": "ssafy",
+      "category_pk": 4,
+      "otherUserId": "admin",
+      "content": "admin1님이 팔로우를 시작했습니다.",
+      "visited": false,
+      "kind_pk": 0,
+      "board_pk": 0,
+      "bot_pk": 0,
+      "created_at": "2021-08-02"
+    },
+    {
+      "alarm_pk": 3,
+      "userId": "ssafy",
+      "category_pk": 1,
+      "otherUserId": "hyein",
+      "content": "hyein1님이 댓글을 남겼습니다.",
+      "visited": false,
+      "kind_pk": 2,
+      "board_pk": 22,
+      "bot_pk": 0,
+      "created_at": "2021-08-02"
+    }
+  ]
+  ```
+
+  
+
+### 2. [POST] /alarm/unreadCount : 안읽은 알람 갯수
+
+- input
+
+  ```
+  {
+    "userId": "hyein"
+  }
+  ```
+
+- output
+
+  ```
+  {
+    "countAlarm": 2
+  }
+  ```
+
+
+
+### 3. [POST] /alarm/read-all : 모두 읽음 표시
+
+- input
+
+  ```
+  {
+    "userId": "hyein"
+  }
+  ```
+
+- output
+
+  ```
+  SUCCESS
+  ```
+
+
+
+
+## Search
+
+> choice_pk
+>
+> - 1: 제목 + 내용
+> - 2: 닉네임
+
+### 1. 전체(Gboard + Lboard) 조회
+
+#### A. 최신순
+
+##### [GET] /search/recent?keyword={keyword}&choice={choice_pk}
+
+- output
+
+  ```
+  [
+    {
+      "board_pk": 23,
+      "userId": "ssafy",
+      "kind_pk": 1,
+      "title": "aaaa",
+      "content": "bbbbbbbbbbbbbbbb",
+      "created_at": "2021-08-02T15:20:19",
+      "updated_at": "2021-08-02T15:20:19",
+      "totalNum": 0,
+      "gatherNum": 0,
+      "location": null,
+      "cnt": 0,
+      "badge": 0,
+      "nickname": "ssafy1"
+    },
+    # 생략
+  ]
+  ```
+
+  
+
+#### B. 인기순
+
+##### [GET] /search/popular?keyword={keyword}&choice={choice_pk}
+
+- output
+
+  ```
+  [
+    {
+      "board_pk": 23,
+      "userId": "ssafy",
+      "kind_pk": 1,
+      "title": "aaaa",
+      "content": "bbbbbbbbbbbbbbbb",
+      "created_at": "2021-08-02T15:20:19",
+      "updated_at": "2021-08-02T15:20:19",
+      "totalNum": 0,
+      "gatherNum": 0,
+      "location": null,
+      "cnt": 0,
+      "badge": 0,
+      "nickname": "ssafy1"
+    },
+    # 생략
+  ]
+  ```
+
+  
+
+### 2. GBoard 전체 조회
+
+#### A. 최신순
+
+##### [GET] /search/gboard/recent?keyword={keyword}&choice={choice_pk}
+
+- output (위 결과들과 같음)
+
+  
+
+#### B. 인기순
+
+##### [GET] /search/gboard/popular?keyword={keyword}&choice={choice_pk}
+
+- output (위 결과들과 같음)
+
+  
+
+### 3. LBoard 전체 조회
+
+#### A. 최신순
+
+##### [GET] /search/lboard/recent?keyword={keyword}&choice={choice_pk}
+
+- output (위 결과들과 같음)
+
+  
+
+#### B. 인기순
+
+##### [GET] /search/lboard/popular?keyword={keyword}&choice={choice_pk}
+
+- output (위 결과들과 같음)
+
+
+
+
+### 4. Feed 전체 조회
+
+#### A. 최신순
+
+##### [GET] /search/feed/recent?keyword={keyword}&choice={choice_pk}
+
+- output (위 결과들과 같음)
+
+  
+
+#### B. 인기순
+
+##### [GET] /search/feed/popular?keyword={keyword}&choice={choice_pk}
+
+- output (위 결과들과 같음)
+
+
+
+
+### 5. 특정 하나의 카테고리 조회
+
+> kind_pk
+>
+> - 1은 한끼 레시피
+> - 2는 자취팁
+> - 3은 홈데코
+> - 4는 공동구매
+> - 5는 모임
+> - 6은 응급상황
+
+#### A. 최신순
+
+##### [GET] /search/{kind_pk}/recent?keyword={keyword}&choice={choice_pk}
+
+- output (위 결과들과 같음)
+
+  
+
+#### B. 인기순
+
+##### [GET] /search/{kind_pk}/popular?keyword={keyword}&choice={choice_pk}
+
+- output (위 결과들과 같음)
+
+
+
+### 6. 네이버 검색
+
+##### [GET] /search?keyword={keyword}
+
+> - 결과는 items 안에 있음
+> - 블로그 기준으로 상위 5개
+> - title(제목), link(해당 블로그 링크), description(미리보여지는 글 내용), bloggername(블로그 이름), bloggerlink(해당 블로거의 링크인데 쓸일 없을듯), postdate(글 작성일)
+
+- output
+
+  ```
+  {
+  lastBuildDate: "Wed, 04 Aug 2021 10:35:28 +0900",
+  total: 2282093,
+  start: 1,
+  display: 5,
+  items: [
+  {
+  	title: "신생아영아산통 개선하는 <b>꿀팁</b>",
+  	link: "https://blog.naver.com/yjhyjh5369?Redirect=Log&logNo=222442764922",
+  	description: "신생아 영아산통이 어떤 증상인지, 그리고 개선하는 <b>꿀팁</b>까지 전수해드릴게요. 보통 생후 4개월 이하의... 저도 신생아영아산통 개선하는 <b>꿀팁</b>으로 유산균을 들고 왔어요. 그렇지만 그냥 유산균이 아닌 신생아... ",
+  	bloggername: "노루궁뎅이의 블로그",
+  	bloggerlink: "https://blog.naver.com/yjhyjh5369",
+  	postdate: "20210723"
+  },
+  # 생략
+  ]
+  }
+  ```
+
+  
 
 
 

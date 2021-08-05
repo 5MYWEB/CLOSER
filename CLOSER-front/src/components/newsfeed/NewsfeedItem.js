@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 function NewsfeedItem({ feed }) {
+
+  // 댓글 개수
+  const [listLength, setListLength] = useState(0)
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/board/${feed.board_pk}/comment`)
+    .then((res) => {
+      setListLength(res.data.length)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
@@ -13,6 +28,7 @@ function NewsfeedItem({ feed }) {
         </Link>
         <div>작성시간 : {feed.created_at}</div>
         <div>위치: {feed.location}</div>
+        <div>댓글 {listLength}개</div>
     </>
   )
 }

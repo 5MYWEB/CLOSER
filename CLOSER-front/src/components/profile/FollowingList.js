@@ -34,6 +34,7 @@ const FollowingList = ({match}) => {
 
       {followingList.length !== 0 ? 
         <div>
+          {followingList.length} 명을 팔로우 하고 있습니다.
           {followingList.map((following) => {
             return (
               <FollowingItem key={following.follow_pk} following={following} />

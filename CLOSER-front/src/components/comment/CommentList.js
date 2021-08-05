@@ -33,7 +33,7 @@ const CommentList = ({board_pk}) => {
       <br />
 
       <div>
-        <CommentForm board_pk={board_pk}/>
+        <CommentForm board_pk={Number(board_pk)}/>
       </div>
       {commentList && 
         <div>

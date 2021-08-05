@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { deleteBoard } from '../../modules/board';
 import axios from 'axios';
 
+import CommentList from '../comment/CommentList';
+
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
@@ -18,6 +20,7 @@ const BoardDetail = ({match}) => {
     userId: '',
     content: '',
     created_at: '',
+    updated_at: '',
     location: '',
     nickname: '',
   })
@@ -91,6 +94,7 @@ const BoardDetail = ({match}) => {
         </div>
       }
       <hr />
+      <CommentList board_pk={Number(pk)} />
     </>
   )
 }

@@ -13,7 +13,7 @@ const Home = () => {
       <h1>Home</h1>
       <p>isLoggedIn: { isLoggedIn }</p>
       <p>userId: { userId }</p>
-      <p>userToken: { userToken }</p>
+      <p>userToken: { userToken }</p>\
     </div>
   );
 };

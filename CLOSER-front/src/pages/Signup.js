@@ -1,7 +1,9 @@
 import React, { useState, useCallback, useRef } from 'react';
 import axios from 'axios'
+import { RippleButton } from '../styles/index';
+import '../styles/theme.css'
 
-function SignUp(props) {
+function SignUp( history ) {
   const [userInfo, setUserInfo] = useState({
     userId: '',
     nickname: '',
@@ -172,6 +174,7 @@ function SignUp(props) {
       .then((response) =>{
         console.log(response);
         console.log(request);
+        history.push('/login')
       })
     return null
   };
@@ -202,13 +205,24 @@ function SignUp(props) {
 
   return (
     <form onSubmit={onSubmit}>
-      <p>아이디를 입력하세요</p>
+      <div>
+        <span className="input-label">아이디</span>
+        <span className="necessary unfollow">*</span>
+      </div>
       <input
+        placeholder="아이디를 입력하세요"
+        onFocus={(e) => {
+          e.target.placeholder='';
+        }}
+        onBlur={(e) => {
+          e.target.placeholder='아이디를 입력하세요';
+        }}
         type="text"
         name="userId"
         value={userId}
         onChange={onChange}
       />
+      <RippleButton type="button" cclass="cbtn cbtn-sm cbtn-primary" children="중복확인"/>
       <p>닉네임을 입력하세요</p>
       <input
         type="text"
@@ -263,6 +277,9 @@ function SignUp(props) {
         value={phone}
         onChange={onChange}
       />
+      <div>
+        <RippleButton type="button" cclass="cbtn cbtn-checked" children="!"/>
+      </div>
       <p>자취 몇년차이신가요?</p>
       <p>언제 자취를 시작하셨나요?</p>
       <label htmlFor="homeAlone">When did you start living alone</label>

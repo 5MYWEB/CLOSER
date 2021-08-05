@@ -115,47 +115,49 @@ function Login({ history }) {
       }, [decodedToken, dispatch, history])
         
   return (
-    <> 
+    <div className="wrap-group"> 
       <h2 className="phrase">클로저에서 자취<br></br>200퍼센트 즐기기</h2>
-      <span>아이디</span>
-      <span className="necessary unfollow">*</span>
-      <form onSubmit={onSubmit}>
-        <div>
-          <input
-            placeholder="아이디를 입력하세요"
-            onFocus={(e) => {
-              e.target.placeholder='';
-            }}
-            onBlur={(e) => {
-              e.target.placeholder='아이디를 입력하세요';
-            }}
-            type="text"
-            name="userId"
-            value={userId}
-            onChange={onChange}
-          />
-          <RippleButton type="button" cclass="cbtn cbtn-sm cbtn-primary" children="중복확인"/>
-        </div>
-        <input
-          placeholder="비밀번호를 입력하세요"
-          onFocus={(e) => {
-            e.target.placeholder='';
-          }}
-          onBlur={(e) => {
-            e.target.placeholder='비밀번호를 입력하세요';
-          }}
-          type="password"
-          name="password"
-          value={password}
-          onChange={onChange}
-        />
-        <RippleButton type="submit" cclass="cbtn cbtn-lg cbtn-primary" children="로그인"/>
-      </form>
-      <div>
-        <RippleButton type="button" cclass="cbtn cbtn-lg cbtn-secondary" children="회원가입"/>
-        <RippleButton type="button" cclass="cbtn cbtn-checked" children="!"/>
+      <form onSubmit={onSubmit} className="type-group">
+      <div className="label-group">
+        <span className="input-label">아이디</span>
+        <span className="necessary unfollow">*</span>
       </div>
-    </>
+      <input
+        placeholder="아이디를 입력하세요"
+        onFocus={(e) => {
+          e.target.placeholder='';
+        }}
+        onBlur={(e) => {
+          e.target.placeholder='아이디를 입력하세요';
+        }}
+        type="text"
+        name="userId"
+        value={userId}
+        onChange={onChange}
+      />
+      <div className="label-group">
+        <span className="input-label">비밀번호</span>
+        <span className="necessary unfollow">*</span>
+      </div>
+      <input
+        placeholder="비밀번호를 입력하세요"
+        onFocus={(e) => {
+          e.target.placeholder='';
+        }}
+        onBlur={(e) => {
+          e.target.placeholder='비밀번호를 입력하세요';
+        }}
+        type="password"
+        name="password"
+        value={password}
+        onChange={onChange}
+      />
+      <div className="button-group">
+        <RippleButton type="submit" cclass="cbtn cbtn-lg cbtn-primary" children="로그인"/>
+        <RippleButton type="button" cclass="cbtn cbtn-none cbtn-lg" children="회원가입"/>
+      </div>
+      </form>
+    </div>
   )
 }
 

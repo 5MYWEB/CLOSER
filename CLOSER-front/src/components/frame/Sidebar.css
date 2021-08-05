@@ -2,9 +2,9 @@
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: fixed;
-  width: 30px;
-  height: 25px;
-  left: 24px;
+  width: 7.5vw;
+  height: 7.5vw;
+  left: 1.5rem;
   top: 24px;
 }
 

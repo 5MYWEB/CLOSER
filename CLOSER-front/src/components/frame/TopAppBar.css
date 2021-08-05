@@ -1,9 +1,40 @@
 .topappbar {
   position: static;
   display: block;
+  height: 12vh;
+
+}
+
+.topapplist {
+  position: fixed;
+  right: 1.5rem;
+  top: 24px;
+
 }
 
 
 h2 {
   text-align: center;
 }
+
+.closerbot {
+  width: 11vw;
+  margin: 0.2rem 1rem 0 0;
+  transition: 0.1s;
+}
+
+.closerbot:active {
+  transform: scale(0.1);
+  opacity: 0.5;
+}
+
+.search {
+  width: 8vw;
+  transition: 0.1s;
+}
+
+.search:active {
+  transform: scale(0.1);
+  opacity: 0.5;
+}
+

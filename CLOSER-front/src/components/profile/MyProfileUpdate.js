@@ -20,7 +20,7 @@ const MyProfileUpdate = () => {
     userId: userInfo.userId,
     nickname: userInfo.nickname,
     password: userInfo.password,
-    email:  userInfo.email,
+    email: userInfo.email,
     addr: userInfo.addr,
     homeAlone: userInfo.homeAlone,
     intro: userInfo.intro,
@@ -30,7 +30,7 @@ const MyProfileUpdate = () => {
   })
 
   // 중복확인이 성공했으면 true
-  const [doubleChecked, setDoubleChecked] = useState(false)
+  const [doubleChecked, setDoubleChecked] = useState(true)
 
   // 값이 바뀌었으면 true
   const [changed, setChanged] = useState(false)
@@ -57,7 +57,16 @@ const MyProfileUpdate = () => {
     })
   }
 
-  // 한줄소개, 자취기간, 위치 변경
+  // 자취기간 변경
+  const onChangeHomeAlone = (e) => {
+    setChangedUserInfo({
+      ...changedUserinfo,
+      homeAlone: Number(e.target.value)
+    })
+    setChanged(true)
+  }
+
+  // 한줄소개, 위치 변경
   const onChange = (e) => {
     const { name, value } = e.target;
     setChangedUserInfo({
@@ -122,7 +131,7 @@ const MyProfileUpdate = () => {
       <Row className="justify-content-center">
         <Col>
           저는 자취를
-          <select id="homeAlone" name="homeAlone" value={changedUserinfo.homeAlone} onChange={onChange} ref={selectInputs}>
+          <select id="homeAlone" name="homeAlone" value={changedUserinfo.homeAlone} onChange={onChangeHomeAlone} ref={selectInputs}>
             <option defaultValue value="undefined"> -- 년도 -- </option>
             <option value="2021">2021년</option>
             <option value="2020">2020년</option>

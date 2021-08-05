@@ -181,4 +181,22 @@ public class UserController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @ApiOperation(value = "프로필 페이지 포스트")
+    @GetMapping("/board/{userId}")
+    public ResponseEntity profilePost(@PathVariable String userId) {
+        return new ResponseEntity(userService.userPost(userId),HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "프로필 페이지 피드")
+    @GetMapping("/feed/{userId}")
+    public ResponseEntity profileFeed(@PathVariable String userId) {
+        return new ResponseEntity(userService.userFeed(userId),HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "프로필 페이지 북마크")
+    @GetMapping("/bookmark/{userId}")
+    public ResponseEntity profileBookmark(@PathVariable String userId) {
+        return new ResponseEntity(userService.userBookmark(userId),HttpStatus.OK);
+    }
 }

@@ -77,7 +77,11 @@ const BoardDetail = ({match}) => {
       <a href="javascript:history.back();">뒤로가기</a>
       <div>글 번호 : {board.board_pk}</div>
       <div>제목 : {board.title}</div>
+<<<<<<< HEAD
+      <div>작성자 : {board.userId}</div>
+=======
       <div>작성자 : {board.nickname}</div>
+>>>>>>> 27c5bf57625a69e7d100c31377f7570f861880f0
       <div>내용 : {board.content}</div>
       <div>작성시간 : {board.created_at}</div>
       <div>수정시간 : {board.updated_at}</div>

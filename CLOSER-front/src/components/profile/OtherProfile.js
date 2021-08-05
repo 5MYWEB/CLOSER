@@ -20,8 +20,8 @@ function OtherProfile({ id }) {
   const { userId } = useSelector((state) => state.user.userInfo)
   const { following } = useSelector((state) => state.user)
 
+  // 타인의 정보 가져오기
   useEffect(() => {
-    // 타인의 정보 가져오기
     axios.post(`http://localhost:8080/user/profileinfo?userId=${id}`)
     .then((res) => {
       setUserInfo(res.data)

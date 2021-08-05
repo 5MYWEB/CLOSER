@@ -28,14 +28,13 @@ const NewsfeedForm = () => {
         title: null,
         content: text,
       })
-    .then((res) => {
+    .then(() => {
       dispatch(createFeed())
     })
     .catch((err) =>{
       console.log(err)
     })
-    
-
+  
     setText('')
   };
 
@@ -45,7 +44,7 @@ const NewsfeedForm = () => {
         <input 
           type="text" 
           value={text}
-          maxLength={200} 
+          maxLength={500} 
           placeholder="무슨 생각을 하고 계신가요?"
           onChange={onChangeText} />
         <input type="submit" value="업로드" />

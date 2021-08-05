@@ -20,11 +20,14 @@ function OtherProfile({ id }) {
   const [userInfo, setUserInfo] = useState([])
   const [isFollowed, setIsFollowed] = useState(false)
 
+  const [followingListLength, setFollowingListLength] = useState(0)
+  const [followerListLength, setFollowerListLength] = useState(0)
+
   const { userId } = useSelector((state) => state.user.userInfo)
   const { following } = useSelector((state) => state.user)
 
-  // 타인의 정보 가져오기
   useEffect(() => {
+    // 타인의 정보 가져오기
     axios.post(`http://localhost:8080/user/profileinfo?userId=${id}`)
     .then((res) => {
       setUserInfo(res.data)
@@ -41,6 +44,23 @@ function OtherProfile({ id }) {
     .then((res) => {
       setIsFollowed(res.data.followed)
       dispatch(getFollowInfoAction())
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
+    // 팔로잉, 팔로워 수 가져오기
+    axios.post(`http://localhost:8080/follow/${id}/following`)
+    .then((res) => {
+      setFollowingListLength(res.data.length)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
+    axios.post(`http://localhost:8080/follow/${id}/follower`)
+    .then((res) => {
+      setFollowerListLength(res.data.length)
     })
     .catch((err) => {
       console.log(err)
@@ -104,10 +124,10 @@ function OtherProfile({ id }) {
       {/* Row-5 : 팔로잉, 팔로워, 공유하기 */}
       <Row>
         <Col xs={3}>
-          <Link to={`/${userInfo.userId}/following-list`}>팔로잉</Link>
+          <Link to={`/${userInfo.userId}/following-list`}>팔로잉 {followingListLength}</Link>
         </Col>
         <Col xs={3}>
-          <Link to={`/${userInfo.userId}/follower-list`}>팔로워</Link>
+          <Link to={`/${userInfo.userId}/follower-list`}>팔로워 {followerListLength}</Link>
         </Col>
         <Col xs={{ span: 3, offset: 3 }}>
           공유하기 버튼

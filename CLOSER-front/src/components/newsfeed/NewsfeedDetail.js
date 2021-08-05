@@ -60,7 +60,6 @@ const NewsfeedDetail = ({match}) => {
         dispatch(deleteFeed())
         alert('게시물이 삭제되었습니다.')
         // 삭제 후 페이지 뒤로가기
-        // eslint-disable-next-line no-script-url
         return window.location.href = 'javascript:history.back();'
       })
       .catch((err) => {
@@ -81,7 +80,7 @@ const NewsfeedDetail = ({match}) => {
         <button onClick={onClickDelete}>삭제</button>
       }
       <hr />
-      <CommentList board_pk={Number(pk)} />
+      <CommentList board_pk={pk} />
     </>
   )
 }

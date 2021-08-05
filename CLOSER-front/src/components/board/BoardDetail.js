@@ -18,6 +18,7 @@ const BoardDetail = ({match}) => {
     content: '',
     created_at: '',
     location: '',
+    nickname: '',
   })
 
   // 현재 게시글의 pk
@@ -38,6 +39,7 @@ const BoardDetail = ({match}) => {
         created_at: res.data.created_at,
         updated_at: res.data.updated_at,
         location: res.data.location,
+        nickname: res.data.nickname,
       })
     })
     .catch((err) =>{
@@ -75,7 +77,7 @@ const BoardDetail = ({match}) => {
       <a href="javascript:history.back();">뒤로가기</a>
       <div>글 번호 : {board.board_pk}</div>
       <div>제목 : {board.title}</div>
-      <div>작성자 : {board.userId}</div>
+      <div>작성자 : {board.nickname}</div>
       <div>내용 : {board.content}</div>
       <div>작성시간 : {board.created_at}</div>
       <div>수정시간 : {board.updated_at}</div>

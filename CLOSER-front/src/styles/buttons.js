@@ -16,6 +16,13 @@ const RippleButton = ({ children, cclass, type, onClick }) => {
     if (!isRippling) setCoords({ x: -1, y: -1 });
   }, [isRippling]);
 
+<<<<<<< HEAD
+=======
+  React.useEffect(() => {
+    return () => setIsRippling(false); // cleanup function을 이용
+  }, []);
+
+>>>>>>> 27c5bf57625a69e7d100c31377f7570f861880f0
   return (
     <button
       type={type}

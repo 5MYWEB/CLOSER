@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { deleteFeed } from '../../modules/newsfeed';
 import axios from 'axios';
+
+import CommentList from '../comment/CommentList';
 
 const NewsfeedDetail = ({match}) => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const NewsfeedDetail = ({match}) => {
     content: '',
     created_at: '',
     location: '',
+    nickname: '',
   })
 
   // 현재 피드의 pk
@@ -25,7 +27,6 @@ const NewsfeedDetail = ({match}) => {
   useEffect(() => {
     axios.get(`http://localhost:8080/board/${pk}`)
     .then((res) => {
-      console.log(res)
       setFeed({
         ...feed,
         board_pk: res.data.board_pk,
@@ -33,6 +34,7 @@ const NewsfeedDetail = ({match}) => {
         content: res.data.content,
         created_at: res.data.created_at,
         location: res.data.location,
+        nickname: res.data.nickname
       })
     })
     .catch((err) =>{
@@ -67,7 +69,11 @@ const NewsfeedDetail = ({match}) => {
   return (
     <>
       <div>글 번호 : {feed.board_pk}</div>
+<<<<<<< HEAD
       <div>작성자 : {feed.userId}</div>
+=======
+      <div>작성자 : {feed.nickname}</div>
+>>>>>>> 27c5bf57625a69e7d100c31377f7570f861880f0
       <div>내용 : {feed.content}</div>
       <div>작성시간 : {feed.created_at}</div>
       <div>위치: {feed.location}</div>
@@ -75,6 +81,8 @@ const NewsfeedDetail = ({match}) => {
         <button onClick={onClickDelete}>삭제</button>
       }
       <hr />
+      <div>댓글</div>
+      <CommentList board_pk={pk} />
     </>
   )
 }

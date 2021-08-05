@@ -91,13 +91,13 @@ function MyProfile() {
       {/* Row-6 : 내피드, 내포스트, 북마크 */}
       <Row>
         <Col>
-          내피드 컴포넌트
+          <Link to={`/profile/${userInfo.userId}/user-feed`}>내 피드</Link>
         </Col>
         <Col>
-          내포스트 컴포넌트
+          <Link to={`/profile/${userInfo.userId}/user-board`}>내 포스트</Link>
         </Col>
         <Col>
-          북마크 컴포넌트
+          <Link to={`/profile/${userInfo.userId}/user-bookmark`}>북마크</Link>
         </Col>
       </Row>
       

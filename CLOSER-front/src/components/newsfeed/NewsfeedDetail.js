@@ -38,6 +38,7 @@ const NewsfeedDetail = ({match}) => {
     .catch((err) =>{
       console.log(err)
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // 삭제 버튼을 클릭했을 때 실행되는 함수

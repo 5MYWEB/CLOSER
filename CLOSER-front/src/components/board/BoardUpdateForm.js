@@ -32,6 +32,7 @@ const BoardUpdateForm = ({match}) => {
     .catch((err) => {
       console.log(err)
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // 사용자가 게시물 내용을 입력할때 작동하는 함수

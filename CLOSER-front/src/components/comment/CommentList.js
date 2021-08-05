@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { getCommentList } from '../../modules/comment';
@@ -12,10 +12,14 @@ const CommentList = ({board_pk}) => {
 
   const { commentList, commentDeleted, commentCreated } = useSelector((state) => state.comment);
 
+  // 댓글 개수
+  const [listLength, setListLength] = useState(0)
+
   useEffect(() => {
     axios.get(`http://localhost:8080/board/${board_pk}/comment`)
     .then((res) => {
       dispatch(getCommentList(res));
+      setListLength(res.data.length)
     })
     .catch((err)=>{
       console.log(err)
@@ -25,7 +29,7 @@ const CommentList = ({board_pk}) => {
 
   return (
     <>
-      <div>댓글</div>
+      <div>댓글 {listLength}개</div>
       <br />
 
       <div>

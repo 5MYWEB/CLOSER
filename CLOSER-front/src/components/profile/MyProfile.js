@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 // import FollowerList from '../components/profile/FollowerList';
 // import FollowingList from '../components/profile/FollowingList';
@@ -15,6 +16,29 @@ import { Link } from 'react-router-dom';
 function MyProfile() {
 
   const { userInfo } = useSelector((state) => state.user);
+
+  const [followingListLength, setFollowingListLength] = useState(0)
+  const [followerListLength, setFollowerListLength] = useState(0)
+
+  // 팔로잉, 팔로워 수 가져오기
+  useEffect(() => {
+    axios.post(`http://localhost:8080/follow/${userInfo.userId}/following`)
+    .then((res) => {
+      setFollowingListLength(res.data.length)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
+    axios.post(`http://localhost:8080/follow/${userInfo.userId}/follower`)
+    .then((res) => {
+      setFollowerListLength(res.data.length)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="container">
@@ -55,10 +79,10 @@ function MyProfile() {
       {/* Row-5 : 팔로잉, 팔로워, 공유하기 */}
       <Row>
         <Col xs={3}>
-          <Link to={`/${userInfo.userId}/following-list`}>팔로잉</Link>
+          <Link to={`/${userInfo.userId}/following-list`}>팔로잉 {followingListLength}</Link>
         </Col>
         <Col xs={3}>
-          <Link to={`/${userInfo.userId}/follower-list`}>팔로워</Link>
+          <Link to={`/${userInfo.userId}/follower-list`}>팔로워 {followerListLength}</Link>
         </Col>
         <Col xs={{ span: 3, offset: 3 }}>
           공유하기 버튼

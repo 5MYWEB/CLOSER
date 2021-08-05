@@ -34,6 +34,7 @@ const FollowerList = ({match}) => {
 
       {followerList.length !== 0 ? 
         <div>
+          {followerList.length} 명이 나를 팔로우합니다.
           {followerList.map((follower) => {
             return (
               <FollowerItem key={follower.follow_pk} follower={follower} />

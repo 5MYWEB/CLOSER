@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
-import { createFeed } from '../../modules/newsfeed';
+import { createBoard } from '../../modules/board';
 
 const NewsfeedForm = () => {
 
@@ -40,7 +40,7 @@ const NewsfeedForm = () => {
           content: text,
         })
       .then(() => {
-        dispatch(createFeed())
+        dispatch(createBoard())
       })
       .catch((err) =>{
         console.log(err)

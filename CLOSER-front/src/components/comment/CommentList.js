@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import CommentItem from './CommentItem';
 import { getCommentList } from '../../modules/comment';
 import PropTypes from 'prop-types';
+import CommentItem from './CommentItem';
+import CommentForm from './CommentForm';
 
 const CommentList = ({board_pk}) => {
 
   const dispatch = useDispatch();
 
-  const { commentList } = useSelector((state) => state.comment);
-  const { commentDeleted } = useSelector((state) => state.comment);
+  const { commentList, commentDeleted, commentCreated } = useSelector((state) => state.comment);
 
   useEffect(() => {
     axios.get(`http://localhost:8080/board/${board_pk}/comment`)
@@ -21,10 +21,16 @@ const CommentList = ({board_pk}) => {
       console.log(err)
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [commentDeleted])
+  }, [commentDeleted, commentCreated])
 
   return (
     <>
+      <div>댓글</div>
+      <br />
+
+      <div>
+        <CommentForm board_pk={board_pk}/>
+      </div>
       {commentList && 
         <div>
           {commentList.map((comment) => {

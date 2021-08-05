@@ -9,7 +9,7 @@ const CommentItem = ({ comment }) => {
 
   const dispatch = useDispatch();
 
-  const [nickname, setNickname] = useState('')
+  const [writerInfo, setWriterInfo] = useState('')
 
   const { userId } = useSelector((state) => state.user.userInfo)
 
@@ -17,7 +17,7 @@ const CommentItem = ({ comment }) => {
   useEffect(() => {
     axios.post(`http://localhost:8080/user/profileinfo?userId=${comment.userId}`)
     .then((res) => {
-      setNickname(res.data.nickname)
+      setWriterInfo(res.data)
     })
     .catch((err) => {
       console.log(err)
@@ -42,14 +42,16 @@ const CommentItem = ({ comment }) => {
   }
 
   return (
-    <>
-        <div>작성자 : {nickname}</div>
-        <div>내용 : {comment.reply}</div>
-        {/* <div>작성시간 : {comment.created_at}</div> */}
-        { userId === comment.userId &&
-          <button onClick={onClickDelete}>삭제</button>
-        }
-        <br />
+    <>  
+      <Link to={`/profile/${writerInfo.userId}`}>
+        <div>작성자 : {writerInfo.nickname}</div>
+      </Link>
+      <div>내용 : {comment.reply}</div>
+      {/* <div>작성시간 : {comment.created_at}</div> */}
+      { userId === comment.userId &&
+        <button onClick={onClickDelete}>삭제</button>
+      }
+      <br />
     </>
   )
 }

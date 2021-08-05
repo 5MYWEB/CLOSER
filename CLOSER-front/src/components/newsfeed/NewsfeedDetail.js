@@ -5,6 +5,9 @@ import axios from 'axios';
 
 import CommentList from '../comment/CommentList';
 
+/* eslint-disable no-script-url */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 const NewsfeedDetail = ({match}) => {
   const dispatch = useDispatch();
   
@@ -68,6 +71,7 @@ const NewsfeedDetail = ({match}) => {
 
   return (
     <>
+      <a href="javascript:history.back();">뒤로가기</a>
       <div>글 번호 : {feed.board_pk}</div>
 <<<<<<< HEAD
       <div>작성자 : {feed.userId}</div>
@@ -81,8 +85,7 @@ const NewsfeedDetail = ({match}) => {
         <button onClick={onClickDelete}>삭제</button>
       }
       <hr />
-      <div>댓글</div>
-      <CommentList board_pk={pk} />
+      <CommentList board_pk={Number(pk)} />
     </>
   )
 }

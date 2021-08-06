@@ -4,8 +4,10 @@ import axios from 'axios'
 import { getBoardList, getWeekBestList, getBestList } from '../../modules/board';
 import BoardItem from './BoardItem';
 
-function BoardRecipe() {
+function BoardGlobal({ match }) {
 
+  const name = match.params.name
+  
   const dispatch = useDispatch();
 
   const { weekBestList, boardList, bestList, boardCreated, boardDeleted, boardUpdated } = useSelector((state) => state.board);
@@ -13,7 +15,7 @@ function BoardRecipe() {
   const [ toggle, setToggle ] = useState(true)
 
   useEffect(() => {
-    axios.post('http://localhost:8080/board/gBoard/recipe/weekbest')
+    axios.post(`http://localhost:8080/board/gBoard/${name}/weekbest`)
     .then((res) => {
       dispatch(getWeekBestList(res));
     })
@@ -21,7 +23,7 @@ function BoardRecipe() {
       console.log(err)
     })
 
-    axios.post('http://localhost:8080/board/gBoard/recipe/new')
+    axios.post(`http://localhost:8080/board/gBoard/${name}/new`)
     .then((res) => {
       dispatch(getBoardList(res));
     })
@@ -29,7 +31,7 @@ function BoardRecipe() {
       console.log(err)
     })
 
-    axios.post('http://localhost:8080/board/gBoard/recipe/best')
+    axios.post(`http://localhost:8080/board/gBoard/${name}/best`)
     .then((res) => {
       dispatch(getBestList(res));
     })
@@ -37,7 +39,7 @@ function BoardRecipe() {
       console.log(err)
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [boardCreated, boardDeleted, boardUpdated])
+  }, [boardCreated, boardDeleted, boardUpdated, name])
 
   const onClickToggle = () => {
     setToggle(!toggle)
@@ -46,7 +48,7 @@ function BoardRecipe() {
   return (
     <>
       <div>
-        이번주 베스트 레시피
+        이번주 베스트 {name === 'recipe' ? '레시피' : name ==='tip' ? '자취 꿀팁' : name === 'deco' ? '홈데코' : '' }
         {/* 피드가 비어있지 않다면 피드목록을 불러옴*/}
         {weekBestList && 
           <div>
@@ -62,10 +64,10 @@ function BoardRecipe() {
       {toggle ?
         <div>
           {/* 토글 버튼 */}
-          최신 레시피
+          최신 {name === 'recipe' ? '레시피' : name ==='tip' ? '자취 꿀팁' : name === 'deco' ? '홈데코' : '' }
           <button onClick={onClickToggle}>인기순</button>
           {/* 피드가 비어있지 않다면 피드목록을 불러옴*/}
-          {boardList.length !== 0 ? 
+          {boardList && boardList.length !== 0 ? 
             <div>
               {boardList.map((board) => {
                 return (
@@ -82,7 +84,7 @@ function BoardRecipe() {
         :
         <div>
           {/* 토글 버튼 */}
-          인기 레시피
+          인기 {name === 'recipe' ? '레시피' : name ==='tip' ? '자취 꿀팁' : name === 'deco' ? '홈데코' : '' }
           <button onClick={onClickToggle}>최신순</button>
           {/* 피드가 비어있지 않다면 피드목록을 불러옴*/}
           {boardList.length !== 0 ? 
@@ -104,4 +106,4 @@ function BoardRecipe() {
   )
 }
 
-export default BoardRecipe;
+export default BoardGlobal;

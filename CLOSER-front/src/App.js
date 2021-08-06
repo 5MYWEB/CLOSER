@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import { TopAppBar, Navbar } from './components/frame/index';
 import { Home, About, Login, SignUp, Profile, Newsfeed, Board } from './pages';
 import BoardGlobal from './components/board/BoardGlobal';
+import BoardLocal from './components/board/BoardLocal';
 import BoardDetail from './components/board/BoardDetail';
 import BoardForm from './components/board/BoardForm';
 import BoardUpdateForm from './components/board/BoardUpdateForm';
@@ -30,6 +31,7 @@ function App() {
         <Route path="/newsfeed" component={Newsfeed} />
         <Route path="/board" component={Board} />
         <Route path="/board/subnav1/:name" component={BoardGlobal} />
+        <Route path="/board/subnav2/:name" component={BoardLocal} />
         <Route path="/board-detail/:id" component={BoardDetail}></Route>
         <Route path="/board-create-form/" component={BoardForm} />
         <Route path="/board-update-form/:id" component={BoardUpdateForm} />

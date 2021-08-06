@@ -15,7 +15,6 @@ function BoardSubNavbar1() {
             <Link to={"/board/subnav1/deco" }>홈데코</Link>
           </li>
         </ul>
-    
       </div>
   );
 }

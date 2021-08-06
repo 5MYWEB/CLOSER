@@ -19,6 +19,10 @@ function BoardItem({ board }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  useEffect(() => {
+    return () => setListLength(0); // cleanup function을 이용
+  }, []);
+
   return (
     <>
       <br />

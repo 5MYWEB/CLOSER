@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios'
-import { getBoardList, getWeekBestList } from '../../modules/board';
+import { getBoardList, getWeekBestList, getBestList } from '../../modules/board';
 import BoardItem from './BoardItem';
 
 function BoardRecipe() {
 
   const dispatch = useDispatch();
 
-  const { weekBestList, boardList, boardCreated, boardDeleted, boardUpdated } = useSelector((state) => state.board);
+  const { weekBestList, boardList, bestList, boardCreated, boardDeleted, boardUpdated } = useSelector((state) => state.board);
+
+  const [ toggle, setToggle ] = useState(true)
 
   useEffect(() => {
     axios.post('http://localhost:8080/board/gBoard/recipe/weekbest')
@@ -18,10 +20,7 @@ function BoardRecipe() {
     .catch((err) =>{
       console.log(err)
     })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [boardCreated, boardDeleted, boardUpdated])
 
-  useEffect(() => {
     axios.post('http://localhost:8080/board/gBoard/recipe/new')
     .then((res) => {
       dispatch(getBoardList(res));
@@ -29,8 +28,20 @@ function BoardRecipe() {
     .catch((err) =>{
       console.log(err)
     })
+
+    axios.post('http://localhost:8080/board/gBoard/recipe/best')
+    .then((res) => {
+      dispatch(getBestList(res));
+    })
+    .catch((err) =>{
+      console.log(err)
+    })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardCreated, boardDeleted, boardUpdated])
+
+  const onClickToggle = () => {
+    setToggle(!toggle)
+  }
 
   return (
     <>
@@ -47,18 +58,48 @@ function BoardRecipe() {
           </div>}
       </div>
       <hr />
-      <div>
-        레시피 최신순/인기순(토글 구현 필요)
-        {/* 피드가 비어있지 않다면 피드목록을 불러옴*/}
-        {boardList && 
-          <div>
-            {boardList.map((board) => {
-              return (
-                <BoardItem key={board.board_pk} board={board} />
-              );
-            })}
-          </div>}
-      </div>
+
+      {toggle ?
+        <div>
+          {/* 토글 버튼 */}
+          최신 레시피
+          <button onClick={onClickToggle}>인기순</button>
+          {/* 피드가 비어있지 않다면 피드목록을 불러옴*/}
+          {boardList.length !== 0 ? 
+            <div>
+              {boardList.map((board) => {
+                return (
+                  <BoardItem key={board.board_pk} board={board} />
+                );
+              })}
+            </div>
+            : 
+            <div>
+              게시글이 없습니다:(
+            </div>
+            }
+        </div>
+        :
+        <div>
+          {/* 토글 버튼 */}
+          인기 레시피
+          <button onClick={onClickToggle}>최신순</button>
+          {/* 피드가 비어있지 않다면 피드목록을 불러옴*/}
+          {boardList.length !== 0 ? 
+            <div>
+              {bestList.map((board) => {
+                return (
+                  <BoardItem key={board.board_pk} board={board} />
+                );
+              })}
+            </div>
+            : 
+            <div>
+              게시글이 없습니다:(
+            </div>
+            }
+        </div>
+      }
     </>
   )
 }

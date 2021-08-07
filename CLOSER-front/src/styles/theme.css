@@ -158,6 +158,7 @@ input::placeholder {
   box-sizing: border-box;
 }
 
+
 .ripple-button > .ripple {
   width: 20px;
   height: 20px;
@@ -168,6 +169,37 @@ input::placeholder {
   border-radius: 9999px;
   opacity: 1;
   animation: 0.9s ease 1 forwards ripple-effect;
+}
+
+.ripple-icon {
+  width: 25vw;
+  height: 13vh;
+  border: none;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-sizing: border-box;
+  /* text-align: center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ripple-icon > .ripple {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  background: #bebdfaad;
+  display: block;
+  content: "";
+  border-radius: 9999px;
+  opacity: 1;
+  animation: 0.9s ease 1 forwards ripple-effect;
+  pointer-events: none;
+}
+
+.ripple-icon > img {
+  pointer-events: none;
 }
 
 @keyframes ripple-effect {

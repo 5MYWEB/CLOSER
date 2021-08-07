@@ -19,6 +19,7 @@ function App() {
   return (
     <div>
       <TopAppBar />
+
       <div className="view my-auto">
         <Route path="/" exact={true} component={Home} />
         <Route path="/about" component={About} />

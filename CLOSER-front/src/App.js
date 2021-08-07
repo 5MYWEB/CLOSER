@@ -2,6 +2,9 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { TopAppBar, Navbar } from './components/frame/index';
 import { Home, About, Login, SignUp, Profile, Newsfeed, Board } from './pages';
+import NewsfeedList from './components/newsfeed/NewsfeedList';
+import BoardSubNavbar1 from './components/board/BoardSubNavbar1';
+import BoardSubNavbar2 from './components/board/BoardSubNavbar2';
 import BoardGlobal from './components/board/BoardGlobal';
 import BoardLocal from './components/board/BoardLocal';
 import BoardDetail from './components/board/BoardDetail';
@@ -29,7 +32,10 @@ function App() {
         <Route path="/signup" component={SignUp} />
         <Route path="/profile/:id" component={Profile} />
         <Route path="/newsfeed" component={Newsfeed} />
+        <Route path="/newsfeed/:name" component={NewsfeedList}></Route>
         <Route path="/board" component={Board} />
+        <Route path="/board/subnav1/" component={BoardSubNavbar1} />
+        <Route path="/board/subnav2/" component={BoardSubNavbar2} />
         <Route path="/board/subnav1/:name" component={BoardGlobal} />
         <Route path="/board/subnav2/:name" component={BoardLocal} />
         <Route path="/board-detail/:id" component={BoardDetail}></Route>

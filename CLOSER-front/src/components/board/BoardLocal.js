@@ -14,9 +14,7 @@ function BoardGlobal({ match }) {
   const { userInfo } = useSelector((state) => state.user)
 
   useEffect(() => {
-    axios.post(`http://localhost:8080/board/lboard/${name}`, {
-      location: userInfo.addr
-    })
+    axios.post(`http://localhost:8080/board/lboard/${name}?location=${userInfo.addr}`)
     .then((res) => {
       dispatch(getBoardList(res));
     })
@@ -30,7 +28,7 @@ function BoardGlobal({ match }) {
   return (
     <>
       <div>
-        클로저 {name === 'purchase' ? '공동구매해요' : name ==='getter' ? '지역 소모임' : name === 'sos' ? '도와주세요!' : '' }
+        클로저 {name === 'purchase' ? '공동구매해요' : name === 'getter' ? '동네 모임' : name === 'sos' ? '도와주세요!' : '' }
         {/* 피드가 비어있지 않다면 피드목록을 불러옴*/}
         {boardList && boardList.length !== 0 ? 
           <div>

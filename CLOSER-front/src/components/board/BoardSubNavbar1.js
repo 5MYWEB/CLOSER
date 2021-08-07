@@ -6,7 +6,7 @@ function BoardSubNavbar1() {
       <div>
         <ul>
           <li>
-            <Link to={ "/board/subnav1/recipe" }>한끼레시피</Link>
+            <Link to={"/board/subnav1/recipe"}>한끼레시피</Link>
           </li>
           <li>
             <Link to={"/board/subnav1/tip" }>자취팁</Link>

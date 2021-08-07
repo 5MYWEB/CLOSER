@@ -28,7 +28,9 @@ function BoardItem({ board }) {
       <br />
         <div>작성자 : {board.nickname}</div>
       <Link to={`/board-detail/${board.board_pk}`}>
-        <div>제목: {board.title}</div>
+        {board.title !== null && 
+          <div>제목: {board.title}</div>
+        }
         <div>내용 : {board.content}</div>
       </Link>
         <div>작성시간 : {board.created_at}</div>

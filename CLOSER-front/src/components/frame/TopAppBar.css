@@ -1,9 +1,52 @@
 .topappbar {
   position: static;
   display: block;
+  height: 12vh;
+  border-bottom: 0.1px solid rgba(160, 145, 245, .5);
+}
+
+.topapplist {
+  position: fixed;
+  right: 1.3rem;
+  top: 2rem;
+
 }
 
 
 h2 {
   text-align: center;
 }
+
+.logo-wrapper {
+  position: fixed;
+  top: 0.8rem;;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin: 0.2rem auto;
+}
+
+.logo {
+  width: 25vw;
+}
+
+.closerbot {
+  width: 11vw;
+  margin: 0.2rem 0.6rem 0 0;
+  transition: 0.1s;
+}
+
+.closerbot:active {
+  transform: scale(0.1);
+  opacity: 0.5;
+}
+
+.search {
+  width: 8vw;
+  transition: 0.1s;
+}
+
+.search:active {
+  transform: scale(0.1);
+  opacity: 0.5;
+}
+

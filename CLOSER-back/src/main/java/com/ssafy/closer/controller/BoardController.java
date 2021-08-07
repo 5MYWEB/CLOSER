@@ -418,6 +418,7 @@ public class BoardController {
         // 유저 정보가 담긴 infoDto에 kind_pk, board_pk 세팅
         infoDto.setKind_pk(1);
         infoDto.setBoard_pk(board_pk);
+        infoDto.setCreated_at(LocalDateTime.now());
 
         if(infoService.createComment(infoDto)){ // 댓글 생성 성공
             // 알림창

@@ -33,7 +33,7 @@
     </select>
 
     <insert id="createComment" parameterType="InfoDto">
-        insert into info(kind_pk, board_pk, userId, reply) values (#{kind_pk}, #{board_pk}, #{userId}, #{reply})
+        insert into info(kind_pk, board_pk, userId, reply, created_at) values (#{kind_pk}, #{board_pk}, #{userId}, #{reply}, #{created_at})
     </insert>
 
     <delete id="deleteComment" parameterType="int">

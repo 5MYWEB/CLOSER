@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
-import { createFeed } from '../../modules/newsfeed';
+import { createBoard } from '../../modules/board';
 
 const NewsfeedForm = () => {
 
@@ -10,6 +10,7 @@ const NewsfeedForm = () => {
 
   // 리덕스 user에서 userId 받아옴 
   const { userId } = useSelector((state) => state.user.userInfo);
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   const [text, setText] = useState('');
 
@@ -18,38 +19,52 @@ const NewsfeedForm = () => {
     setText(e.target.value)
   }
 
+  // 텍스트가 빈 값인지 검사하는 함수
+  const nullCheck = () => {
+    if(text === ''){
+      alert('댓글을 입력해주세요!')
+      return false
+    }
+    return true
+  }
+
   // 피드를 제출할때 작동하는 함수
   const onSubmit = (e) => {
     e.preventDefault();
     
-    axios.post('http://localhost:8080/board/', {
-        kind_pk: 7,
-        userId: userId,
-        title: null,
-        content: text,
+    if (nullCheck()){
+      axios.post('http://localhost:8080/board/', {
+          kind_pk: 7,
+          userId: userId,
+          title: null,
+          content: text,
+        })
+      .then(() => {
+        dispatch(createBoard())
       })
-    .then((res) => {
-      dispatch(createFeed())
-    })
-    .catch((err) =>{
-      console.log(err)
-    })
-    
-
-    setText('')
+      .catch((err) =>{
+        console.log(err)
+      })
+      setText('')
+    }
   };
 
   return (
     <>
-      <form encType="multipart/form-data" onSubmit={onSubmit}>
-        <input 
-          type="text" 
-          value={text}
-          maxLength={200} 
-          placeholder="무슨 생각을 하고 계신가요?"
-          onChange={onChangeText} />
-        <input type="submit" value="업로드" />
-      </form>
+      {isLoggedIn &&
+        <div>
+          <form encType="multipart/form-data" onSubmit={onSubmit}>
+            <input 
+              type="text" 
+              value={text}
+              maxLength={500} 
+              placeholder="무슨 생각을 하고 계신가요?"
+              onChange={onChangeText} />
+            <input type="submit" value="업로드" />
+          </form>
+          <br />
+        </div>
+      }
     </>
   )
 }

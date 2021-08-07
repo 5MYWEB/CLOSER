@@ -1,5 +1,128 @@
 # API 정리
 
+## User
+
+### 1. 회원가입
+
+#### A. [POST] /user/regist : 회원가입
+
+#### B. [POST] /user/userIdCheck : 아이디 중복 확인
+
+#### C. [POST] /user/userNicknameCheck : 닉네임 중복 확인
+
+
+
+### 2. 로그인
+
+
+
+### 3. 로그아웃
+
+
+
+### 4. 프로필 페이지 정보
+
+#### A. [POST] /user/profileinfo : 프로필 페이지 정보
+
+- output
+
+  ```
+  {
+    "userId": "hyein",
+    "nickname": "hyein1",
+    "password": "hyein",
+    "email": "hyein@ssafy.com",
+    "addr": "인천광역시 연수구",
+    "homeAlone": 2018,
+    "intro": null,
+    "profileImg": "2",
+    "phone": "010-1234-5678",
+    "badge": [
+      null
+    ]
+  }
+  ```
+
+#### B. [GET] /user/board/{userId} : 내 포스트
+
+- output
+
+  ```
+  [
+    {
+      "board_pk": 23,
+      "userId": "ssafy",
+      "kind_pk": 1,
+      "title": "aaaa",
+      "content": "bbbbbbbbbbbbbbbb",
+      "created_at": "2021-08-02T15:20:19",
+      "updated_at": "2021-08-02T15:20:19",
+      "totalNum": 0,
+      "gatherNum": 0,
+      "location": null,
+      "cnt": 0,
+      "badge": 0,
+      "nickname": "ssafy1"
+    },
+    # 생략
+  ]
+  ```
+
+#### C. [GET] /user/feed/{userId} : 내 피드
+
+- output
+
+  ```
+  [
+    {
+      "board_pk": 26,
+      "userId": "minji",
+      "kind_pk": 7,
+      "title": null,
+      "content": "시간 순삭",
+      "created_at": "2021-08-05T15:03:13",
+      "updated_at": null,
+      "totalNum": 0,
+      "gatherNum": 0,
+      "location": "서울시 동작구 염리동",
+      "cnt": 0,
+      "badge": 0,
+      "nickname": "minji"
+    }
+  ]
+  ```
+
+#### D. [GET] /user/bookmark/{userId} : 내 북마크
+
+- output
+
+  ```
+  [
+    {
+      "board_pk": 20,
+      "userId": "admin",
+      "kind_pk": 2,
+      "title": "checkkkkkkkkkkkk",
+      "content": "뺑ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ",
+      "created_at": "2021-08-02T15:02:19",
+      "updated_at": "2021-08-02T15:02:19",
+      "totalNum": 0,
+      "gatherNum": 0,
+      "location": null,
+      "cnt": 0,
+      "badge": 0,
+      "nickname": "admin1"
+    },
+    # 생략
+  ]
+  ```
+
+  
+
+
+
+
+
 ## Board
 
 ### 1. 게시글 리스트 조회 (POST)

@@ -4,18 +4,18 @@ import { getBoardList } from '../../modules/board';
 import axios from 'axios';
 import BoardItem from '../board/BoardItem';
 
-const UserFeed = ({ match }) => {
+const UserBoard = ({ match }) => {
 
   const dispatch = useDispatch();
   
   const userId = match.params.id
 
-  // 리덕스의 boardList, boardCreated, boardDeleted 불러옴
+  // 리덕스의 feedList, feedCreated, feedDeleted 불러옴
   const { boardList } = useSelector((state) => state.board);
 
-  // 리덕스에 boardList가 state로 담김
+  // 리덕스에 feedList가 state로 담김
   useEffect(() => {
-    axios.get(`http://localhost:8080/user/feed/${userId}`)
+    axios.get(`http://localhost:8080/user/board/${userId}`)
     .then((res) => {
       dispatch(getBoardList(res));
     })
@@ -40,4 +40,4 @@ const UserFeed = ({ match }) => {
   )
 };
 
-export default UserFeed;
+export default UserBoard;

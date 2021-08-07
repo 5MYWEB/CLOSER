@@ -16,8 +16,12 @@ const initialState = {
     homeAlone: null,
     intro: '',
     profileImg: null,
-    phone: null 
-  }
+    phone: null,
+    badge: [
+      0
+    ],
+  },
+  following: false,
 };
 
 /* 액션 타입 만들기 */
@@ -26,6 +30,8 @@ const initialState = {
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
 const GET_MY_INFO = 'GET_MY_INFO';
+const FOLLOW = 'FOLLOW';
+const GET_FOLLOW_INFO = 'GET_FOLLOW_INFO';
 
 /* 액션 생성함수 만들기 */
 // 액션 생성함수를 만들고 export 키워드를 사용해서 내보내주세요.
@@ -41,6 +47,14 @@ export const logoutAction = () => ({
 export const getMyInfoAction = (data) => ({
   type: GET_MY_INFO,
   data,
+});
+
+export const followAction = () => ({
+  type: FOLLOW,
+});
+
+export const getFollowInfoAction = () => ({
+  type: GET_FOLLOW_INFO,
 });
 
 
@@ -70,6 +84,16 @@ export const getMyInfoAction = (data) => ({
       return {
         ...state,
         userInfo: action.data
+      };
+    case FOLLOW:
+      return {
+        ...state,
+        following: true,
+      };
+    case GET_FOLLOW_INFO:
+      return {
+        ...state,
+        following: false,
       };
     default:
       return state;

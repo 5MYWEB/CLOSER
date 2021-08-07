@@ -1,9 +1,5 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
-
-import NewsfeedNear from './NewsfeedNear';
-import NewsfeedFavorite from './NewsfeedFavorite';
-import NewsfeedHot from './NewsfeedHot';
+import { Link } from 'react-router-dom';
 
 function NewsfeedNavbar() {
   return (
@@ -14,17 +10,13 @@ function NewsfeedNavbar() {
                 <Link to={"/newsfeed/near"}>NEAR</Link>
               </li>
               <li>
-                <Link to={"/newsfeed/favorite"}>FAVORITE</Link>
+                <Link to={"/newsfeed/follow"}>FAVORITE</Link>
               </li>
               <li>
-                <Link to={"/newsfeed/hot"}>HOT</Link>
+                <Link to={"/newsfeed/total"}>HOT</Link>
               </li>
             </ul>
         </div>
-        
-      <Route path="/newsfeed/near" component={NewsfeedNear}></Route>
-      <Route path="/newsfeed/favorite" component={NewsfeedFavorite}></Route>
-      <Route path="/newsfeed/hot" component={NewsfeedHot}></Route>
     </div>
   );
 }

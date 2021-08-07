@@ -15,7 +15,8 @@ const BoardDetail = ({match}) => {
   
   // 현재 게시글의 정보
   const [board, setBoard] = useState({
-    board_pk: '',
+    board_pk: null,
+    kind_pk: null,
     title: '',
     userId: '',
     content: '',
@@ -37,6 +38,7 @@ const BoardDetail = ({match}) => {
       setBoard({
         ...board,
         board_pk: res.data.board_pk,
+        kind_pk: res.data.kind_pk,
         title: res.data.title,
         userId: res.data.userId,
         content: res.data.content,
@@ -80,7 +82,9 @@ const BoardDetail = ({match}) => {
     <>
       <a href="javascript:history.back();">뒤로가기</a>
       <div>글 번호 : {board.board_pk}</div>
-      <div>제목 : {board.title}</div>
+      {board.kind_pk !== 7 && 
+        <div>제목 : {board.title}</div>
+      }
       <div>작성자 : {board.nickname}</div>
       <div>내용 : {board.content}</div>
       <div>작성시간 : {board.created_at}</div>

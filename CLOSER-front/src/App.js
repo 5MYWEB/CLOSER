@@ -1,9 +1,13 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-// import React, { useState } from 'react';
 import { TopAppBar, Navbar } from './components/frame/index';
 import { Home, About, Login, SignUp, Profile, Newsfeed, Board } from './pages';
-import BoardDetail from './components/board/BoardDetail'; // 게시판 상세페이지
+import NewsfeedList from './components/newsfeed/NewsfeedList';
+import BoardSubNavbar1 from './components/board/BoardSubNavbar1';
+import BoardSubNavbar2 from './components/board/BoardSubNavbar2';
+import BoardGlobal from './components/board/BoardGlobal';
+import BoardLocal from './components/board/BoardLocal';
+import BoardDetail from './components/board/BoardDetail';
 import BoardForm from './components/board/BoardForm';
 import BoardUpdateForm from './components/board/BoardUpdateForm';
 import FollowingList from './components/profile/FollowingList';
@@ -16,8 +20,7 @@ import UserBookmark from './components/profile/UserBookmark';
 import './App.css';
 
 function App() {
-  // const [ isLoggedIn, setIsLoggedIn ] = useState(false)
-  // const [ isSignedUp, setIsSignedUp ] = useState(false)
+
 
   return (
     <div>
@@ -29,7 +32,12 @@ function App() {
         <Route path="/signup" component={SignUp} />
         <Route path="/profile/:id" component={Profile} />
         <Route path="/newsfeed" component={Newsfeed} />
+        <Route path="/newsfeed/:name" component={NewsfeedList}></Route>
         <Route path="/board" component={Board} />
+        <Route path="/board/subnav1/" component={BoardSubNavbar1} />
+        <Route path="/board/subnav2/" component={BoardSubNavbar2} />
+        <Route path="/board/subnav1/:name" component={BoardGlobal} />
+        <Route path="/board/subnav2/:name" component={BoardLocal} />
         <Route path="/board-detail/:id" component={BoardDetail}></Route>
         <Route path="/board-create-form/" component={BoardForm} />
         <Route path="/board-update-form/:id" component={BoardUpdateForm} />

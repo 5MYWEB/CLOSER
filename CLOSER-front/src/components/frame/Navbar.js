@@ -1,30 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { Newsfeed, Board } from '../../pages';
-// import NewsfeedDetail from '../newsfeed/NewsfeedDetail'; // 뉴스피드 상세페이지
-// import BoardDetail from '../board/BoardDetail'; // 게시판 상세페이지
-// import BoardForm from '../board/BoardForm';
+import { RippleIcon } from '../../styles/index';
+import newsfeedOn from '../../assets/newsfeed-on.svg'
+import newsfeedOff from '../../assets/newsfeed-off.svg'
+import boardOn from '../../assets/board-on.svg'
+import boardOff from '../../assets/board-off.svg'
+import alertsOn from '../../assets/alerts-on.svg'
+import alertsOff from '../../assets/alerts-off.svg'
+import messagesOn from '../../assets/messages-on.svg'
+import messagedOff from '../../assets/messages-off.svg'
+
+import './Navbar.css';
+import '../../styles/theme.css'
 
 const Menu = () => {
-  return (
-    <div className="fixed-bottom">
-      {/* 하단 바 */}
-      {/* <Route path="/newsfeed" component={Newsfeed} />
-      <Route path="/board" component={Board} />
-      <Route path="/newsfeed-detail/:id" component={NewsfeedDetail}></Route>
-      <Route path="/board-detail/:id" component={BoardDetail}></Route>
-      <Route path="/board-create-form/" component={BoardForm} /> */}
-      
-      <div className="d-flex">
-        <ul className="row">
-          <li className="col"><Link to="/newsfeed">뉴스피드</Link></li>
-          <li className="col"><Link to="/board">게시판</Link></li>
-          <li className="col">알림</li>
-          <li className="col">DM</li>
-        </ul>
-      </div>
-    </div>
 
+  const [iconLight, setIconLight] = useState('');
+
+  const onClick = (e) => {
+      // now에 클릭한 아이콘의 id를 값으로 넣음
+      setIconLight(e.target.id);
+    }
+
+
+  return (
+    <div className="d-flex nav-wrapper align-items-center justify-content-between">
+      {
+      iconLight === 'newsfeed'
+      ? <Link to="/newsfeed"><RippleIcon src={newsfeedOn} alt="newsfeedOn" id="newsfeed" cclass="newsfeed" onClick={onClick} /></Link>
+      : <Link to="/newsfeed"><RippleIcon src={newsfeedOff} alt="newsfeedOff" id="newsfeed" cclass="newsfeed" onClick={onClick} /></Link>
+      }
+      {
+      iconLight === 'board'
+      ? <Link to="/board"><RippleIcon src={boardOn} alt="boardOn" id="board" cclass="board" onClick={onClick} /></Link>
+      : <Link to="/board"><RippleIcon src={boardOff} alt="boardOff" id="board" cclass="board" onClick={onClick} /></Link>
+      }
+      {
+      iconLight === 'alerts'
+      ? <RippleIcon src={alertsOn} alt="alertsOn" id="alerts" cclass="alerts" onClick={onClick} />
+      : <RippleIcon src={alertsOff} alt="alertsOff" id="alerts" cclass="alerts" onClick={onClick} />
+      }
+      {
+      iconLight === 'messages'
+      ? <RippleIcon src={messagesOn} alt="messagesOn" id="messages" cclass="messages" onClick={onClick} />
+      : <RippleIcon src={messagedOff} alt="messagedOff" id="messages" cclass="messages" onClick={onClick} />
+      }
+    </div>
   )
 }
 export default Menu;

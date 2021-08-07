@@ -36,7 +36,6 @@ class Sidebar extends React.Component {
           isOpen={this.state.menuOpen}
           onStateChange={(state) => this.handleStateChange(state)}
         >
-          <h2>SideBar</h2>
           <ul>
             <li>
               <Link to="/" onClick={() => this.closeMenu()}>홈</Link>

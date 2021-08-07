@@ -70,19 +70,34 @@ p {
 
 /* 제목 */
 .phrase {
+  display: inline;
   text-align: start;
   line-height: 3.5vh;
-  margin-left: 8vw;
   font-weight: 700;
+  margin-left: 3rem;
 }
+
+.input-label {
+  width: 60%;
+  margin-top: 3rem;
+  margin-left: 2rem;
+  padding: 3rem 0;
+}
+
 
 
 /* 입력창(input) */
 input {
   padding: 10px;
-  margin: 0.5rem 0;
+  margin: 1rem auto;
   border: none;
   border-radius: 8px;
+  /* flex-basis: 80vw; */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 80%;
+
 }
 
 input::placeholder {
@@ -92,8 +107,48 @@ input::placeholder {
   font-style: normal;
 }
 
-/* 버튼 */
+/* .input-line {
 
+} */
+.wrap-group {
+  /* position: relative; */
+  margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  /* width: 100%; */
+}
+
+
+.type-group {
+  position: relative;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  /* align-items: stretch; */
+  width: 100%;
+
+}
+
+.label-group {
+  display: block;
+  align-items: stretch;
+  margin-top: 2rem;
+}
+
+
+.button-group {
+  margin-top: 5rem;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+}
+
+/* 버튼 */
 .ripple-button {
   border: none;
   margin: 8px;
@@ -102,6 +157,7 @@ input::placeholder {
   cursor: pointer;
   box-sizing: border-box;
 }
+
 
 .ripple-button > .ripple {
   width: 20px;
@@ -113,6 +169,37 @@ input::placeholder {
   border-radius: 9999px;
   opacity: 1;
   animation: 0.9s ease 1 forwards ripple-effect;
+}
+
+.ripple-icon {
+  width: 25vw;
+  height: 13vh;
+  border: none;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-sizing: border-box;
+  /* text-align: center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ripple-icon > .ripple {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  background: #bebdfaad;
+  display: block;
+  content: "";
+  border-radius: 9999px;
+  opacity: 1;
+  animation: 0.9s ease 1 forwards ripple-effect;
+  pointer-events: none;
+}
+
+.ripple-icon > img {
+  pointer-events: none;
 }
 
 @keyframes ripple-effect {
@@ -139,36 +226,34 @@ input::placeholder {
 /* =================================== */
 
 .cbtn {
-  display: flex;
-  flex-direction: row;
+  /* flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
+  margin: 0.5rem 1rem;
   position: relative;
   border-style: none;
   font-family: inherit;
 }
 .cbtn-sm {
-  padding: 5px 10px;
+  padding: 9px 12px;
   font-size: 12px;
   line-height: 1.5;
-  border-radius: 3px;
   font-family: Spoqa Han Sans Neo;
   font-style: normal;
-  font-weight: regular;
+  font-weight: normal;
 }
 .cbtn-lg {
   padding: 9px 12px;
-  margin: 0.5rem auto;
-  width: 80%;
+  width: 60%;
   font-family: Spoqa Han Sans Neo;
   font-style: normal;
   font-weight: bold;
+  
 }
 
 .cbtn-primary {
   background: #5552FF;
   /* 🌔 Shadow / Z-index 1 */
-  
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   color: #fff;
@@ -192,4 +277,10 @@ input::placeholder {
   font-family: Spoqa Han Sans Neo;
   font-style: normal;
   font-weight: bold;
+}
+
+.cbtn-none {
+  background: #ECECFF;
+  color: #5552FF;
+  border-radius: 8px;
 }

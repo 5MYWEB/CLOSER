@@ -1,14 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { useSelector } from 'react-redux'
+// import { connect } from 'react-redux'
 import { bubble as Menu } from 'react-burger-menu'
+import { connect } from 'react-redux'
+
 import './Sidebar.css'
 
-class Sidebar extends React.Component {
+const mapStateToProps = state => {
+  return {
+    userInfo: state.user.userInfo
+  };
+};
+
+class ConnectedSidebar extends React.Component {
   constructor(props) { // render 함수보다 먼저 실행이 되면서 그 컴포넌트를 초기화를 담당
     super(props);
+
     this.state = {
-      menuOpen: false,
+      menuOpen: false,      
     }
   }
 
@@ -22,7 +31,13 @@ class Sidebar extends React.Component {
     this.setState({menuOpen : false})
   }
 
+  // 프로필 표시
+  // const userInfo = state => ( state.user );
   render () {
+    const { addr, intro, nickname, profileImg } = this.props.userInfo
+
+    console.log(this.props.userInfo)
+    console.log(addr, intro, nickname, profileImg)
     // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
     if (this.state.menuOpen) {return (
       <div>
@@ -31,6 +46,10 @@ class Sidebar extends React.Component {
           onStateChange={(state) => this.handleStateChange(state)}
         >
           <ul>
+            <p>{addr}</p>
+            <p>{intro}</p>
+            <p>{nickname}</p>
+            <p>{profileImg}</p>
             <li>
               <Link to="/" onClick={() => this.closeMenu()}>홈</Link>
             </li>
@@ -86,5 +105,7 @@ class Sidebar extends React.Component {
     }
   }
 }
+
+const Sidebar = connect(mapStateToProps)(ConnectedSidebar)
 
 export default Sidebar;

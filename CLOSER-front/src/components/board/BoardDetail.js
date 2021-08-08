@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { deleteBoard } from '../../modules/board';
+import { likeBoard } from '../../modules/board';
 import axios from 'axios';
 
 import CommentList from '../comment/CommentList';
@@ -32,6 +33,17 @@ const BoardDetail = ({match}) => {
   // 현재 로그인한 사용자의 아이디 가져오기
   const { userId } = useSelector((state) => state.user.userInfo);
 
+  // 좋아요, 북마크를 눌렀을때 상태 반영 
+  const { boardLiked } = useSelector((state) => state.board);
+
+  // 좋아요, 댓글, 북마크 갯수
+  const [countLike, setCountLike] = useState(0)
+  const [countBookmark, setCountBookmark] = useState(0)
+
+  // 유저의 좋아요, 북마크 상태
+  const [ liked, setLiked ] = useState(false)
+  const [ bookmarked, setBookmarked] = useState(false)
+
   useEffect(() => {
     axios.get(`http://localhost:8080/board/${pk}`)
     .then((res) => {
@@ -51,8 +63,46 @@ const BoardDetail = ({match}) => {
     .catch((err) =>{
       console.log(err)
     })
-  // eslint-disable-next-line
-  }, [])
+
+    axios.post(`http://localhost:8080/board/${pk}/info`, {
+      kind_pk: 2,
+      userId: userId,
+      flag: "false",
+    })
+    .then((res) => {
+      if(res.data.clicked === true){
+        setLiked(true)
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
+    axios.post(`http://localhost:8080/board/${pk}/info`, {
+      kind_pk: 3,
+      userId: userId,
+      flag: "false",
+    })
+    .then((res) => {
+      if(res.data.clicked === true){
+        setBookmarked(true)
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
+    axios.post(`http://localhost:8080/board/${pk}/info-cnt`)
+    .then((res) => {
+      setCountLike(res.data.countLike)
+      setCountBookmark(res.data.countBookmark)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
+    // eslint-disable-next-line
+  }, [boardLiked])
 
 
   // 삭제 버튼을 클릭했을 때 실행되는 함수
@@ -64,8 +114,7 @@ const BoardDetail = ({match}) => {
           userId: userId
         }
       })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         dispatch(deleteBoard())
         alert('게시물이 삭제되었습니다.')
         // 삭제 후 페이지 뒤로가기
@@ -77,6 +126,38 @@ const BoardDetail = ({match}) => {
       })
     }
   };
+
+  // 좋아요 버튼을 눌렀을 때
+  const onClickLike = () => {
+    axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
+      kind_pk: 2,
+      userId: userId,
+      flag: "true",
+    })
+    .then(() => {
+      setLiked(!liked)
+      dispatch(likeBoard())
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  // 북마크 버튼을 눌렀을 때
+  const onClickBookmark = () => {
+    axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
+      kind_pk: 3,
+      userId: userId,
+      flag: "true",
+    })
+    .then(() => {
+      setBookmarked(!bookmarked)
+      dispatch(likeBoard())
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
 
   return (
     <>
@@ -97,8 +178,33 @@ const BoardDetail = ({match}) => {
           <button onClick={onClickDelete}>삭제</button>
         </div>
       }
-      <hr />
-      <CommentList board_pk={Number(pk)} />
+      <div>
+        { liked
+          ?
+          <div>
+            <button onClick={onClickLike}>좋아요 취소</button> {countLike}
+          </div>
+          : 
+          <div>
+            <button onClick={onClickLike}>좋아요</button> {countLike}
+          </div>
+        }
+        
+        { bookmarked
+          ?
+          <div>
+            <button onClick={onClickBookmark}>북마크 취소</button> {countBookmark}
+          </div>
+          : 
+          <div>
+            <button onClick={onClickBookmark}>북마크</button> {countBookmark}
+          </div>
+        }
+      </div>
+      <div>
+        <hr />
+        <CommentList board_pk={Number(pk)} />
+      </div>
     </>
   )
 }

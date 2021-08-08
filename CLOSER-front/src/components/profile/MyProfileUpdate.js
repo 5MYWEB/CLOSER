@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import UserLocation from './UserLocation';
 
 const MyProfileUpdate = () => {
 
@@ -153,6 +154,7 @@ const MyProfileUpdate = () => {
       위치
       <Row className="justify-content-center">
         <Col>
+          <UserLocation />
           <input 
             type="text"
             value={changedUserinfo.addr}

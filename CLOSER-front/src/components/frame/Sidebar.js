@@ -35,9 +35,6 @@ class ConnectedSidebar extends React.Component {
   // const userInfo = state => ( state.user );
   render () {
     const { addr, intro, nickname, profileImg } = this.props.userInfo
-
-    console.log(this.props.userInfo)
-    console.log(addr, intro, nickname, profileImg)
     // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
     if (this.state.menuOpen) {return (
       <div>
@@ -66,7 +63,7 @@ class ConnectedSidebar extends React.Component {
               <Link to="/signup" onClick={() => this.closeMenu()}>회원가입</Link>
             </li>
             <li>
-              <Link to='/profile' onClick={() => this.closeMenu()}>프로필</Link>
+              <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
             </li>
           </ul>
         </Menu>
@@ -96,7 +93,7 @@ class ConnectedSidebar extends React.Component {
                 <Link to="/signup" onClick={this.handleStatus}>회원가입</Link>
               </li>
               <li>
-                <Link to='/profile' onClick={() => this.closeMenu()}>프로필</Link>
+                <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
               </li>
             </ul>
           </Menu>

@@ -105,7 +105,7 @@ function Login({ history }) {
         axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
           .then((response) => {
             dispatch(getMyInfoAction(response.data))
-            history.push('/home')
+            history.push('/')
           })
           .catch((error) => {
             console.log(error)

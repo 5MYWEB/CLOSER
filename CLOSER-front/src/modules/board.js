@@ -1,7 +1,8 @@
 /* 초기 상태 선언 */
 const initialState = {
-  weekBestList: null,
-  boardList: null,
+  weekBestList: null, // 이번주 베스트
+  boardList: null, // 최신순 리스트(디폴트)
+  bestList: null, // 인기순 리스트
   boardCreated: false,
   boardUpdated: false,
   boardDeleted: false,
@@ -11,6 +12,7 @@ const initialState = {
 const CREATE_BOARD = 'CREATE_BOARD';
 const GET_BOARD_LIST = 'GET_BOARD_LIST';
 const GET_WEEK_BEST_LIST = 'GET_WEEK_BEST_LIST';
+const GET_BEST_LIST = 'GET_BEST_LIST';
 const UPDATE_BOARD = 'UPDATE_BOARD';
 const DELETE_BOARD = 'DELETE_BOARD';
 
@@ -31,6 +33,13 @@ export const getWeekBestList = (data) => {
 export const getBoardList = (data) => {
   return {
     type: GET_BOARD_LIST,
+    data
+  }
+};
+
+export const getBestList = (data) => {
+  return {
+    type: GET_BEST_LIST,
     data
   }
 };
@@ -66,6 +75,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         boardList: action.data.data,
+      };
+    case GET_BEST_LIST:
+      return {
+        ...state,
+        bestList: action.data.data,
       };
     case UPDATE_BOARD:
       return {

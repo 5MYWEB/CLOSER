@@ -5,17 +5,25 @@ import { Link } from 'react-router-dom';
 import { deleteBoard } from '../../modules/board';
 import axios from 'axios';
 
+import CommentList from '../comment/CommentList';
+
+/* eslint-disable no-script-url */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 const BoardDetail = ({match}) => {
   const dispatch = useDispatch();
   
   // 현재 게시글의 정보
   const [board, setBoard] = useState({
-    board_pk: '',
+    board_pk: null,
+    kind_pk: null,
     title: '',
     userId: '',
     content: '',
     created_at: '',
+    updated_at: '',
     location: '',
+    nickname: '',
   })
 
   // 현재 게시글의 pk
@@ -30,17 +38,20 @@ const BoardDetail = ({match}) => {
       setBoard({
         ...board,
         board_pk: res.data.board_pk,
+        kind_pk: res.data.kind_pk,
         title: res.data.title,
         userId: res.data.userId,
         content: res.data.content,
         created_at: res.data.created_at,
         updated_at: res.data.updated_at,
         location: res.data.location,
+        nickname: res.data.nickname,
       })
     })
     .catch((err) =>{
       console.log(err)
     })
+  // eslint-disable-next-line
   }, [])
 
 
@@ -71,8 +82,10 @@ const BoardDetail = ({match}) => {
     <>
       <a href="javascript:history.back();">뒤로가기</a>
       <div>글 번호 : {board.board_pk}</div>
-      <div>제목 : {board.title}</div>
-      <div>작성자 : {board.userId}</div>
+      {board.kind_pk !== 7 && 
+        <div>제목 : {board.title}</div>
+      }
+      <div>작성자 : {board.nickname}</div>
       <div>내용 : {board.content}</div>
       <div>작성시간 : {board.created_at}</div>
       <div>수정시간 : {board.updated_at}</div>
@@ -85,6 +98,7 @@ const BoardDetail = ({match}) => {
         </div>
       }
       <hr />
+      <CommentList board_pk={Number(pk)} />
     </>
   )
 }

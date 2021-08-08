@@ -1,5 +1,7 @@
 package com.ssafy.closer.model.service;
 
+import com.ssafy.closer.model.dto.BoardDto;
+import com.ssafy.closer.model.dto.InfoDto;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Map<String, String> login(Map<String, String> user) throws SQLException {
-        if(user.get("userId") == null || user.get("password") == null)
+        if (user.get("userId") == null || user.get("password") == null)
             return null;
         return sqlSession.getMapper(UserMapper.class).login(user);
     }
@@ -65,6 +67,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Integer> userbadge(String userId) {
         return sqlSession.getMapper(UserMapper.class).userbadge(userId);
+    }
 
+    @Override
+    public List<BoardDto> userPost(String userId) {
+        return sqlSession.getMapper(UserMapper.class).userPost(userId);
+    }
+
+    @Override
+    public List<BoardDto> userFeed(String userId) {
+        return sqlSession.getMapper(UserMapper.class).userFeed(userId);
+    }
+
+    @Override
+    public List<BoardDto> userBookmark(String userId) {
+        return sqlSession.getMapper(UserMapper.class).userBookmark(userId);
     }
 }

@@ -17,9 +17,7 @@ const initialState = {
     intro: '',
     profileImg: null,
     phone: null,
-    badge: [
-      0
-    ],
+    badge: [],
   },
   following: false,
 };

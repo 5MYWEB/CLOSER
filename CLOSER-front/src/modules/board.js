@@ -6,6 +6,7 @@ const initialState = {
   boardCreated: false,
   boardUpdated: false,
   boardDeleted: false,
+  boardLiked: false,
 };
 
 /* 액션 타입 만들기 */
@@ -15,6 +16,7 @@ const GET_WEEK_BEST_LIST = 'GET_WEEK_BEST_LIST';
 const GET_BEST_LIST = 'GET_BEST_LIST';
 const UPDATE_BOARD = 'UPDATE_BOARD';
 const DELETE_BOARD = 'DELETE_BOARD';
+const LIKE_BOARD = 'LIKE_BOARD';
 
 /* 액션 생성함수 만들기 */
 export const createBoard = () => {
@@ -56,7 +58,13 @@ export const deleteBoard = () => {
     type: DELETE_BOARD,
   }
 };
-  
+
+export const likeBoard = () => {
+  return {
+    type: LIKE_BOARD,
+  }
+};
+
 
 /* 리듀서 선언 */
 const reducer = (state = initialState, action) => {
@@ -90,6 +98,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         boardDeleted: true,
+      };
+    case LIKE_BOARD:
+      return {
+        ...state,
+        boardLiked: !state.boardLiked,
       };
     default:
       return state;

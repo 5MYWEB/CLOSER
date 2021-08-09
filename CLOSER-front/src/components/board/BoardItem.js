@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { likeBoard } from '../../modules/board';
+import UserBadgeItem from '../profile/UserBadgeItem'
 
 function BoardItem({ board }) {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function BoardItem({ board }) {
   }, []);
 
   useEffect(() => {
+    // 좋아요 조회
     axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
       kind_pk: 2,
       userId: userId,
@@ -45,6 +47,7 @@ function BoardItem({ board }) {
       console.log(err)
     })
 
+    // 북마크 조회
     axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
       kind_pk: 3,
       userId: userId,
@@ -59,6 +62,7 @@ function BoardItem({ board }) {
       console.log(err)
     })
 
+    // 댓글, 좋아요, 북마크 개수
     axios.post(`http://localhost:8080/board/${board.board_pk}/info-cnt`)
     .then((res) => {
       setCountLike(res.data.countLike)
@@ -108,6 +112,7 @@ function BoardItem({ board }) {
     <>
       <br />
         <div>작성자 : {board.nickname}</div>
+        <div>뱃지 : <UserBadgeItem badge={board.badge}/></div>
       <Link to={`/board-detail/${board.board_pk}`}>
         {board.title !== null && 
           <div>제목: {board.title}</div>

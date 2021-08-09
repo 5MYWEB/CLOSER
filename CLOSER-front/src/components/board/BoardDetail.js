@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-
 import { deleteBoard } from '../../modules/board';
 import { likeBoard } from '../../modules/board';
 import axios from 'axios';
 
 import CommentList from '../comment/CommentList';
+import UserBadgeItem from '../profile/UserBadgeItem';
 
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -25,6 +25,7 @@ const BoardDetail = ({match}) => {
     updated_at: '',
     location: '',
     nickname: '',
+    badge: null,
   })
 
   // 현재 게시글의 pk
@@ -58,12 +59,14 @@ const BoardDetail = ({match}) => {
         updated_at: res.data.updated_at,
         location: res.data.location,
         nickname: res.data.nickname,
+        badge: res.data.badge,
       })
     })
     .catch((err) =>{
       console.log(err)
     })
 
+    // 좋아요 눌렀는지
     axios.post(`http://localhost:8080/board/${pk}/info`, {
       kind_pk: 2,
       userId: userId,
@@ -78,6 +81,7 @@ const BoardDetail = ({match}) => {
       console.log(err)
     })
 
+    // 북마크 눌렀는지
     axios.post(`http://localhost:8080/board/${pk}/info`, {
       kind_pk: 3,
       userId: userId,
@@ -92,6 +96,7 @@ const BoardDetail = ({match}) => {
       console.log(err)
     })
 
+    // 댓글 좋아요 북마크 개수
     axios.post(`http://localhost:8080/board/${pk}/info-cnt`)
     .then((res) => {
       setCountLike(res.data.countLike)
@@ -167,6 +172,7 @@ const BoardDetail = ({match}) => {
         <div>제목 : {board.title}</div>
       }
       <div>작성자 : {board.nickname}</div>
+      <div>뱃지 : <UserBadgeItem badge={board.badge}/></div>
       <div>내용 : {board.content}</div>
       <div>작성시간 : {board.created_at}</div>
       <div>수정시간 : {board.updated_at}</div>

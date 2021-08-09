@@ -1,21 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import UserBadgeItem from './UserBadgeItem';
 
 function UserBadge({userId}) {
 
+  const [ badgeList, SetbadgeList] = useState([])
+
+  useEffect(() => {
+    axios.post(`http://localhost:8080/user/profileinfo/?userId=${userId}`)
+    .then((res) => {
+      SetbadgeList(res.data.badge)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  // eslint-disable-next-line
+  }, [])
+
   return (
     <div>
-      {/* {followerList.length !== 0 ? 
+      {badgeList.length !== 0 
+        ? 
         <div>
-          {followerList.length} 명이 나를 팔로우합니다.
-          {followerList.map((follower) => {
+          {badgeList.length} 명이 나를 팔로우합니다.
+          {/* 인덱스로 쓸 값이 없을때 인덱스를 만들어 줄 수 있다 */}
+          {badgeList.map((badge, index) => {
             return (
-              <FollowerItem key={follower.follow_pk} follower={follower} />
+              <UserBadgeItem key={index} badge={badge} />
             );
           })}
-        </div> :
-        <div>
-          아직 나를 팔로우하는 사람이 없습니다:(
-        </div> } */}
+        </div> 
+        :
+        '' 
+      }
     </div>
   )
 }

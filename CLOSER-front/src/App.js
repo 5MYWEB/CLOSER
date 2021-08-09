@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { TopAppBar, Navbar } from './components/frame/index';
-import { Home, About, Login, SignUp, Profile, Newsfeed, Board, Search } from './pages';
+import { Home, About, Login, SignUp, Profile, Newsfeed, Board, Search, Messages } from './pages';
 import NewsfeedList from './components/newsfeed/NewsfeedList';
 import BoardSubNavbar1 from './components/board/BoardSubNavbar1';
 import BoardSubNavbar2 from './components/board/BoardSubNavbar2';
@@ -36,6 +36,7 @@ function App() {
         <Route path="/newsfeed/:name" component={NewsfeedList} />
         <Route path="/board" component={Board} />
         <Route path="/search" component={Search} />
+        <Route path="/messages" component={Messages} />
         <Route path="/board/subnav1/" component={BoardSubNavbar1} />
         <Route path="/board/subnav2/" component={BoardSubNavbar2} />
         <Route path="/board/subnav1/:name" component={BoardGlobal} />

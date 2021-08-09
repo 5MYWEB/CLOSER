@@ -211,9 +211,12 @@ public class UserController {
 
     @ApiOperation(value = "주소 변경")
     @PutMapping("/change-location")
-    public ResponseEntity changeLocation(@RequestBody MemberDto memberDto){
-//        String userId = info.get("userId");
-//        String addr = info.get("addr");
+    public ResponseEntity changeLocation(@RequestBody Map<String, String> info){
+        String userId = info.get("userId");
+        String addr = info.get("addr");
+        MemberDto memberDto = new MemberDto();
+        memberDto.setUserId(userId);
+        memberDto.setAddr(addr);
 
         if(userService.changeLocation(memberDto)){
             return new ResponseEntity(SUCCESS, HttpStatus.OK);

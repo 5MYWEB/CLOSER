@@ -6,10 +6,9 @@ import { Link } from 'react-router-dom';
 import { changeAddr } from '../../modules/user';
 import { Container, Row, Col } from 'react-bootstrap';
 
-function NaverMapAPI({addr}) {
+function NaverMapAPI() {
   const dispatch = useDispatch();
 
-  // let changedAddr = "";
   const navermaps = window.naver.maps
 
   // 싸피 주소
@@ -59,10 +58,7 @@ function NaverMapAPI({addr}) {
       let address = tmp.area1.name + ' ' + tmp.area2.name + ' ' + tmp.area3.name
       
       if(address !== ''){
-        console.log(address)
-        // changedAddr = address
         dispatch(changeAddr(address))
-        // axios
       }
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,29 +83,36 @@ function NaverMapAPI({addr}) {
           animation={1}
         />
       </NaverMap>
-      
-      {/* <button onClick={getCurrentLocation}>현재 위치 불러오기</button> */}
     </Container>
   );
 }
 
 const UserLocation = () => {
-  const { userInfo, changedAddr } = useSelector((state) => state.user);
-  console.log(userInfo.userId)
-  console.log(changedAddr)
+  const { isLoggedIn, userInfo, changedAddr } = useSelector((state) => state.user);
+
+  // 수정할 정보의 초기값은 기존 정보와 동일하다.
+  const [changedUserinfo, setChangedUserInfo] = useState({
+    userId: userInfo.userId,
+    addr: userInfo.addr
+  })
+
+  useEffect(()=>{
+    setChangedUserInfo({
+      ...changedUserinfo,
+      addr: changedAddr
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [changedAddr])
+
   // 저장
   const onClickSave = () => {
-    if (changedAddr !== ""){
-      axios.put('http://localhost:8080/user/mypage', changedAddr)
+    axios.put('http://localhost:8080/user/change-location', {userId:changedUserinfo.userId, addr:changedUserinfo.addr})
       .then((res) => {
         console.log(res)
       })
       .catch((err) => {
         console.log(err)
       })
-    } else{
-      alert('닉네임 중복체크를 해주세요!')
-    }
   }
 
   return (
@@ -122,24 +125,29 @@ const UserLocation = () => {
       >
         <NaverMapAPI/>
       </RenderAfterNavermapsLoaded>
-
-      <h5 className="my-2">현재 위치</h5>
-      <Row className="justify-content-center">
-        <Col>
-          <div>{ changedAddr }</div>
-        </Col>
-      </Row>
-      <br />
-      {/* Row-6 : 취소, 저장 */}
-      <Row className="justify-content-center">
-        <Col >
-          <Link to={`/`}><button>취소</button></Link>
-        </Col>
-        <Col>
-        <button onClick={onClickSave}>저장</button>
-          
-        </Col>
-      </Row>
+      
+      { isLoggedIn === true &&
+        <div>
+          <h5 className="my-2">현재 위치</h5>
+          <Row className="justify-content-center">
+            <Col>
+              <div>{ changedAddr }</div>
+            </Col>
+          </Row>
+          <br />
+          {/* Row-6 : 취소, 저장 */}
+          <Row className="justify-content-center">
+            <Col >
+              <Link to={`/`}><button>취소</button></Link>
+            </Col>
+            <Col>
+            <button onClick={onClickSave}>저장</button>
+              
+            </Col>
+          </Row>
+        </div>
+      }
+      
     </Container>
   )
 };

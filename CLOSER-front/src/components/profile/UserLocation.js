@@ -1,102 +1,155 @@
-import React from 'react';
-// import { RenderAfterNavermapsLoaded, NaverMap, Marker } from "react-naver-maps";
-// import $ from 'jquery';
-// import ScriptTag from 'react-script-tag';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { RenderAfterNavermapsLoaded, NaverMap, Marker } from "react-naver-maps";
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { changeAddr } from '../../modules/user';
+import { Container, Row, Col } from 'react-bootstrap';
+
+function NaverMapAPI() {
+  const dispatch = useDispatch();
+
+  const navermaps = window.naver.maps
+
+  // 싸피 주소
+  const [myLocation, setMyLocation] = useState({ 
+    latitude: 37.5012901, 
+    longitude: 127.0396125
+  })
+
+  // get current position
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setMyLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      });
+    } else {
+      window.alert("현재위치를 알수 없습니다.");
+    }
+  }, [])
+
+  useEffect(() => {
+    const latlng = new navermaps.LatLng(myLocation.latitude, myLocation.longitude);
+  
+    navermaps.Service.reverseGeocode({
+      coords: latlng,
+      orders: [
+        navermaps.Service.OrderType.ADDR,
+        navermaps.Service.OrderType.ROAD_ADDR
+      ].join(',')
+    }, function(status, response) {
+      if (status === navermaps.Service.Status.ERROR) {
+        if (!latlng) {
+          return alert('ReverseGeocode Error, Please check latlng');
+        }
+        if (latlng.toString) {
+          return alert('ReverseGeocode Error, latlng:' + latlng.toString());
+        }
+        if (latlng.x && latlng.y) {
+          return alert('ReverseGeocode Error, x:' + latlng.x + ', y:' + latlng.y);
+        }
+        return alert('ReverseGeocode Error, Please check latlng');
+      }
+  
+      let tmp = response.v2.results[0].region;
+      let address = tmp.area1.name + ' ' + tmp.area2.name + ' ' + tmp.area3.name
+      
+      if(address !== ''){
+        dispatch(changeAddr(address))
+      }
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [myLocation]);
+
+  return (
+    <Container className="px-0">
+      <NaverMap
+        mapDivId={'maps-getting-started-uncontrolled'} // default: react-naver-map
+        style={{
+          width: '100%', // 네이버지도 가로 길이
+          height: '50vh' // 네이버지도 세로 길이
+        }}
+        center={{ lat: myLocation.latitude, lng: myLocation.longitude}}  // 지도 위치
+        // defaultCenter={{ lat: 37.5012901, lng: 127.0396125 }} // 지도 초기 위치
+        defaultZoom={16} // 지도 초기 확대 배율
+        zoomControl={false}
+      >
+        <Marker
+          key={1} 
+          position={new navermaps.LatLng(myLocation.latitude, myLocation.longitude)}
+          animation={1}
+        />
+      </NaverMap>
+    </Container>
+  );
+}
 
 const UserLocation = () => {
-    // <RenderAfterNavermapsLoaded
-    //   ncpClientId={"6md51fbo47"} // 자신의 네이버 계정에서 발급받은 Client ID
-    //   error={<p>Maps Load Error</p>}
-    //   loading={<p>Maps Loading...</p>}
-    // >
-    //   <NaverMap
-    //     mapDivId={"map"} // default: react-naver-map
-    //     style={{
-    //       width: 800, // 네이버지도 가로 길이
-    //       height: 800 // 네이버지도 세로 길이
-    //     }}
-    //     defaultCenter={{ lat: 37.554722, lng: 126.970833 }} // 지도 초기 위치
-    //     zoom={props.zoom}
-    //   >
-    //     {props.address !== null
-    //       ? props.test.map((ele, idx) => {
-    //           return (
-    //             <Marker
-    //               // icon={""}
-    //               key={idx}
-    //               position={{ lat: ele.lat, lng: ele.lng }}
-    //               animation={2}
-    //               onClick={() => {
-    //                 alert('hello');
-    //               }}
-    //             />
-    //           );
-    //         })
-    //       : null}
-    //   </NaverMap>
-    // </RenderAfterNavermapsLoaded>
-    // let curtBtn = '<img src="https://media.discordapp.net/attachments/861279386740064306/871983067219243078/Asset_1.png" alt="현재위치로 이동" width="50px">';
+  const { isLoggedIn, userInfo, changedAddr } = useSelector((state) => state.user);
 
-    // // 현재 위치 위도, 경도 좌표를 담을 변수
-    // let curtLoca = "";
+  // 수정할 정보의 초기값은 기존 정보와 동일하다.
+  const [changedUserinfo, setChangedUserInfo] = useState({
+    userId: userInfo.userId,
+    addr: userInfo.addr
+  })
 
-    // // 싸피 서울캠퍼스 위/경도 좌표 객체
-    // let ssafy = new naver.maps.LatLng(37.5012901, 127.0396125);
+  useEffect(()=>{
+    setChangedUserInfo({
+      ...changedUserinfo,
+      addr: changedAddr
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [changedAddr])
 
-    // // Map 초기화
-    // let map = new naver.maps.Map('map', {
-    //     center: ssafy, // x,y 값 설정
-    //     scaleControl: false, // 우측 하단 scale 표시
-    //     mapDataControl: false, // 좌측 하단 @Naver Corp 표시
-    //     mapTypeControl: true,
-    //     zoom: 17
-    // });
+  // 저장
+  const onClickSave = () => {
+    axios.put('http://localhost:8080/user/change-location', {userId:changedUserinfo.userId, addr:changedUserinfo.addr})
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
-    // // 싸피 마커 설정
-    // let marker = new naver.maps.Marker({
-    //     position: ssafy,
-    //     map: map,
-    //     // icon: { url: "https://media.discordapp.net/attachments/861279386740064306/871983067219243078/Asset_1.png" }
-    // });
-
-
-    // let onSuccessGeolocation = function (position) {
-    //     curtLoca = new naver.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-    //     map.setCenter(curtLoca);
-    //     map.setZoom(17);
-
-    //     new naver.maps.Marker({
-    //         position: curtLoca,
-    //         map: map
-    //     })
-    // }
-
-    // let onErrorGeolocation = function () {
-    //     let agent = navigator.userAgent.toLowerCase();
-    //     let name = navigator.appName;
-
-    //     if(name === 'Microsoft Internet Explorer' || agent.indexOf('trident') > -1 || agent.indexOf('edge/') > -1 ){
-    //         alert("지원하지 않는 브라우저입니다.");
-    //     }else{
-    //         console.log("현재 위치를 가져오는데 에러가 발생했습니다.")
-    //     }
-    // }
-
-    // if(navigator.geolocation){
-    //     navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
-    // }else{
-    //     console.log("Geolocation Not supported Required");
-    // }
-
-
-    // return (
-    //   <div>
-    //     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6md51fbo47" />
-    //     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=6md51fbo47&submodules=geocoder" />
-    //     <div id="map" style="width:100%;"></div>
-    //   </div>
-    // );
-  };
+  return (
+    <Container className="px-0 mt-3">
+      <RenderAfterNavermapsLoaded	   // Render후 Navermap로드
+        ncpClientId={'6md51fbo47'} // 자신의 네이버 계정에서 발급받은 Client ID
+        error={<p>Maps Load Error</p>}
+        loading={<p>Maps Loading...</p>}
+        submodules={["geocoder"]}
+      >
+        <NaverMapAPI/>
+      </RenderAfterNavermapsLoaded>
+      
+      { isLoggedIn === true &&
+        <div>
+          <h5 className="my-2">현재 위치</h5>
+          <Row className="justify-content-center">
+            <Col>
+              <div>{ changedAddr }</div>
+            </Col>
+          </Row>
+          <br />
+          {/* Row-6 : 취소, 저장 */}
+          <Row className="justify-content-center">
+            <Col >
+              <Link to={`/`}><button>취소</button></Link>
+            </Col>
+            <Col>
+            <button onClick={onClickSave}>저장</button>
+              
+            </Col>
+          </Row>
+        </div>
+      }
+      
+    </Container>
+  )
+};
   
   export default UserLocation;

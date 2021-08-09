@@ -23,9 +23,7 @@ chatClient.connectUser(
 const filters = { type: 'messaging', members: { $in: [user_id] } };
 const sort = { last_message_at: -1 };
 
-const Messages = ({ match, location }) => {
-  console.log("match", match);
-  console.log("location", location);
+const Messages = () => {
   const [chatClient, setChatClient] = useState(null);
 
   useEffect(() => {
@@ -52,10 +50,10 @@ const Messages = ({ match, location }) => {
 
   return (
       <Chat client={chatClient} theme='messaging light'>
-        <ChannelList filters={filters} sort={sort}/>
+        <ChannelList filters={filters} sort={sort} />
         <Channel>
           <Window>
-            <ChannelHeader />
+            <ChannelHeader/>
             <MessageList />
             <MessageInput />
           </Window>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, withRouter  } from 'react-router-dom';
-import { TopAppBar, Navbar } from './components/frame/index';
+import { TopAppBar, Navbar, BackButton } from './components/frame/index';
 import { Home, About, Login, SignUp, Profile, Newsfeed, Board, Search, Messages } from './pages';
 import NewsfeedList from './components/newsfeed/NewsfeedList';
 import BoardSubNavbar1 from './components/board/BoardSubNavbar1';
@@ -30,7 +30,7 @@ function App( { location }) {
     '/board-detail': null,
     '/board-create-form': null,
     '/board-update-form': null,
-    '/messages': null,
+    '/messages': <BackButton />,
     '/profile': null,
     '/profile-update': null
   }

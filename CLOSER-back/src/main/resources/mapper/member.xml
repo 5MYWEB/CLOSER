@@ -87,8 +87,14 @@
         where board_pk in
               ( select board_pk
                 from info
-                where kind_pk = 3
+                where userId=#{userId} and kind_pk = 3
               )
         order by board_pk desc
     </select>
+
+    <update id="changeLocation" parameterType="MemberDto">
+        update user
+        set addr=#{addr}
+        where userId = #{userId}
+    </update>
 </mapper>

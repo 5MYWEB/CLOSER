@@ -3,7 +3,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import UserLocation from './UserLocation';
 
 const MyProfileUpdate = () => {
 
@@ -22,7 +21,6 @@ const MyProfileUpdate = () => {
     nickname: userInfo.nickname,
     password: userInfo.password,
     email: userInfo.email,
-    addr: userInfo.addr,
     homeAlone: userInfo.homeAlone,
     intro: userInfo.intro,
     profileImg: userInfo.profileImg,
@@ -148,21 +146,6 @@ const MyProfileUpdate = () => {
           부터 했어요!
         </Col>
       </Row >
-      <br />
-      
-      {/* Row-4 : 위치 */}
-      위치
-      <Row className="justify-content-center">
-        <Col>
-          <UserLocation />
-          <input 
-            type="text"
-            value={changedUserinfo.addr}
-            name="addr"
-            onChange={onChange}
-          />
-        </Col>
-      </Row>
       <br />
 
       {/* Row-5 : 한줄소개 */}

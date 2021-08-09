@@ -19,4 +19,6 @@ public class MemberDto {
     private String profileImg;
     private String phone;
     private List<Integer> badge;
+    private int following;
+    private int follower;
 }

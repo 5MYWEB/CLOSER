@@ -55,6 +55,9 @@ class Sidebar extends React.Component {
             <li>
               <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
             </li>
+            <li>
+              <Link to={`/change-location/`} onClick={() => this.closeMenu()}>동네 변경</Link>
+            </li>
           </ul>
         </Menu>
       </div>

@@ -1,10 +1,10 @@
 import React from 'react';
 
-function UserBadgeItem() {
+function UserBadgeItem({badge}) {
 
   return (
     <div>
-      
+      {badge}
     </div>
   )
 }

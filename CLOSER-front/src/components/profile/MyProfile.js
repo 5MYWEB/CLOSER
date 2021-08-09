@@ -69,7 +69,7 @@ function MyProfile() {
       </Row>
       {/* Row-4 : 한줄소개 */}
       <Row>
-        {userInfo.addr}
+        {userInfo.intro}
       </Row>
       {/* Row-5 : 팔로잉, 팔로워, 공유하기 */}
       <Row>

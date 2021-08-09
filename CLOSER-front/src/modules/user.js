@@ -102,8 +102,8 @@ export const changeAddr = (data) => ({
       };
     case CHANGE_ADDR:
       return {
-        ...state,
-        changedAddr: action.data,
+        ...state.userInfo,
+        addr: action.data,
       };
     default:
       return state;

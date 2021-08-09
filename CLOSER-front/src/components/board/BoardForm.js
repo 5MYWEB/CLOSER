@@ -95,7 +95,7 @@ const BoardForm = () => {
           <div>
             <label htmlFor="totalNum">모집인원을 선택하세요 (2명 이상 5명 이하):</label>
               <br />
-              <input type="radio" name="totalNum" onClick={onChangeTotalNum} value={2} />2명
+              <input type="radio" name="totalNum" onClick={onChangeTotalNum} value={2} /> 2명
               <input type="radio" name="totalNum" onClick={onChangeTotalNum} value={3} /> 3명
               <input type="radio" name="totalNum" onClick={onChangeTotalNum} value={4} /> 4명
               <input type="radio" name="totalNum" onClick={onChangeTotalNum} value={5} /> 5명

@@ -21,7 +21,9 @@ const TopAppBar = () => {
             <img src={closerbot} alt="closerbot" className="closerbot" />
           </Link>
           
-          <img src={search} alt="search" className="search" />
+          <Link to="/search">
+            <img src={search} alt="search" className="search" />
+          </Link>
         </div>
       </div>
       <Sidebar />

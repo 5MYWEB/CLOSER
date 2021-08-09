@@ -2,8 +2,7 @@ import React from 'react';
 import NewsfeedNavbar from '../components/newsfeed/NewsfeedNavbar';
 import NewsfeedForm from '../components/newsfeed/NewsfeedForm';
 
-function Newsfeed({ match }) {
-  console.log(match.path)
+function Newsfeed() {
 
   return (
     <div>

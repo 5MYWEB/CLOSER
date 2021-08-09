@@ -1,0 +1,10 @@
+.str-chat__header-livestream {
+  padding: var(--xs-p) var(--xl-p);
+  min-height: 70px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  font-family: var(--second-font);
+  background: var(--white);
+  box-shadow: 0 1px 1px 0 var(--border);
+}

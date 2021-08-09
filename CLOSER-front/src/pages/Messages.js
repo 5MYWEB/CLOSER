@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StreamChat } from 'stream-chat';
 import { Chat, Channel, ChannelHeader, ChannelList, LoadingIndicator, MessageInput, MessageList, Thread, Window } from 'stream-chat-react';
 import 'stream-chat-react/dist/css/index.css';
+import './Messages.css'
 
 const user_id = 'ssafy';
 const chatClient = StreamChat.getInstance('5gan2md896h2');
@@ -22,7 +23,9 @@ chatClient.connectUser(
 const filters = { type: 'messaging', members: { $in: [user_id] } };
 const sort = { last_message_at: -1 };
 
-const Messages = () => {
+const Messages = ({ match, location }) => {
+  console.log("match", match);
+  console.log("location", location);
   const [chatClient, setChatClient] = useState(null);
 
   useEffect(() => {

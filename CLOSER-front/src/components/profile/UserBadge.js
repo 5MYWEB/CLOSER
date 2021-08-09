@@ -4,7 +4,7 @@ import UserBadgeItem from './UserBadgeItem';
 
 function UserBadge({userId}) {
 
-  const [ badgeList, SetbadgeList] = useState([])
+  const [badgeList, SetbadgeList] = useState([])
 
   useEffect(() => {
     axios.post(`http://localhost:8080/user/profileinfo/?userId=${userId}`)
@@ -22,7 +22,8 @@ function UserBadge({userId}) {
       {badgeList.length !== 0 
         ? 
         <div>
-          {badgeList.length} 명이 나를 팔로우합니다.
+          뱃지 {badgeList.length} 개 획득!
+          <br />
           {/* 인덱스로 쓸 값이 없을때 인덱스를 만들어 줄 수 있다 */}
           {badgeList.map((badge, index) => {
             return (

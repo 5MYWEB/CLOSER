@@ -91,4 +91,10 @@
               )
         order by board_pk desc
     </select>
+
+    <update id="changeLocation" parameterType="MemberDto">
+        update user
+        set addr=#{addr}
+        where userId = #{userId}
+    </update>
 </mapper>

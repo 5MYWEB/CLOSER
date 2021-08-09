@@ -103,16 +103,16 @@ function Login({ history }) {
   useEffect(() => {
     if (decodedToken.UserId !== null){
       console.log('로그인했을때만')
-        axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
-          .then((response) => {
-            dispatch(getMyInfoAction(response.data))
-            history.push('/')
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-        }
-      }, [decodedToken, dispatch, history])
+      axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
+        .then((response) => {
+          dispatch(getMyInfoAction(response.data))
+          history.push('/')
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      }
+    }, [decodedToken, dispatch, history])
         
   return (
     <div className="wrap-group"> 

@@ -1,6 +1,8 @@
 package com.ssafy.closer.controller;
 
+import com.ssafy.closer.model.dto.FollowDto;
 import com.ssafy.closer.model.dto.MemberDto;
+import com.ssafy.closer.model.service.FollowService;
 import com.ssafy.closer.model.service.JwtService;
 import com.ssafy.closer.model.service.UserService;
 import io.swagger.annotations.Api;
@@ -34,6 +36,9 @@ public class UserController {
 
     @Autowired
     private JwtService jwtService;
+
+    @Autowired
+    private FollowService followService;
 
     @ApiOperation(value = "로그인 화면으로 이동")
     @GetMapping("/login")
@@ -163,12 +168,16 @@ public class UserController {
     @ApiOperation(value = "프로필 페이지 정보 (내 프로필, 다른사람 프로필 모두 사용)")
     @PostMapping("/profileinfo")
     public ResponseEntity profileInfo(@RequestParam String userId){
-        logger.debug("조회할 프로필 페이지 id : " + userId);
-
         try{
             MemberDto memberDto = userService.userInfo(userId);
             List<Integer> badge = userService.userbadge(userId);
             memberDto.setBadge(badge);
+
+            // 팔로워 팔로잉 수
+            FollowDto followDto = new FollowDto();
+            followDto.setPassiveUser(userId);
+            memberDto.setFollower(followService.countPassiveUser(followDto));
+            memberDto.setFollowing(followService.countActiveUser(followDto));
 
             if(memberDto!=null){
                 return new ResponseEntity(memberDto,HttpStatus.OK);
@@ -198,5 +207,20 @@ public class UserController {
     @GetMapping("/bookmark/{userId}")
     public ResponseEntity profileBookmark(@PathVariable String userId) {
         return new ResponseEntity(userService.userBookmark(userId),HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "주소 변경")
+    @PutMapping("/change-location")
+    public ResponseEntity changeLocation(@RequestBody Map<String, String> info){
+        String userId = info.get("userId");
+        String addr = info.get("addr");
+        MemberDto memberDto = new MemberDto();
+        memberDto.setUserId(userId);
+        memberDto.setAddr(addr);
+
+        if(userService.changeLocation(memberDto)){
+            return new ResponseEntity(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
     }
 }

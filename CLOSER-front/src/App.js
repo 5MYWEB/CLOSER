@@ -16,6 +16,7 @@ import MyProfileUpdate from './components/profile/MyProfileUpdate';
 import UserFeed from './components/profile/UserFeed';
 import UserBoard from './components/profile/UserBoard';
 import UserBookmark from './components/profile/UserBookmark';
+import UserLocation from './components/profile/UserLocation';
 
 import './App.css';
 
@@ -91,6 +92,7 @@ function App( { location }) {
         <Route path="/profile/:id/user-feed" component={UserFeed} />
         <Route path="/profile/:id/user-board" component={UserBoard} />
         <Route path="/profile/:id/user-bookmark" component={UserBookmark} />
+        <Route path="/change-location" component={UserLocation} />
       </div>
       {/* Navbar를 보여주거나 변형하거나 / 숨김 */}
       { !isNavBar

@@ -1,20 +1,24 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import axios from 'axios'
+import { useSelector } from 'react-redux';
 import { RippleButton } from '../styles/index';
 import '../styles/theme.css'
+import UserLocation from '../components/profile/UserLocation';
+// import { changeAddr } from '../modules/user';
 
 function SignUp( history ) {
+  const { changedAddr } = useSelector((state) => state.user);
   const [userInfo, setUserInfo] = useState({
     userId: '',
     nickname: '',
     password: '',
     email: '',
-    addr: {
-      city: '',
-      gu: '',
-      dong: ''
-    },
-    // addr: '',
+    // addr: {
+    //   city: '',
+    //   gu: '',
+    //   dong: ''
+    // },
+    addr: '',
     // 번호만 입력받기
     phone: '',
     //HowLongLiveAlone
@@ -28,6 +32,13 @@ function SignUp( history ) {
   const date = new Date();
 
   // 주소 전체응
+  useEffect(() => {
+    setUserInfo({
+      ...userInfo,
+      addr: changedAddr
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [changedAddr])
 
   // DOM 선택
   const radioBtn = useRef();
@@ -45,22 +56,22 @@ function SignUp( history ) {
       // console.log(name, value);
 
       // 주소만 구조가 다르므로 name이 주소 속성이면
-      if (Object.keys(addr).includes(name)) {
-        setUserInfo({
-          ...userInfo,
-          addr: {
-            ...userInfo.addr,
-            [name]: value
-          }
-        });
-      } else {
+      // if (Object.keys(addr).includes(name)) {
+      //   setUserInfo({
+      //     ...userInfo,
+      //     addr: {
+      //       ...userInfo.addr,
+      //       [name]: value
+      //     }
+      //   });
+      // } else {
         setUserInfo({
           ...userInfo,
           [name]: value
         });
-      }
+      // }
     },
-    [userInfo, addr]
+    [userInfo]
   );
   
     // 데이터 빈 값 검사
@@ -121,12 +132,7 @@ function SignUp( history ) {
     // 주소 검사
     
     const checkAddr = (addr) => {
-      let { city, gu, dong } = addr;
-      if (!checkExistData(city, '시를')) {
-        return false
-      } else if (!checkExistData(gu, '구를')) {
-        return false
-      } else if (!checkExistData(dong, '동을')) {
+      if(!checkExistData(addr, '주소를')) {
         return false
       }
       return true
@@ -189,7 +195,7 @@ function SignUp( history ) {
         userInfo.homeAlone *= 1
 
         // 백으로 보내질 주소(공백으로 구분)
-        userInfo.addr = String(userInfo.addr.city + ' ' + userInfo.addr.gu + ' ' + userInfo.addr.dong);
+        // userInfo.addr = String(userInfo.addr.city + ' ' + userInfo.addr.gu + ' ' + userInfo.addr.dong);
 
         console.log(userInfo)
 
@@ -245,6 +251,19 @@ function SignUp( history ) {
         onChange={onChange}
       />
       <p>주소를 입력하세요</p>
+      <UserLocation></UserLocation>
+      <div className="justify-content-center">
+        <div xs={8}>
+          <input 
+            type="text"
+            value={changedAddr}
+            name="addr"
+            // onChange={onChange}
+          />
+        </div>
+      </div>
+      <br />
+{/*       
       <label htmlFor="city">Choose a City:</label>
       <select id="city" name="city" value={addr.city} onChange={onChange}>
         <option defaultValue value="undefined"> -- 시를 선택해주세요 -- </option>
@@ -268,7 +287,7 @@ function SignUp( history ) {
         <option value="동교동">동교동</option>
         <option value="서교동">서교동</option>
         <option value="둔산동">둔산동</option>
-      </select>
+      </select> */}
 
       <p>휴대전화 번호를 입력하세요</p>
       <input

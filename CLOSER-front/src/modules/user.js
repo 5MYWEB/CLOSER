@@ -17,11 +17,10 @@ const initialState = {
     intro: '',
     profileImg: null,
     phone: null,
-    badge: [
-      0
-    ],
+    badge: [],
   },
   following: false,
+  changedAddr: '',
 };
 
 /* 액션 타입 만들기 */
@@ -32,6 +31,7 @@ const LOGOUT = 'LOGOUT';
 const GET_MY_INFO = 'GET_MY_INFO';
 const FOLLOW = 'FOLLOW';
 const GET_FOLLOW_INFO = 'GET_FOLLOW_INFO';
+const CHANGE_ADDR = 'CHANGE_ADDR';
 
 /* 액션 생성함수 만들기 */
 // 액션 생성함수를 만들고 export 키워드를 사용해서 내보내주세요.
@@ -55,6 +55,11 @@ export const followAction = () => ({
 
 export const getFollowInfoAction = () => ({
   type: GET_FOLLOW_INFO,
+});
+
+export const changeAddr = (data) => ({
+  type: CHANGE_ADDR,
+  data,
 });
 
 
@@ -94,6 +99,11 @@ export const getFollowInfoAction = () => ({
       return {
         ...state,
         following: false,
+      };
+    case CHANGE_ADDR:
+      return {
+        ...state,
+        changedAddr: action.data,
       };
     default:
       return state;

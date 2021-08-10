@@ -1,10 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+import { getMyInfoAction } from '../../modules/user';
 
 const MyProfileUpdate = () => {
+
+  const dispatch = useDispatch();
 
   // DOM 선택
   const selectInputs = useRef();
@@ -26,6 +29,7 @@ const MyProfileUpdate = () => {
     profileImg: userInfo.profileImg,
     phone: userInfo.phone,
     badge: userInfo.badge,
+    addr: userInfo.addr,
   })
 
   // 중복확인이 성공했으면 true
@@ -78,9 +82,18 @@ const MyProfileUpdate = () => {
   // 저장
   const onClickSave = () => {
     if (doubleChecked === true){
+      // 수정 요청
       axios.put('http://localhost:8080/user/mypage', changedUserinfo)
       .then((res) => {
         console.log(res)
+        // 정보다시 받아오는 요청
+        axios.post(`http://localhost:8080/user/profileinfo?userId=${userInfo.userId}`)
+        .then((res) => {
+          dispatch(getMyInfoAction(res.data))
+        })
+        .catch((err) => {
+          console.log(err)
+        })
       })
       .catch((err) => {
         console.log(err)

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { changeAddr } from '../../modules/user';
 import { Container, Row, Col } from 'react-bootstrap';
+import { getMyInfoAction } from '../../modules/user';
 
 function NaverMapAPI() {
   const dispatch = useDispatch();
@@ -89,6 +90,7 @@ function NaverMapAPI() {
 
 const UserLocation = () => {
   const { isLoggedIn, userInfo, changedAddr } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   // 수정할 정보의 초기값은 기존 정보와 동일하다.
   const [changedUserinfo, setChangedUserInfo] = useState({
@@ -109,6 +111,14 @@ const UserLocation = () => {
     axios.put('http://localhost:8080/user/change-location', {userId:changedUserinfo.userId, addr:changedUserinfo.addr})
       .then((res) => {
         console.log(res)
+        // 정보다시 받아오는 요청
+        axios.post(`http://localhost:8080/user/profileinfo?userId=${userInfo.userId}`)
+        .then((res) => {
+          dispatch(getMyInfoAction(res.data))
+        })
+        .catch((err) => {
+          console.log(err)
+        })
       })
       .catch((err) => {
         console.log(err)

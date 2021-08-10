@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useRef } from 'react';
 import axios from 'axios'
+import AWS from "aws-sdk";
 import { RippleButton } from '../styles/index';
 import '../styles/theme.css'
 
-function SignUp( history ) {
+function SignUp( {history} ) {
   const [userInfo, setUserInfo] = useState({
     userId: '',
     nickname: '',
@@ -179,6 +180,49 @@ function SignUp( history ) {
     return null
   };
 
+    // AWS 앨범 생성
+    var albumBucketName = "photo-album-hy";
+    var bucketRegion = "ap-northeast-2";
+    var IdentityPoolId = "ap-northeast-2:00a0ab54-d07b-4fbc-9601-4362640e9362";
+
+    AWS.config.update({
+        region: bucketRegion,
+        credentials: new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: IdentityPoolId,
+        }),
+    });
+
+    var s3 = new AWS.S3({
+        apiVersion: "2006-03-01",
+        params: { Bucket: albumBucketName },
+    });
+    const createAlbum = (albumName) => {
+        // 앨범 생성
+        albumName = albumName.trim();
+        if (!albumName) {
+            return alert("Album names must contain at least one non-space character.");
+        }
+        if (albumName.indexOf("/") !== -1) {
+            return alert("Album names cannot contain slashes.");
+        }
+        var albumKey = encodeURIComponent(albumName);
+        s3.headObject({ Key: albumKey }, function (err, data) {
+            if (!err) {
+                return alert("Album already exists.");
+            }
+            if (err.code !== "NotFound") {
+                return alert("There was an error creating your album: " + err.message);
+            }
+            s3.putObject({ Key: albumKey }, function (err, data) {
+                if (err) {
+                    return alert("There was an error creating your album: " + err.message);
+                }
+                alert("Successfully created album.");
+            });
+        });
+    };
+
+
   // 제출버튼 클릭 시 실행되는 함수
   const onSubmit=(
     e => {
@@ -194,6 +238,9 @@ function SignUp( history ) {
         console.log(userInfo)
 
         // 회원가입 함수의 파라미터 설정
+
+        // 앨범 생성
+          createAlbum(userInfo.userId);
 
         // 회원가입 함수 실행
         signup(userInfo);

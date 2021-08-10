@@ -49,7 +49,7 @@ function MyProfile() {
       {/* Row-2 : 프로필사진, 닉네임, 자취기간, 위치, 프로필 수정 */}
       <Row>
         <Col xs={3}>
-          <img src="" alt="프로필 사진"></img>
+          <img src={userInfo.profileImg} alt="프로필 사진"></img>
         </Col>
         <Col xs={6}>
           <Row>

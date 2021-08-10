@@ -13,11 +13,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/user")
@@ -199,4 +202,54 @@ public class UserController {
     public ResponseEntity profileBookmark(@PathVariable String userId) {
         return new ResponseEntity(userService.userBookmark(userId),HttpStatus.OK);
     }
+
+//    @RequestMapping(value = "이메일 인증")
+//    public ModelAndView pw_auth(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        String email = (String) request.getParameter("email");
+//        String name = (String) request.getParameter("name");
+//
+//        MemberVO vo = memberSV.selectMember(email);
+//
+//        if (vo != null) {
+//            Random r = new Random();
+//            int num = r.nextInt(999999); // 랜덤난수설정
+//
+//            if (vo.getName().equals(name)) {
+//                session.setAttribute("email", vo.getEmail());
+//
+//                String setfrom = "ivedot@naver.com"; // naver
+//                String tomail = email; //받는사람
+//                String title = "인증 이메일입니다.";
+//                String content = System.getProperty("line.separator") + "안녕하세요 회원님" + System.getProperty("line.separator")
+//                        + "이메일 인증번호는 " + num + " 입니다." + System.getProperty("line.separator"); //
+//
+//                try {
+//                    MimeMessage message = mailSender.createMimeMessage();
+//                    MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
+//
+//                    messageHelper.setFrom(setfrom);
+//                    messageHelper.setTo(tomail);
+//                    messageHelper.setSubject(title);
+//                    messageHelper.setText(content);
+//
+//                    mailSender.send(message);
+//                } catch (Exception e) {
+//                    System.out.println(e.getMessage());
+//                }
+//
+//                ModelAndView mv = new ModelAndView();
+//                mv.setViewName("YM/pw_auth");
+//                mv.addObject("num", num);
+//                return mv;
+//            } else {
+//                ModelAndView mv = new ModelAndView();
+//                mv.setViewName("YM/pw_find");
+//                return mv;
+//            }
+//        } else {
+//            ModelAndView mv = new ModelAndView();
+//            mv.setViewName("YM/pw_find");
+//            return mv;
+//        }
+//    }
 }

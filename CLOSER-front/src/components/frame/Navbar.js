@@ -37,8 +37,8 @@ const Menu = () => {
       }
       {
       iconLight === 'alerts'
-      ? <RippleIcon src={alertsOn} alt="alertsOn" id="alerts" cclass="alerts" onClick={onClick} />
-      : <RippleIcon src={alertsOff} alt="alertsOff" id="alerts" cclass="alerts" onClick={onClick} />
+      ? <Link to="/alarm"><RippleIcon src={alertsOn} alt="alertsOn" id="alerts" cclass="alerts" onClick={onClick} /></Link> 
+      : <Link to="/alarm"><RippleIcon src={alertsOff} alt="alertsOff" id="alerts" cclass="alerts" onClick={onClick} /></Link>
       }
       {
       iconLight === 'messages'

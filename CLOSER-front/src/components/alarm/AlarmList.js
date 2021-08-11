@@ -47,7 +47,7 @@ function AlarmList() {
     })
   
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onClickAlarmClear])
+  }, [unreadCount])
 
 
   return (

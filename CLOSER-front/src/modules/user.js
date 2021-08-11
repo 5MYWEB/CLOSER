@@ -21,6 +21,7 @@ const initialState = {
   },
   following: false,
   changedAddr: '',
+  alarmList: null,
 };
 
 /* 액션 타입 만들기 */
@@ -32,6 +33,7 @@ const GET_MY_INFO = 'GET_MY_INFO';
 const FOLLOW = 'FOLLOW';
 const GET_FOLLOW_INFO = 'GET_FOLLOW_INFO';
 const CHANGE_ADDR = 'CHANGE_ADDR';
+const GET_ALARM_LIST = 'GET_ALARM_LIST';
 
 /* 액션 생성함수 만들기 */
 // 액션 생성함수를 만들고 export 키워드를 사용해서 내보내주세요.
@@ -59,6 +61,11 @@ export const getFollowInfoAction = () => ({
 
 export const changeAddr = (data) => ({
   type: CHANGE_ADDR,
+  data,
+});
+
+export const getAlarmList = (data) => ({
+  type: GET_ALARM_LIST,
   data,
 });
 
@@ -104,6 +111,11 @@ export const changeAddr = (data) => ({
       return {
         ...state,
         changedAddr: action.data,
+      };
+    case GET_ALARM_LIST:
+      return {
+        ...state,
+        alarmList: action.data,
       };
     default:
       return state;

@@ -38,7 +38,7 @@ AlarmItem.propTypes = {
     category_pk: PropTypes.number,
     userId: PropTypes.string,
     otherUserId: PropTypes.string,
-    visited: PropTypes.number,
+    visited: PropTypes.bool,
     content: PropTypes.string,
     kind_pk: PropTypes.number,
     board_pk: PropTypes.number,

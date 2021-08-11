@@ -1,0 +1,35 @@
+.container{
+    display: grid;
+}
+.profilepart{
+    display: grid;
+	grid-template-columns: repeat(4, 80px);
+	grid-template-rows: repeat(6, 40px);
+}
+
+.item1 {
+	grid-column: 1 / 5;
+}
+
+.item2 {
+	grid-row: 2 / 4;
+}
+
+.item6 {
+    grid-column : 2 / span 3;
+}
+
+.item9 {
+    grid-column : 5 / 1 ;
+}
+
+.item12 {
+    grid-column : 4 / 5 ;
+}
+
+
+.myprofilepost{
+    display: grid;
+    grid-template-columns: repeat(4, 120px);
+    grid-template-rows: 30px ;
+}

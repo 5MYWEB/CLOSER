@@ -49,4 +49,8 @@ public interface BoardService {
     boolean isJoin(JoinDto joinDto); // 지역게시판 참가 유무
     boolean changeJoinCnt(int board_pk); // 지역게시판 참여 / 취소시 갯수 변경
     int countJoin(int board_pk); // 지역게시판 참가자 수
+
+    int countFeedAll(); // 뉴스피드 게시글 총 갯수
+    int countFeedNear(String location); // 나와 동일한 위치인 사람들의 피드 갯수
+    int countFeedFollow(String userId); // 내가 팔로우 한 사람들의 피드 갯수
 }

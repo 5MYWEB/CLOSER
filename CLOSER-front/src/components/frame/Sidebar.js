@@ -6,6 +6,7 @@ import './Sidebar.css'
 
 const mapStateToProps = (state) => ({
   userInfo: state.user.userInfo,
+  isLoggedIn: state.user.isLoggedIn
 });
 
 class Sidebar extends React.Component {
@@ -27,71 +28,117 @@ class Sidebar extends React.Component {
   }
 
   render () {
-    const { userInfo } = this.props;
+    const { userInfo, isLoggedIn } = this.props;
     
     // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
-    if (this.state.menuOpen) {return (
-      <div>
-        <Menu
-          isOpen={this.state.menuOpen}
-          onStateChange={(state) => this.handleStateChange(state)}
-        >
-          <ul>
-            <li>
-              <Link to="/" onClick={() => this.closeMenu()}>홈</Link>
-            </li>
-            <li>
-              <Link to="/about" onClick={() => this.closeMenu()}>소개</Link>
-            </li>
-            <li>
-              <Link to="/login" onClick={() => this.closeMenu()}>로그인</Link>
-            </li>
-            <li>
-              <Link to="/" onClick={() => this.closeMenu()}>로그아웃</Link>
-            </li>
-            <li>
-              <Link to="/signup" onClick={() => this.closeMenu()}>회원가입</Link>
-            </li>
-            <li>
-              <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
-            </li>
-            <li>
-              <Link to={`/change-location/`} onClick={() => this.closeMenu()}>동네 변경</Link>
-            </li>
-          </ul>
-        </Menu>
-      </div>
-    );
+    if (this.state.menuOpen) {
+      // 비로그인시
+      if(isLoggedIn === false){
+        return (
+          <div>
+            <Menu
+              isOpen={this.state.menuOpen}
+              onStateChange={(state) => this.handleStateChange(state)}
+            >
+              <ul>
+                <li>
+                  <Link to="/" onClick={() => this.closeMenu()}>홈</Link>
+                </li>
+                <li>
+                  <Link to="/about" onClick={() => this.closeMenu()}>소개</Link>
+                </li>
+                <li>
+                  <Link to="/login" onClick={() => this.closeMenu()}>로그인</Link>
+                </li>
+                <li>
+                  <Link to="/signup" onClick={() => this.closeMenu()}>회원가입</Link>
+                </li>
+              </ul>
+            </Menu>
+          </div>
+        );
+      }else{
+        // 로그인시
+        return (
+          <div>
+            <Menu
+              isOpen={this.state.menuOpen}
+              onStateChange={(state) => this.handleStateChange(state)}
+            >
+              <ul>
+                <li>
+                  <Link to="/" onClick={() => this.closeMenu()}>홈</Link>
+                </li>
+                <li>
+                  <Link to="/about" onClick={() => this.closeMenu()}>소개</Link>
+                </li>
+                <li>
+                  <Link to="/" onClick={() => this.closeMenu()}>로그아웃</Link>
+                </li>
+                <li>
+                  <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
+                </li>
+                <li>
+                  <Link to={`/change-location/`} onClick={() => this.closeMenu()}>동네 변경</Link>
+                </li>
+              </ul>
+            </Menu>
+          </div>
+        );
+      }
     } else {
-      return (
-        <div>
-          <Menu 
-            isOpen={false}
-            onStateChange={(state) => this.handleStateChange(state)}
-          >
-            <ul>
-              <li>
-                <Link to="/" onClick={this.handleStatus}>홈</Link>
-              </li>
-              <li>
-                <Link to="/about" onClick={this.handleStatus}>소개</Link>
-              </li>
-              <li>
-                <Link to="/login" onClick={this.handleStatus}>로그인</Link>
-              </li>
-              <li>
-                <Link to="/" onClick={this.handleStatus}>로그아웃</Link>
-              </li>
-              <li>
-                <Link to="/signup" onClick={this.handleStatus}>회원가입</Link>
-              </li>
-              <li>
-                <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
-              </li>
-            </ul>
-          </Menu>
-        </div>
-      )
+      // 비로그인시
+      if(isLoggedIn === false){
+        return (
+          <div>
+            <Menu 
+              isOpen={false}
+              onStateChange={(state) => this.handleStateChange(state)}
+            >
+              <ul>
+                <li>
+                  <Link to="/" onClick={this.handleStatus}>홈</Link>
+                </li>
+                <li>
+                  <Link to="/about" onClick={this.handleStatus}>소개</Link>
+                </li>
+                <li>
+                  <Link to="/login" onClick={this.handleStatus}>로그인</Link>
+                </li>
+                <li>
+                  <Link to="/signup" onClick={this.handleStatus}>회원가입</Link>
+                </li>
+              </ul>
+            </Menu>
+          </div>
+        )
+      }
+      else{
+        // 로그인시
+        return (
+          <div>
+            <Menu 
+              isOpen={false}
+              onStateChange={(state) => this.handleStateChange(state)}
+            >
+              <ul>
+                <li>
+                  <Link to="/" onClick={this.handleStatus}>홈</Link>
+                </li>
+                <li>
+                  <Link to="/about" onClick={this.handleStatus}>소개</Link>
+                </li>
+                <li>
+                  <Link to="/" onClick={this.handleStatus}>로그아웃</Link>
+                </li>
+                <li>
+                  <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
+                </li>
+              </ul>
+            </Menu>
+          </div>
+        )
+      }
     }
   }
 }

@@ -179,4 +179,20 @@ public class BoardServiceImpl implements BoardService {
     public int countJoin(int board_pk){
         return sqlSession.getMapper(BoardMapper.class).countJoin(board_pk);
     }
+
+    @Override
+    public int countFeedAll() {
+        return sqlSession.getMapper(BoardMapper.class).countFeedAll();
+    }
+
+    @Override
+    public int countFeedNear(String location) {
+        return sqlSession.getMapper(BoardMapper.class).countFeedNear(location);
+    }
+
+    @Override
+    public int countFeedFollow(String userId) {
+        return sqlSession.getMapper(BoardMapper.class).countFeedFollow(userId);
+    }
+
 }

@@ -5,6 +5,7 @@ import com.ssafy.closer.model.dto.*;
 import com.ssafy.closer.model.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -154,13 +155,13 @@ public class BoardController {
         logger.debug("전체 피드글 - 호출");
         JSONObject output = new JSONObject();
         List<BoardDto> boardDtos = boardService.feedListAll((page-1)*10);
-        output.put("items", boardDtos);
-//        ArrayList<BoardDto> list = new ArrayList<BoardDto>();
-//        for(int i=0;i<boardDtos.size();i++) list.add(boardDtos.get(i));
-//        output.put("list", list);
-//        if(boardDtos.size() == 10) output.put("hasmore", true);
-//        else output.put("hasmore", false);
-        return new ResponseEntity(boardDtos, HttpStatus.OK);
+        output.put("data", boardDtos);
+
+        int total = boardService.countFeedAll();
+        if(page*10 < total) output.put("hasmore", true);
+        else output.put("hasmore", false);
+
+        return new ResponseEntity(output, HttpStatus.OK);
     }
 
     // 피드 같은 동네만 보기
@@ -175,11 +176,14 @@ public class BoardController {
             }
         };
         JSONObject output = new JSONObject();
-        List<BoardDto> boardDtos =  boardService.feedListNear(info);
-//        output.put("items", boardDtos);
-//        if(boardDtos.size() == 10) output.put("hasmore", true);
-//        else output.put("hasmore", false);
-        return new ResponseEntity(boardDtos, HttpStatus.OK);
+        List<BoardDto> boardDtos = boardService.feedListNear(info);
+        output.put("data", boardDtos);
+
+        int total = boardService.countFeedNear(location);
+        if(page*10 < total) output.put("hasmore", true);
+        else output.put("hasmore", false);
+
+        return new ResponseEntity(output, HttpStatus.OK);
     }
 
     // 피드 팔로우한 사람들 것만 보기
@@ -196,10 +200,13 @@ public class BoardController {
         };
         JSONObject output = new JSONObject();
         List<BoardDto> boardDtos = boardService.feedListFollow(info);
-//        output.put("items", boardDtos);
-//        if(boardDtos.size() == 10) output.put("hasmore", true);
-//        else output.put("hasmore", false);
-        return new ResponseEntity(boardDtos, HttpStatus.OK);
+        output.put("data", boardDtos);
+
+        int total = boardService.countFeedFollow(userId);
+        if(page*10 < total) output.put("hasmore", true);
+        else output.put("hasmore", false);
+
+        return new ResponseEntity(output, HttpStatus.OK);
     }
 
 

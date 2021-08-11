@@ -1,0 +1,76 @@
+.str-chat__header-livestream {
+  /* padding: var(--xs-p) var(--xl-p); */
+  padding: var(--xs-p) 0;
+  height: 9vh;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  font-family: var(--second-font);
+  background: var(--white);
+  box-shadow: 0 1px 1px 0 var(--border);
+}
+
+.str-chat__header-livestream-left {
+  margin-left: 3rem;
+}
+
+
+/* .messaging.str-chat .str-chat__header-livestream {
+    padding-left: 0;
+    padding-right: var(--sm-p);
+} */
+
+.str-chat-channel-list .str-chat__channel-list-messenger {
+  padding: 0; }
+  .str-chat-channel-list .str-chat__channel-list-messenger__main {
+    /* 뒤로가기 버튼 위치 바꿀 때 조정해야하는 변수 */
+    padding: 8vh var(--sm-p) 0 var(--sm-p);
+    overflow-y: auto; }
+
+
+
+.str-chat-channel-list.messaging, .str-chat-channel-list.team, .str-chat-channel-list.commerce {
+  position: fixed;
+  left: -380px;
+  top: 0;
+  z-index: 1001;
+  min-height: 100vh;
+  width: 90vw;
+  overflow-y: auto;
+  box-shadow: 7px 0 9px 0 var(--black5), 1px 0 0 0 var(--black5);
+  transition: left 200ms ease-in-out; }
+.str-chat-channel-list--open.messaging, .str-chat-channel-list--open.team, .str-chat-channel-list--open.commerce {
+  left: 0px; }
+
+
+/* 리액트 로고 없애기 */
+.str-chat__header-hamburger + .str-chat__avatar  {
+  display: none;
+}
+
+/* 이건 뭐지 크게 날짜가 찍히는거 일단 없앰 */
+.str-chat__date-separator {
+  /* display: none; */
+}
+
+/* .str-chat__date-separator {
+  display: flex;
+  padding: var(--xl-p);
+  align-items: center; }
+  .str-chat__date-separator-date {
+    font-size: var(--md-font);
+    font-weight: var(--font-weight-bold);
+    color: var(--overlay-dark);
+    font-family: var(--second-font); }
+  .str-chat__date-separator-line {
+    flex: 1;
+    background-color: var(--overlay);
+    height: 1px;
+    border: none; }
+  .str-chat__date-separator > *:not(:last-child) {
+    margin-right: var(--sm-m); } */
+
+/* 채팅창 위 공백 없애기 */
+.messaging.str-chat .str-chat__list .str-chat__reverse-infinite-scroll {
+  padding-top: 20px;
+}

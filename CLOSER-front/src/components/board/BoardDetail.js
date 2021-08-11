@@ -172,10 +172,14 @@ const BoardDetail = ({match}) => {
         <div>제목 : {board.title}</div>
       }
       <div>작성자 : {board.nickname}</div>
-      <div>뱃지 : <UserBadgeItem badge={board.badge}/></div>
+      {board.badge !== 0 && 
+        <div>뱃지 : <UserBadgeItem badge={board.badge}/></div>
+      }
       <div>내용 : {board.content}</div>
       <div>작성시간 : {board.created_at}</div>
-      <div>수정시간 : {board.updated_at}</div>
+      {board.kind_pk !== 7 && 
+        <div>수정시간 : {board.updated_at}</div>
+      }
       { userId === board.userId &&
         <div>
           <Link to={`/board-update-form/${board.board_pk}/`}>

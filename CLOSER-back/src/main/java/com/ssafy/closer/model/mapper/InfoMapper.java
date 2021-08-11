@@ -30,4 +30,7 @@ public interface InfoMapper {
 
     // 해당 댓글을 쓴 유저 id 찾기
     String findCommentUser(int info_pk);
+
+    // 이미지 생성
+    int addImage(InfoDto infoDto);
 }

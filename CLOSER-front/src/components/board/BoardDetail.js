@@ -198,12 +198,15 @@ const BoardDetail = ({match}) => {
         <div>제목 : {board.title}</div>
       }
       <div>작성자 : {board.nickname}</div>
-      { board.kind_pk > 0 && board.kind_pk < 4 && 
+
+      { board.kind_pk > 0 && board.kind_pk < 4 && board.badge !== 0 &&
         <div>뱃지 : <UserBadgeItem badge={board.badge}/></div>
       }
       <div>내용 : {board.content}</div>
       <div>작성시간 : {board.created_at}</div>
-      <div>수정시간 : {board.updated_at}</div>
+      {board.kind_pk !== 7 && 
+        <div>수정시간 : {board.updated_at}</div>
+      }
       {/* 지역게시판 인원모으기: 글쓴이한테는 버튼이 안 보임 */}
       <div>
         {board.kind_pk > 3 && board.kind_pk < 7
@@ -227,6 +230,7 @@ const BoardDetail = ({match}) => {
       </div>
       
       {/* 수정 및 삭제 */}
+
       { userId === board.userId &&
         <div>
           <Link to={`/board-update-form/${board.board_pk}/`}>

@@ -148,27 +148,30 @@
     <!--                             뉴스피드                         -->
 
     <!-- CLOSER 전체 유저의 피드 목록 -->
-    <select id="feedListAll" resultType="BoardDto">
-        select B.board_pk as board_pk, B.userId as userId, B.content as content, B.created_at as created_at, B.location as location, B.nickname as nickname
+    <select id="feedListAll" parameterType="int" resultType="BoardDto">
+        select B.board_pk as board_pk, B.kind_pk as kind_pk, B.userId as userId, B.content as content, B.created_at as created_at, B.updated_at as updated_at, B.location as location, B.nickname as nickname
         from board B join board_category BC on B.kind_pk = BC.kind_pk
         where BC.kind_pk = 7
-        order by B.created_at desc;
+        order by B.created_at desc
+        limit #{page}, 10;
     </select>
 
     <!-- 나와 동일한 위치인 사람들의 피드 목록 -->
-    <select id="feedListNear" parameterType="String" resultType="BoardDto">
-        select B.board_pk as board_pk, B.userId as userId, B.content as content, B.created_at as created_at, B.location as location, B.nickname as nickname
+    <select id="feedListNear" parameterType="Map" resultType="BoardDto">
+        select B.board_pk as board_pk, B.kind_pk as kind_pk, B.userId as userId, B.content as content, B.created_at as created_at, B.updated_at as updated_at, B.location as location, B.nickname as nickname
         from board B join board_category BC on B.kind_pk = BC.kind_pk
-        where BC.kind_pk = 7 and B.location = #{location}
-        order by B.created_at desc;
+        where BC.kind_pk = 7 and B.location like concat(substring_index(#{location}, ' ', 2), '%')
+        order by B.created_at desc
+        limit #{page}, 10;
     </select>
 
     <!-- 내가 팔로우 한 사람들의 피드 목록 -->
-    <select id="feedListFollow" parameterType="String" resultType="BoardDto">
-        select B.board_pk as board_pk, B.title as title, B.kind_pk as kind_pk, B.userId as userId, B.content as content, B.created_at as created_at, B.location as location, B.nickname as nickname
+    <select id="feedListFollow" parameterType="Map" resultType="BoardDto">
+        select B.board_pk as board_pk, B.kind_pk as kind_pk, B.userId as userId, B.content as content, B.created_at as created_at, B.updated_at as updated_at, B.location as location, B.nickname as nickname
         from user_follow U left join board B on (U.passiveUser = B.userId)
-        where U.activeUser=#{passiveUser} and B.kind_pk = 7
-        order by B.created_at desc;
+        where U.activeUser=#{userId} and B.kind_pk = 7
+        order by B.created_at desc
+        limit #{page}, 10;
     </select>
 
 
@@ -189,8 +192,8 @@
 
     <!-- 피드 생성 -->
     <insert id="feedCreate" parameterType="BoardDto" useGeneratedKeys="true" keyProperty="board_pk" keyColumn="board_pk">
-        insert into board(kind_pk, userId, content, location, created_at, nickname)
-        values (#{kind_pk}, #{userId}, #{content}, #{location}, #{created_at}, #{nickname})
+        insert into board(kind_pk, userId, content, location, created_at, updated_at, nickname)
+        values (#{kind_pk}, #{userId}, #{content}, #{location}, #{created_at}, #{updated_at}, #{nickname})
     </insert>
 
     <!-- Read -->
@@ -278,6 +281,27 @@
         select gatherNum
         from board
         where board_pk=#{board_pk}
+    </select>
+
+    <!-- 뉴스피드 게시글 총 갯수 -->
+    <select id="countFeedAll" resultType="int">
+        select count(*)
+        from board
+        where kind_pk=7
+    </select>
+
+    <!-- 나와 동일한 위치인 사람들의 피드 갯수 -->
+    <select id="countFeedNear" parameterType="String" resultType="int">
+        select count(*)
+        from board
+        where kind_pk=7 and location like concat(substring_index(#{location}, ' ', 2), '%')
+    </select>
+
+    <!--  내가 팔로우 한 사람들의 피드 갯수 -->
+    <select id="countFeedFollow" parameterType="String" resultType="int">
+        select count(*)
+        from user_follow U left join board B on (U.passiveUser = B.userId)
+        where U.activeUser=#{userId} and B.kind_pk = 7
     </select>
 
 </mapper>

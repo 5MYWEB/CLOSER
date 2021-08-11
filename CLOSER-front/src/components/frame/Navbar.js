@@ -32,7 +32,7 @@ const Menu = () => {
       }
       {
       iconLight === 'board'
-      ? <Link to="/board"><RippleIcon src={boardOn} alt="boardOn" id="board" cclass="board" onClick={onClick} /></Link>
+          ? <Link to="/board"><RippleIcon src={boardOn} alt="boardOn" id="board" cclass="board" onClick={onClick} /></Link>
       : <Link to="/board"><RippleIcon src={boardOff} alt="boardOff" id="board" cclass="board" onClick={onClick} /></Link>
       }
       {
@@ -42,8 +42,8 @@ const Menu = () => {
       }
       {
       iconLight === 'messages'
-      ? <RippleIcon src={messagesOn} alt="messagesOn" id="messages" cclass="messages" onClick={onClick} />
-      : <RippleIcon src={messagedOff} alt="messagedOff" id="messages" cclass="messages" onClick={onClick} />
+          ? <Link to="/messages"><RippleIcon src={messagesOn} alt="messagesOn" id="messages" cclass="messages" onClick={onClick} /></Link>
+          : <Link to="/messages"><RippleIcon src={messagedOff} alt="messagedOff" id="messages" cclass="messages" onClick={onClick} /></Link>
       }
     </div>
   )

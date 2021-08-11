@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -86,18 +87,18 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardDto> feedListAll() {
-        return sqlSession.getMapper(BoardMapper.class).feedListAll();
+    public List<BoardDto> feedListAll(int page) {
+        return sqlSession.getMapper(BoardMapper.class).feedListAll(page);
     }
 
     @Override
-    public List<BoardDto> feedListNear(String location) {
-        return sqlSession.getMapper(BoardMapper.class).feedListNear(location);
+    public List<BoardDto> feedListNear(Map<String, Object> info) {
+        return sqlSession.getMapper(BoardMapper.class).feedListNear(info);
     }
 
     @Override
-    public List<BoardDto> feedListFollow(String userId) {
-        return sqlSession.getMapper(BoardMapper.class).feedListFollow(userId);
+    public List<BoardDto> feedListFollow(Map<String, Object> info) {
+        return sqlSession.getMapper(BoardMapper.class).feedListFollow(info);
     }
 
     @Override

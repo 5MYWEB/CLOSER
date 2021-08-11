@@ -1,9 +1,11 @@
 package com.ssafy.closer.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.closer.model.dto.*;
 import com.ssafy.closer.model.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/board")
@@ -25,6 +28,8 @@ public class BoardController {
     private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
+
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
     private UserService userService;
@@ -149,27 +154,63 @@ public class BoardController {
     // 뉴스피드
     // 피드 전체 보기
     @ApiOperation(value = "모든 유저들의 피드글 정보를 반환한다.", response = List.class)
-    @GetMapping("/feed/total")
-    public ResponseEntity<List<BoardDto>> listFeedAll() {
+    @GetMapping("/feed/total/{page}")
+    public ResponseEntity listFeedAll(@PathVariable int page) {
         logger.debug("전체 피드글 - 호출");
-        return new ResponseEntity<>(boardService.feedListAll(), HttpStatus.OK);
+        JSONObject output = new JSONObject();
+        List<BoardDto> boardDtos = boardService.feedListAll((page-1)*10);
+        output.put("data", boardDtos);
+
+        int total = boardService.countFeedAll();
+        if(page*10 < total) output.put("hasmore", true);
+        else output.put("hasmore", false);
+
+        return new ResponseEntity(output, HttpStatus.OK);
     }
 
     // 피드 같은 동네만 보기
     @ApiOperation(value = "같은 동네 유저들의 피드글 정보를 반환한다.", response = List.class)
-    @GetMapping("/feed/near")
-    public ResponseEntity<List<BoardDto>> listFeedNear(@RequestParam String location) {
+    @GetMapping("/feed/near/{page}")
+    public ResponseEntity listFeedNear(@PathVariable int page, @RequestParam String location) {
         logger.debug("동네 피드글 - 호출");
-        return new ResponseEntity<>(boardService.feedListNear(location), HttpStatus.OK);
+        Map<String, Object> info = new HashMap<String, Object>() {
+            {
+                put("page", (page-1)*10);
+                put("location", location);
+            }
+        };
+        JSONObject output = new JSONObject();
+        List<BoardDto> boardDtos = boardService.feedListNear(info);
+        output.put("data", boardDtos);
+
+        int total = boardService.countFeedNear(location);
+        if(page*10 < total) output.put("hasmore", true);
+        else output.put("hasmore", false);
+
+        return new ResponseEntity(output, HttpStatus.OK);
     }
 
     // 피드 팔로우한 사람들 것만 보기
     // activeUser가 passiveUser를 팔로잉한다.
     @ApiOperation(value = "팔로우 한 유저들의 피드글 정보를 반환한다.", response = List.class)
-    @GetMapping("/feed/follow")
-    public ResponseEntity<List<BoardDto>> listFeedFollow(String userId) {
+    @GetMapping("/feed/follow/{page}")
+    public ResponseEntity listFeedFollow(@PathVariable int page, @RequestParam String userId) {
         logger.debug("팔로우 피드글 - 호출");
-        return new ResponseEntity<>(boardService.feedListFollow(userId), HttpStatus.OK);
+        Map<String, Object> info = new HashMap<String, Object>() {
+            {
+                put("page", (page-1)*10);
+                put("userId", userId);
+            }
+        };
+        JSONObject output = new JSONObject();
+        List<BoardDto> boardDtos = boardService.feedListFollow(info);
+        output.put("data", boardDtos);
+
+        int total = boardService.countFeedFollow(userId);
+        if(page*10 < total) output.put("hasmore", true);
+        else output.put("hasmore", false);
+
+        return new ResponseEntity(output, HttpStatus.OK);
     }
 
 
@@ -177,15 +218,28 @@ public class BoardController {
     // 게시글 작성
     @ApiOperation(value="게시글 작성")
     @PostMapping()
-    public ResponseEntity create(@RequestBody BoardDto boardDto) {
+    public ResponseEntity create(@RequestBody Map<String, Object> info) {
         // 로그인 유저의 정보 받아오기 (주소, 닉네임 찾기 위해서)
-        MemberDto memberDto = userService.userInfo(boardDto.getUserId());
+        String userId = (String)info.get("userId");
+        MemberDto memberDto = userService.userInfo(userId);
 
-        // FeedDto 값 넣기
-        boardDto.setCreated_at(LocalDateTime.now()); // 생성 시간
-        boardDto.setUpdated_at(LocalDateTime.now()); // 수정 시간
+        // BoardDto 값 넣기
+        BoardDto boardDto = new BoardDto();
+        boardDto.setUserId(userId);
+        boardDto.setKind_pk((int)info.get("kind_pk"));
+        if(info.get("title") != null) boardDto.setTitle((String)info.get("title"));
+        boardDto.setContent((String)info.get("content"));
+        boardDto.setCreated_at(dateFormat.format(LocalDateTime.now())); // 생성 시간
+        boardDto.setUpdated_at(dateFormat.format(LocalDateTime.now())); // 수정 시간
         boardDto.setLocation(memberDto.getAddr()); // 주소
         boardDto.setNickname(memberDto.getNickname()); // 닉네임
+
+        // 이미지 리스트 형식으로 저장
+        ArrayList<String> imgUrls = (ArrayList) info.get("imgUrls");
+
+        // InfoDto (사진) 선언
+        InfoDto infoDto = new InfoDto();
+        if(imgUrls != null) infoDto.setUserId(userId);
 
         // 리턴할 값 선언 (댓글 수, 좋아요 수, 북마크 수)
         JSONObject output = new JSONObject();
@@ -193,10 +247,19 @@ public class BoardController {
         if(boardDto.getKind_pk() <= 3){ // Gboard인 경우
             int board_pk = boardService.gBoardCreate(boardDto);
             if(board_pk > 0){ // 생성 성공한 경우
+                if(imgUrls != null){
+                    infoDto.setBoard_pk(board_pk);
+                    for(int i=0;i<imgUrls.size();i++) {
+                        infoDto.setImgUrl(imgUrls.get(i));
+                        if(infoService.addImage(infoDto)) continue;
+                        return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
+                    }
+                }
                 output.put("board_pk", board_pk);
                 return new ResponseEntity(output, HttpStatus.OK);
             }
         }else if(boardDto.getKind_pk() <= 6){ // Lboard인 경우
+            boardDto.setTotalNum((int)info.get("totalNum"));
             int board_pk = boardService.lBoardCreate(boardDto);
             if(board_pk > 0){
                 // joinDto 생성 및 본인 인원 추가
@@ -209,7 +272,16 @@ public class BoardController {
             }
         }else if(boardDto.getKind_pk() == 7){ // feed인 경우
             int board_pk = boardService.feedCreate(boardDto);
+            System.out.println(board_pk);
             if(board_pk > 0){
+                if(imgUrls != null) {
+                    infoDto.setBoard_pk(board_pk);
+                    for (int i = 0; i < imgUrls.size(); i++) {
+                        infoDto.setImgUrl(imgUrls.get(i));
+                        if (infoService.addImage(infoDto)) continue;
+                        return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
+                    }
+                }
                 output.put("board_pk", board_pk);
                 return new ResponseEntity(output, HttpStatus.OK);
             }
@@ -244,10 +316,10 @@ public class BoardController {
             boardDto.setKind_pk(kind_pk);
             boardDto.setTitle(info.get("title"));
             boardDto.setContent(info.get("content"));
-            boardDto.setUpdated_at(LocalDateTime.now());
+            boardDto.setUpdated_at(dateFormat.format(LocalDateTime.now()));
 
             if (kind_pk <= 3){ // gboard인 경우
-                boardDto.setUpdated_at(LocalDateTime.now());
+                boardDto.setUpdated_at(dateFormat.format(LocalDateTime.now()));
                 if(boardService.gBoardUpdate(boardDto)){ // 수정을 성공했다면
                     return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
                 }

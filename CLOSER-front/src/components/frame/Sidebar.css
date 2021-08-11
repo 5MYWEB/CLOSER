@@ -2,10 +2,10 @@
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: fixed;
-  width: 7.5vw;
-  height: 7.5vw;
-  left: 1.3rem;
-  top: 2rem;
+  width: 6vw;
+  height: 6vw;
+  left: 1.1rem;
+  top: 1.1rem;
 }
 
 /* Color/shape of burger icon bars */

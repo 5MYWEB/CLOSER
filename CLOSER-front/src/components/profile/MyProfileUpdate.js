@@ -1,24 +1,13 @@
 import React, {useState, useRef, useEffect} from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import AWS from 'aws-sdk';
+import { getMyInfoAction } from '../../modules/user';
 
 const MyProfileUpdate = () => {
 
-  var albumBucketName = "photo-album-hy";
-  var bucketRegion = "ap-northeast-2";
-  var IdentityPoolId = "ap-northeast-2:00a0ab54-d07b-4fbc-9601-4362640e9362";
-
-  // Cognito 연동으로 S3 접근 권한을 얻는 부분
-  AWS.config.update({
-    region: bucketRegion,
-    credentials: new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: IdentityPoolId
-    }),
-  })
-
+  const dispatch = useDispatch();
   // DOM 선택
   const selectInputs = useRef();
 
@@ -39,6 +28,7 @@ const MyProfileUpdate = () => {
     profileImg: userInfo.profileImg,
     phone: userInfo.phone,
     badge: userInfo.badge,
+    addr: userInfo.addr,
   })
 
   // 중복확인이 성공했으면 true
@@ -90,91 +80,26 @@ const MyProfileUpdate = () => {
 
   // 저장
   const onClickSave = () => {
-    let myPromise = new Promise((resolve, reject) => {
-      // setTimeout(() => {
-      //   resolve("Success!");
-      // }, 1000);
-      if(file!==null) {
-        alert("first");
-        handleFileInput();
-        resolve("Success!");
-      }
-    });
-
-    myPromise.then((value)=>{
-          if (doubleChecked === true) {
-            alert("second")
-            axios.put('http://localhost:8080/user/mypage', changedUserinfo)
-                .then((res) => {
-                  console.log(res)
-                })
-                .catch((err) => {
-                  console.log(err)
-                })
-          } else {
-            alert('닉네임 중복체크를 해주세요!')
-          }}
-  )
-  }
-
-
-  const [InputUrl, setInputUrl] = useState(null);
-
-  // const Changeurl = () => {
-  //   setChangedUserInfo({
-  //     ...changedUserinfo,
-  //     profileImg: this.state.InputUrl
-  //   })
-  // }
-
-  // 이미지 미리보기
-  const [fileUrl, setFileUrl] = useState(null);
-  const [file, setfile] = useState(null);
-
-  function processImage(event){
-    const imageFile = event.target.files[0];
-    setfile(imageFile);
-    const imageUrl=URL.createObjectURL(imageFile);
-    setFileUrl(imageUrl);
-    setChanged(true);
-  }
-
-  //////////////////////////////////////////
-  // const uploadurl = (data) => {
-  //   setInputUrl(data);
-  // };
-  //
-
-  useEffect(()=>{
-
-  },[])
-  const handleFileInput = e => {
-
-    const userid = userInfo.userId;
-    var albumPhotosKey = encodeURIComponent(userid) + "/";
-    var photoKey = albumPhotosKey + userid + "_profile.jpg";
-
-    // AWS sdk에 포함된 함수로 파일을 업로드하는 부분
-    const upload = new AWS.S3.ManagedUpload({
-      params: {
-        Bucket: albumBucketName,
-        Key: photoKey,
-        Body: file,
-      },
-    });
-
-    const promise = upload.promise()
-
-    promise.then(
-        function (data) {
-          alert("이미지 업로드에 성공했습니다.")
-          setInputUrl(data.Location);
-
-        },
-        function (err) {
-          return alert("오류가 발생했습니다: ", err.message)
-        }
-    )
+    if (doubleChecked === true){
+      // 수정 요청
+      axios.put('http://localhost:8080/user/mypage', changedUserinfo)
+      .then((res) => {
+        console.log(res)
+        // 정보다시 받아오는 요청
+        axios.post(`http://localhost:8080/user/profileinfo?userId=${userInfo.userId}`)
+        .then((res) => {
+          dispatch(getMyInfoAction(res.data))
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    } else{
+      alert('닉네임 중복체크를 해주세요!')
+    }
   }
 
   return (

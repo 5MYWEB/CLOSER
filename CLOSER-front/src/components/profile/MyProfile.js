@@ -1,14 +1,9 @@
 import React, { useEffect, useState} from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
-// import FollowerList from '../components/profile/FollowerList';
-// import FollowingList from '../components/profile/FollowingList';
-// import UserFeed from '../components/profile/UserFeed';
-// import UserPost from '../components/profile/UserPost';
-// import UserBookmark from '../components/profile/UserBookmark';
+import UserBadge from './UserBadge';
 
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -41,7 +36,7 @@ function MyProfile() {
   }, [])
 
   return (
-    <div className="container">
+    <Container>
       {/* Row-1 : 뒤로가기 */}
       <Row>
         <a href="javascript:history.back();">뒤로가기</a>
@@ -70,21 +65,21 @@ function MyProfile() {
       </Row>
       {/* Row-3 : 뱃지 */}
       <Row>
-        뱃지 컴포넌트, 라우터
+        <UserBadge userId={userInfo.userId}/>
       </Row>
       {/* Row-4 : 한줄소개 */}
       <Row>
-        {userInfo.addr}
+        {userInfo.intro}
       </Row>
       {/* Row-5 : 팔로잉, 팔로워, 공유하기 */}
       <Row>
-        <Col xs={3}>
+        <Col xs={2}>
           <Link to={`/${userInfo.userId}/following-list`}>팔로잉 {followingListLength}</Link>
         </Col>
-        <Col xs={3}>
+        <Col xs={2}>
           <Link to={`/${userInfo.userId}/follower-list`}>팔로워 {followerListLength}</Link>
         </Col>
-        <Col xs={{ span: 3, offset: 3 }}>
+        <Col xs={{ span: 6, offset: 2 }}>
           공유하기 버튼
         </Col>
       </Row>
@@ -100,9 +95,7 @@ function MyProfile() {
           <Link to={`/profile/${userInfo.userId}/user-bookmark`}>북마크</Link>
         </Col>
       </Row>
-      
-      
-    </div>
+    </Container>
   );
 }
 

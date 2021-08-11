@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -26,6 +28,8 @@ public class BoardController {
     private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
+
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
     private UserService userService;
@@ -225,8 +229,8 @@ public class BoardController {
         boardDto.setKind_pk((int)info.get("kind_pk"));
         if(info.get("title") != null) boardDto.setTitle((String)info.get("title"));
         boardDto.setContent((String)info.get("content"));
-        boardDto.setCreated_at(LocalDateTime.now()); // 생성 시간
-        boardDto.setUpdated_at(LocalDateTime.now()); // 수정 시간
+        boardDto.setCreated_at(dateFormat.format(LocalDateTime.now())); // 생성 시간
+        boardDto.setUpdated_at(dateFormat.format(LocalDateTime.now())); // 수정 시간
         boardDto.setLocation(memberDto.getAddr()); // 주소
         boardDto.setNickname(memberDto.getNickname()); // 닉네임
 
@@ -312,10 +316,10 @@ public class BoardController {
             boardDto.setKind_pk(kind_pk);
             boardDto.setTitle(info.get("title"));
             boardDto.setContent(info.get("content"));
-            boardDto.setUpdated_at(LocalDateTime.now());
+            boardDto.setUpdated_at(dateFormat.format(LocalDateTime.now()));
 
             if (kind_pk <= 3){ // gboard인 경우
-                boardDto.setUpdated_at(LocalDateTime.now());
+                boardDto.setUpdated_at(dateFormat.format(LocalDateTime.now()));
                 if(boardService.gBoardUpdate(boardDto)){ // 수정을 성공했다면
                     return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
                 }

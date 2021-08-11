@@ -28,10 +28,10 @@ public class BoardDto {
 
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime created_at;
+    private String created_at;
 
     @LastModifiedDate
-    private LocalDateTime updated_at;
+    private String updated_at;
 
     private int totalNum;
     private int gatherNum;

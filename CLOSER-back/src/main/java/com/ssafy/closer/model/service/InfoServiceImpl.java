@@ -59,4 +59,8 @@ public class InfoServiceImpl implements InfoService {
         return sqlSession.getMapper(InfoMapper.class).findCommentUser(info_pk);
     }
 
+    @Override
+    public boolean addImage(InfoDto infoDto) {
+        return sqlSession.getMapper(InfoMapper.class).addImage(infoDto)==1;
+    }
 }

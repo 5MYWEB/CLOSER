@@ -1,6 +1,6 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
-import { TopAppBar, Navbar } from './components/frame/index';
+import { Route, withRouter } from 'react-router-dom';
+import { TopAppBar, Navbar, BackButton } from './components/frame/index';
 import { Home, About, Login, SignUp, Profile, Newsfeed, Board, Search, Alarm, Messages } from './pages';
 import NewsfeedList from './components/newsfeed/NewsfeedList';
 import BoardSubNavbar1 from './components/board/BoardSubNavbar1';

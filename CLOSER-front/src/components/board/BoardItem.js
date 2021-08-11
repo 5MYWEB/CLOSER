@@ -6,7 +6,8 @@ import axios from 'axios';
 import { likeBoard } from '../../modules/board';
 import UserBadgeItem from '../profile/UserBadgeItem'
 
-function BoardItem({ board }) {
+const BoardItem = React.forwardRef(({ board }, ref) => {
+// function BoardItem({ board }, ref) {
   const dispatch = useDispatch();
 
   // 현재 로그인한 사용자의 아이디 가져오기
@@ -30,7 +31,6 @@ function BoardItem({ board }) {
   useEffect(() => {
     return () => setCountBookmark(false); // cleanup function을 이용
   }, []);
-
   useEffect(() => {
     // 좋아요 조회
     axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
@@ -109,12 +109,14 @@ function BoardItem({ board }) {
   }
 
   return (
-    <>
+    <div ref={ref}>
       <br />
         <div>작성자 : {board.nickname}</div>
-        <div>뱃지 : <UserBadgeItem badge={board.badge}/></div>
+        {board.badge !== 0 && 
+          <div>뱃지 : <UserBadgeItem badge={board.badge}/></div>
+        }
       <Link to={`/board-detail/${board.board_pk}`}>
-        {board.title !== null && 
+        {board.title !== "" && 
           <div>제목: {board.title}</div>
         }
         <div>내용 : {board.content}</div>
@@ -144,9 +146,9 @@ function BoardItem({ board }) {
             </span>
           }
         </div>
-    </>
+    </div>
   )
-}
+})
 
 BoardItem.propTypes = {
   board: PropTypes.shape({

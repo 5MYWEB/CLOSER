@@ -1,21 +1,12 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import axios from 'axios'
-<<<<<<< HEAD
 import AWS from "aws-sdk";
-=======
-import { useSelector } from 'react-redux';
->>>>>>> 01fdff1134c187250c5714af12683b7f925a1752
 import { RippleButton } from '../styles/index';
 import '../styles/theme.css'
 import UserLocation from '../components/profile/UserLocation';
 // import { changeAddr } from '../modules/user';
 
-<<<<<<< HEAD
 function SignUp( {history} ) {
-=======
-function SignUp( history ) {
-  const { changedAddr } = useSelector((state) => state.user);
->>>>>>> 01fdff1134c187250c5714af12683b7f925a1752
   const [userInfo, setUserInfo] = useState({
     userId: '',
     nickname: '',
@@ -43,10 +34,12 @@ function SignUp( history ) {
   useEffect(() => {
     setUserInfo({
       ...userInfo,
-      addr: changedAddr
+      // addr: changedAddr
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [changedAddr])
+  }, 
+  // [changedAddr]
+  )
 
   // DOM 선택
   const radioBtn = useRef();
@@ -310,7 +303,7 @@ function SignUp( history ) {
         <div xs={8}>
           <input 
             type="text"
-            value={changedAddr}
+            // value={changedAddr}
             name="addr"
             // onChange={onChange}
           />

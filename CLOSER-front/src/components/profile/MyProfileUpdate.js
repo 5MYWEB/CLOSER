@@ -111,8 +111,8 @@ const MyProfileUpdate = () => {
       {/* Row-1 : 프로필사진 */}
       <Row className="justify-content-center">
         <Col xs={5} >
-          <img src={fileUrl} alt="프로필사진"></img>
-          <input type="file" onChange={processImage}></input>
+          {/* <img src={fileUrl} alt="프로필사진"></img> */}
+          {/* <input type="file" onChange={processImage}></input> */}
         </Col>
       </Row>
       <br />

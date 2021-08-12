@@ -390,3 +390,12 @@ a:active { text-decoration: none; }
 	transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
 }
 
+.heart_full, .heart_empty{
+  width: 9vw;
+  height: 5vh;
+}
+
+.bookmark_full, .bookmark_empty{
+  width: 9vw;
+  height: 5vh;
+}

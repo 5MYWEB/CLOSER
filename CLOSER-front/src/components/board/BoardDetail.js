@@ -8,6 +8,12 @@ import axios from 'axios';
 import CommentList from '../comment/CommentList';
 import UserBadgeItem from '../profile/UserBadgeItem';
 
+import './BoardDetail.css';
+import heartEmpty from '../../assets/heart_empty.png';
+import heartFull from '../../assets/heart_full.png';
+import bookmarkEmpty from '../../assets/bookmark_empty.png';
+import bookmarkFull from '../../assets/bookmark_full.png';
+
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
@@ -191,9 +197,9 @@ const BoardDetail = ({match}) => {
   }
 
   return (
-    <>
-      <a href="javascript:history.back();">뒤로가기</a>
-      <div>글 번호 : {board.board_pk}</div>
+    <div className="container">
+      <div className="board-main">
+      {/* <div>글 번호 : {board.board_pk}</div> */}
       {board.kind_pk !== 7 && 
         <div>제목 : {board.title}</div>
       }
@@ -202,8 +208,8 @@ const BoardDetail = ({match}) => {
       { board.kind_pk > 0 && board.kind_pk < 4 && board.badge !== 0 &&
         <div>뱃지 : <UserBadgeItem badge={board.badge}/></div>
       }
-      <div>내용 : {board.content}</div>
       <div>작성시간 : {board.created_at}</div>
+      <div>내용 : {board.content}</div>
       {board.kind_pk !== 7 && 
         <div>수정시간 : {board.updated_at}</div>
       }
@@ -239,35 +245,37 @@ const BoardDetail = ({match}) => {
           <button onClick={onClickDelete}>삭제</button>
         </div>
       }
-      <div>
+      <div className = "likeAndBookmark">
         {/* 좋아요 */}
         { liked
           ?
-          <div>
-            <button onClick={onClickLike}>좋아요 취소</button> {countLike}
+          <div className = "likePart">
+            <img className ="heart_full" src={heartFull} onClick={onClickLike}></img> {countLike}
           </div>
           : 
-          <div>
-            <button onClick={onClickLike}>좋아요</button> {countLike}
+          <div className = "likePart">
+            <img className ="heart_empty" src={heartEmpty} onClick={onClickLike}></img> {countLike}
           </div>
         }
         {/* 북마크 */}
         { bookmarked
           ?
-          <div>
-            <button onClick={onClickBookmark}>북마크 취소</button> {countBookmark}
+          <div className = "bookmarkPart">
+            <img className ="bookmark_full" src={bookmarkFull} onClick={onClickBookmark}></img> {countBookmark}
           </div>
           : 
-          <div>
-            <button onClick={onClickBookmark}>북마크</button> {countBookmark}
+          <div className = "bookmarkPart">
+            <img className ="bookmark_empty" src={bookmarkEmpty} onClick={onClickBookmark}></img> {countBookmark}
           </div>
         }
       </div>
       <div>
+
+      </div>
         <hr />
         <CommentList board_pk={Number(pk)} />
-      </div>
-    </>
+      </div>     
+    </div>
   )
 }
 

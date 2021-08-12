@@ -9,6 +9,7 @@
 }
 
 .profilepart{
+	margin-top: 8vh;
   display: grid;
 	grid-template-columns: repeat(4, 25%);
 	grid-template-rows: repeat(7, 17%);

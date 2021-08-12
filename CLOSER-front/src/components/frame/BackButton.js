@@ -4,8 +4,8 @@ import { RippleBackButton } from '../../styles/index';
 import backButton from '../../assets/arrow-left-solid.svg'
 
 
-const BackButton = ({ history }) => {
-
+const BackButton = ({ history, cclass}) => {
+  
   const onClick = ( ) => {
     setTimeout( function() {
       history.goBack();
@@ -13,7 +13,7 @@ const BackButton = ({ history }) => {
   }
 
   return (
-    <RippleBackButton src={backButton} alt="backButton" cclass="back-button" onClick={onClick} />
+    <RippleBackButton src={backButton} alt="backButton" cclass={`back-button ${cclass}`} onClick={onClick} />
   )
 }
 export default withRouter(BackButton);

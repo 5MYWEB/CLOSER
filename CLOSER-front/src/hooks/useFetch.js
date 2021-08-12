@@ -3,7 +3,6 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 function useFetch(page, name, addr, userId) {
-  console.log(page, name )
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [list, setList] = useState([]);
@@ -29,6 +28,7 @@ function useFetch(page, name, addr, userId) {
             }
         });
       }
+      // page가 1이면 name(near, follow, total)이 바뀌었단 뜻이므로 리스트를 초기화 한 뒤 담음 (prev 리스트와 합치지 않음)
       if (page === 1) {
         await setList([...res.data.data]);
       } else {

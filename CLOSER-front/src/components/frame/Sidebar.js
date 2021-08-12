@@ -38,16 +38,16 @@ class Sidebar extends React.Component {
             >
               <div>
                 <div className="side_home">
-                  <Link to="/" onClick={() => this.closeMenu()} class="link-dark">HOME</Link>
+                  <Link to="/" onClick={() => this.closeMenu()} className="link-dark">HOME</Link>
                 </div>
                 <div className="side_about">
-                  <Link to="/about" onClick={() => this.closeMenu()} class="link-dark">ABOUT</Link>
+                  <Link to="/about" onClick={() => this.closeMenu()} className="link-dark">ABOUT</Link>
                 </div>
                 <div className="side_login">
-                  <Link to="/login" onClick={() => this.closeMenu()} class="link-dark">LOGIN</Link>
+                  <Link to="/login" onClick={() => this.closeMenu()} className="link-dark">LOGIN</Link>
                 </div>
                 <div className="side_join">
-                  <Link to="/signup" onClick={() => this.closeMenu()} class="link-dark">JOIN</Link>
+                  <Link to="/signup" onClick={() => this.closeMenu()} className="link-dark">JOIN</Link>
                 </div>
               </div>
             </Menu>
@@ -63,21 +63,21 @@ class Sidebar extends React.Component {
             >
               <div>
                 <div className="side_home">
-                  <Link to="/" onClick={() => this.closeMenu()} class="link-dark">HOME</Link>
+                  <Link to="/" onClick={() => this.closeMenu()} className="link-dark">HOME</Link>
                 </div>
                 <div className="side_about">
-                  <Link to="/about" onClick={() => this.closeMenu()} class="link-dark">ABOUT</Link>
+                  <Link to="/about" onClick={() => this.closeMenu()} className="link-dark">ABOUT</Link>
                 </div>
                 <div className="side_logout">
-                  <Link to="/" onClick={() => {this.closeMenu(); logoutAction();}} class="link-dark">LOGOUT</Link>
+                  <Link to="/" onClick={() => {this.closeMenu(); logoutAction();}} className="link-dark">LOGOUT</Link>
                 </div>
               
                   <div className="side_profile">
-                    <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()} class="link-dark">MY PROFILE</Link>
+                    <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()} className="link-dark">MY PROFILE</Link>
                   </div>
                 
                 <div className="side_location">
-                  <Link to={`/change-location/`} onClick={() => this.closeMenu()} class="link-dark">동네 변경</Link>
+                  <Link to={`/change-location/`} onClick={() => this.closeMenu()} className="link-dark">동네 변경</Link>
                 </div>
               </div>
             </Menu>

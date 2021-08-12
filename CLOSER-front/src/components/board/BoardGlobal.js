@@ -63,7 +63,9 @@ function BoardGlobal({ match }) {
           <div>
             게시글이 없습니다:(
           </div>
+          
         } 
+
       </div>
       <hr />
 
@@ -72,6 +74,7 @@ function BoardGlobal({ match }) {
           {/* 토글 버튼 */}
           최신 {name === 'recipe' ? '레시피' : name ==='tip' ? '자취 꿀팁' : name === 'deco' ? '홈데코' : '' }
           <button onClick={onClickToggle}>인기순</button>
+          
           {/* 목록이 비어있지 않다면 목록을 불러옴*/}
           {boardList && boardList.length !== 0 
             ? 
@@ -106,7 +109,11 @@ function BoardGlobal({ match }) {
             <div>
               게시글이 없습니다:(
             </div>
+
+            
             }
+
+            
         </div>
       }
     </>

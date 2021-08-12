@@ -44,8 +44,8 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bm-menu {
   width: 75vw;
   background: #ECECFF;
-  padding: 2.5em 1rem 0;
-  font-size: 1.15em;
+  /* padding: 2.5em 1rem 0; */
+  font-size: 1.4em;
 }
 
 /* Morph shape necessary with bubble or elastic */
@@ -56,15 +56,22 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* Wrapper for item list */
 .bm-item-list {
   color: #5552FF;
-  padding: 0.8em;
+  text-align: center;
+  align-items: center;
+  display: grid;
 }
 
 /* Individual item */
 .bm-item {
-  display: inline-block;
+  letter-spacing: 5px;
+  height: 50%;
 }
 
 /* Styling of overlay */
 .bm-overlay {
   background: rgba(0, 0, 0, 0.3);
+}
+
+.side_about, .side_logout, .side_profile, .side_location, .side_login, .side_join{
+  margin-top: 2vh;
 }

@@ -1,11 +1,26 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+import AWS from 'aws-sdk';
 import { getMyInfoAction } from '../../modules/user';
+import defaultProfile from '../../assets/profile-user-demo.png'
 
 const MyProfileUpdate = () => {
+
+  // S3 기본 정보
+  var albumBucketName = "photo-album-hy";
+  var bucketRegion = "ap-northeast-2";
+  var IdentityPoolId = "ap-northeast-2:00a0ab54-d07b-4fbc-9601-4362640e9362";
+
+  // Cognito 연동으로 S3 접근 권한을 얻는 부분
+  AWS.config.update({
+    region: bucketRegion,
+    credentials: new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: IdentityPoolId
+    }),
+  })
 
   const dispatch = useDispatch();
   // DOM 선택
@@ -17,6 +32,8 @@ const MyProfileUpdate = () => {
   // 기존 정보
   const { userInfo } = useSelector((state) => state.user);
 
+  let img = `https://photo-album-hy.s3.ap-northeast-2.amazonaws.com/${userInfo.userId}/${userInfo.userId}_profile.jpg`
+
   // 수정할 정보의 초기값은 기존 정보와 동일하다.
   const [changedUserinfo, setChangedUserInfo] = useState({
     userId: userInfo.userId,
@@ -25,7 +42,7 @@ const MyProfileUpdate = () => {
     email: userInfo.email,
     homeAlone: userInfo.homeAlone,
     intro: userInfo.intro,
-    profileImg: userInfo.profileImg,
+    profileImg: img,
     phone: userInfo.phone,
     badge: userInfo.badge,
     addr: userInfo.addr,
@@ -36,6 +53,9 @@ const MyProfileUpdate = () => {
 
   // 값이 바뀌었으면 true
   const [changed, setChanged] = useState(false)
+
+  // 프로필 사진을 변경했으면 true
+  const [changedimg,setChangedimg] = useState(false)
 
   // 닉네임 변경
   const onChangeNickname = (e) => {
@@ -78,8 +98,60 @@ const MyProfileUpdate = () => {
     setChanged(true)
   }
 
+  // 이미지 미리보기
+  const [fileUrl, setFileUrl] = useState(img);
+  const [file, setFile] = useState('');
+
+  function processImage(event){
+    let file = event.target.files[0];
+    let reader = new FileReader();
+
+    reader.onloadend = (e) => {
+      setFile(file);
+      setFileUrl(reader.result);
+    }
+    if(file)
+      reader.readAsDataURL(file);
+    setChanged(true);
+    setChangedimg(true);
+  }
+
+  // 이미지 S3에 업로드
+  async function handleFileInput() {
+    const userid = userInfo.userId;
+    let albumPhotosKey = encodeURIComponent(userid) + "/";
+    let photoKey = albumPhotosKey + userid + "_profile.jpg";
+
+    // AWS sdk에 포함된 함수로 파일을 업로드하는 부분
+    const upload = new AWS.S3.ManagedUpload({
+      params: {
+        Bucket: albumBucketName,
+        Key: photoKey,
+        Body: file,
+      },
+    })
+
+    const promise = upload.promise();
+
+    promise.then(
+        function (data) {
+          console.log("Successfully uploaded photo.");
+        },
+        function (err) {
+            return console.log("There was an error uploading your photo: ", err.message);
+        }
+    );
+  }
+
+  // 이미지 없을 시 기본 이미지 생성
+  const handleImgError = (e) => {
+    e.target.src = defaultProfile;
+  }
+
   // 저장
   const onClickSave = () => {
+    if(changedimg === true) handleFileInput();
+
     if (doubleChecked === true){
       // 수정 요청
       axios.put('http://localhost:8080/user/mypage', changedUserinfo)
@@ -111,8 +183,8 @@ const MyProfileUpdate = () => {
       {/* Row-1 : 프로필사진 */}
       <Row className="justify-content-center">
         <Col xs={5} >
-          {/* <img src={fileUrl} alt="프로필사진"></img> */}
-          {/* <input type="file" onChange={processImage}></input> */}
+           <img src={fileUrl} alt="프로필사진" onError={handleImgError}></img>
+           <input type="file" onChange={processImage}></input>
         </Col>
       </Row>
       <br />

@@ -1,8 +1,9 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState, useRef} from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import defaultProfile from '../../assets/profile-user-demo.png'
 import UserBadge from './UserBadge';
 import backarrow from '../../assets/arrow-left-solid.svg';
 import userprofile from '../../assets/profile-user-demo.png';
@@ -19,7 +20,7 @@ import './MyProfile.css';
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 function MyProfile() {
-  
+  const imgRef = useRef(null);
   const { userInfo } = useSelector((state) => state.user);
 
   const now = new Date();
@@ -29,6 +30,9 @@ function MyProfile() {
   const [followingListLength, setFollowingListLength] = useState(0)
   const [followerListLength, setFollowerListLength] = useState(0)
   const [annual, setAnnual] = useState(0)
+
+  let img = `https://photo-album-hy.s3.ap-northeast-2.amazonaws.com/${userInfo.userId}/${userInfo.userId}_profile.jpg`
+
   // 팔로잉, 팔로워 수 가져오기
   useEffect(() => {
     axios.post(`http://localhost:8080/follow/${userInfo.userId}/following`)
@@ -51,13 +55,20 @@ function MyProfile() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // 이미지 없을 시 기본 이미지 생성
+  const handleImgError = (e) => {
+    e.target.src = defaultProfile;
+  }
+
   return (
     <div className="container"> 
       {/* Row-1 : 뒤로가기 */}
       <div className = "profilepart">
 
         <div className = "item2">
-          <img src={userprofile} alt="userprofile" className="userprofile"/>
+          <img ref={imgRef} src={img}  alt="userprofile" className="userprofile" onError={handleImgError}/>
+
+
         </div>
 
         <div className = "item3">

@@ -18,6 +18,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RestController
@@ -265,8 +266,8 @@ public class BoardController {
         boardDto.setKind_pk((int)info.get("kind_pk"));
         if(info.get("title") != null) boardDto.setTitle((String)info.get("title"));
         boardDto.setContent((String)info.get("content"));
-        boardDto.setCreated_at(dateFormat.format(LocalDateTime.now())); // 생성 시간
-        boardDto.setUpdated_at(dateFormat.format(LocalDateTime.now())); // 수정 시간
+        boardDto.setCreated_at(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))); // 생성 시간
+        boardDto.setUpdated_at(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))); // 수정 시간
         boardDto.setLocation(memberDto.getAddr()); // 주소
         boardDto.setNickname(memberDto.getNickname()); // 닉네임
 
@@ -277,7 +278,7 @@ public class BoardController {
         InfoDto infoDto = new InfoDto();
         if(imgUrls != null) {
             infoDto.setUserId(userId);
-            infoDto.setCreated_at(dateFormat.format(LocalDateTime.now()));
+            infoDto.setCreated_at(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         }
 
         // 리턴할 값 선언 (댓글 수, 좋아요 수, 북마크 수)
@@ -357,10 +358,10 @@ public class BoardController {
             boardDto.setKind_pk(kind_pk);
             boardDto.setTitle(info.get("title"));
             boardDto.setContent(info.get("content"));
-            boardDto.setUpdated_at(dateFormat.format(LocalDateTime.now()));
+            boardDto.setUpdated_at(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
             if (kind_pk <= 3){ // gboard인 경우
-                boardDto.setUpdated_at(dateFormat.format(LocalDateTime.now()));
+                boardDto.setUpdated_at(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                 if(boardService.gBoardUpdate(boardDto)){ // 수정을 성공했다면
                     return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
                 }
@@ -531,7 +532,7 @@ public class BoardController {
         // 유저 정보가 담긴 infoDto에 kind_pk, board_pk 세팅
         infoDto.setKind_pk(1);
         infoDto.setBoard_pk(board_pk);
-        infoDto.setCreated_at(dateFormat.format(LocalDateTime.now()));
+        infoDto.setCreated_at(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
         if(infoService.createComment(infoDto)){ // 댓글 생성 성공
             // 알림창

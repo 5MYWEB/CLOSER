@@ -16,7 +16,7 @@ function Login({ history }) {
   
   const { userId, password } = userInputs;
 
-  const { decodedToken } = useSelector((state) => state.user);
+  const { decodedToken, isLoggedIn } = useSelector((state) => state.user);
 
   const onChange=useCallback(
     e => {
@@ -101,7 +101,8 @@ function Login({ history }) {
 
   // 로그인에 성공했으면 로그인 유저 정보 가져오기
   useEffect(() => {
-    if (decodedToken.UserId !== null){
+
+    if (isLoggedIn === true && decodedToken.UserId !== null){
       axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
         .then((response) => {
           dispatch(getMyInfoAction(response.data))
@@ -111,7 +112,8 @@ function Login({ history }) {
           console.log(error)
         })
       }
-    }, [decodedToken, dispatch, history])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [decodedToken])
         
   return (
     <div className="wrap-group"> 

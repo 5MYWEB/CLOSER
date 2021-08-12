@@ -85,7 +85,7 @@ export const refreshInfo = () => ({
       const decodedToken = jwt.decode(action.data.jwtAuthToken)
 
       localStorage.setItem("userToken", action.data.jwtAuthToken);
-      localStorage.setItem("decodedToken", decodedToken.UserId);
+      localStorage.setItem("decodedToken", decodedToken);
       localStorage.setItem("isLoggedIn", true);
 
       return {
@@ -98,11 +98,12 @@ export const refreshInfo = () => ({
       localStorage.removeItem("userToken");
       localStorage.removeItem("decodedToken");
       localStorage.removeItem("isLoggedIn");
+      alert('로그아웃 되었습니다.')
       return {
         ...state,
         isLoggedIn: false,
-        userToken: '',
-        decodedToken: '',
+        userToken: null,
+        decodedToken: null,
         userInfo: null,
       };
     case GET_MY_INFO:

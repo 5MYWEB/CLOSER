@@ -27,5 +27,5 @@ public class InfoDto {
 
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime created_at;
+    private String created_at;
 }

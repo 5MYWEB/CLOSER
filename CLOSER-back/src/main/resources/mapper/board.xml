@@ -125,7 +125,7 @@
     <select id="lBoardList1" parameterType="String" resultType="BoardDto">
         select board_pk, userId, title, content, created_at, totalNum, gatherNum, location, nickname
         from board
-        where location = #{location} and kind_pk = 4
+        where location like concat(substring_index(#{location}, ' ', 2), '%') and kind_pk = 4
         order by created_at desc;
     </select>
 
@@ -133,7 +133,7 @@
     <select id="lBoardList2" parameterType="String" resultType="BoardDto">
         select board_pk, userId, title, content, created_at, totalNum, gatherNum, location, nickname
         from board
-        where location = #{location} and kind_pk = 5
+        where location like concat(substring_index(#{location}, ' ', 2), '%') and kind_pk = 5
         order by created_at desc;
     </select>
 
@@ -141,7 +141,7 @@
     <select id="lBoardList3" parameterType="String" resultType="BoardDto">
         select board_pk, userId, title, content, created_at, totalNum, gatherNum, location, nickname
         from board
-        where location = #{location} and kind_pk = 6
+        where location like concat(substring_index(#{location}, ' ', 2), '%') and kind_pk = 6
         order by created_at desc;
     </select>
 

@@ -33,4 +33,7 @@ public interface InfoMapper {
 
     // 이미지 생성
     int addImage(InfoDto infoDto);
+
+    // 이미지 조회
+    List<String> detailImage(int board_pk);
 }

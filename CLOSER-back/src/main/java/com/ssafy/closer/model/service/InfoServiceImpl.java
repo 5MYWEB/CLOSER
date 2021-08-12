@@ -63,4 +63,9 @@ public class InfoServiceImpl implements InfoService {
     public boolean addImage(InfoDto infoDto) {
         return sqlSession.getMapper(InfoMapper.class).addImage(infoDto)==1;
     }
+
+    @Override
+    public List<String> detailImage(int board_pk) {
+        return sqlSession.getMapper(InfoMapper.class).detailImage(board_pk);
+    }
 }

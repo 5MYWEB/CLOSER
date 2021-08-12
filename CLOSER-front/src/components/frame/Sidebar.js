@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { bubble as Menu } from 'react-burger-menu'
 import { connect } from 'react-redux';
-import './Sidebar.css'
+import './Sidebar.css';
+import '../../styles/bootstrap.min.css';
 import * as actions from '../../modules/user';
 
 class Sidebar extends React.Component {
@@ -61,6 +62,23 @@ class Sidebar extends React.Component {
               isOpen={this.state.menuOpen}
               onStateChange={(state) => this.handleStateChange(state)}
             >
+              <div className="bm-profile d-flex">
+                <div>
+                  <div>
+                    <img src={userInfo.profileImg} alt="프로필사진" />
+                  </div>
+                  <div>
+                    <div>
+                      {userInfo.nickname}
+                    </div>
+                    <div>
+                      {userInfo.addr}
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
               <div>
                 <div className="side_home">
                   <Link to="/" onClick={() => this.closeMenu()} className="link-dark">HOME</Link>

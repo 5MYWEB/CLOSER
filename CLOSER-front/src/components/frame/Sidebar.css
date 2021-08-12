@@ -1,3 +1,8 @@
+.bm-profile {
+  align-items: center;
+  height: 35%;
+  padding-top: 2rem;
+}
 
 /* Position and sizing of burger button */
 .bm-burger-button {
@@ -44,8 +49,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bm-menu {
   width: 75vw;
   background: #ECECFF;
-  /* padding: 2.5em 1rem 0; */
-  font-size: 1.4em;
+  font-size: 1.15em;
 }
 
 /* Morph shape necessary with bubble or elastic */

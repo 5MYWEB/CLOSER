@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom';
 import { bubble as Menu } from 'react-burger-menu'
 import { connect } from 'react-redux';
 import './Sidebar.css'
-
-const mapStateToProps = (state) => ({
-  userInfo: state.user.userInfo,
-  isLoggedIn: state.user.isLoggedIn
-});
+import * as actions from '../../modules/user';
 
 class Sidebar extends React.Component {
   constructor(props) { // render 함수보다 먼저 실행이 되면서 그 컴포넌트를 초기화를 담당
@@ -28,7 +24,7 @@ class Sidebar extends React.Component {
   }
 
   render () {
-    const { userInfo, isLoggedIn } = this.props;
+    const { userInfo, isLoggedIn, logoutAction } = this.props;
     
     // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
     if (this.state.menuOpen) {
@@ -40,20 +36,20 @@ class Sidebar extends React.Component {
               isOpen={this.state.menuOpen}
               onStateChange={(state) => this.handleStateChange(state)}
             >
-              <ul>
-                <li>
-                  <Link to="/" onClick={() => this.closeMenu()}>홈</Link>
-                </li>
-                <li>
-                  <Link to="/about" onClick={() => this.closeMenu()}>소개</Link>
-                </li>
-                <li>
-                  <Link to="/login" onClick={() => this.closeMenu()}>로그인</Link>
-                </li>
-                <li>
-                  <Link to="/signup" onClick={() => this.closeMenu()}>회원가입</Link>
-                </li>
-              </ul>
+              <div>
+                <div className="side_home">
+                  <Link to="/" onClick={() => this.closeMenu()} class="link-dark">HOME</Link>
+                </div>
+                <div className="side_about">
+                  <Link to="/about" onClick={() => this.closeMenu()} class="link-dark">ABOUT</Link>
+                </div>
+                <div className="side_login">
+                  <Link to="/login" onClick={() => this.closeMenu()} class="link-dark">LOGIN</Link>
+                </div>
+                <div className="side_join">
+                  <Link to="/signup" onClick={() => this.closeMenu()} class="link-dark">JOIN</Link>
+                </div>
+              </div>
             </Menu>
           </div>
         );
@@ -65,23 +61,25 @@ class Sidebar extends React.Component {
               isOpen={this.state.menuOpen}
               onStateChange={(state) => this.handleStateChange(state)}
             >
-              <ul>
-                <li>
-                  <Link to="/" onClick={() => this.closeMenu()}>홈</Link>
-                </li>
-                <li>
-                  <Link to="/about" onClick={() => this.closeMenu()}>소개</Link>
-                </li>
-                <li>
-                  <Link to="/" onClick={() => this.closeMenu()}>로그아웃</Link>
-                </li>
-                <li>
-                  <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
-                </li>
-                <li>
-                  <Link to={`/change-location/`} onClick={() => this.closeMenu()}>동네 변경</Link>
-                </li>
-              </ul>
+              <div>
+                <div className="side_home">
+                  <Link to="/" onClick={() => this.closeMenu()} class="link-dark">HOME</Link>
+                </div>
+                <div className="side_about">
+                  <Link to="/about" onClick={() => this.closeMenu()} class="link-dark">ABOUT</Link>
+                </div>
+                <div className="side_logout">
+                  <Link to="/" onClick={() => {this.closeMenu(); logoutAction();}} class="link-dark">LOGOUT</Link>
+                </div>
+              
+                  <div className="side_profile">
+                    <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()} class="link-dark">MY PROFILE</Link>
+                  </div>
+                
+                <div className="side_location">
+                  <Link to={`/change-location/`} onClick={() => this.closeMenu()} class="link-dark">동네 변경</Link>
+                </div>
+              </div>
             </Menu>
           </div>
         );
@@ -131,8 +129,13 @@ class Sidebar extends React.Component {
                 <li>
                   <Link to="/" onClick={this.handleStatus}>로그아웃</Link>
                 </li>
+                {userInfo &&
+                  <li>
+                    <Link to={`/profile/${userInfo.userId}`} onClick={this.handleStatus}>프로필</Link>
+                  </li>
+                }
                 <li>
-                  <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
+                  <Link to={`/change-location/`} onClick={this.handleStatus}>동네 변경</Link>
                 </li>
               </ul>
             </Menu>
@@ -143,4 +146,13 @@ class Sidebar extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(Sidebar);
+const mapStateToProps = (state) => ({
+  userInfo: state.user.userInfo,
+  isLoggedIn: state.user.isLoggedIn
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  logoutAction: () => dispatch(actions.logoutAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

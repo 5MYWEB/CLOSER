@@ -42,11 +42,11 @@ const BoardForm = () => {
     e.preventDefault();
     
     axios.post('http://localhost:8080/board/', {
-      kind_pk: kind,
+      kind_pk: Number(kind),
       userId: userInfo.userId,
       title: title,
       content: content,
-      totalNum: totalNum,
+      totalNum: Number(totalNum),
     })
     .then((res) => {
       dispatch(createBoard())

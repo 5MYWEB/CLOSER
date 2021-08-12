@@ -1,0 +1,152 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+:root {
+	--primary-color: #185ee0;
+	--secondary-color: #e6eef9;
+}
+
+*,
+*:after,
+*:before {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Inter", sans-serif;
+	background-color: rgba(#e6eef9, 0.5);
+}
+.container {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.tabs {
+	display: flex;
+	position: relative;
+	background-color: #fff;
+	box-shadow: 0 0 1px 0 rgba(#185ee0, 0.15), 0 6px 12px 0 rgba(#185ee0, 0.15);
+	padding: 0.75rem;
+	z-index: 2;
+}
+
+input[type="radio"] {
+	display: none;
+}
+
+.tab1, .tab2 {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 54px;
+	width: 200px;
+	font-size: 1.25rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: color 0.15s ease-in;
+}
+
+.notification {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	margin-left: 0.75rem;
+	border-radius: 50%;
+	background-color: var(--secondary-color);
+	transition: 0.15s ease-in;
+}
+
+input[type="radio"]:checked ~ .label{
+	color: var(--primary-color);
+}
+
+input[id="radio-1"]:checked ~ .glider{
+	transform: translateX(0);
+}
+
+input[id="radio-2"]:checked ~ .glider {
+	transform: translateX(100%);
+}
+
+
+.glider {
+	position: absolute;
+	display: flex;
+	height: 54px;
+	width: 200px;
+	background-color: var(--secondary-color);
+	z-index: -1;
+	border-radius: 99px; 
+	transition: 0.25s ease-out;
+}
+
+@media (max-width: 700px) {
+	.tabs {
+		transform: scale(0.6);
+	}
+}
+
+#tab1:checked ~ #radio-1 {
+    display: block;
+} */
+.boardcontainer{
+    display: grid;
+}
+
+.tabList{
+    display: grid;
+	grid-template-columns: repeat(2, 50%);
+	grid-template-rows: 10vw;
+    background-color: #c8c6fc;
+}
+
+.board1, .board2{
+    text-align:center;
+	vertical-align:middle;
+	margin-top: 1vh;
+}
+
+
+.animated-button2 {
+	color: #fff;
+	cursor: pointer;
+	display: fixed;
+	position: relative;
+	border: 1px solid #9864d4;
+	transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
+	border-radius: 8px;
+}
+.animated-button2:hover {
+	color: #000 !important;
+	background-color: transparent;
+	text-shadow: nfour;
+}
+.animated-button2:hover:before {
+	right: 0%;
+	left: auto;
+	width: 100%;
+}
+.animated-button2:before {
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 0px;
+	z-index: -1;
+	content: '';
+	color: #000 !important;
+	background: #5552FF;
+	transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+
+.writeBtn{
+    border-radius: 100px;
+}

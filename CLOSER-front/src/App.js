@@ -37,8 +37,9 @@ function App( { location }) {
     '/board-create-form': null,
     '/board-update-form': null,
     '/messages': <BackButton />,
-    '/profile': null,
-    '/profile-update': null
+    '/profile': <BackButton />,
+    '/profile-update': <BackButton />,
+    '/change-location': <BackButton />
   }
 
   // NavBar를 변형하거나 보여주지 않는 페이지를 모아둔 오브젝트
@@ -48,7 +49,8 @@ function App( { location }) {
     '/board-update-form': null,
     '/messages': null,
     '/profile': null,
-    '/profile-update': null
+    '/profile-update': null,
+    '/change-location': null
   }
 
   // 3.

@@ -50,4 +50,10 @@
     <insert id="addImage" parameterType="InfoDto">
         insert into info(kind_pk, board_pk, userId, imgUrl) values (4, #{board_pk}, #{userId}, #{imgUrl})
     </insert>
+
+    <select id="detailImage" parameterType="int" resultType="String">
+        select imgUrl
+        from info
+        where kind_pk=4 and board_pk=#{board_pk}
+    </select>
 </mapper>

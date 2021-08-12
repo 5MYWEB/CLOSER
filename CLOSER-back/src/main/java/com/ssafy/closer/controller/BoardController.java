@@ -47,24 +47,33 @@ public class BoardController {
     @ApiOperation(value = "자취 게시판 cnt 많은 순으로 게시글 보여줌(완료)", response = List.class)
     @PostMapping("/gBoard/all")
     public ResponseEntity<List<BoardDto>> gBoardList() {
-        logger.debug("인기많은 자취 게시글 - 호출");
-        return new ResponseEntity<>(boardService.gBoardList(), HttpStatus.OK);
+        List<BoardDto> boardDtos = boardService.gBoardList();
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity<>(boardDtos, HttpStatus.OK);
     }
 
     // 자취 게시판 - 한끼레시피 이번주 best
     @ApiOperation(value = "자취게시판 - 한끼레시피 한주 인기글(완료)", response = List.class)
     @PostMapping("/gBoard/recipe/weekbest")
     public ResponseEntity<List<BoardDto>> gBoardWeekBestList1() {
-        logger.debug("한끼레시피 - 주간 인기");
-        return new ResponseEntity<>(boardService.gBoardWeekBestList1(), HttpStatus.OK);
+        List<BoardDto> boardDtos = boardService.gBoardWeekBestList1();
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity<>(boardDtos, HttpStatus.OK);
     }
 
     // 자취 게시판 - 한끼레시피 최신글
     @ApiOperation(value = "자취게시판 - 한끼레시피 최신글(완료)", response = List.class)
     @PostMapping("/gBoard/recipe/new")
     public ResponseEntity<List<BoardDto>> gBoardNewList1() {
-        logger.debug("한끼레시피 - 최신");
-        return new ResponseEntity<>(boardService.gBoardNewList1(), HttpStatus.OK);
+        List<BoardDto> boardDtos = boardService.gBoardNewList1();
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity<>(boardDtos, HttpStatus.OK);
     }
 
     // 자취 게시판 - 한끼레시피 인기글
@@ -73,24 +82,33 @@ public class BoardController {
     @ApiOperation(value = "자취게시판 - 한끼레시피 인기글", response = List.class)
     @PostMapping("/gBoard/recipe/best")
     public ResponseEntity<List<BoardDto>> gBoardBestList1() {
-        logger.debug("한끼레시피 - 인기");
-        return new ResponseEntity<>(boardService.gBoardBestList1(), HttpStatus.OK);
+        List<BoardDto> boardDtos = boardService.gBoardBestList1();
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity<>(boardDtos, HttpStatus.OK);
     }
 
     // 자취 게시판 - 자취팁 이번주 best
     @ApiOperation(value = "자취게시판 - 자취팁 한주 인기글(완료)", response = List.class)
     @PostMapping("/gBoard/tip/weekbest")
     public ResponseEntity<List<BoardDto>> gBoardWeekBestList2() {
-        logger.debug("자취팁 - 주간 인기");
-        return new ResponseEntity<>(boardService.gBoardWeekBestList2(), HttpStatus.OK);
+        List<BoardDto> boardDtos = boardService.gBoardWeekBestList2();
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity<>(boardDtos, HttpStatus.OK);
     }
 
     // 자취 게시판 - 자취팁 최신글
     @ApiOperation(value = "자취게시판 - 자취팁 최신글(완료)", response = List.class)
     @PostMapping("/gBoard/tip/new")
     public ResponseEntity<List<BoardDto>> gBoardNewList2() {
-        logger.debug("자취팁 - 최신");
-        return new ResponseEntity<>(boardService.gBoardNewList2(), HttpStatus.OK);
+        List<BoardDto> boardDtos = boardService.gBoardNewList2();
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity<>(boardDtos, HttpStatus.OK);
     }
 
     // 자취 게시판 - 자취팁 인기글
@@ -98,24 +116,33 @@ public class BoardController {
     @ApiOperation(value = "자취게시판 - 자취팁 인기글", response = List.class)
     @PostMapping("/gBoard/tip/best")
     public ResponseEntity<List<BoardDto>> gBoardBestList2() {
-        logger.debug("자취팁 - 인기");
-        return new ResponseEntity<>(boardService.gBoardBestList2(), HttpStatus.OK);
+        List<BoardDto> boardDtos = boardService.gBoardBestList2();
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity<>(boardDtos, HttpStatus.OK);
     }
 
     // 자취 게시판 - 홈데코 이번주 best
     @ApiOperation(value = "자취게시판 - 홈데코 한주 인기글(완료)", response = List.class)
     @PostMapping("/gBoard/deco/weekbest")
     public ResponseEntity<List<BoardDto>> gBoardWeekBestList3() {
-        logger.debug("홈데코 - 주간 인기");
-        return new ResponseEntity<>(boardService.gBoardWeekBestList3(), HttpStatus.OK);
+        List<BoardDto> boardDtos = boardService.gBoardWeekBestList3();
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity<>(boardDtos, HttpStatus.OK);
     }
 
     // 자취 게시판 - 홈데코 최신글
     @ApiOperation(value = "자취게시판 - 홈데코 최신글(완료)", response = List.class)
     @PostMapping("/gBoard/deco/new")
     public ResponseEntity<List<BoardDto>> gBoardNewList3() {
-        logger.debug("홈데코 - 최신");
-        return new ResponseEntity<>(boardService.gBoardNewList3(), HttpStatus.OK);
+        List<BoardDto> boardDtos = boardService.gBoardNewList3();
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity<>(boardDtos, HttpStatus.OK);
     }
 
     // 자취 게시판 - 홈데코 인기글
@@ -123,8 +150,11 @@ public class BoardController {
     @ApiOperation(value = "자취게시판 - 홈데코 인기글", response = List.class)
     @PostMapping("/gBoard/deco/best")
     public ResponseEntity<List<BoardDto>> gBoardBestList3() {
-        logger.debug("홈데코 - 인기");
-        return new ResponseEntity<>(boardService.gBoardBestList3(), HttpStatus.OK);
+        List<BoardDto> boardDtos = boardService.gBoardBestList3();
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity<>(boardDtos, HttpStatus.OK);
     }
 
     // 지역 게시판 - 공동구매 최신순
@@ -156,9 +186,11 @@ public class BoardController {
     @ApiOperation(value = "모든 유저들의 피드글 정보를 반환한다.", response = List.class)
     @GetMapping("/feed/total/{page}")
     public ResponseEntity listFeedAll(@PathVariable int page) {
-        logger.debug("전체 피드글 - 호출");
         JSONObject output = new JSONObject();
         List<BoardDto> boardDtos = boardService.feedListAll((page-1)*10);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
         output.put("data", boardDtos);
 
         int total = boardService.countFeedAll();
@@ -172,7 +204,6 @@ public class BoardController {
     @ApiOperation(value = "같은 동네 유저들의 피드글 정보를 반환한다.", response = List.class)
     @GetMapping("/feed/near/{page}")
     public ResponseEntity listFeedNear(@PathVariable int page, @RequestParam String location) {
-        logger.debug("동네 피드글 - 호출");
         Map<String, Object> info = new HashMap<String, Object>() {
             {
                 put("page", (page-1)*10);
@@ -181,6 +212,9 @@ public class BoardController {
         };
         JSONObject output = new JSONObject();
         List<BoardDto> boardDtos = boardService.feedListNear(info);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
         output.put("data", boardDtos);
 
         int total = boardService.countFeedNear(location);
@@ -195,7 +229,6 @@ public class BoardController {
     @ApiOperation(value = "팔로우 한 유저들의 피드글 정보를 반환한다.", response = List.class)
     @GetMapping("/feed/follow/{page}")
     public ResponseEntity listFeedFollow(@PathVariable int page, @RequestParam String userId) {
-        logger.debug("팔로우 피드글 - 호출");
         Map<String, Object> info = new HashMap<String, Object>() {
             {
                 put("page", (page-1)*10);
@@ -204,6 +237,9 @@ public class BoardController {
         };
         JSONObject output = new JSONObject();
         List<BoardDto> boardDtos = boardService.feedListFollow(info);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
         output.put("data", boardDtos);
 
         int total = boardService.countFeedFollow(userId);
@@ -239,7 +275,10 @@ public class BoardController {
 
         // InfoDto (사진) 선언
         InfoDto infoDto = new InfoDto();
-        if(imgUrls != null) infoDto.setUserId(userId);
+        if(imgUrls != null) {
+            infoDto.setUserId(userId);
+            infoDto.setCreated_at(dateFormat.format(LocalDateTime.now()));
+        }
 
         // 리턴할 값 선언 (댓글 수, 좋아요 수, 북마크 수)
         JSONObject output = new JSONObject();
@@ -294,7 +333,9 @@ public class BoardController {
     @GetMapping("/{board_pk}")
     public ResponseEntity detail(@PathVariable int board_pk) {
         try {
-            return new ResponseEntity<BoardDto>(boardService.read(board_pk), HttpStatus.OK);
+            BoardDto boardDto = boardService.read(board_pk);
+            boardDto.setImgUrls(infoService.detailImage(board_pk));
+            return new ResponseEntity(boardDto, HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
@@ -490,7 +531,7 @@ public class BoardController {
         // 유저 정보가 담긴 infoDto에 kind_pk, board_pk 세팅
         infoDto.setKind_pk(1);
         infoDto.setBoard_pk(board_pk);
-        infoDto.setCreated_at(LocalDateTime.now());
+        infoDto.setCreated_at(dateFormat.format(LocalDateTime.now()));
 
         if(infoService.createComment(infoDto)){ // 댓글 생성 성공
             // 알림창
@@ -594,5 +635,4 @@ public class BoardController {
         }
     }
 
-    // 게시글 사진 관련 (호영님이 aws 연결한 후에 하기로 함)
 }

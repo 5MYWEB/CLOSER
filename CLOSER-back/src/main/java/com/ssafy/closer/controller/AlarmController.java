@@ -65,7 +65,6 @@ public class AlarmController {
     @PostMapping("/read-all")
     public ResponseEntity readAll(@RequestBody Map<String, String> info) {
         String userId = info.get("userId");
-//        System.out.println(alarmService.readAll(userId));
         if(alarmService.readAll(userId) > 0){ // 모두 읽는거 성공하면
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }

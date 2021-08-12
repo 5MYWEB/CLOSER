@@ -1,5 +1,6 @@
-import React, { useRef, useState, useCallback  } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useRef, useState, useCallback, useEffect  } from 'react';
+import { NaverMap } from 'react-naver-maps';
+import { useSelector } from 'react-redux';
 import useFetch from "../../hooks/useFetch";
 import BoardItem from '../board/BoardItem';
 // import { getBoardList } from '../../modules/board';
@@ -13,7 +14,7 @@ const NewsfeedHot = ({match}) => {
   const userId  = useSelector((state) => state.user.userInfo.userId);
   const addr  = useSelector((state) => state.user.userInfo.addr);
   const name = match.params.name
-
+  
   // infinite scroll
   const [pageNum, setPageNum] = useState(1);
   const { loading, error, list, hasMore } = useFetch(pageNum, name, addr, userId);
@@ -32,6 +33,11 @@ const NewsfeedHot = ({match}) => {
     [loading, hasMore]
   );
 
+  useEffect(() => {
+    setPageNum(1)
+  }, [name])
+
+    
   return (
     <div className="App">
       {list.map((board, i) => {

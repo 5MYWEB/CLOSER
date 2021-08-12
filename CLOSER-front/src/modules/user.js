@@ -34,6 +34,7 @@ const FOLLOW = 'FOLLOW';
 const GET_FOLLOW_INFO = 'GET_FOLLOW_INFO';
 const CHANGE_ADDR = 'CHANGE_ADDR';
 const GET_ALARM_LIST = 'GET_ALARM_LIST';
+const REFRESH_INFO = 'REFRESH_INFO';
 
 /* 액션 생성함수 만들기 */
 // 액션 생성함수를 만들고 export 키워드를 사용해서 내보내주세요.
@@ -69,6 +70,10 @@ export const getAlarmList = (data) => ({
   data,
 });
 
+export const refreshInfo = () => ({
+  type: REFRESH_INFO,
+})
+
 
 
 /* 리듀서 선언 */
@@ -78,6 +83,11 @@ export const getAlarmList = (data) => ({
     case LOGIN:
       const jwt = require('jsonwebtoken');
       const decodedToken = jwt.decode(action.data.jwtAuthToken)
+
+      localStorage.setItem("userToken", action.data.jwtAuthToken);
+      localStorage.setItem("decodedToken", decodedToken.UserId);
+      localStorage.setItem("isLoggedIn", true);
+
       return {
         ...state,
         isLoggedIn: true,
@@ -85,6 +95,9 @@ export const getAlarmList = (data) => ({
         decodedToken: decodedToken,
       };
     case LOGOUT:
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("decodedToken");
+      localStorage.removeItem("isLoggedIn");
       return {
         ...state,
         isLoggedIn: false,
@@ -117,6 +130,13 @@ export const getAlarmList = (data) => ({
         ...state,
         alarmList: action.data,
       };
+    case REFRESH_INFO:
+      return {
+        ...state,
+        isLoggedIn: true,
+        userToken: localStorage.getItem("userToken"),
+        decodedToken: localStorage.getItem("decodedToken"),
+      }
     default:
       return state;
   }

@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, withRouter } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios';
+import { loginAction, getMyInfoAction, refreshInfo } from './modules/user'
 import { TopAppBar, Navbar, BackButton } from './components/frame/index';
 import { Home, About, Login, SignUp, Profile, Newsfeed, Board, Search, Alarm, Messages } from './pages';
 import NewsfeedList from './components/newsfeed/NewsfeedList';
@@ -21,6 +24,9 @@ import UserLocation from './components/profile/UserLocation';
 import './App.css';
 
 function App( { location }) {
+  const dispatch = useDispatch();
+  const { isLoggedIn, decodedToken } = useSelector((state) => state.user);
+
   // 1. 현재 라우터가 어딜 보여주고 있는지 (ex. '/login')
   const now = '/' + location.pathname.split('/')[1]
 
@@ -60,6 +66,25 @@ function App( { location }) {
   if (now in noNavBarPages) {
     isNavBar = false
   }
+
+  // 로그인 상태 유지
+  // 로컬 스토리지에는 저장되어 있으나, 새로고침 등의 이유로 인해 isLoggedIn이 false인 경우
+  if(localStorage.getItem("isLoggedIn") === 'true' && isLoggedIn === false){
+    dispatch(refreshInfo());
+  }
+
+  useEffect(() => {
+    if (decodedToken !== null){
+      axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken}`)
+        .then((response) => {
+          dispatch(getMyInfoAction(response.data))
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      }
+    }, [decodedToken, dispatch])
+
   return (
     <div>
       {/* TopAppBar를 보여주거나 변형하거나 / 숨김 */}

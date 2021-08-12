@@ -3,7 +3,6 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 function useFetch(page, name, addr, userId) {
-  console.log('잘됨',page)
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [list, setList] = useState([]);
@@ -29,13 +28,18 @@ function useFetch(page, name, addr, userId) {
             }
         });
       }
-      await setList((prev) => [...new Set([...prev, ...res.data.data])]);
+      // page가 1이면 name(near, follow, total)이 바뀌었단 뜻이므로 리스트를 초기화 한 뒤 담음 (prev 리스트와 합치지 않음)
+      if (page === 1) {
+        await setList([...res.data.data]);
+      } else {
+        await setList((prev) => [...new Set([...prev, ...res.data.data])]);
+      }
       await setHasMore(res.data.hasmore);
       setLoading(false);
     } catch (err) {
       setError(err);
     }
-  }, [addr, name, page]);
+  }, [addr, name, page, userId]);
 
   useEffect(() => {
     sendBoard();

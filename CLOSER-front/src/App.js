@@ -30,8 +30,8 @@ function App( { location }) {
     '/board-detail': null,
     '/board-create-form': null,
     '/board-update-form': null,
-    '/messages': <BackButton />,
-    '/profile': <BackButton />,
+    '/messages': <BackButton cclass="message-backbutton" />,
+    '/profile': <BackButton cclass="normal-backbutton" />,
     '/profile-update': <BackButton />,
     '/change-location': <BackButton />
   }

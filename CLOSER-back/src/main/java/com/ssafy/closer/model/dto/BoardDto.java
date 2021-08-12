@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,10 +29,10 @@ public class BoardDto {
 
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime created_at;
+    private String created_at;
 
     @LastModifiedDate
-    private LocalDateTime updated_at;
+    private String updated_at;
 
     private int totalNum;
     private int gatherNum;
@@ -40,4 +41,6 @@ public class BoardDto {
     private int badge; // 어떤 카테고리에서 badge가 있는지 카테고리 넘버가 넘어감
 
     private String nickname;
+
+    private List<String> imgUrls;
 }

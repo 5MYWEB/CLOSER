@@ -4,6 +4,7 @@ import com.ssafy.closer.model.dto.BoardDto;
 import com.ssafy.closer.model.dto.JoinDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BoardService {
     List<BoardDto> gBoardList(); // 자취 게시판 전체 인기글
@@ -23,9 +24,9 @@ public interface BoardService {
     List<BoardDto> lBoardList2(String location); // 지역 게시판 - 클로저모임 최신순
     List<BoardDto> lBoardList3(String location); // 지역 게시판 - 도와주세요 최신순
 
-    List<BoardDto> feedListAll(); // 피드 목록 - 전체
-    List<BoardDto> feedListNear(String location); // 피드 목록 - 동네
-    List<BoardDto> feedListFollow(String userId); // 피드 목록 - 팔로우
+    List<BoardDto> feedListAll(int page); // 피드 목록 - 전체
+    List<BoardDto> feedListNear(Map<String, Object> info); // 피드 목록 - 동네
+    List<BoardDto> feedListFollow(Map<String, Object> info); // 피드 목록 - 팔로우
 
     int gBoardCreate(BoardDto boardDto); // gboard 생성
     int lBoardCreate(BoardDto boardDto); // lboard 생성
@@ -48,4 +49,8 @@ public interface BoardService {
     boolean isJoin(JoinDto joinDto); // 지역게시판 참가 유무
     boolean changeJoinCnt(int board_pk); // 지역게시판 참여 / 취소시 갯수 변경
     int countJoin(int board_pk); // 지역게시판 참가자 수
+
+    int countFeedAll(); // 뉴스피드 게시글 총 갯수
+    int countFeedNear(String location); // 나와 동일한 위치인 사람들의 피드 갯수
+    int countFeedFollow(String userId); // 내가 팔로우 한 사람들의 피드 갯수
 }

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function BoardSubNavbar2() {
   return (
-      <div>
+      <div className = "container2">
         <ul>
           <li>
             <Link to={ "/board/subnav2/purchase" }>공동구매</Link>

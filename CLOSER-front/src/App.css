@@ -5,8 +5,8 @@
   /* 100 - topappbar - navbar */
   height: 75vh;
   /* navbar */
-  bottom: 13vh;
-  overflow-y: auto;
+  /* bottom: 13vh; */
+  /* overflow-y: auto; */
 }
 
 /* 없애도 일단 변화 없음 */
@@ -14,7 +14,7 @@
   position: fixed;
   display: block;
   width: 100vw;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   /* 기본설정 visible */
   /* overflow-x: hidden; */
 }

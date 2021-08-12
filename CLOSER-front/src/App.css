@@ -6,7 +6,8 @@
   height: 75vh;
   /* navbar */
   /* bottom: 13vh; */
-  /* overflow-y: auto; */
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* 없애도 일단 변화 없음 */

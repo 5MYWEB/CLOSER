@@ -49,8 +49,7 @@ function App( { location }) {
     '/board-update-form': null,
     '/messages': null,
     '/profile': null,
-    '/profile-update': null,
-    '/change-location': null
+    '/profile-update': null
   }
 
   // 3.

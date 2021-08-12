@@ -81,11 +81,11 @@ export const refreshInfo = () => ({
   const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN:
-      const jwt = require('jsonwebtoken');
-      const decodedToken = jwt.decode(action.data.jwtAuthToken)
+      let jwt = require('jsonwebtoken');
+      let decodedToken = jwt.decode(action.data.jwtAuthToken)
 
       localStorage.setItem("userToken", action.data.jwtAuthToken);
-      localStorage.setItem("decodedToken", decodedToken.UserId);
+      localStorage.setItem("decodedToken", decodedToken);
       localStorage.setItem("isLoggedIn", true);
 
       return {
@@ -98,11 +98,12 @@ export const refreshInfo = () => ({
       localStorage.removeItem("userToken");
       localStorage.removeItem("decodedToken");
       localStorage.removeItem("isLoggedIn");
+      alert('로그아웃 되었습니다.')
       return {
         ...state,
         isLoggedIn: false,
-        userToken: '',
-        decodedToken: '',
+        userToken: null,
+        decodedToken: null,
         userInfo: null,
       };
     case GET_MY_INFO:
@@ -131,11 +132,14 @@ export const refreshInfo = () => ({
         alarmList: action.data,
       };
     case REFRESH_INFO:
+      const refreshedUserToken = localStorage.getItem("userToken");
+      const refreshedJwt = require('jsonwebtoken');
+      const refreshedDecodedToken = refreshedJwt.decode(refreshedUserToken)
       return {
         ...state,
         isLoggedIn: true,
         userToken: localStorage.getItem("userToken"),
-        decodedToken: localStorage.getItem("decodedToken"),
+        decodedToken: refreshedDecodedToken,
       }
     default:
       return state;

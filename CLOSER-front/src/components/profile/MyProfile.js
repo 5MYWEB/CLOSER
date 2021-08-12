@@ -4,11 +4,24 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import UserBadge from './UserBadge';
+import backarrow from '../../assets/arrow-left-solid.svg';
+import userprofile from '../../assets/profile-user-demo.png';
+import './MyProfile.css';
+
+// import FollowerList from '../components/profile/FollowerList';
+// import FollowingList from '../components/profile/FollowingList';
+// import UserFeed from '../components/profile/UserFeed';
+// import UserPost from '../components/profile/UserPost';
+// import UserBookmark from '../components/profile/UserBookmark';
+
 
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 function MyProfile() {
+
+  const now = new Date();
+  const year = now.getFullYear;
 
   const { userInfo } = useSelector((state) => state.user);
 
@@ -36,15 +49,86 @@ function MyProfile() {
   }, [])
 
   return (
-    <Container>
+    <div className="container"> 
       {/* Row-1 : 뒤로가기 */}
-      <Row>
-        <a href="javascript:history.back();">뒤로가기</a>
-      </Row>
+      <div className = "profilepart">
+        <div className = "item1">
+            <a href="javascript:history.back();">
+              <img src={backarrow} alt="backarrow" className="backarrow" />
+            </a>
+        </div>
+
+        <div className = "item2">
+          <img src={userprofile} alt="userprofile" className="userprofile"/>
+        </div>
+
+        <div className = "item3">
+          <h4 className="userName"> {userInfo.nickname}</h4>
+        </div>
+
+        <div className = "item4">
+          <h6 className="userYear"> {userInfo.homeAlone} 년차</h6>
+        </div>
+
+        <div className = "item5">
+          <button class = "animated-button">
+            <Link to="/profile-update" class="link-dark">프로필 수정</Link>
+          </button>
+        </div>
+
+        <div className = "item6">
+          <h6 className="userLocation">사용자의 현재 위치</h6>
+        </div>
+
+        <div className = "item7">
+          <h6>요리왕</h6>
+        </div>
+        <div className = "item8">
+          <h6>살림왕</h6>
+        </div>
+
+        <div className = "item9">
+          <h6> 쌀국수 냉면 돈까스 좋아하는 자취생임</h6>
+        </div>
+
+        <div className = "item10">
+          <h6><Link to={`/${userInfo.userId}/following-list`} class="link-dark">팔로잉 {followingListLength}</Link></h6>
+        </div>
+
+        <div className = "item11">
+          <h6><Link to={`/${userInfo.userId}/follower-list`} class="link-dark">팔로워 {followerListLength}</Link></h6>
+        </div>
+
+        <div className = "item12">
+          <button class = "animated-button">
+            <Link to="" class="link-dark">프로필 공유</Link>
+          </button>
+        </div>
+      </div>
+
+      <div className="myprofilepost">
+        <div className ="myfeed">
+          <h7><Link to={`/profile/${userInfo.userId}/user-feed`} class="link-light" >내 피드</Link></h7>
+        </div>
+
+        <div className ="mypost">
+          <Link to={`/profile/${userInfo.userId}/user-board`} class="link-light">내 포스트</Link>
+        </div>
+
+        <div className ="mybookmark">
+          <Link to={`/profile/${userInfo.userId}/user-bookmark`} class="link-light">북마크</Link>
+        </div>
+
+
+      </div>
+  
+
+      {/* 프로필 사진 / 닉네임, 자취기간 // 위치 / 프로필 수정  */}
+
       {/* Row-2 : 프로필사진, 닉네임, 자취기간, 위치, 프로필 수정 */}
-      <Row>
+      {/* <Row>
         <Col xs={3}>
-          <img src="" alt="프로필 사진"></img>
+          <img src={userInfo.profileImg} alt="프로필 사진"></img>
         </Col>
         <Col xs={6}>
           <Row>
@@ -62,40 +146,54 @@ function MyProfile() {
         <Col xs={3}>
           <Link to="/profile-update">프로필 수정</Link>
         </Col>
-      </Row>
+      </Row> */}
+
       {/* Row-3 : 뱃지 */}
-      <Row>
-        <UserBadge userId={userInfo.userId}/>
-      </Row>
+
+      {/* <Row>
+        뱃지 컴포넌트, 라우터
+      </Row> */}
+
       {/* Row-4 : 한줄소개 */}
+{/* 
       <Row>
-        {userInfo.intro}
-      </Row>
+        {userInfo.addr}
+      </Row> */}
+
       {/* Row-5 : 팔로잉, 팔로워, 공유하기 */}
+{/* 
       <Row>
-        <Col xs={2}>
+        <Col xs={3}>
           <Link to={`/${userInfo.userId}/following-list`}>팔로잉 {followingListLength}</Link>
-        </Col>
-        <Col xs={2}>
+        </div>
+
+        <div className = "item11">
           <Link to={`/${userInfo.userId}/follower-list`}>팔로워 {followerListLength}</Link>
         </Col>
-        <Col xs={{ span: 6, offset: 2 }}>
+        <Col xs={{ span: 3, offset: 3 }}>
           공유하기 버튼
         </Col>
-      </Row>
+      </Row> */}
+      
       {/* Row-6 : 내피드, 내포스트, 북마크 */}
-      <Row>
+      {/* <Row>
         <Col>
           <Link to={`/profile/${userInfo.userId}/user-feed`}>내 피드</Link>
-        </Col>
-        <Col>
+        </div>
+
+        <div className ="mypost">
           <Link to={`/profile/${userInfo.userId}/user-board`}>내 포스트</Link>
-        </Col>
-        <Col>
+        </div>
+
+        <div className ="mybookmark">
           <Link to={`/profile/${userInfo.userId}/user-bookmark`}>북마크</Link>
         </Col>
-      </Row>
-    </Container>
+      </Row> */}
+      
+      
+    </div>
+
+
   );
 }
 

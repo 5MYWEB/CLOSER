@@ -1,15 +1,22 @@
-.feedcontainer{
+.container2{
     display: grid;
 }
-.feedList{
+
+.boardTabList{
     display: grid;
 	grid-template-columns: repeat(3, 35%);
 	grid-template-rows: 10vw;
     background-color: #c8c6fc;
+    margin-top: 1vh;
 }
 
-.feedNear, .feedFavorite, .feedHot{
+.boardTab1, .boardTab2, .boardTab3 {
     text-align:center;
 	vertical-align:middle;
 	margin-top: 1vh;
+}
+
+.writeBtn{
+    /* display: fixed-bottom; */
+    margin-top: 20vh;
 }

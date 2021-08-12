@@ -95,3 +95,58 @@ input[id="radio-2"]:checked ~ .glider {
 #tab1:checked ~ #radio-1 {
     display: block;
 } */
+.boardcontainer{
+    display: grid;
+}
+
+.tabList{
+    display: grid;
+	grid-template-columns: repeat(2, 50%);
+	grid-template-rows: 10vw;
+    background-color: #c8c6fc;
+}
+
+.board1, .board2{
+    text-align:center;
+	vertical-align:middle;
+	margin-top: 1vh;
+}
+
+
+.animated-button2 {
+	color: #fff;
+	cursor: pointer;
+	display: fixed;
+	position: relative;
+	border: 1px solid #9864d4;
+	transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
+	border-radius: 8px;
+}
+.animated-button2:hover {
+	color: #000 !important;
+	background-color: transparent;
+	text-shadow: nfour;
+}
+.animated-button2:hover:before {
+	right: 0%;
+	left: auto;
+	width: 100%;
+}
+.animated-button2:before {
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 0px;
+	z-index: -1;
+	content: '';
+	color: #000 !important;
+	background: #5552FF;
+	transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+
+.writeBtn{
+    border-radius: 100px;
+}

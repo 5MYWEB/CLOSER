@@ -1,20 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './BoardSubNavbar2.css';
 
 function BoardSubNavbar2() {
   return (
       <div className = "container2">
-        <ul>
-          <li>
-            <Link to={ "/board/subnav2/purchase" }>공동구매</Link>
-          </li>
-          <li>
-            <Link to={"/board/subnav2/getter" }>클로저 모임</Link>
-          </li>
-          <li>
-            <Link to={"/board/subnav2/sos" }>도와주세요</Link>
-          </li>
-        </ul>
+        <div className="boardTabList">
+          <div className="boardTab1">
+            <Link to={ "/board/subnav2/purchase" } class="link-light">공동구매</Link>
+          </div>
+
+          <div className="boardTab2">
+            <Link to={"/board/subnav2/getter" } class="link-light">클로저 모임</Link>
+          </div>
+
+          <div className="boardTab3">
+            <Link to={"/board/subnav2/sos" } class="link-light">도와주세요</Link>
+          </div>
+
+          
+        </div>
+
+        {/* <div>
+            <button class = "writeBtn">
+              <Link to={ "/board-create-form/" } class="link-dark">글 작성</Link> 
+            </button>
+        </div> */}
       </div>
   );
 }

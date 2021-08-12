@@ -96,7 +96,7 @@ const BoardDetail = ({match}) => {
     })
 
     // 참여했는지
-    axios.post(`http://localhost:8080/board/${board.board_pk}/join`, {
+    axios.post(`http://localhost:8080/board/${pk}/join`, {
       userId: userId,
       flag: "false",
     })

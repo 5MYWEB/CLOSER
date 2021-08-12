@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
-import { loginAction, getMyInfoAction, refreshInfo } from './modules/user'
+import { getMyInfoAction, refreshInfo } from './modules/user'
 import { TopAppBar, Navbar, BackButton } from './components/frame/index';
 import { Home, About, Login, SignUp, Profile, Newsfeed, Board, Search, Alarm, Messages } from './pages';
 import NewsfeedList from './components/newsfeed/NewsfeedList';
@@ -74,8 +74,8 @@ function App( { location }) {
   }
 
   useEffect(() => {
-    if (decodedToken !== null){
-      axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken}`)
+    if (isLoggedIn === true && decodedToken.UserId !== undefined){
+      axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
         .then((response) => {
           dispatch(getMyInfoAction(response.data))
         })
@@ -83,7 +83,8 @@ function App( { location }) {
           console.log(error)
         })
       }
-    }, [decodedToken, dispatch])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [decodedToken])
 
   return (
     <div>

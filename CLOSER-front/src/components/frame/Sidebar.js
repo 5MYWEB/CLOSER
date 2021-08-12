@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom';
 import { bubble as Menu } from 'react-burger-menu'
 import { connect } from 'react-redux';
 import './Sidebar.css'
-
-const mapStateToProps = (state) => ({
-  userInfo: state.user.userInfo,
-  isLoggedIn: state.user.isLoggedIn
-});
+import * as actions from '../../modules/user';
 
 class Sidebar extends React.Component {
   constructor(props) { // render 함수보다 먼저 실행이 되면서 그 컴포넌트를 초기화를 담당
@@ -28,7 +24,7 @@ class Sidebar extends React.Component {
   }
 
   render () {
-    const { userInfo, isLoggedIn } = this.props;
+    const { userInfo, isLoggedIn, logoutAction } = this.props;
     
     // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
     if (this.state.menuOpen) {
@@ -73,11 +69,13 @@ class Sidebar extends React.Component {
                   <Link to="/about" onClick={() => this.closeMenu()}>소개</Link>
                 </li>
                 <li>
-                  <Link to="/" onClick={() => this.closeMenu()}>로그아웃</Link>
+                  <Link to="/" onClick={() => {this.closeMenu(); logoutAction();}}>로그아웃</Link>
                 </li>
-                <li>
-                  <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
-                </li>
+                {userInfo &&
+                  <li>
+                    <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
+                  </li>
+                }
                 <li>
                   <Link to={`/change-location/`} onClick={() => this.closeMenu()}>동네 변경</Link>
                 </li>
@@ -131,8 +129,13 @@ class Sidebar extends React.Component {
                 <li>
                   <Link to="/" onClick={this.handleStatus}>로그아웃</Link>
                 </li>
+                {userInfo &&
+                  <li>
+                    <Link to={`/profile/${userInfo.userId}`} onClick={this.handleStatus}>프로필</Link>
+                  </li>
+                }
                 <li>
-                  <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
+                  <Link to={`/change-location/`} onClick={this.handleStatus}>동네 변경</Link>
                 </li>
               </ul>
             </Menu>
@@ -143,4 +146,13 @@ class Sidebar extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(Sidebar);
+const mapStateToProps = (state) => ({
+  userInfo: state.user.userInfo,
+  isLoggedIn: state.user.isLoggedIn
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  logoutAction: () => dispatch(actions.logoutAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

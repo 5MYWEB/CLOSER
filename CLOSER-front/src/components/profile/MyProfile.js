@@ -55,11 +55,6 @@ function MyProfile() {
     <div className="container"> 
       {/* Row-1 : 뒤로가기 */}
       <div className = "profilepart">
-        <div className = "item1">
-            <a href="javascript:history.back();">
-              <img src={backarrow} alt="backarrow" className="backarrow" />
-            </a>
-        </div>
 
         <div className = "item2">
           <img src={userprofile} alt="userprofile" className="userprofile"/>

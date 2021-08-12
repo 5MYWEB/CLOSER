@@ -138,7 +138,7 @@ const UserLocation = () => {
       
       { isLoggedIn === true &&
         <div>
-          <h5 className="my-2">현재 위치</h5>
+          <h5 className="my-2">현재 나의 위치</h5>
           <Row className="justify-content-center">
             <Col>
               <div>{ changedAddr }</div>

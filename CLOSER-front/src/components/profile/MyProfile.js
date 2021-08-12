@@ -19,15 +19,16 @@ import './MyProfile.css';
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 function MyProfile() {
+  
+  const { userInfo } = useSelector((state) => state.user);
 
   const now = new Date();
-  const year = now.getFullYear;
-
-  const { userInfo } = useSelector((state) => state.user);
+  console.log(now);
+  const year = now.getFullYear();
 
   const [followingListLength, setFollowingListLength] = useState(0)
   const [followerListLength, setFollowerListLength] = useState(0)
-
+  const [annual, setAnnual] = useState(0)
   // 팔로잉, 팔로워 수 가져오기
   useEffect(() => {
     axios.post(`http://localhost:8080/follow/${userInfo.userId}/following`)
@@ -45,6 +46,8 @@ function MyProfile() {
     .catch((err) => {
       console.log(err)
     })
+
+    setAnnual(year - userInfo.homeAlone + 1)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -67,7 +70,7 @@ function MyProfile() {
         </div>
 
         <div className = "item4">
-          <h6 className="userYear"> {userInfo.homeAlone} 년차</h6>
+          <h6 className="userYear"> {annual} 년차</h6>
         </div>
 
         <div className = "item5">
@@ -77,7 +80,7 @@ function MyProfile() {
         </div>
 
         <div className = "item6">
-          <h6 className="userLocation">사용자의 현재 위치</h6>
+          <h6 className="userLocation"> {userInfo.addr}</h6>
         </div>
 
         <div className = "item7">
@@ -88,7 +91,7 @@ function MyProfile() {
         </div>
 
         <div className = "item9">
-          <h6> 쌀국수 냉면 돈까스 좋아하는 자취생임</h6>
+          <h6> {userInfo.intro}</h6>
         </div>
 
         <div className = "item10">

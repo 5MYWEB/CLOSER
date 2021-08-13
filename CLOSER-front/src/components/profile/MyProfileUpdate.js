@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,7 +8,6 @@ import { getMyInfoAction } from '../../modules/user';
 const MyProfileUpdate = () => {
 
   const dispatch = useDispatch();
-
   // DOM 선택
   const selectInputs = useRef();
 
@@ -112,7 +111,8 @@ const MyProfileUpdate = () => {
       {/* Row-1 : 프로필사진 */}
       <Row className="justify-content-center">
         <Col xs={5} >
-          <img src="" alt="프로필 사진" />
+          {/* <img src={fileUrl} alt="프로필사진"></img> */}
+          {/* <input type="file" onChange={processImage}></input> */}
         </Col>
       </Row>
       <br />

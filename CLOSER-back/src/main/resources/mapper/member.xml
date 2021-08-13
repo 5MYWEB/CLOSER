@@ -55,7 +55,7 @@
     <!-- 프로필 수정 -->
     <update id="userModify" parameterType="MemberDto">
         update user
-        set profileImg=#{profileImg},nickname=#{nickname},addr=#{addr}, intro=#{intro}
+        set profileImg=#{profileImg},nickname=#{nickname},homeAlone=#{homeAlone}, intro=#{intro}
         where userId = #{userId}
     </update>
 

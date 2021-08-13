@@ -94,17 +94,23 @@ const UserLocation = () => {
 
   // 수정할 정보의 초기값은 기존 정보와 동일하다.
   const [changedUserinfo, setChangedUserInfo] = useState({
-    userId: userInfo.userId,
-    addr: userInfo.addr
+    userId: "",
+    addr: ""
   })
 
   useEffect(()=>{
-    setChangedUserInfo({
-      ...changedUserinfo,
-      addr: changedAddr
-    })
+    if(isLoggedIn === true){
+      setChangedUserInfo({
+        userId: userInfo.userId,
+        addr: changedAddr
+      })
+    }else{
+      setChangedUserInfo({
+        addr: changedAddr
+      })
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [changedAddr])
+  }, [])
 
   // 저장
   const onClickSave = () => {

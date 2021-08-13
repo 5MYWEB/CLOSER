@@ -5,11 +5,10 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { likeBoard } from '../../modules/board';
 import UserBadgeItem from '../profile/UserBadgeItem'
-import { Row, Col, Card, Container, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Row, Col, Card, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark } from "@fortawesome/free-regular-svg-icons";
-import { faUsers } from '@fortawesome/free-solid-svg-icons';
-import closerbot from '../../assets/closerbot.png'
+import defaultBoardImg from '../../assets/house-emoji.png';
 // import '../../styles/bootstrap.min.css';
 
 const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
@@ -36,9 +35,6 @@ const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
 
   // 이미지 갯수
   const [ imgUrl, setImgUrl ] = useState("")
-
-  // 모집 여부
-  const [ isJoin, setIsJoin ] = useState(true)
 
   useEffect(() => {
     return () => setLiked(false); // cleanup function을 이용
@@ -122,15 +118,6 @@ const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
     }
   }, [])
 
-  // 지역 게시판 모집 중 여부
-  useEffect(() => {
-    if(board.board_pk >= 4 && board.board_pk <= 6){
-      if(board.totalNum == board.gatherNum) {
-        setIsJoin(false)
-      }
-    }
-  }, [])
-
   // 좋아요 버튼을 눌렀을 때
   const onClickLike = () => {
     axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
@@ -164,46 +151,40 @@ const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
   }
 
   return (
-    <Container ref={ref} className="px-0">
+    <div>
       <br />
       {/* 자취 게시판 */}
       <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
-        <Card className="mx-2">
-          <Row className="g-0">
-            <Col xs={4}>
-            { imgUrl
-              ?
-              <img src={imgUrl} className="img-fluid rounded-start" alt={board.title} />
-              : 
-              <img src={closerbot} className="img-fluid rounded-start" alt="기본이미지" />
-            }
-              
-            </Col>
-            <Col xs={8}>
-              <Row className="mx-2">{board.title}</Row>
-              <Row className="mx-2">
-                <Col xs={8} className="px-0">
-                {board.badge !== 0 && 
-                  <span><UserBadgeItem badge={board.badge}/> </span>
-                }
-                {board.nickname}
-                </Col>
-                <Col xs={4} className="px-0 text-end">{timePeriod}</Col>
-              </Row>
-              <Row className="mx-2">
-                <Col className="px-0 text-end">
-                  <FontAwesomeIcon icon={faComment}/> { countComment }
-                  &nbsp;&nbsp;     
-                  <FontAwesomeIcon icon={faHeart}/> { countLike }
-                  &nbsp;&nbsp;
-                  <FontAwesomeIcon icon={faBookmark}/> {countBookmark}
-                </Col>
-              </Row>
-            </Col>
-          </Row>
+        <Card className="mx-2 p-2">
+          { imgUrl
+            ?
+            <img src={imgUrl} className="img-fluid rounded-start card-img-top" alt={board.title} />
+            : 
+            <img src={defaultBoardImg} className="img-fluid rounded-start card-img-top" alt="기본이미지" />
+          }
+          <div class="card-body p-0 mt-2">
+            <Row className="mx-2 card-text">
+              <Col className="px-0">{board.title}</Col>
+            </Row>
+            <Row className="mx-2 card-text">
+              <Col className="px-0">
+                <small class="text-muted" style={{fontSize: "13px"}}>By. {board.nickname}</small>
+              </Col>
+            </Row>
+            <Row className="mx-2 card-text mt-2 pt-1 border-top border-2">
+              <Col className="px-0 text-end">
+                <FontAwesomeIcon icon={faComment}/> { countComment }
+                &nbsp;&nbsp;     
+                <FontAwesomeIcon icon={faHeart}/> { countLike }
+                &nbsp;&nbsp;
+                <FontAwesomeIcon icon={faBookmark}/> {countBookmark}
+              </Col>
+            </Row>
+          </div>
+        
         </Card>
       </Link>
-    </Container>
+    </div>
   )
 })
 

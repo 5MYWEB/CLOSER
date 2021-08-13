@@ -10,7 +10,7 @@
         from board
         where if(#{choice_pk},
                (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%')),
-               nickname like concat('%', #{keyword}, '%'))
+               nickname like concat('%', #{keyword}, '%')) and board_pk &lt; 7
         order by created_at desc
     </select>
 
@@ -20,7 +20,7 @@
         from board
         where if(#{choice_pk},
                (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%')),
-               nickname like concat('%', #{keyword}, '%'))
+               nickname like concat('%', #{keyword}, '%')) and board_pk &lt; 7
         order by cnt desc, created_at desc
     </select>
 

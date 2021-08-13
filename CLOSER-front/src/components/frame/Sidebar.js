@@ -6,7 +6,7 @@ import './Sidebar.css';
 import '../../styles/bootstrap.min.css';
 import * as actions from '../../modules/user';
 
-import defaultUserImg from '../../assets/user-on.svg';
+import defaultProfile from '../../assets/user-on.svg';
 import homeSolid from '../../assets/sidebar/home-solid.svg';
 import userSolid from '../../assets/sidebar/user-solid.svg';
 import compassSolid from '../../assets/sidebar/compass-solid.svg';
@@ -33,6 +33,11 @@ class Sidebar extends React.Component {
     this.setState({menuOpen : false})
   }
 
+  // 이미지 없을 시 기본 이미지 생성
+  handleImgError = (e) => {
+    e.target.src = defaultProfile;
+  }
+
   render () {
     const { userInfo, isLoggedIn, logoutAction, postCount } = this.props;
 
@@ -50,7 +55,7 @@ class Sidebar extends React.Component {
                 <Link to="/login" onClick={() => this.closeMenu()} className="bm-profile">
                   <div className="row mx-0">
                     <div className="col-4 bm-profile-img px-0">
-                      <img src={defaultUserImg} alt="프로필사진" />
+                      <img src={defaultProfile} alt="프로필사진" />
                     </div>
                     <div className="col-8 px-0">
                       <p className="bm-not-login-text">로그인 해주세요</p> 
@@ -91,11 +96,12 @@ class Sidebar extends React.Component {
                 <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()} className="bm-profile">
                   <div className="row mx-0">
                     <div className="col-5 bm-profile-img px-0">
-                      { userInfo.profileImg !== null && userInfo.profileImg !== ''
+                      {/* { userInfo.profileImg !== null && userInfo.profileImg !== ''
                         ? <img src={userInfo.profileImg} alt="프로필사진" />
                         : <img src={defaultUserImg} alt="프로필사진" />
-                      }
+                      } */}
                       {/* <img src={defaultUserImg} alt="프로필사진" /> */}
+                      <img src={userInfo.profileImg} onError={(e) => this.handleImgError(e)} alt="프로필사진" />
                     </div>
                     <div className="col-7 px-0">
                       <div>

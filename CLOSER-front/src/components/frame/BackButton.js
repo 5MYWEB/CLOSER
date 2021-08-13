@@ -13,7 +13,9 @@ const BackButton = ({ history, cclass}) => {
   }
 
   return (
-    <RippleBackButton src={backButton} alt="backButton" cclass={`back-button ${cclass}`} onClick={onClick} />
+    <div class="back-button-wrapper">
+      <RippleBackButton src={backButton} alt="backButton" cclass={`back-button ${cclass}`} onClick={onClick} />
+    </div>
   )
 }
 export default withRouter(BackButton);

@@ -38,7 +38,7 @@ function App( { location }) {
 
   // NavBar를 변형하거나 보여주지 않는 페이지를 모아둔 오브젝트
   const noNavBarPages = {
-    '/board-detail': <CommentBar/>,
+    '/board-detail': null,
     '/board-create-form': null,
     '/board-update-form': null,
     '/messages': null,

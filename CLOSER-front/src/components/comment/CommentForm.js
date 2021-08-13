@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import '../../styles/theme.css'
 
 import { createComment } from '../../modules/comment';
 
@@ -48,22 +49,19 @@ const CommentForm = ({board_pk}) => {
   };
 
   return (
-    <>
+    <div className="comment-form-wrapper">
     {isLoggedIn &&
-      <div>
-        <form onSubmit={onSubmit}>
-          <input 
-            type="text" 
-            value={text}
-            maxLength={200} 
-            placeholder="댓글을 입력하세요"
-            onChange={onChangeText} />
-          <input type="submit" value="업로드" />
-        </form>
-        <br />
-      </div>
+      <form onSubmit={onSubmit}>
+        <input 
+          type="text" 
+          value={text}
+          maxLength={200} 
+          placeholder="댓글을 입력하세요"
+          onChange={onChangeText} />
+        <input type="submit" value="업로드" />
+      </form>
       }
-    </>
+    </div>
   )
 }
 

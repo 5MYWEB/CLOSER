@@ -10,11 +10,14 @@
   overflow-x: hidden;
 }
 
-/* 없애도 일단 변화 없음 */
+
 .noTopview {
   position: fixed;
   display: block;
   width: 100vw;
+  height: 74vh;
+  margin: 0 2rem;
+  padding: 4vh 0;
   overflow-y: auto;
   /* 기본설정 visible */
   overflow-x: hidden;

@@ -5,6 +5,7 @@ import { deleteBoard } from '../../modules/board';
 import { likeBoard } from '../../modules/board';
 import axios from 'axios';
 
+import CommentForm from '../comment/CommentForm';
 import CommentList from '../comment/CommentList';
 import UserBadgeItem from '../profile/UserBadgeItem';
 
@@ -198,7 +199,7 @@ const BoardDetail = ({match}) => {
 
   return (
     <div className="">
-      <div className="board-main">
+      <div>
       {/* <div>글 번호 : {board.board_pk}</div> */}
       {board.kind_pk !== 7 && 
         <div>제목 : {board.title}</div>

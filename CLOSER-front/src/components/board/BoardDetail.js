@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { deleteBoard } from '../../modules/board';
 import { likeBoard } from '../../modules/board';
 import axios from 'axios';
-
 import CommentList from '../comment/CommentList';
 import UserBadgeItem from '../profile/UserBadgeItem';
 
@@ -197,13 +196,18 @@ const BoardDetail = ({match}) => {
   }
 
   return (
-    <div className="container">
-      <div className="board-main">
+    <div className="page-wrapper">
       {/* <div>글 번호 : {board.board_pk}</div> */}
       {board.kind_pk !== 7 && 
         <div>제목 : {board.title}</div>
       }
-      <div>작성자 : {board.nickname}</div>
+      
+        <div>작성자 : 
+        <Link to = {`/profile/${board.userId}`}>
+          {board.nickname}
+          </Link>
+          </div>
+
 
       { board.kind_pk > 0 && board.kind_pk < 4 && board.badge !== 0 &&
         <div>뱃지 : <UserBadgeItem badge={board.badge}/></div>
@@ -250,32 +254,28 @@ const BoardDetail = ({match}) => {
         { liked
           ?
           <div className = "likePart">
-            <img className ="heart_full" src={heartFull} onClick={onClickLike}></img> {countLike}
+            <img className ="heart_full" alt="heart_full" src={heartFull} onClick={onClickLike}></img> {countLike}
           </div>
           : 
           <div className = "likePart">
-            <img className ="heart_empty" src={heartEmpty} onClick={onClickLike}></img> {countLike}
+            <img className ="heart_empty" alt="heart_empty" src={heartEmpty} onClick={onClickLike}></img> {countLike}
           </div>
         }
         {/* 북마크 */}
         { bookmarked
           ?
           <div className = "bookmarkPart">
-            <img className ="bookmark_full" src={bookmarkFull} onClick={onClickBookmark}></img> {countBookmark}
+            <img className ="bookmark_full" alt="bookmark_full" src={bookmarkFull} onClick={onClickBookmark}></img> {countBookmark}
           </div>
           : 
           <div className = "bookmarkPart">
-            <img className ="bookmark_empty" src={bookmarkEmpty} onClick={onClickBookmark}></img> {countBookmark}
+            <img className ="bookmark_empty" alt="bookmark_empty" src={bookmarkEmpty} onClick={onClickBookmark}></img> {countBookmark}
           </div>
         }
       </div>
-      <div>
 
-      </div>
-        <hr />
-        <CommentList board_pk={Number(pk)} />
-      </div>     
-    </div>
+      <CommentList board_pk={Number(pk)} />
+    </div>     
   )
 }
 

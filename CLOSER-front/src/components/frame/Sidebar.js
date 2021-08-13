@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { bubble as Menu } from 'react-burger-menu'
 import { connect } from 'react-redux';
-import './Sidebar.css'
+import './Sidebar.css';
+import '../../styles/bootstrap.min.css';
 import * as actions from '../../modules/user';
+import defaultUserImg from '../../assets/user-on.svg'
 
 class Sidebar extends React.Component {
   constructor(props) { // render 함수보다 먼저 실행이 되면서 그 컴포넌트를 초기화를 담당
@@ -25,7 +27,7 @@ class Sidebar extends React.Component {
 
   render () {
     const { userInfo, isLoggedIn, logoutAction } = this.props;
-    
+
     // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
     if (this.state.menuOpen) {
       // 비로그인시
@@ -38,16 +40,16 @@ class Sidebar extends React.Component {
             >
               <div>
                 <div className="side_home">
-                  <Link to="/" onClick={() => this.closeMenu()} class="link-dark">HOME</Link>
+                  <Link to="/" onClick={() => this.closeMenu()} className="link-dark">HOME</Link>
                 </div>
                 <div className="side_about">
-                  <Link to="/about" onClick={() => this.closeMenu()} class="link-dark">ABOUT</Link>
+                  <Link to="/about" onClick={() => this.closeMenu()} className="link-dark">ABOUT</Link>
                 </div>
                 <div className="side_login">
-                  <Link to="/login" onClick={() => this.closeMenu()} class="link-dark">LOGIN</Link>
+                  <Link to="/login" onClick={() => this.closeMenu()} className="link-dark">LOGIN</Link>
                 </div>
                 <div className="side_join">
-                  <Link to="/signup" onClick={() => this.closeMenu()} class="link-dark">JOIN</Link>
+                  <Link to="/signup" onClick={() => this.closeMenu()} className="link-dark">JOIN</Link>
                 </div>
               </div>
             </Menu>
@@ -61,24 +63,59 @@ class Sidebar extends React.Component {
               isOpen={this.state.menuOpen}
               onStateChange={(state) => this.handleStateChange(state)}
             >
-              <div>
+              <div className="bm-profile d-flex justify-content-center">
+                <div className="row mx-0">
+                  <div className="col-5 bm-profile-img px-0">
+                    {/* { userInfo.profileImg !== null 
+                      ? <img src={userInfo.profileImg} alt="프로필사진" />
+                      : <img src={defaultUserImg} alt="프로필사진" />
+                    } */}
+                    <img src={defaultUserImg} alt="프로필사진" />
+                  </div>
+                  <div className="col-7 px-0">
+                    <div>
+                      {userInfo.nickname}
+                    </div>
+                    <div className="bm-profile-addr">
+                      {userInfo.addr}
+                    </div>
+                  </div>
+                  <div className="row px-0 bm-profile-info">
+                    <div className="col">
+                      게시물
+                    </div>
+                    <div className="col">
+                      팔로잉
+                    </div>
+                    <div className="col">
+                      팔로워
+                    </div>
+                  </div>
+                  <div className="bm-profile-intro">
+                    <p>{userInfo.intro}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="">
                 <div className="side_home">
-                  <Link to="/" onClick={() => this.closeMenu()} class="link-dark">HOME</Link>
+                  <Link to="/" onClick={() => this.closeMenu()} className="link-dark">HOME</Link>
                 </div>
                 <div className="side_about">
-                  <Link to="/about" onClick={() => this.closeMenu()} class="link-dark">ABOUT</Link>
+                  <Link to="/about" onClick={() => this.closeMenu()} className="link-dark">ABOUT</Link>
                 </div>
                 <div className="side_logout">
-                  <Link to="/" onClick={() => {this.closeMenu(); logoutAction();}} class="link-dark">LOGOUT</Link>
+                  <Link to="/" onClick={() => {this.closeMenu(); logoutAction();}} className="link-dark">LOGOUT</Link>
                 </div>
               
                   <div className="side_profile">
-                    <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()} class="link-dark">MY PROFILE</Link>
+                    <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()} className="link-dark">MY PROFILE</Link>
                   </div>
                 
                 <div className="side_location">
-                  <Link to={`/change-location/`} onClick={() => this.closeMenu()} class="link-dark">동네 변경</Link>
+                  <Link to={`/change-location/`} onClick={() => this.closeMenu()} className="link-dark">동네 변경</Link>
                 </div>
+              </div>
+              <div>
               </div>
             </Menu>
           </div>

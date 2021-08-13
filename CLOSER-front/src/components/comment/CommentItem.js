@@ -43,9 +43,11 @@ const CommentItem = ({ comment }) => {
 
   return (
     <>  
-      <Link to={`/profile/${writerInfo.userId}`}>
-        <div>작성자 : {writerInfo.nickname}</div>
-      </Link>
+      <div>작성자 : 
+        <Link to={`/profile/${writerInfo.userId}`}>
+          {writerInfo.nickname}
+        </Link>
+      </div>
       <div>내용 : {comment.reply}</div>
       {/* <div>작성시간 : {comment.created_at}</div> */}
       { userId === comment.userId &&

@@ -25,7 +25,8 @@
                  left join user_badge AS ub
                            on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
         where bd.kind_pk = 1 and created_at >= (SELECT DATE_SUB(DATE_FORMAT(NOW(), '%Y-%m-%d'), INTERVAL(DAYOFWEEK(DATE_FORMAT(NOW(), '%Y-%m-%d')) - 1) DAY))
-        order by cnt desc;
+        order by cnt desc
+        limit 6;
     </select>
 
     <!-- 자취 게시판 - 한끼레시피 (최신순) -->
@@ -57,7 +58,8 @@
                  left join user_badge AS ub
                            on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
         where bd.kind_pk = 2 and created_at >= (SELECT DATE_SUB(DATE_FORMAT(NOW(), '%Y-%m-%d'), INTERVAL(DAYOFWEEK(DATE_FORMAT(NOW(), '%Y-%m-%d')) - 1) DAY))
-        order by cnt desc;
+        order by cnt desc
+        limit 6;
     </select>
 
     <!-- 자취 게시판 - 자취팁 (최신순) -->
@@ -89,7 +91,8 @@
                  left join user_badge AS ub
                            on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
         where bd.kind_pk = 3 and created_at >= (SELECT DATE_SUB(DATE_FORMAT(NOW(), '%Y-%m-%d'), INTERVAL(DAYOFWEEK(DATE_FORMAT(NOW(), '%Y-%m-%d')) - 1) DAY))
-        order by cnt desc;
+        order by cnt desc
+        limit 6;
     </select>
 
     <!-- 자취 게시판 - 홈데코 (최신순) -->

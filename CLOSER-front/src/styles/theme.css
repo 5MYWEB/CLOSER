@@ -69,6 +69,16 @@ p {
 }
 
 
+/* 페이지 자동 여백 */
+.page-wrapper {
+  margin: 0 2rem;
+  padding: 4vh 0;
+}
+
+.comment-list-wrapper {
+  
+}
+
 /* 제목 */
 .phrase {
   display: inline;
@@ -218,7 +228,12 @@ input::placeholder {
 width: 6vw;
 height: 6vw;
  */
-
+.back-button-wrapper{
+  position: static;
+  display: block;
+  height: 8vh;
+  border-bottom: 0.1px solid rgba(160, 145, 245, .5);
+}
 
 .ripple-back-button {
   padding: 1.1rem;
@@ -398,4 +413,15 @@ a:active { text-decoration: none; }
 .bookmark_full, .bookmark_empty{
   width: 9vw;
   height: 5vh;
+}
+
+.comment-form-wrapper{
+  height: 10vh;
+  /* fixed-bottom */
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1030;
+  border-top: 0.1px solid rgba(160, 145, 245, .5);
 }

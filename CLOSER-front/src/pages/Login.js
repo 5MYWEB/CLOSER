@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
-import { getMyInfoAction, loginAction } from '../modules/user'
+import { getMyInfoAction, loginAction, getPostCount } from '../modules/user'
 import { RippleButton } from '../styles/index';
 import '../styles/theme.css'
 
@@ -99,19 +99,27 @@ function Login({ history }) {
     }
   )
 
-  // 로그인에 성공했으면 로그인 유저 정보 가져오기
+  // 로그인에 성공했으면 로그인 유저 정보, 게시글 수 가져오기
   useEffect(() => {
-
     if (isLoggedIn === true && decodedToken.UserId !== null){
       axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
-        .then((response) => {
-          dispatch(getMyInfoAction(response.data))
-          history.push('/')
+        .then((res) => {
+          dispatch(getMyInfoAction(res.data))
+          axios.get(`http://localhost:8080/user/totalBoard/${decodedToken.UserId}`)
+            .then((res) => {
+              dispatch(getPostCount(res.data))
+              history.push("/")
+            })
+            .catch((err) => {
+              console.log(err)
+            })
         })
-        .catch((error) => {
-          console.log(error)
+        .catch((err) => {
+          console.log(err)
         })
       }
+
+      
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [decodedToken])
         

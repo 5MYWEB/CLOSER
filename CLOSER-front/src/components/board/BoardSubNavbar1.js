@@ -7,15 +7,15 @@ function BoardSubNavbar1() {
       <div className = "container2">
         <div className="boardTabList">
           <div className="boardTab1">
-          <Link to={"/board/subnav1/recipe"} class="link-light">한끼레시피</Link>
+          <Link to={"/board/subnav1/recipe"} className="link-light">한끼레시피</Link>
           </div>
 
           <div className="boardTab2">
-          <Link to={"/board/subnav1/tip" } class="link-light">자취팁</Link>
+          <Link to={"/board/subnav1/tip" } className="link-light">자취팁</Link>
           </div>
 
           <div className="boardTab3">
-          <Link to={"/board/subnav1/deco" } class="link-light">홈데코</Link>
+          <Link to={"/board/subnav1/deco" } className="link-light">홈데코</Link>
           </div>
         </div>
 

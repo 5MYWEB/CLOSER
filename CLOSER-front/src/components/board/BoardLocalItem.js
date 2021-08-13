@@ -8,8 +8,7 @@ import UserBadgeItem from '../profile/UserBadgeItem'
 import { Row, Col, Card, Container, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark } from "@fortawesome/free-regular-svg-icons";
-import { faUsers } from '@fortawesome/free-solid-svg-icons';
-import closerbot from '../../assets/closerbot.png'
+import usersSolidImg from '../../assets/users-solid.svg';
 import '../../styles/bootstrap.min.css';
 
 const BoardLocalItem = React.forwardRef(({ board }, ref) => {
@@ -33,9 +32,6 @@ const BoardLocalItem = React.forwardRef(({ board }, ref) => {
 
   // n시간 전
   const [ timePeriod, setTimePeriod ] = useState("")
-
-  // 이미지 갯수
-  const [ imgUrl, setImgUrl ] = useState("")
 
   // 모집 여부
   const [ isJoin, setIsJoin ] = useState(true)
@@ -115,13 +111,6 @@ const BoardLocalItem = React.forwardRef(({ board }, ref) => {
     }
   }, []);
 
-  // 이미지 링크 세팅
-  useEffect(() => {
-    if((board.board_pk <= 3 || board.board_pk == 7) && board.imgUrls !== []){
-      setImgUrl(board.imgUrls[0])
-    }
-  }, [])
-
   // 지역 게시판 모집 중 여부
   useEffect(() => {
     if(board.board_pk >= 4 && board.board_pk <= 6){
@@ -169,21 +158,22 @@ const BoardLocalItem = React.forwardRef(({ board }, ref) => {
       <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
         <Card className="mx-2 p-2">
           <Row className="mx-2">
+            <Col className="text-start px-0" style={{color: "#5552FF"}}>모집중</Col>
+            <Col className="text-end px-0 text-secondary">{timePeriod}</Col>
+          </Row>
+          <Row className="mx-2 mb-3 mt-1">
             { isJoin 
-              ? <div className="px-0"><span style={{color: "#5552FF"}}>모집중</span> {board.title}</div>
-              : <div className="px-0"><span style={{color: "#5552FF"}}>모집완료</span> {board.title}</div>
+              ? <Col className="px-0 mt-0 fs-4"> {board.title}</Col>
+              : <Col className="px-0 mt-0 fs-4"><span style={{color: "#5552FF"}}>모집완료</span> {board.title}</Col>
             }
           </Row>
           <Row className="mx-2">
-            <FontAwesomeIcon icon={faUsers} className="px-0 my-auto"/> &nbsp;&nbsp; {board.gatherNum} / {board.totalNum} 참여
+            <h3 className="text-center"><img src={usersSolidImg} alt="참여인원" className="px-0" style={{width: "30px"}}/> &nbsp; {board.gatherNum} / {board.totalNum} 참여</h3>
           </Row>
-          <Row className="mx-2">
-            <Col xs={8} className="px-0">
-            {board.nickname}
+          <Row className="mx-2 mt-3">
+            <Col className="px-0">
+              By. {board.nickname}
             </Col>
-            <Col xs={4} className="px-0 text-end">{timePeriod}</Col>
-          </Row>
-          <Row className="mx-2">
             <Col className="px-0 text-end">
               <FontAwesomeIcon icon={faComment}/> { countComment }
               &nbsp;&nbsp;     

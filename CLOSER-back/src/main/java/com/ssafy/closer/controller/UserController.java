@@ -223,4 +223,10 @@ public class UserController {
         }
         return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
     }
+
+    @ApiOperation(value = "해당 유저가 쓴 글 갯수")
+    @GetMapping("/totalBoard/{userId}")
+    public ResponseEntity totalBoard(@PathVariable String userId){
+        return new ResponseEntity(userService.countBoardByUser(userId), HttpStatus.OK);
+    }
 }

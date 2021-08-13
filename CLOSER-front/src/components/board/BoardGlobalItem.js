@@ -5,11 +5,10 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { likeBoard } from '../../modules/board';
 import UserBadgeItem from '../profile/UserBadgeItem'
-import { Row, Col, Card, Container, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Row, Col, Card, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark } from "@fortawesome/free-regular-svg-icons";
-import { faUsers } from '@fortawesome/free-solid-svg-icons';
-import closerbot from '../../assets/closerbot.png'
+import defaultBoardImg from '../../assets/house-emoji.png';
 import '../../styles/bootstrap.min.css';
 
 const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
@@ -36,9 +35,6 @@ const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
 
   // 이미지 갯수
   const [ imgUrl, setImgUrl ] = useState("")
-
-  // 모집 여부
-  const [ isJoin, setIsJoin ] = useState(true)
 
   useEffect(() => {
     return () => setLiked(false); // cleanup function을 이용
@@ -117,17 +113,8 @@ const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
 
   // 이미지 링크 세팅
   useEffect(() => {
-    if((board.board_pk <= 3 || board.board_pk == 7) && board.imgUrls !== []){
+    if(board.imgUrls !== []){
       setImgUrl(board.imgUrls[0])
-    }
-  }, [])
-
-  // 지역 게시판 모집 중 여부
-  useEffect(() => {
-    if(board.board_pk >= 4 && board.board_pk <= 6){
-      if(board.totalNum == board.gatherNum) {
-        setIsJoin(false)
-      }
     }
   }, [])
 
@@ -169,18 +156,24 @@ const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
       {/* 자취 게시판 */}
       <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
         <Card className="mx-2">
-          <Row className="g-0">
+          <Row className="g-0 align-items-center">
             <Col xs={4}>
-            { imgUrl
-              ?
-              <img src={imgUrl} className="img-fluid rounded-start" alt={board.title} />
-              : 
-              <img src={closerbot} className="img-fluid rounded-start" alt="기본이미지" />
-            }
-              
+              <div className="p-2 m-2 d-flex justify-content-center" style={{ border: "2px solid #5552FF"}}>
+                { imgUrl
+                  ?
+                  <img src={imgUrl} className="img-fluid rounded-start" style={{ width: "100%"}} alt={board.title} />
+                  : 
+                  <img src={defaultBoardImg} className="img-fluid rounded-start" style={{ width: "100%"}} alt="기본이미지" />
+                }
+              </div>
             </Col>
             <Col xs={8}>
-              <Row className="mx-2">{board.title}</Row>
+              <Row className="mx-2">
+                <Col className="text-end px-0 text-secondary">{timePeriod}</Col>
+              </Row>
+              <Row className="mx-2 mb-3 mt-1">
+                <Col className="px-0 mt-0 fs-4"> {board.title}</Col>
+              </Row>
               <Row className="mx-2">
                 <Col xs={8} className="px-0">
                 {board.badge !== 0 && 
@@ -188,7 +181,7 @@ const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
                 }
                 {board.nickname}
                 </Col>
-                <Col xs={4} className="px-0 text-end">{timePeriod}</Col>
+                
               </Row>
               <Row className="mx-2">
                 <Col className="px-0 text-end">

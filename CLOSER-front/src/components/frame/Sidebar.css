@@ -2,8 +2,26 @@
   justify-content: center;
 }
 
-.bm-profile {
+.bm-icon {
+  padding: 0 1rem 0 1rem;
+  height: 1.75rem;
+  width: 1.75rem;
+}
+
+.bm-not-login-text {
+  letter-spacing: 0px;
+  width: 8rem;
+  margin: 0;
+}
+
+.bm-profile,
+.bm-profile:hover {
   align-items: center;
+  color: black;
+}
+
+.bm-menu-first {
+  background-color: rgba(255, 255, 255, 0.75);
   border-bottom: 0.1px solid rgba(160, 145, 245, .5);
 }
 
@@ -21,9 +39,9 @@
 }
 
 .bm-profile .bm-profile-addr {
-  width: 8rem;
+  width: 5rem;
   font-size: 0.8rem;
-  word-wrap: normal;
+  word-break: keep-all;
   color:#8B93A6;
 }
 
@@ -34,7 +52,6 @@
 
 .bm-profile .bm-profile-intro {
   font-size: 1rem;
-  padding: 0 0 1rem 0;
 }
 
 .bm-profile-intro > p {
@@ -96,23 +113,32 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* Wrapper for item list */
 .bm-item-list {
-  /* color: #5552FF;s */
-  text-align: center;
-  align-items: center;
   display: grid;
   grid-template-rows: 2fr 2fr 2fr;
+  /* background: #ECECFF; */
 }
 
 /* Individual item */
 .bm-item {
   letter-spacing: 5px;
+  align-items: center;
 }
+
+.bm-menu-second {
+  text-align: left;
+}
+
+.bm-menu-third {
+  align-self: center;
+  text-align: left;
+}
+
 
 /* Styling of overlay */
 .bm-overlay {
   background: rgba(0, 0, 0, 0.3);
 }
 
-.side_about, .side_logout, .side_profile, .side_location, .side_login, .side_join{
-  margin-top: 2vh;
+.side_home, .side_about, .side_logout, .side_profile, .side_location, .side_login, .side_join{
+  margin-top: 3vh;
 }

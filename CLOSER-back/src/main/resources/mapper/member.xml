@@ -25,8 +25,8 @@
 
     <!-- 회원가입 -->
     <insert id="userRegister" parameterType="MemberDto">
-        insert into user (userId, password, nickname, phone, email, addr, homeAlone)
-        values (#{userId}, #{password}, #{nickname}, #{phone}, #{email}, #{addr}, #{homeAlone})
+        insert into user (userId, password, nickname, phone, email, addr, homeAlone, profileImg)
+        values (#{userId}, #{password}, #{nickname}, #{phone}, #{email}, #{addr}, #{homeAlone}, ' ')
     </insert>
 
     <!-- 뱃지 담아 보내기 -->

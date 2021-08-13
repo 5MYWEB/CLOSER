@@ -190,7 +190,7 @@ const MyProfileUpdate = () => {
         })
       })
       .catch((err) => {
-        console.log(err)
+        console. log(err)
       })
     } else{
       alert('닉네임 중복체크를 해주세요!')

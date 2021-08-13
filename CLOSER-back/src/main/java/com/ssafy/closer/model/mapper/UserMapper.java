@@ -27,4 +27,5 @@ public interface UserMapper {
     List<BoardDto> userFeed(String userId);
     List<BoardDto> userBookmark(String userId);
     int changeLocation(MemberDto memberDto);
+    int countBoardByUser(String userId);
 }

@@ -1,11 +1,12 @@
 import React, {useState, useRef} from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import AWS from 'aws-sdk';
 import { getMyInfoAction } from '../../modules/user';
 import defaultProfile from '../../assets/profile-user-demo.png'
+import { RippleButton, ShakeButton } from '../../styles/index';
+import '../../styles/theme.css'
 
 const MyProfileUpdate = () => {
 
@@ -190,7 +191,7 @@ const MyProfileUpdate = () => {
                 })
           })
           .catch((err) => {
-            console. log(err)
+            console.log(err)
           })
     } else{
       alert('닉네임 중복체크를 해주세요!')
@@ -198,97 +199,95 @@ const MyProfileUpdate = () => {
   }
 
   return (
-      <Container>
-        {/* Row-0 : 뒤로가기 */}
-        <Row>
-          <Link to={`/profile/${userInfo.userId}`}>뒤로가기</Link>
-        </Row>
-        {/* Row-1 : 프로필사진 */}
-        <Row className="justify-content-center">
-          <Col xs={5} >
-            <img src={fileUrl} alt="프로필사진" onError={handleImgError}></img>
-            <div>
-              <label className="input-file-button" htmlFor="input-file" >
-                파일 선택
-              </label>
-              <input type="file" id="input-file" style={{display:"none"}} onChange={processImage}/>
-              <button onClick={removeFile}>파일삭제</button>
-            </div>
-          </Col>
-        </Row>
-        <br />
+    <div className="normal-wrapper">
+      {/* 1. 닉네임 */}
+      <div className="paragraph">
+        <span className="input-label">닉네임</span>
+        <span className="necessary unfollow">*</span>
+      </div>
+      <input
+        placeholder="닉네임을 입력하세요"
+        onFocus={(e) => {
+          e.target.placeholder='';
+        }}
+        onBlur={(e) => {
+          e.target.placeholder='닉네임을 입력하세요';
+        }}
+        type="text"
+        value={changedUserinfo.nickname}
+        name="nickname"
+        onChange={onChangeNickname}
+      />
+      {doubleChecked ? 
+        <RippleButton disabled onClick={onDoubleCheck} type="button" cclass="cbtn cbtn-sm cbtn-primary" children="중복확인"/>
+        :
+        <RippleButton onClick={onDoubleCheck} type="button" cclass="cbtn cbtn-sm cbtn-primary" children="중복확인"/>
+      }
+      
+      {/* 2. 프로필 사진 */}
+      <div className="paragraph">
+        <span className="input-label">프로필 사진</span>
+        <img src={fileUrl} alt="프로필사진" onError={handleImgError}></img>
+        <div>
+          <label className="input-file-button" htmlFor="input-file" >
+            파일 선택
+          </label>
+          <input type="file" id="input-file" style={{display:"none"}} onChange={processImage}/>
+          <button onClick={removeFile}>파일삭제</button>
+        </div>
+      </div>
+      {/* <img src={fileUrl} alt="프로필사진"></img> */}
+      {/* <input type="file" onChange={processImage}></input> */}
+      {/* <RippleButton type="button" cclass="cbtn cbtn-sm cbtn-primary" children="무언가 확인버튼"/> */}
 
-        {/* Row-2: 닉네임 */}
-        닉네임
-        <Row className="justify-content-center">
-          <Col xs={8}>
-            <input
-                type="text"
-                value={changedUserinfo.nickname}
-                name="nickname"
-                onChange={onChangeNickname}
-            />
-          </Col>
-          <Col xs={4} className="align-self-center">
-            {doubleChecked ?
-                <button disabled onClick={onDoubleCheck}>중복체크</button>
-                :
-                <button onClick={onDoubleCheck}>중복체크</button>
-            }
-          </Col>
-        </Row>
-        <br />
+      {/* 3. 자취기간 */}
+      <div className="paragraph">
+        <span className="input-label">자취기간: {date.getFullYear()-changedUserinfo.homeAlone+1} 년차</span>
+      </div>
+      <div className="ml-2rem">
+        저는 자취를
+        <select id="homeAlone" name="homeAlone" value={changedUserinfo.homeAlone} onChange={onChangeHomeAlone} ref={selectInputs}>
+          <option defaultValue value="undefined"> -- 년도 -- </option>
+          <option value="2021">2021년</option>
+          <option value="2020">2020년</option>
+          <option value="2019">2019년</option>
+          <option value="2018">2018년</option>
+          <option value="2017">2017년</option>
+          <option value="2016">2016년</option>
+          <option value="2015">2015년</option>
+          <option value="2014">2014년</option>
+          <option value="2013">2013년</option>
+          <option value="2012">2012년 이전</option>
+        </select>
+        부터 했어요!
+      </div>
 
-        {/* Row-3 : 자취기간 */}
-        자취기간: {date.getFullYear()-changedUserinfo.homeAlone+1} 년차
-        <Row className="justify-content-center">
-          <Col>
-            저는 자취를
-            <select id="homeAlone" name="homeAlone" value={changedUserinfo.homeAlone} onChange={onChangeHomeAlone} ref={selectInputs}>
-              <option defaultValue value="undefined"> -- 년도 -- </option>
-              <option value="2021">2021년</option>
-              <option value="2020">2020년</option>
-              <option value="2019">2019년</option>
-              <option value="2018">2018년</option>
-              <option value="2017">2017년</option>
-              <option value="2016">2016년</option>
-              <option value="2015">2015년</option>
-              <option value="2014">2014년</option>
-              <option value="2013">2013년</option>
-              <option value="2012">2012년 이전</option>
-            </select>
-            부터 했어요!
-          </Col>
-        </Row >
-        <br />
+      {/* 4. .한줄 소개 */}
+      <div className="paragraph">
+        <span className="input-label">한줄 소개</span>
+      </div>
+      <input
+        placeholder="한줄로 자신을 소개해보세요"
+        onFocus={(e) => {
+          e.target.placeholder='';
+        }}
+        onBlur={(e) => {
+          e.target.placeholder='한줄로 자신을 소개해보세요';
+        }}
+        type="text"
+        value={changedUserinfo.intro}
+        name="intro"
+        onChange={onChange}
+      />
 
-        {/* Row-5 : 한줄소개 */}
-        한줄 소개
-        <Row className="justify-content-center">
-          <Col>
-            <input
-                type="text"
-                value={changedUserinfo.intro}
-                name="intro"
-                onChange={onChange}
-            />
-          </Col>
-        </Row>
-        {/* Row-6 : 취소, 저장 */}
-        <Row className="justify-content-center">
-          <Col >
-            <Link to={`/profile/${userInfo.userId}`}><button>취소</button></Link>
-          </Col>
-          <Col>
-            {changed ?
-                <button onClick={onClickSave}>저장</button>
-                :
-                <button disabled onClick={onClickSave}>저장</button>
-            }
-
-          </Col>
-        </Row>
-      </Container>
+      {/* 5. 제출 버튼 */}
+      <RippleButton type="button" cclass="cbtn cbtn-none cbtn-lg" children="회원가입"/>
+      <Link to={`/profile/${userInfo.userId}`}><RippleButton onClick={onClickSave} cclass="cbtn cbtn-lg cbtn-primary" children="취소"/></Link>    
+      {changed 
+      ? <RippleButton onClick={onClickSave} cclass="cbtn cbtn-lg cbtn-primary" children="저장"/>
+      : <ShakeButton cclass="cbtn cbtn-lg cbtn-disabled" children="저장"/>
+      }
+    </div>  
   )
 }
 

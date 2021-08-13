@@ -1,12 +1,12 @@
-.container2{
+/* .container{
 	width: 100%;
 	padding-right: 0;
 	padding-left: 0;
 	margin-right: 0;
 	margin-left: 0;
 	display: grid;
-	overflow: visible;
-}
+	overflow: scroll;
+} */
 
 .board-main{
     margin-top: 8vh;
@@ -19,3 +19,4 @@
 .bookmarkPart{
 	display: inline;
 }
+

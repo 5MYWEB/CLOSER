@@ -3,7 +3,7 @@ import { Route, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
 import { getMyInfoAction, refreshInfo } from './modules/user'
-import { TopAppBar, Navbar, BackButton } from './components/frame/index';
+import { TopAppBar, Navbar, BackButton, CommentBar } from './components/frame/index';
 import { Home, About, Login, SignUp, Profile, Newsfeed, Board, Search, Alarm, Messages } from './pages';
 import NewsfeedList from './components/newsfeed/NewsfeedList';
 import BoardSubNavbar1 from './components/board/BoardSubNavbar1';
@@ -44,7 +44,7 @@ function App( { location }) {
 
   // NavBar를 변형하거나 보여주지 않는 페이지를 모아둔 오브젝트
   const noNavBarPages = {
-    '/board-detail': null,
+    '/board-detail': <CommentBar/>,
     '/board-create-form': null,
     '/board-update-form': null,
     '/messages': null,
@@ -127,6 +127,7 @@ function App( { location }) {
       ? noNavBarPages[now]
       : <Navbar />
       }
+
     </div>
   );
 }

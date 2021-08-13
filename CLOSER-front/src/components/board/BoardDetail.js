@@ -197,7 +197,7 @@ const BoardDetail = ({match}) => {
   }
 
   return (
-    <div className="container">
+    <div className="">
       <div className="board-main">
       {/* <div>글 번호 : {board.board_pk}</div> */}
       {board.kind_pk !== 7 && 
@@ -273,7 +273,9 @@ const BoardDetail = ({match}) => {
 
       </div>
         <hr />
-        <CommentList board_pk={Number(pk)} />
+        <div >
+        <CommentList board_pk={Number(pk)} /> {/* class 추가하기 - */}
+        </div>
       </div>     
     </div>
   )

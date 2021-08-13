@@ -15,7 +15,11 @@
   position: fixed;
   display: block;
   width: 100vw;
-  /* overflow-y: auto; */
+  overflow-y: auto;
   /* 기본설정 visible */
-  /* overflow-x: hidden; */
+  overflow-x: hidden;
+}
+
+.noNavview{
+
 }

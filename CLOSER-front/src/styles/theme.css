@@ -399,3 +399,8 @@ a:active { text-decoration: none; }
   width: 9vw;
   height: 5vh;
 }
+
+.commentlist{
+  overflow-y: auto;
+  overflow-x: hidden;
+}

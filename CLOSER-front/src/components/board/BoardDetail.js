@@ -203,10 +203,10 @@ const BoardDetail = ({match}) => {
       }
       
         <div>작성자 : 
-        <Link to = {`/profile/${board.userId}`}>
-          {board.nickname}
+          <Link to = {`/profile/${board.userId}`}>
+            {board.nickname}
           </Link>
-          </div>
+        </div>
 
 
       { board.kind_pk > 0 && board.kind_pk < 4 && board.badge !== 0 &&

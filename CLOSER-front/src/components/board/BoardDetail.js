@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import { deleteBoard } from '../../modules/board';
 import { likeBoard } from '../../modules/board';
 import axios from 'axios';
-
-import CommentForm from '../comment/CommentForm';
 import CommentList from '../comment/CommentList';
 import UserBadgeItem from '../profile/UserBadgeItem';
 
@@ -198,8 +196,7 @@ const BoardDetail = ({match}) => {
   }
 
   return (
-    <div className="">
-      <div>
+    <div className="page-wrapper">
       {/* <div>글 번호 : {board.board_pk}</div> */}
       {board.kind_pk !== 7 && 
         <div>제목 : {board.title}</div>
@@ -257,34 +254,28 @@ const BoardDetail = ({match}) => {
         { liked
           ?
           <div className = "likePart">
-            <img className ="heart_full" src={heartFull} onClick={onClickLike}></img> {countLike}
+            <img className ="heart_full" alt="heart_full" src={heartFull} onClick={onClickLike}></img> {countLike}
           </div>
           : 
           <div className = "likePart">
-            <img className ="heart_empty" src={heartEmpty} onClick={onClickLike}></img> {countLike}
+            <img className ="heart_empty" alt="heart_empty" src={heartEmpty} onClick={onClickLike}></img> {countLike}
           </div>
         }
         {/* 북마크 */}
         { bookmarked
           ?
           <div className = "bookmarkPart">
-            <img className ="bookmark_full" src={bookmarkFull} onClick={onClickBookmark}></img> {countBookmark}
+            <img className ="bookmark_full" alt="bookmark_full" src={bookmarkFull} onClick={onClickBookmark}></img> {countBookmark}
           </div>
           : 
           <div className = "bookmarkPart">
-            <img className ="bookmark_empty" src={bookmarkEmpty} onClick={onClickBookmark}></img> {countBookmark}
+            <img className ="bookmark_empty" alt="bookmark_empty" src={bookmarkEmpty} onClick={onClickBookmark}></img> {countBookmark}
           </div>
         }
       </div>
-      <div>
 
-      </div>
-        <hr />
-        <div >
-        <CommentList board_pk={Number(pk)} /> {/* class 추가하기 - */}
-        </div>
-      </div>     
-    </div>
+      <CommentList board_pk={Number(pk)} />
+    </div>     
   )
 }
 

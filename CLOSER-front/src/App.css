@@ -3,7 +3,7 @@
   display: block;
   width: 100vw;
   /* 100 - topappbar - navbar */
-  height: 75vh;
+  height: 82vh;
   /* navbar */
   /* bottom: 13vh; */
   overflow-y: auto;
@@ -15,9 +15,7 @@
   position: fixed;
   display: block;
   width: 100vw;
-  height: 74vh;
-  margin: 0 2rem;
-  padding: 4vh 0;
+  height: 92vh;
   overflow-y: auto;
   /* 기본설정 visible */
   overflow-x: hidden;

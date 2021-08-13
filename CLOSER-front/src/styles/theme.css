@@ -69,6 +69,16 @@ p {
 }
 
 
+/* 페이지 자동 여백 */
+.page-wrapper {
+  margin: 0 2rem;
+  padding: 4vh 0;
+}
+
+.comment-list-wrapper {
+  
+}
+
 /* 제목 */
 .phrase {
   display: inline;

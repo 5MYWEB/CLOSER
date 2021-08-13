@@ -51,14 +51,15 @@ const CommentForm = ({board_pk}) => {
   return (
     <div className="comment-form-wrapper">
     {isLoggedIn &&
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} class="d-flex flex-row">
         <input 
           type="text" 
           value={text}
           maxLength={200} 
           placeholder="댓글을 입력하세요"
-          onChange={onChangeText} />
-        <input type="submit" value="업로드" />
+          onChange={onChangeText}
+          class="col-8" />
+        <input type="submit" value="업로드" class="col-4"/>
       </form>
       }
     </div>

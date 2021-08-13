@@ -3,7 +3,7 @@ import { Route, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
 import { getMyInfoAction, refreshInfo } from './modules/user'
-import { TopAppBar, Navbar, BackButton, CommentBar } from './components/frame/index';
+import { TopAppBar, Navbar, BackButton } from './components/frame/index';
 import { Home, About, Login, SignUp, Profile, Newsfeed, Board, Search, Alarm, Messages } from './pages';
 import { BoardSubNavbar1, BoardSubNavbar2, BoardGlobal, BoardLocal, BoardDetail, BoardForm, BoardUpdateForm} from './components/board/index';
 import NewsfeedList from './components/newsfeed/NewsfeedList';
@@ -27,13 +27,17 @@ function App( { location }) {
   // 2.
   // TopAppBar를 변형하거나 보여주지 않는 페이지를 모아둔 오브젝트
   const noTopAppBarPages = {
-    '/board-detail': <BackButton cclass="normal-backbutton" />,
+    '/board-detail': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/board-create-form': null,
     '/board-update-form': null,
     '/messages': <BackButton cclass="message-backbutton" />,
     '/profile': <BackButton cclass="normal-backbutton" />,
     '/profile-update': <BackButton />,
     '/change-location': <BackButton />
+  }
+
+  const butNormalViewPages = {
+    '/board-detail': null,
   }
 
   // NavBar를 변형하거나 보여주지 않는 페이지를 모아둔 오브젝트
@@ -49,9 +53,12 @@ function App( { location }) {
   // 3.
   // TopAppBar를 그대로 보여줄지, 변형하거나 보여주지 말지 결정하는 변수
   let isTopBar = true
-
+  
   // NavBar를 그대로 보여줄지, 변형하거나 보여주지 말지 결정하는 변수
   let isNavBar = true
+  
+  // TopAppBar나 NavBar가 없어도 다른 요소가 있어서 noTopView가 아닌 그냥 view를 적용해야할 때
+  let isNormalView = false
 
   // 1이 2에 있는지 확인해서 있으면 3의 값을 true로
   if (now in noTopAppBarPages) {
@@ -60,6 +67,10 @@ function App( { location }) {
 
   if (now in noNavBarPages) {
     isNavBar = false
+  }
+
+  if (now in butNormalViewPages) {
+    isNormalView = true
   }
 
   // 로그인 상태 유지
@@ -89,7 +100,7 @@ function App( { location }) {
       : <TopAppBar />
       }
       {/* <div className="my-auto view"> */}
-      <div className={ "my-auto " + (isTopBar? "view" : "noTopview")}>
+      <div className={ "my-auto " + (isTopBar || isNormalView? "view" : "noTopview")}>
         <Route path="/" exact={true} component={Home} />
         <Route path="/about" component={About} />
         <Route path="/login" component={Login} />

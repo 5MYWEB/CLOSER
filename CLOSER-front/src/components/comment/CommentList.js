@@ -29,7 +29,7 @@ const CommentList = ({board_pk}) => {
   }, [commentDeleted, commentCreated])
 
   return (
-    <>
+    <div className="comment-list-wrapper">
       <div>댓글 {listLength}개</div>
       <br />
 
@@ -45,7 +45,7 @@ const CommentList = ({board_pk}) => {
         <div>
           <CommentForm board_pk={Number(board_pk)}/>
         </div>
-    </>
+    </div>
   )
 }
 

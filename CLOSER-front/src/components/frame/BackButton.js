@@ -4,7 +4,7 @@ import { RippleBackButton } from '../../styles/index';
 import backButton from '../../assets/arrow-left-solid.svg'
 
 
-const BackButton = ({ history, cclass}) => {
+const BackButton = ({ history, cclass, wrapclass}) => {
   
   const onClick = ( ) => {
     setTimeout( function() {
@@ -13,7 +13,7 @@ const BackButton = ({ history, cclass}) => {
   }
 
   return (
-    <div class="back-button-wrapper">
+    <div class={wrapclass}>
       <RippleBackButton src={backButton} alt="backButton" cclass={`back-button ${cclass}`} onClick={onClick} />
     </div>
   )

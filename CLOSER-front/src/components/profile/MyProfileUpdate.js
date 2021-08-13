@@ -22,6 +22,11 @@ const MyProfileUpdate = () => {
     }),
   })
 
+  var s3 = new AWS.S3({
+    apiVersion: "2006-03-01",
+    params: { Bucket: albumBucketName },
+  });
+
   const dispatch = useDispatch();
   // DOM 선택
   const selectInputs = useRef();
@@ -56,6 +61,9 @@ const MyProfileUpdate = () => {
 
   // 프로필 사진을 변경했으면 true
   const [changedimg,setChangedimg] = useState(false)
+
+  // 프로필 사진 삭제한 경우 true
+  const [deleteimg,setdeleteimg] = useState(false)
 
   // 닉네임 변경
   const onChangeNickname = (e) => {
@@ -117,11 +125,11 @@ const MyProfileUpdate = () => {
   }
 
   // 이미지 S3에 업로드
-  async function handleFileInput() {
-    const userid = userInfo.userId;
-    let albumPhotosKey = encodeURIComponent(userid) + "/";
-    let photoKey = albumPhotosKey + userid + "_profile.jpg";
+  const userid = userInfo.userId;
+  let albumPhotosKey = encodeURIComponent(userid) + "/";
+  let photoKey = albumPhotosKey + userid + "_profile.jpg";
 
+  async function handleFileInput() {
     // AWS sdk에 포함된 함수로 파일을 업로드하는 부분
     const upload = new AWS.S3.ManagedUpload({
       params: {
@@ -148,10 +156,25 @@ const MyProfileUpdate = () => {
     e.target.src = defaultProfile;
   }
 
+  // 이미지 파일 삭제
+  const removeFile = (e) =>{
+    e.target.files = ''
+    setFile('')
+    setFileUrl('')
+    setChanged(true)
+    setdeleteimg(true)
+  }
+
+  //s3에 파일 삭제
+  const deletePhoto = (photoKey) => {
+    // 파일 삭제
+    s3.deleteObject({ Key: photoKey }, function (err, data) {});
+  };
+
   // 저장
   const onClickSave = () => {
     if(changedimg === true) handleFileInput();
-
+    if(deleteimg === true) deletePhoto(photoKey);
     if (doubleChecked === true){
       // 수정 요청
       axios.put('http://localhost:8080/user/mypage', changedUserinfo)
@@ -184,7 +207,13 @@ const MyProfileUpdate = () => {
       <Row className="justify-content-center">
         <Col xs={5} >
            <img src={fileUrl} alt="프로필사진" onError={handleImgError}></img>
-           <input type="file" onChange={processImage}></input>
+          <div>
+          <label className="input-file-button" htmlFor="input-file" >
+            파일 선택
+          </label>
+          <input type="file" id="input-file" style={{display:"none"}} onChange={processImage}/>
+          <button onClick={removeFile}>파일삭제</button>
+          </div>
         </Col>
       </Row>
       <br />

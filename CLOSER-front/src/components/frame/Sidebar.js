@@ -101,7 +101,7 @@ class Sidebar extends React.Component {
                         : <img src={defaultUserImg} alt="프로필사진" />
                       } */}
                       {/* <img src={defaultUserImg} alt="프로필사진" /> */}
-                      <img src={userInfo.profileImg} onError={() => this.handleImgError()} alt="프로필사진" />
+                      <img src={userInfo.profileImg} onError={(e) => this.handleImgError(e)} alt="프로필사진" />
                     </div>
                     <div className="col-7 px-0">
                       <div>

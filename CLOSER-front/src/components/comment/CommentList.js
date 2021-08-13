@@ -32,9 +32,6 @@ const CommentList = ({board_pk}) => {
       <div>댓글 {listLength}개</div>
       <br />
 
-      <div>
-        <CommentForm board_pk={Number(board_pk)}/>
-      </div>
       {commentList && 
         <div>
           {commentList.map((comment) => {
@@ -43,6 +40,10 @@ const CommentList = ({board_pk}) => {
             );
           })}
         </div>}
+        
+        <div>
+          <CommentForm board_pk={Number(board_pk)}/>
+        </div>
     </>
   )
 }

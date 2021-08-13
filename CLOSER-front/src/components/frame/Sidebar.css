@@ -1,7 +1,44 @@
+.row {
+  justify-content: center;
+}
+
 .bm-profile {
   align-items: center;
-  height: 35%;
-  padding-top: 2rem;
+  border-bottom: 0.1px solid rgba(160, 145, 245, .5);
+}
+
+.bm-profile > div {
+  width: 100%;
+  padding: 0;
+  letter-spacing: 0px;
+  text-align: left;
+  align-items: center;
+}
+
+.bm-profile .bm-profile-img {
+  align-items: center;
+  text-align: center;
+}
+
+.bm-profile .bm-profile-addr {
+  width: 8rem;
+  font-size: 0.8rem;
+  word-wrap: normal;
+  color:#8B93A6;
+}
+
+.bm-profile .bm-profile-info {
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.bm-profile .bm-profile-intro {
+  font-size: 1rem;
+  padding: 0 0 1rem 0;
+}
+
+.bm-profile-intro > p {
+  padding-left: 1rem;
 }
 
 /* Position and sizing of burger button */
@@ -49,7 +86,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bm-menu {
   width: 75vw;
   background: #ECECFF;
-  font-size: 1.15em;
+  font-size: 1.15rem;
 }
 
 /* Morph shape necessary with bubble or elastic */
@@ -59,16 +96,16 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* Wrapper for item list */
 .bm-item-list {
-  color: #5552FF;
+  /* color: #5552FF;s */
   text-align: center;
   align-items: center;
   display: grid;
+  grid-template-rows: 2fr 2fr 2fr;
 }
 
 /* Individual item */
 .bm-item {
   letter-spacing: 5px;
-  height: 50%;
 }
 
 /* Styling of overlay */

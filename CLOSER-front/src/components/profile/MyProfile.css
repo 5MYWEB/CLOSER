@@ -1,4 +1,4 @@
-.container{
+.container2{
 	width: 100%;
 	padding-right: 0;
 	padding-left: 0;
@@ -10,7 +10,7 @@
 
 .profilepart{
 	margin-top: 8vh;
-  display: grid;
+    display: grid;
 	grid-template-columns: repeat(4, 25%);
 	grid-template-rows: repeat(7, 17%);
 }
@@ -44,7 +44,7 @@
 }
 
 .userYear{
-    font-weight: 500;
+    font-weight: 900;
     align-items: center;
     justify-content: center;
 

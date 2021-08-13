@@ -47,7 +47,9 @@ function MyProfile() {
       console.log(err)
     })
 
-    setAnnual(year - userInfo.homeAlone + 1)
+    if(userInfo.homeAlone != null){
+      setAnnual(year - userInfo.homeAlone + 1)
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -65,7 +67,9 @@ function MyProfile() {
         </div>
 
         <div className = "item4">
-          <h6 className="userYear"> {annual} 년차</h6>
+          <h6 className="userYear"> 
+            {annual} 년차
+          </h6>
         </div>
 
         <div className = "item5">
@@ -79,22 +83,22 @@ function MyProfile() {
         </div>
 
         <div className = "item7">
-          <h6>요리왕</h6>
+          요리왕
         </div>
         <div className = "item8">
-          <h6>살림왕</h6>
+          살림왕
         </div>
 
         <div className = "item9">
-          <h6> {userInfo.intro}</h6>
+          {userInfo.intro}
         </div>
 
         <div className = "item10">
-          <h6><Link to={`/${userInfo.userId}/following-list`} class="link-dark">팔로잉 {followingListLength}</Link></h6>
+          <Link to={`/${userInfo.userId}/following-list`} class="link-dark">팔로잉 {followingListLength}</Link>
         </div>
 
         <div className = "item11">
-          <h6><Link to={`/${userInfo.userId}/follower-list`} class="link-dark">팔로워 {followerListLength}</Link></h6>
+          <Link to={`/${userInfo.userId}/follower-list`} class="link-dark">팔로워 {followerListLength}</Link>
         </div>
 
         <div className = "item12">
@@ -116,8 +120,6 @@ function MyProfile() {
         <div className ="mybookmark">
           <Link to={`/profile/${userInfo.userId}/user-bookmark`} class="link-light">북마크</Link>
         </div>
-
-
       </div>
   
 

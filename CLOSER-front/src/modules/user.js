@@ -33,6 +33,7 @@ const initialState = {
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
 const GET_MY_INFO = 'GET_MY_INFO';
+const GET_POST_COUNT = 'GET_POST_COUNT';
 const FOLLOW = 'FOLLOW';
 const GET_FOLLOW_INFO = 'GET_FOLLOW_INFO';
 const CHANGE_ADDR = 'CHANGE_ADDR';
@@ -52,6 +53,11 @@ export const logoutAction = () => ({
 
 export const getMyInfoAction = (data) => ({
   type: GET_MY_INFO,
+  data,
+});
+
+export const getPostCount = (data) => ({
+  type: GET_POST_COUNT,
   data,
 });
 
@@ -113,6 +119,11 @@ export const refreshInfo = () => ({
       return {
         ...state,
         userInfo: action.data
+      };
+    case GET_POST_COUNT:
+      return {
+        ...state,
+        postCount: action.data
       };
     case FOLLOW:
       return {

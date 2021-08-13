@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
-import { getMyInfoAction, loginAction } from '../modules/user'
+import { getMyInfoAction, loginAction, getPostCount } from '../modules/user'
 import { RippleButton } from '../styles/index';
 import '../styles/theme.css'
 
@@ -105,12 +105,21 @@ function Login({ history }) {
       axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
         .then((res) => {
           dispatch(getMyInfoAction(res.data))
-          history.push('/')
+          axios.get(`http://localhost:8080/user/totalBoard/${decodedToken.UserId}`)
+            .then((res) => {
+              dispatch(getPostCount(res.data))
+              history.push("/")
+            })
+            .catch((err) => {
+              console.log(err)
+            })
         })
         .catch((err) => {
           console.log(err)
         })
       }
+
+      
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [decodedToken])
         

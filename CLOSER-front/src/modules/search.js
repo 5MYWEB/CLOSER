@@ -20,7 +20,7 @@ const initialState = {
     5: '/lboard/recent',
     6: '/4/recent',
     7: '/5/recent',
-    8: '/a6/recent',
+    8: '/6/recent',
     9: '/feed/recent',
   },
   categoryName: '게시판 전체',

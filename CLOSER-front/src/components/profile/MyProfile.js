@@ -20,7 +20,7 @@ import './MyProfile.css';
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 function MyProfile() {
-  const imgRef = useRef(null);
+  // const imgRef = useRef(null);
   const { userInfo } = useSelector((state) => state.user);
 
   const now = new Date();
@@ -66,7 +66,8 @@ function MyProfile() {
         <div className = "profilepart">
 
           <div className = "item2">
-            <img ref={imgRef} src={img}  alt="userprofile" className="userprofile" onError={handleImgError}/>
+            {/* <img ref={imgRef} src={img}  alt="userprofile" className="userprofile" onError={handleImgError}/> */}
+            <img src={img}  alt="userprofile" className="userprofile" onError={handleImgError}/>
           </div>
 
           <div className = "item3">

@@ -33,7 +33,7 @@ function App( { location }) {
   // 2.
   // TopAppBar를 변형하거나 보여주지 않는 페이지를 모아둔 오브젝트
   const noTopAppBarPages = {
-    '/board-detail': null,
+    '/board-detail': <BackButton cclass="normal-backbutton" />,
     '/board-create-form': null,
     '/board-update-form': null,
     '/messages': <BackButton cclass="message-backbutton" />,

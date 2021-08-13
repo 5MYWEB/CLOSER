@@ -67,8 +67,6 @@ function MyProfile() {
 
         <div className = "item2">
           <img ref={imgRef} src={img}  alt="userprofile" className="userprofile" onError={handleImgError}/>
-
-
         </div>
 
         <div className = "item3">

@@ -13,7 +13,7 @@ const BackButton = ({ history, cclass, wrapclass}) => {
   }
 
   return (
-    <div class={wrapclass}>
+    <div className={wrapclass}>
       <RippleBackButton src={backButton} alt="backButton" cclass={`back-button ${cclass}`} onClick={onClick} />
     </div>
   )

@@ -2,6 +2,7 @@ package com.ssafy.closer.controller;
 
 import com.ssafy.closer.model.dto.BoardDto;
 import com.ssafy.closer.model.dto.SearchDto;
+import com.ssafy.closer.model.service.InfoService;
 import com.ssafy.closer.model.service.SearchNaverService;
 import com.ssafy.closer.model.service.SearchService;
 import io.swagger.annotations.Api;
@@ -31,6 +32,9 @@ public class SearchController {
     @Autowired
     private SearchNaverService searchNaverService;
 
+    @Autowired
+    private InfoService infoService;
+
     // 네이버 검색
     @Autowired(required = false)
     public SearchController(SearchNaverService searchNaverService) {
@@ -54,7 +58,12 @@ public class SearchController {
         else if(choice==2) searchDto.setChoice_pk(false); // 닉네임
         else return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 
-        return new ResponseEntity<List<BoardDto>>(searchService.recentSearchAll(searchDto), HttpStatus.OK);
+        List<BoardDto> boardDtos = searchService.recentSearchAll(searchDto);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+
+        return new ResponseEntity<List<BoardDto>>(boardDtos, HttpStatus.OK);
     }
 
     // [인기순] 전체게시판 선택 시
@@ -67,7 +76,12 @@ public class SearchController {
         else if(choice==2) searchDto.setChoice_pk(false); // 닉네임
         else return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 
-        return new ResponseEntity<List<BoardDto>>(searchService.popularSearchAll(searchDto), HttpStatus.OK);
+        List<BoardDto> boardDtos = searchService.popularSearchAll(searchDto);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+
+        return new ResponseEntity<List<BoardDto>>(boardDtos, HttpStatus.OK);
     }
 
     // [최신순] 자취게시판(GBoard) 선택 시 - 한끼레시피 / 자취 팁 / 홈데코
@@ -80,7 +94,12 @@ public class SearchController {
         else if(choice==2) searchDto.setChoice_pk(false); // 닉네임
         else return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 
-        return new ResponseEntity<List<BoardDto>>(searchService.recentSearchGboard(searchDto), HttpStatus.OK);
+        List<BoardDto> boardDtos = searchService.recentSearchGboard(searchDto);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+
+        return new ResponseEntity<List<BoardDto>>(boardDtos, HttpStatus.OK);
     }
 
     // [인기순] 자취게시판(GBoard) 선택 시 - 한끼레시피 / 자취 팁 / 홈데코
@@ -93,7 +112,12 @@ public class SearchController {
         else if(choice==2) searchDto.setChoice_pk(false); // 닉네임
         else return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 
-        return new ResponseEntity<List<BoardDto>>(searchService.popularSearchGboard(searchDto), HttpStatus.OK);
+        List<BoardDto> boardDtos = searchService.popularSearchGboard(searchDto);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+
+        return new ResponseEntity<List<BoardDto>>(boardDtos, HttpStatus.OK);
     }
 
     // [최신순] 지역게시판(LBoard) 선택 시 - 공동구매 / 클로저 모임 / 도와주세요
@@ -132,7 +156,12 @@ public class SearchController {
         else if(choice==2) searchDto.setChoice_pk(false); // 닉네임
         else return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 
-        return new ResponseEntity<List<BoardDto>>(searchService.recentSearchFeed(searchDto), HttpStatus.OK);
+        List<BoardDto> boardDtos = searchService.recentSearchFeed(searchDto);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+
+        return new ResponseEntity<List<BoardDto>>(boardDtos, HttpStatus.OK);
     }
 
     // [인기순] 뉴스피드 선택 시
@@ -145,7 +174,12 @@ public class SearchController {
         else if(choice==2) searchDto.setChoice_pk(false); // 닉네임
         else return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 
-        return new ResponseEntity<List<BoardDto>>(searchService.popularSearchFeed(searchDto), HttpStatus.OK);
+        List<BoardDto> boardDtos = searchService.popularSearchFeed(searchDto);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+
+        return new ResponseEntity<List<BoardDto>>(boardDtos, HttpStatus.OK);
     }
 
     // [최신순] 게시판(GBoard, LBoard) 중 한개 선택 시
@@ -159,7 +193,12 @@ public class SearchController {
         else if(choice==2) searchDto.setChoice_pk(false); // 닉네임
         else return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 
-        return new ResponseEntity<List<BoardDto>>(searchService.recentSearchOne(searchDto), HttpStatus.OK);
+        List<BoardDto> boardDtos = searchService.recentSearchOne(searchDto);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+
+        return new ResponseEntity<List<BoardDto>>(boardDtos, HttpStatus.OK);
     }
 
     // [인기순] 게시판(GBoard, LBoard) 중 한개 선택 시
@@ -173,7 +212,12 @@ public class SearchController {
         else if(choice==2) searchDto.setChoice_pk(false); // 닉네임
         else return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 
-        return new ResponseEntity<List<BoardDto>>(searchService.popularSearchOne(searchDto), HttpStatus.OK);
+        List<BoardDto> boardDtos = searchService.popularSearchOne(searchDto);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+
+        return new ResponseEntity<List<BoardDto>>(boardDtos, HttpStatus.OK);
     }
 
 }

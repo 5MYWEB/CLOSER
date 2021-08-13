@@ -1,8 +1,10 @@
 package com.ssafy.closer.controller;
 
+import com.ssafy.closer.model.dto.BoardDto;
 import com.ssafy.closer.model.dto.FollowDto;
 import com.ssafy.closer.model.dto.MemberDto;
 import com.ssafy.closer.model.service.FollowService;
+import com.ssafy.closer.model.service.InfoService;
 import com.ssafy.closer.model.service.JwtService;
 import com.ssafy.closer.model.service.UserService;
 import io.swagger.annotations.Api;
@@ -39,6 +41,9 @@ public class UserController {
 
     @Autowired
     private FollowService followService;
+
+    @Autowired
+    private InfoService infoService;
 
     @ApiOperation(value = "로그인 화면으로 이동")
     @GetMapping("/login")
@@ -194,19 +199,31 @@ public class UserController {
     @ApiOperation(value = "프로필 페이지 포스트")
     @GetMapping("/board/{userId}")
     public ResponseEntity profilePost(@PathVariable String userId) {
-        return new ResponseEntity(userService.userPost(userId),HttpStatus.OK);
+        List<BoardDto> boardDtos = userService.userPost(userId);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity(boardDtos, HttpStatus.OK);
     }
 
     @ApiOperation(value = "프로필 페이지 피드")
     @GetMapping("/feed/{userId}")
     public ResponseEntity profileFeed(@PathVariable String userId) {
-        return new ResponseEntity(userService.userFeed(userId),HttpStatus.OK);
+        List<BoardDto> boardDtos = userService.userFeed(userId);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity(boardDtos, HttpStatus.OK);
     }
 
     @ApiOperation(value = "프로필 페이지 북마크")
     @GetMapping("/bookmark/{userId}")
     public ResponseEntity profileBookmark(@PathVariable String userId) {
-        return new ResponseEntity(userService.userBookmark(userId),HttpStatus.OK);
+        List<BoardDto> boardDtos = userService.userBookmark(userId);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity(boardDtos, HttpStatus.OK);
     }
 
     @ApiOperation(value = "주소 변경")

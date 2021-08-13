@@ -18,8 +18,11 @@ const initialState = {
     profileImg: null,
     phone: null,
     badge: [],
+    following: 0,
+    follower: 0,
   },
   following: false,
+  postCount: 0,
   changedAddr: '',
   alarmList: null,
 };

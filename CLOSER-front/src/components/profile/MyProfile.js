@@ -1,9 +1,6 @@
-import React, { useEffect, useState, useRef} from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import React, { useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import defaultProfile from '../../assets/profile-user-demo.png'
 import UserBadge from './UserBadge';
 import backarrow from '../../assets/arrow-left-solid.svg';
 import userprofile from '../../assets/profile-user-demo.png';
@@ -27,30 +24,9 @@ function MyProfile() {
   console.log(now);
   const year = now.getFullYear();
 
-  const [followingListLength, setFollowingListLength] = useState(0)
-  const [followerListLength, setFollowerListLength] = useState(0)
   const [annual, setAnnual] = useState(0)
 
-  let img = `https://photo-album-hy.s3.ap-northeast-2.amazonaws.com/${userInfo.userId}/${userInfo.userId}_profile.jpg`
-
-  // 팔로잉, 팔로워 수 가져오기
   useEffect(() => {
-    axios.post(`http://localhost:8080/follow/${userInfo.userId}/following`)
-        .then((res) => {
-          setFollowingListLength(res.data.length)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-
-    axios.post(`http://localhost:8080/follow/${userInfo.userId}/follower`)
-        .then((res) => {
-          setFollowerListLength(res.data.length)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-
     setAnnual(year - userInfo.homeAlone + 1)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -98,13 +74,13 @@ function MyProfile() {
             <h6> {userInfo.intro}</h6>
           </div>
 
-          <div className = "item10">
-            <h6><Link to={`/${userInfo.userId}/following-list`} class="link-dark">팔로잉 {followingListLength}</Link></h6>
-          </div>
+        <div className = "item10">
+          <h6><Link to={`/${userInfo.userId}/following-list`} class="link-dark">팔로잉 {userInfo.following}</Link></h6>
+        </div>
 
-          <div className = "item11">
-            <h6><Link to={`/${userInfo.userId}/follower-list`} class="link-dark">팔로워 {followerListLength}</Link></h6>
-          </div>
+        <div className = "item11">
+          <h6><Link to={`/${userInfo.userId}/follower-list`} class="link-dark">팔로워 {userInfo.follower}</Link></h6>
+        </div>
 
           <div className = "item12">
             <button class = "animated-button">

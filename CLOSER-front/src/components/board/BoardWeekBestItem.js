@@ -113,10 +113,10 @@ const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
 
   // 이미지 링크 세팅
   useEffect(() => {
-    if((board.board_pk <= 3 || board.board_pk == 7) && board.imgUrls !== []){
+    if((board.board_pk <= 3 || board.board_pk === 7) && board.imgUrls !== []){
       setImgUrl(board.imgUrls[0])
     }
-  }, [])
+  }, [board.board_pk, board.imgUrls])
 
   // 좋아요 버튼을 눌렀을 때
   const onClickLike = () => {
@@ -162,13 +162,13 @@ const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
             : 
             <img src={defaultBoardImg} className="img-fluid rounded-start card-img-top" alt="기본이미지" />
           }
-          <div class="card-body p-0 mt-2">
+          <Container className="card-body p-0 mt-2">
             <Row className="mx-2 card-text">
               <Col className="px-0">{board.title}</Col>
             </Row>
             <Row className="mx-2 card-text">
               <Col className="px-0">
-                <small class="text-muted" style={{fontSize: "13px"}}>By. {board.nickname}</small>
+                <span className="text-secondary text-muted" style={{fontSize: "13px"}}>By. {board.nickname}</span>
               </Col>
             </Row>
             <Row className="mx-2 card-text mt-2 pt-1 border-top border-2">
@@ -180,7 +180,7 @@ const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
                 <FontAwesomeIcon icon={faBookmark}/> {countBookmark}
               </Col>
             </Row>
-          </div>
+          </Container>
         
         </Card>
       </Link>

@@ -8,11 +8,11 @@ function BoardNavbar() {
     <div className="boardcontainer">
       <div className="tabList">
         <div className = "board1">
-          <Link to={ "/board/subnav1/" } class="link-light" >자취 게시판</Link>
+          <Link to={ "/board/subnav1/" } className="link-light" >자취 게시판</Link>
         </div>
 
         <div className = "board2">
-        <Link to={"/board/subnav2/" } class="link-light" >지역 게시판</Link>
+        <Link to={"/board/subnav2/" } className="link-light" >지역 게시판</Link>
         </div>
       </div>
     

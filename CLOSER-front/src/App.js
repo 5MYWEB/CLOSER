@@ -5,7 +5,6 @@ import axios from 'axios';
 import { getMyInfoAction, refreshInfo } from './modules/user'
 import { TopAppBar, Navbar, BackButton, CommentBar } from './components/frame/index';
 import { Home, About, Login, SignUp, Profile, Newsfeed, Board, Search, Alarm, Messages } from './pages';
-import NewsfeedList from './components/newsfeed/NewsfeedList';
 import { BoardSubNavbar1, BoardSubNavbar2, BoardGlobal, BoardLocal, BoardDetail, BoardForm, BoardUpdateForm} from './components/board/index';
 import FollowingList from './components/profile/FollowingList';
 import FollowerList from './components/profile/FollowerList';
@@ -38,7 +37,7 @@ function App( { location }) {
 
   // NavBar를 변형하거나 보여주지 않는 페이지를 모아둔 오브젝트
   const noNavBarPages = {
-    '/board-detail': <CommentBar/>,
+    '/board-detail': null,
     '/board-create-form': null,
     '/board-update-form': null,
     '/messages': null,
@@ -121,7 +120,6 @@ function App( { location }) {
       ? noNavBarPages[now]
       : <Navbar />
       }
-
     </div>
   );
 }

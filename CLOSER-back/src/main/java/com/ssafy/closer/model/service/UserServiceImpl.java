@@ -88,4 +88,9 @@ public class UserServiceImpl implements UserService {
     public boolean changeLocation(MemberDto memberDto) {
         return sqlSession.getMapper(UserMapper.class).changeLocation(memberDto)==1;
     }
+
+    @Override
+    public int countBoardByUser(String userId) {
+        return sqlSession.getMapper(UserMapper.class).countBoardByUser(userId);
+    }
 }

@@ -5,8 +5,8 @@ import axios from 'axios';
 import { getMyInfoAction, refreshInfo } from './modules/user'
 import { TopAppBar, Navbar, BackButton, CommentBar } from './components/frame/index';
 import { Home, About, Login, SignUp, Profile, Newsfeed, Board, Search, Alarm, Messages } from './pages';
-import NewsfeedList from './components/newsfeed/NewsfeedList';
 import { BoardSubNavbar1, BoardSubNavbar2, BoardGlobal, BoardLocal, BoardDetail, BoardForm, BoardUpdateForm} from './components/board/index';
+import NewsfeedList from './components/newsfeed/NewsfeedList';
 import FollowingList from './components/profile/FollowingList';
 import FollowerList from './components/profile/FollowerList';
 import MyProfileUpdate from './components/profile/MyProfileUpdate';
@@ -121,7 +121,6 @@ function App( { location }) {
       ? noNavBarPages[now]
       : <Navbar />
       }
-
     </div>
   );
 }

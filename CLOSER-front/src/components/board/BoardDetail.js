@@ -204,7 +204,13 @@ const BoardDetail = ({match}) => {
       {board.kind_pk !== 7 && 
         <div>제목 : {board.title}</div>
       }
-      <div>작성자 : {board.nickname}</div>
+      
+        <div>작성자 : 
+        <Link to = {`/profile/${board.userId}`}>
+          {board.nickname}
+          </Link>
+          </div>
+
 
       { board.kind_pk > 0 && board.kind_pk < 4 && board.badge !== 0 &&
         <div>뱃지 : <UserBadgeItem badge={board.badge}/></div>

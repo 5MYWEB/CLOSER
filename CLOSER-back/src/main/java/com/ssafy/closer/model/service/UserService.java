@@ -24,4 +24,5 @@ public interface UserService {
     List<BoardDto> userFeed(String userId);
     List<BoardDto> userBookmark(String userId);
     boolean changeLocation(MemberDto memberDto);
+    int countBoardByUser(String userId);
 }

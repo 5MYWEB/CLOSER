@@ -97,4 +97,10 @@
         set addr=#{addr}
         where userId = #{userId}
     </update>
+
+    <select id="countBoardByUser" parameterType="String" resultType="int">
+        select count(*)
+        from board
+        where userId = #{userId}
+    </select>
 </mapper>

@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { likeBoard } from '../../modules/board';
-import UserBadgeItem from '../profile/UserBadgeItem'
-import { Row, Col, Card, Container, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Row, Col, Card, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark } from "@fortawesome/free-regular-svg-icons";
 import usersSolidImg from '../../assets/users-solid.svg';
@@ -109,16 +108,16 @@ const BoardLocalItem = React.forwardRef(({ board }, ref) => {
     else {
       setTimePeriod(`${Math.floor(betweenTimeDay / 365)}년전`);
     }
-  }, []);
+  }, [board.created_at]);
 
   // 지역 게시판 모집 중 여부
   useEffect(() => {
     if(board.board_pk >= 4 && board.board_pk <= 6){
-      if(board.totalNum == board.gatherNum) {
+      if(board.totalNum === board.gatherNum) {
         setIsJoin(false)
       }
     }
-  }, [])
+  }, [board.board_pk, board.totalNum, board.gatherNum])
 
   // 좋아요 버튼을 눌렀을 때
   const onClickLike = () => {

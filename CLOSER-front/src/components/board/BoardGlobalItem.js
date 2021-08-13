@@ -110,14 +110,14 @@ const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
     else {
       setTimePeriod(`${Math.floor(betweenTimeDay / 365)}년전`);
     }
-  }, []);
+  }, [board.created_at]);
 
   // 이미지 링크 세팅
   useEffect(() => {
     if(board.imgUrls !== []){
       setImgUrl(board.imgUrls[0])
     }
-  }, [])
+  }, [board.imgUrls])
 
   // 좋아요 버튼을 눌렀을 때
   const onClickLike = () => {

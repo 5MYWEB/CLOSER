@@ -4,7 +4,7 @@ import axios from 'axios'
 import { getBoardList, getWeekBestList, getBestList } from '../../modules/board';
 import BoardWeekBestItem from './BoardWeekBestItem';
 import BoardItem from './BoardItem';
-import { Row, Col, Card, Container } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 
 function BoardGlobal({ match }) {
 
@@ -61,8 +61,8 @@ function BoardGlobal({ match }) {
             <Row className="g-0">
               {weekBestList.map((board) => {
                 return (
-                  <Col xs={6}>
-                    <BoardWeekBestItem key={board.board_pk} board={board} />
+                  <Col xs={6} key={board.board_pk}>
+                    <BoardWeekBestItem board={board} />
                   </Col>
                 );
               })}

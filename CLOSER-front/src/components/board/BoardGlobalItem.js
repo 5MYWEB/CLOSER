@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark } from "@fortawesome/free-regular-svg-icons";
 import defaultBoardImg from '../../assets/house-emoji.png';
 import '../../styles/bootstrap.min.css';
+import './BoardItem.css'
 
 const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
 
@@ -158,33 +159,31 @@ const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
         <Card className="mx-2">
           <Row className="g-0 align-items-center">
             <Col xs={4}>
-              <div className="p-2 m-2 d-flex justify-content-center" style={{ border: "2px solid #5552FF"}}>
+              <div className="p-2 m-2 d-flex justify-content-center align-items-center" style={{ border: "2px solid #5552FF", height: "80px"}}>
                 { imgUrl
                   ?
-                  <img src={imgUrl} className="img-fluid rounded-start" style={{ width: "100%"}} alt={board.title} />
+                  <img src={imgUrl} className="img-fluid rounded-start cropped1" alt={board.title} />
                   : 
-                  <img src={defaultBoardImg} className="img-fluid rounded-start" style={{ width: "100%"}} alt="기본이미지" />
+                  <img src={defaultBoardImg} className="img-fluid rounded-start cropped1"  alt="기본이미지" />
                 }
               </div>
             </Col>
             <Col xs={8}>
-              <Row className="mx-2">
+              <Row className="mx-2 mt-1">
                 <Col className="text-end px-0 text-secondary">{timePeriod}</Col>
               </Row>
               <Row className="mx-2 mb-3 mt-1">
-                <Col className="px-0 mt-0 fs-4"> {board.title}</Col>
+                <Col className="px-0 mt-0 fs-5"> {board.title}</Col>
               </Row>
-              <Row className="mx-2">
-                <Col xs={8} className="px-0">
-                {board.badge !== 0 && 
-                  <span><UserBadgeItem badge={board.badge}/> </span>
-                }
-                {board.nickname}
+              <Row className="mx-2 mt-3 border-top border-2">
+                <Col className="px-0 mt-1">
+                  By.&nbsp;
+                  {board.badge !== 0 && 
+                    <span><UserBadgeItem badge={board.badge}/> </span>
+                  }
+                  {board.nickname}
                 </Col>
-                
-              </Row>
-              <Row className="mx-2">
-                <Col className="px-0 text-end">
+                <Col className="px-0 text-end my-1">
                   <FontAwesomeIcon icon={faComment}/> { countComment }
                   &nbsp;&nbsp;     
                   <FontAwesomeIcon icon={faHeart}/> { countLike }

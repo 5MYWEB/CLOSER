@@ -4,6 +4,7 @@ import AWS from "aws-sdk";
 import { RippleButton } from '../styles/index';
 import '../styles/theme.css'
 import UserLocation from '../components/profile/UserLocation';
+import { useSelector } from 'react-redux';
 // import { changeAddr } from '../modules/user';
 
 function SignUp( {history} ) {
@@ -24,6 +25,8 @@ function SignUp( {history} ) {
     homeAlone: ''
   });
 
+  const { changedAddr } = useSelector((state)=>state.user)
+
   // 구조분해 할당
   let { userId, nickname, password, email, addr, phone, homeAlone } = userInfo;
 
@@ -34,11 +37,11 @@ function SignUp( {history} ) {
   useEffect(() => {
     setUserInfo({
       ...userInfo,
-      // addr: changedAddr
+      addr: changedAddr
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, 
-  // [changedAddr]
+  },
+  [changedAddr]
   )
 
   // DOM 선택
@@ -303,7 +306,7 @@ function SignUp( {history} ) {
         <div xs={8}>
           <input 
             type="text"
-            // value={changedAddr}
+            value={changedAddr}
             name="addr"
             // onChange={onChange}
           />

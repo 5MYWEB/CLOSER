@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios'
 import { getBoardList, getWeekBestList, getBestList } from '../../modules/board';
+import BoardWeekBestItem from './BoardWeekBestItem';
 import BoardItem from './BoardItem';
 
 function BoardGlobal({ match }) {
@@ -55,7 +56,7 @@ function BoardGlobal({ match }) {
           <div>
             {weekBestList.map((board) => {
               return (
-                <BoardItem key={board.board_pk} board={board} />
+                <BoardWeekBestItem key={board.board_pk} board={board} />
               );
             })}
           </div>

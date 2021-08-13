@@ -6,13 +6,7 @@ import { getMyInfoAction, refreshInfo } from './modules/user'
 import { TopAppBar, Navbar, BackButton } from './components/frame/index';
 import { Home, About, Login, SignUp, Profile, Newsfeed, Board, Search, Alarm, Messages } from './pages';
 import NewsfeedList from './components/newsfeed/NewsfeedList';
-import BoardSubNavbar1 from './components/board/BoardSubNavbar1';
-import BoardSubNavbar2 from './components/board/BoardSubNavbar2';
-import BoardGlobal from './components/board/BoardGlobal';
-import BoardLocal from './components/board/BoardLocal';
-import BoardDetail from './components/board/BoardDetail';
-import BoardForm from './components/board/BoardForm';
-import BoardUpdateForm from './components/board/BoardUpdateForm';
+import { BoardSubNavbar1, BoardSubNavbar2, BoardGlobal, BoardLocal, BoardDetail, BoardForm, BoardUpdateForm} from './components/board/index';
 import FollowingList from './components/profile/FollowingList';
 import FollowerList from './components/profile/FollowerList';
 import MyProfileUpdate from './components/profile/MyProfileUpdate';

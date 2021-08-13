@@ -31,8 +31,8 @@ function App( { location }) {
     '/board-create-form': null,
     '/board-update-form': null,
     '/messages': <BackButton cclass="message-backbutton" />,
-    '/profile': <BackButton cclass="normal-backbutton" />,
-    '/profile-update': <BackButton />,
+    '/profile': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
+    '/profile-update': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton"/>,
     '/change-location': <BackButton />
   }
 
@@ -101,7 +101,16 @@ function App( { location }) {
       : <TopAppBar />
       }
       {/* <div className="my-auto view"> */}
-      <div className={ "my-auto " + (isTopBar || isNormalView? "view" : "noTopview")}>
+      <div className={ "my-auto " + 
+        (
+        // messages는 topappbar와 navbar 둘 다 없는 화면
+        now === '/messages'? "" :
+        // 탑바가 있거나, 없더라도 노말뷰를 원하는 페이지목록에 들어가 있으면
+        // 다른 컴포넌트가 그 자리를 차지) view를 제공,
+        // 아니면 noTopview를 제공
+        (isTopBar || isNormalView? "view" : "noTopview")
+        )
+      }>
         <Route path="/" exact={true} component={Home} />
         <Route path="/about" component={About} />
         <Route path="/login" component={Login} />

@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import '../../styles/theme.css'
-
+import { Col } from 'react-bootstrap';
+import { RippleButton } from '../../styles/index';
 import { createComment } from '../../modules/comment';
 
 const CommentForm = ({board_pk}) => {
@@ -49,17 +50,23 @@ const CommentForm = ({board_pk}) => {
   };
 
   return (
-    <div className="comment-form-wrapper">
+    <div className="comment-form-wrapper mx-2">
     {isLoggedIn &&
-      <form onSubmit={onSubmit} class="d-flex flex-row">
-        <input 
-          type="text" 
-          value={text}
-          maxLength={200} 
-          placeholder="댓글을 입력하세요"
-          onChange={onChangeText}
-          class="col-8" />
-        <input type="submit" value="업로드" class="col-4"/>
+      <form onSubmit={onSubmit} className="d-flex flex-row">
+        <Col xs={8}>
+          <input 
+            className="me-1"
+            type="text" 
+            value={text}
+            maxLength={200} 
+            placeholder="댓글을 입력하세요"
+            onChange={onChangeText}
+           />
+        </Col>
+        <Col xs={4} className="button-group m-0">
+          <RippleButton type="submit" cclass="cbtn cbtn-lg cbtn-primary" children="업로드"/>
+        </Col>
+        {/* <input type="submit" value="업로드" class="col-4"/> */}
       </form>
       }
     </div>

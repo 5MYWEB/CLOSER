@@ -1,5 +1,4 @@
 import React, { useRef, useState, useCallback, useEffect  } from 'react';
-import { NaverMap } from 'react-naver-maps';
 import { useSelector } from 'react-redux';
 import useFetch from "../../hooks/useFetch";
 import BoardItem from '../board/BoardItem';

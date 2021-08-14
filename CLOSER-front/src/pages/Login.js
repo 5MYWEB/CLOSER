@@ -101,19 +101,6 @@ function Login({ history }) {
 
   // 로그인에 성공했으면 로그인 유저 정보, 게시글 수 가져오기
   useEffect(() => {
-<<<<<<< HEAD
-    if (decodedToken.UserId !== null){
-        axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
-          .then((response) => {
-            dispatch(getMyInfoAction(response.data))
-            history.push('/')
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-        }
-      }, [decodedToken, dispatch, history])
-=======
     if (isLoggedIn === true && decodedToken.user_id !== null){
         console.log(decodedToken)
       axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.user_id}`)
@@ -136,7 +123,6 @@ function Login({ history }) {
       
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [decodedToken])
->>>>>>> fe72b4d9b3cc5c9129b4d9f8796c20d638177f70
         
   return (
     <div className="wrap-group"> 

@@ -208,4 +208,4 @@ const mapDispatchToProps = (dispatch) => ({
   logoutAction: () => dispatch(actions.logoutAction()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectedSidebar);

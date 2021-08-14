@@ -6,6 +6,7 @@ import axios from 'axios';
 import { followAction, getFollowInfoAction } from '../../modules/user';
 import { Row, Col } from 'react-bootstrap';
 import UserBadge from './UserBadge';
+import defaultProfile from "../../assets/profile-user-demo.png";
 
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -80,6 +81,11 @@ function OtherProfile({ id }) {
     })
   }
 
+  // 이미지 없을 시 기본 이미지 생성
+  const handleImgError = (e) => {
+    e.target.src = defaultProfile;
+  }
+
   return (
     <div className="container">
       {/* Row-1 : 뒤로가기 */}
@@ -89,7 +95,7 @@ function OtherProfile({ id }) {
       {/* Row-2 : 프로필사진, 닉네임, 자취기간, 위치, 프로필 수정 */}
       <Row>
         <Col xs={3}>
-          <img src="" alt="프로필 사진"></img>
+          <img src={userInfo.profileImg}  alt="userprofile" className="userprofile" onError={handleImgError}/>
         </Col>
         <Col xs={6}>
           <Row>

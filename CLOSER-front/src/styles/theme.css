@@ -68,6 +68,10 @@ p {
   color : #CC1F36;
 }
 
+/* topappbar없을때 그만큼 공간 띄워주는 wrapper */
+.normal-wrapper{
+  height: 8vh;
+}
 
 /* 페이지 자동 여백 */
 .page-wrapper {
@@ -75,9 +79,17 @@ p {
   padding: 4vh 0;
 }
 
+
 .comment-list-wrapper {
   
 }
+
+
+/* 단락, signup, profile update에서 사용 */
+.paragraph {
+  margin-top: 2vh;
+}
+
 
 /* 제목 */
 .phrase {
@@ -91,8 +103,12 @@ p {
 .input-label {
   width: 60%;
   margin-top: 3rem;
-  margin-left: 2rem;
+  margin-left: 1.5rem;
   padding: 3rem 0;
+}
+
+.input-wrapper {
+  margin-left: 1rem;
 }
 
 
@@ -116,6 +132,24 @@ input::placeholder {
   font-family: 'SqoqaHanSansNeo';
   font-weight: 400; 
   font-style: normal;
+}
+
+.input-placeholder-style {
+  font-size: .83em;
+  font-family: 'SqoqaHanSansNeo';
+  font-weight: 400; 
+  font-style: normal;
+}
+
+/* input을 포함하고 있는 문장이거나 인풋의 역할을 하는 요소 */
+.input-role {
+  margin: 1rem auto;
+}
+/* 프로필 사진 (profile update) */
+.profile-img {
+  width: 20vw;
+  margin: auto;
+  display: block;
 }
 
 /* .input-line {
@@ -152,7 +186,7 @@ input::placeholder {
 
 
 .button-group {
-  margin-top: 5rem;
+  margin-top: 4rem;
   justify-content: center;
   flex-direction: column;
   align-items: center;
@@ -354,12 +388,25 @@ height: 6vw;
   font-weight: bold;
 }
 
+.cbtn-disabled {
+  /* 🌔 Shadow / Z-index 1 */
+  background: #c2c2c2;
+  border-radius: 8px;
+  color: #818181;
+}
+
 .cbtn-none {
   background: #ECECFF;
   color: #5552FF;
   border-radius: 8px;
 }
 
+.cbtn-green {
+  /* 🌔 Shadow / Z-index 1 */
+  background: #3ED3A3;
+  border-radius: 8px;
+  color: #ECECFF;
+}
 
 a:link { text-decoration: none; }
 
@@ -424,4 +471,13 @@ a:active { text-decoration: none; }
   left: 0;
   z-index: 1030;
   border-top: 0.1px solid rgba(160, 145, 245, .5);
+}
+
+/* 간단한 css 속성 */
+.ml-2rem {
+  margin-left: 2rem;
+}
+
+.ml-1_5rem {
+  margin-left: 2rem;
 }

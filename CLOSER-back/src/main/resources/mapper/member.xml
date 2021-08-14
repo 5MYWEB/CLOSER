@@ -10,12 +10,6 @@
         where userId = #{userId} and password = #{password}
     </select>
 
-    <select id="userList" resultType="memberDto">
-        select userid, userpwd, username, email, address, date_format(joindate, '%y.%m.%d') joindate
-        from ssafy_member
-        order by joindate desc;
-    </select>
-
     <!-- 회원 정보 보기 -->
     <select id="userInfo" parameterType="String" resultType="MemberDto">
         select *
@@ -25,9 +19,15 @@
 
     <!-- 회원가입 -->
     <insert id="userRegister" parameterType="MemberDto">
-        insert into user (userId, password, nickname, phone, email, addr, homeAlone)
-        values (#{userId}, #{password}, #{nickname}, #{phone}, #{email}, #{addr}, #{homeAlone})
+        insert into user (userId, password, nickname, phone, email, addr, homeAlone, profileImg)
+        values (#{userId}, #{password}, #{nickname}, #{phone}, #{email}, #{addr}, #{homeAlone}, ' ')
     </insert>
+
+    <update id="usertoken" parameterType="String">
+        update user
+        set chattoken = #{chattoken}
+        where userId = #{userId}
+    </update>
 
     <!-- 뱃지 담아 보내기 -->
     <select id="userbadge" parameterType="String" resultType="int">

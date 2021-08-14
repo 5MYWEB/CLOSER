@@ -1,12 +1,9 @@
-import React, { useEffect, useState, useRef} from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import defaultProfile from '../../assets/profile-user-demo.png'
 import UserBadge from './UserBadge';
-import backarrow from '../../assets/arrow-left-solid.svg';
-import userprofile from '../../assets/profile-user-demo.png';
 import './MyProfile.css';
 
 // import FollowerList from '../components/profile/FollowerList';
@@ -23,8 +20,7 @@ function MyProfile() {
   // const imgRef = useRef(null);
   const { userInfo } = useSelector((state) => state.user);
 
-  const now = new Date();
-  console.log(now);
+  const now = new Date()
   const year = now.getFullYear();
 
   const [followingListLength, setFollowingListLength] = useState(0)
@@ -116,7 +112,7 @@ function MyProfile() {
 
         <div className="myprofilepost">
           <div className ="myfeed">
-            <h7><Link to={`/profile/${userInfo.userId}/user-feed`} class="link-light" >내 피드</Link></h7>
+            <Link to={`/profile/${userInfo.userId}/user-feed`} class="link-light" >내 피드</Link>
           </div>
 
           <div className ="mypost">

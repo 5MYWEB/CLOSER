@@ -40,7 +40,7 @@ public class JwtService {
 
         // 3. Payload 설정 - claim 정보 포함
         builder.setSubject("로그인 토큰").setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * expireMin))
-                .claim("UserId", userId); // 토큰 payload에 유저 아이디만 넣는다.
+                .claim("user_id", userId); // 토큰 payload에 유저 아이디만 넣는다.
 
         // 4. Signature - Secret Key를 이용해 암호화한다
         builder.signWith(SignatureAlgorithm.HS256, salt.getBytes());
@@ -50,6 +50,25 @@ public class JwtService {
         logger.debug("토큰 생성 완료 - " + jwt);
         return jwt;
     }
+
+    public String chatcreate(final String userId) {
+        // 1. JWT토큰을 만들어줄 빌더를 선언.
+        final JwtBuilder builder = Jwts.builder();
+
+        // JWT Token = Header + PayLoad + Signature
+        // 2. Header 설정
+        String jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.";
+
+        // 3. Payload 설정 - claim 정보 포함
+        builder.claim("user_id", userId); // 토큰 payload에 유저 아이디만 넣는다.
+
+        // 5. 직렬화처리
+        String cl = builder.compact().substring(20);
+        jwt += cl;
+        jwt += "G_tyJqCy1p3b4p7QfLWhj-qFUv3XraYbCUPOX_w-yUY";
+        return jwt;
+    }
+
 
     /**
      * 전달받은 토큰이 제대로 생성된건지 확인하고 문제가 있다면 예외발생

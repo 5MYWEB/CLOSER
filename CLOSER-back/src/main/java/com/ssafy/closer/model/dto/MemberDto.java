@@ -21,4 +21,5 @@ public class MemberDto {
     private List<Integer> badge;
     private int following;
     private int follower;
+    private String chattoken;
 }

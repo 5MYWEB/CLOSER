@@ -102,7 +102,7 @@ function SignUp( {history} ) {
       // }
       return true
     }
-  
+
     // 닉네임 검사
     const checkNickname = (nickname) => {
       if (!checkExistData(nickname, '닉네임을')) {
@@ -134,7 +134,6 @@ function SignUp( {history} ) {
     }
 
     // 주소 검사
-    
     const checkAddr = (addr) => {
       if(!checkExistData(addr, '주소를')) {
         return false

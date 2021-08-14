@@ -41,7 +41,7 @@ function SignUp( {history} ) {
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },
-  [changedAddr]
+  [changedAddr, userInfo]
   )
 
   // DOM 선택

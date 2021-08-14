@@ -1,5 +1,4 @@
 import React, {useState, useRef} from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import AWS from 'aws-sdk';

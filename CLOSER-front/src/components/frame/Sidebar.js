@@ -5,10 +5,8 @@ import { connect } from 'react-redux';
 import './Sidebar.css';
 import '../../styles/bootstrap.min.css';
 import * as actions from '../../modules/user';
-import UserBadge from '../profile/UserBadge';
+// import UserBadge from '../profile/UserBadge';
 import defaultProfile from '../../assets/user-on.svg';
-
-import compassRegular from '../../assets/profile/compass-regular.svg';
 
 import homeSolid from '../../assets/sidebar/home-solid.svg';
 import userSolid from '../../assets/sidebar/user-solid.svg';

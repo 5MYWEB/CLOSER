@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import defaultProfile from '../../assets/user-on.svg';
 import UserBadge from './UserBadge';
-import { RippleButton, ShakeButton } from '../../styles/index';
+import { RippleButton } from '../../styles/index';
 
 import compassRegular from '../../assets/profile/compass-regular.svg';
 import calendarRegular from '../../assets/profile/calendar-alt-regular.svg';
@@ -26,35 +25,8 @@ function MyProfile({ history }) {
   const { userInfo } = useSelector((state) => state.user);
 
   const now = new Date()
-  const year = now.getFullYear();
-
-  const [followingListLength, setFollowingListLength] = useState(0)
-  const [followerListLength, setFollowerListLength] = useState(0)
-  const [annual, setAnnual] = useState(0)
 
   let img = `https://photo-album-hy.s3.ap-northeast-2.amazonaws.com/${userInfo.userId}/${userInfo.userId}_profile.jpg`
-
-  // 팔로잉, 팔로워 수 가져오기
-  useEffect(() => {
-    axios.post(`http://localhost:8080/follow/${userInfo.userId}/following`)
-        .then((res) => {
-          setFollowingListLength(res.data.length)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-
-    axios.post(`http://localhost:8080/follow/${userInfo.userId}/follower`)
-        .then((res) => {
-          setFollowerListLength(res.data.length)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-
-    setAnnual(year - userInfo.homeAlone + 1)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   // 이미지 없을 시 기본 이미지 생성
   const handleImgError = (e) => {
@@ -108,12 +80,12 @@ function MyProfile({ history }) {
           <div className="row px-3 pt-3 bm-profile-info justify-content-between">
             <div className="row px-3 col-6 p-0">
               <div className="col-6 p-0">
-                  <Link to={`/${userInfo.userId}/following-list`} class="link-dark">
+                  <Link to={`/${userInfo.userId}/following-list`} className="link-dark">
                     {userInfo.following} 팔로잉
                   </Link>
               </div>
               <div className="col-6 p-0">
-                <Link to={`/${userInfo.userId}/follower-list`} class="link-dark">
+                <Link to={`/${userInfo.userId}/follower-list`} className="link-dark">
                   <div>{userInfo.follower} 팔로워</div>
                 </Link>
               </div>
@@ -130,15 +102,15 @@ function MyProfile({ history }) {
 
         <div className="myprofilepost">
           <div className ="myfeed">
-            <Link to={`/profile/${userInfo.userId}/user-feed`} class="link-light" >내 피드</Link>
+            <Link to={`/profile/${userInfo.userId}/user-feed`} className="link-light" >내 피드</Link>
           </div>
 
           <div className ="mypost">
-            <Link to={`/profile/${userInfo.userId}/user-board`} class="link-light">내 포스트</Link>
+            <Link to={`/profile/${userInfo.userId}/user-board`} className="link-light">내 포스트</Link>
           </div>
 
           <div className ="mybookmark">
-            <Link to={`/profile/${userInfo.userId}/user-bookmark`} class="link-light">북마크</Link>
+            <Link to={`/profile/${userInfo.userId}/user-bookmark`} className="link-light">북마크</Link>
           </div>
 
 

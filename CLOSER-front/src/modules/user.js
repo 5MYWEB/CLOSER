@@ -92,7 +92,6 @@ export const refreshInfo = () => ({
     case LOGIN:
       let jwt = require('jsonwebtoken');
       let decodedToken = jwt.decode(action.data.jwtAuthToken)
-
       localStorage.setItem("userToken", action.data.jwtAuthToken);
       localStorage.setItem("decodedToken", decodedToken);
       localStorage.setItem("isLoggedIn", true);

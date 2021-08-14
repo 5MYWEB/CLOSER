@@ -5,8 +5,11 @@ import { connect } from 'react-redux';
 import './Sidebar.css';
 import '../../styles/bootstrap.min.css';
 import * as actions from '../../modules/user';
-
+import UserBadge from '../profile/UserBadge';
 import defaultProfile from '../../assets/user-on.svg';
+
+import compassRegular from '../../assets/profile/compass-regular.svg';
+
 import homeSolid from '../../assets/sidebar/home-solid.svg';
 import userSolid from '../../assets/sidebar/user-solid.svg';
 import compassSolid from '../../assets/sidebar/compass-solid.svg';
@@ -53,14 +56,12 @@ class Sidebar extends React.Component {
             >
               <div className="bm-menu-first d-flex justify-content-center">
                 <Link to="/login" onClick={() => this.closeMenu()} className="bm-profile">
-                  <div className="row mx-0">
-                    <div className="col-4 bm-profile-img px-0">
-                      <img src={defaultProfile} alt="프로필사진" />
+                    <div className="col-4 mx-auto px-0 py-2 profile-img-wrapper">
+                      <img src={defaultProfile}  alt="프로필사진" className="profile-img" />
                     </div>
                     <div className="col-8 px-0">
                       <p className="bm-not-login-text">로그인 해주세요</p> 
                     </div>
-                  </div>
                 </Link>
               </div>
               <div>
@@ -94,24 +95,34 @@ class Sidebar extends React.Component {
             >
               <div className="bm-menu-first d-flex justify-content-center">
                 <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()} className="bm-profile">
-                  <div className="row mx-0">
-                    <div className="col-5 bm-profile-img px-0">
-                      {/* { userInfo.profileImg !== null && userInfo.profileImg !== ''
-                        ? <img src={userInfo.profileImg} alt="프로필사진" />
-                        : <img src={defaultUserImg} alt="프로필사진" />
-                      } */}
-                      {/* <img src={defaultUserImg} alt="프로필사진" /> */}
-                      <img src={userInfo.profileImg} onError={(e) => this.handleImgError(e)} alt="프로필사진" />
-                    </div>
-                    <div className="col-7 px-0">
-                      <div>
-                        {userInfo.nickname}
+                  
+                  {/* 프로필 정보 */}
+                  <div className="row mx-0 ">
+                    
+                    <div className="ms-5 mt-4 mb-2">
+                      {/* 프로필 사진 */}
+                      <div className="profile-img-wrapper">
+                        <img src={userInfo.profileImg}  onError={(e) => this.handleImgError(e)} alt="프로필사진" className="profile-img" />
                       </div>
-                      <div className="bm-profile-addr">
-                        {userInfo.addr}
+                      {/* 닉네임 */}
+                      <h2 className="row justify-content-start px-3 pt-3 pb-1">
+                        <div className="col px-0 text-start">{userInfo.nickname}</div>
+                      </h2>
+
+                      {/* 아이디 */}
+                      <p className="input-placeholder-style row justify-content-start px-3">@{userInfo.userId}</p>
+                      
+                      {/* <div className="input-placeholder-style row justify-content-start px-3">
+                          {userInfo.addr}
                       </div>
+
+                      <div className="input-placeholder-style row justify-content-start px-3">
+                        <UserBadge userId={userInfo.userId} />
+                      </div> */}
+
                     </div>
-                    <div className="row px-0 bm-profile-info">
+
+                    <div className="row px-0 py-3 bm-profile-info">
                       <div className="col">
                         <div>{postCount}</div>
                         <div>게시물</div>
@@ -124,9 +135,6 @@ class Sidebar extends React.Component {
                         <div>{userInfo.follower}</div>
                         <div>팔로워</div>
                       </div>
-                    </div>
-                    <div className="bm-profile-intro">
-                      <p>{userInfo.intro}</p>
                     </div>
                   </div>
                 </Link>

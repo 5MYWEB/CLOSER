@@ -1,14 +1,14 @@
 .topappbar {
   position: static;
   display: block;
-  height: 12vh;
+  height: 8vh;
   border-bottom: 0.1px solid rgba(160, 145, 245, .5);
 }
 
 .topapplist {
   position: fixed;
   right: 1.3rem;
-  top: 2rem;
+  top: 1rem;
 
 }
 
@@ -19,18 +19,18 @@ h2 {
 
 .logo-wrapper {
   position: fixed;
-  top: 0.8rem;;
+  top: 0.9rem;
   left: 50%;
   transform: translate(-50%, 0);
-  margin: 0.2rem auto;
 }
 
 .logo {
   width: 25vw;
+  
 }
 
 .closerbot {
-  width: 11vw;
+  width: 10vw;
   margin: 0.2rem 0.6rem 0 0;
   transition: 0.1s;
 }
@@ -41,7 +41,7 @@ h2 {
 }
 
 .search {
-  width: 8vw;
+  width: 7vw;
   transition: 0.1s;
 }
 

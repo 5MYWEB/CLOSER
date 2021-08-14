@@ -5,7 +5,7 @@ const initialState = {
   decodedToken: {
     sub: null,
     exp: null,
-    UserId: null,
+    user_id: null,
   },
   userInfo: {
     userId: '',
@@ -17,11 +17,15 @@ const initialState = {
     intro: '',
     profileImg: null,
     phone: null,
-    badge: [
-      0
-    ],
+    badge: [],
+    following: 0,
+    follower: 0,
+    chattoken:'',
   },
   following: false,
+  postCount: 0,
+  changedAddr: '',
+  alarmList: null,
 };
 
 /* 액션 타입 만들기 */
@@ -30,8 +34,12 @@ const initialState = {
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
 const GET_MY_INFO = 'GET_MY_INFO';
+const GET_POST_COUNT = 'GET_POST_COUNT';
 const FOLLOW = 'FOLLOW';
 const GET_FOLLOW_INFO = 'GET_FOLLOW_INFO';
+const CHANGE_ADDR = 'CHANGE_ADDR';
+const GET_ALARM_LIST = 'GET_ALARM_LIST';
+const REFRESH_INFO = 'REFRESH_INFO';
 
 /* 액션 생성함수 만들기 */
 // 액션 생성함수를 만들고 export 키워드를 사용해서 내보내주세요.
@@ -49,6 +57,11 @@ export const getMyInfoAction = (data) => ({
   data,
 });
 
+export const getPostCount = (data) => ({
+  type: GET_POST_COUNT,
+  data,
+});
+
 export const followAction = () => ({
   type: FOLLOW,
 });
@@ -57,6 +70,20 @@ export const getFollowInfoAction = () => ({
   type: GET_FOLLOW_INFO,
 });
 
+export const changeAddr = (data) => ({
+  type: CHANGE_ADDR,
+  data,
+});
+
+export const getAlarmList = (data) => ({
+  type: GET_ALARM_LIST,
+  data,
+});
+
+export const refreshInfo = () => ({
+  type: REFRESH_INFO,
+})
+
 
 
 /* 리듀서 선언 */
@@ -64,8 +91,12 @@ export const getFollowInfoAction = () => ({
   const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN:
-      const jwt = require('jsonwebtoken');
-      const decodedToken = jwt.decode(action.data.jwtAuthToken)
+      let jwt = require('jsonwebtoken');
+      let decodedToken = jwt.decode(action.data.jwtAuthToken)
+      localStorage.setItem("userToken", action.data.jwtAuthToken);
+      localStorage.setItem("decodedToken", decodedToken);
+      localStorage.setItem("isLoggedIn", true);
+
       return {
         ...state,
         isLoggedIn: true,
@@ -73,17 +104,26 @@ export const getFollowInfoAction = () => ({
         decodedToken: decodedToken,
       };
     case LOGOUT:
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("decodedToken");
+      localStorage.removeItem("isLoggedIn");
+      alert('로그아웃 되었습니다.')
       return {
         ...state,
         isLoggedIn: false,
-        userToken: '',
-        decodedToken: '',
+        userToken: null,
+        decodedToken: null,
         userInfo: null,
       };
     case GET_MY_INFO:
       return {
         ...state,
         userInfo: action.data
+      };
+    case GET_POST_COUNT:
+      return {
+        ...state,
+        postCount: action.data
       };
     case FOLLOW:
       return {
@@ -95,6 +135,26 @@ export const getFollowInfoAction = () => ({
         ...state,
         following: false,
       };
+    case CHANGE_ADDR:
+      return {
+        ...state,
+        changedAddr: action.data,
+      };
+    case GET_ALARM_LIST:
+      return {
+        ...state,
+        alarmList: action.data,
+      };
+    case REFRESH_INFO:
+      const refreshedUserToken = localStorage.getItem("userToken");
+      const refreshedJwt = require('jsonwebtoken');
+      const refreshedDecodedToken = refreshedJwt.decode(refreshedUserToken)
+      return {
+        ...state,
+        isLoggedIn: true,
+        userToken: localStorage.getItem("userToken"),
+        decodedToken: refreshedDecodedToken,
+      }
     default:
       return state;
   }

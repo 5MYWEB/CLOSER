@@ -1,11 +1,69 @@
+.row {
+  justify-content: center;
+}
+
+.bm-icon {
+  padding: 0 1rem 0 1rem;
+  height: 1.75rem;
+  width: 1.75rem;
+}
+
+.bm-not-login-text {
+  letter-spacing: 0px;
+  width: 8rem;
+  margin: 0;
+}
+
+.bm-profile,
+.bm-profile:hover {
+  align-items: center;
+  color: black;
+}
+
+.bm-menu-first {
+  background-color: rgba(255, 255, 255, 0.75);
+  border-bottom: 0.1px solid rgba(160, 145, 245, .5);
+}
+
+.bm-profile > div {
+  padding: 0;
+  letter-spacing: 0px;
+  text-align: left;
+  align-items: center;
+}
+
+.bm-profile .bm-profile-img {
+  align-items: center;
+  text-align: center;
+}
+
+/* .bm-profile .bm-profile-addr {
+  width: 5rem;
+  font-size: 0.8rem;
+  word-break: keep-all;
+  color:#8B93A6;
+} */
+
+.bm-profile .bm-profile-info {
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.bm-profile .bm-profile-intro {
+  font-size: 1rem;
+}
+
+.bm-profile-intro > p {
+  padding-left: 1rem;
+}
 
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: fixed;
-  width: 7.5vw;
-  height: 7.5vw;
-  left: 1.3rem;
-  top: 2rem;
+  width: 6vw;
+  height: 6vw;
+  left: 1.1rem;
+  top: 1.1rem;
 }
 
 /* Color/shape of burger icon bars */
@@ -44,8 +102,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bm-menu {
   width: 75vw;
   background: #ECECFF;
-  padding: 2.5em 1rem 0;
-  font-size: 1.15em;
+  font-size: 1.15rem;
 }
 
 /* Morph shape necessary with bubble or elastic */
@@ -55,16 +112,32 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* Wrapper for item list */
 .bm-item-list {
-  color: #5552FF;
-  padding: 0.8em;
+  display: grid;
+  grid-template-rows: 2fr 2fr 2fr;
+  /* background: #ECECFF; */
 }
 
 /* Individual item */
 .bm-item {
-  display: inline-block;
+  letter-spacing: 5px;
+  align-items: center;
 }
+
+.bm-menu-second {
+  text-align: left;
+}
+
+.bm-menu-third {
+  align-self: center;
+  text-align: left;
+}
+
 
 /* Styling of overlay */
 .bm-overlay {
   background: rgba(0, 0, 0, 0.3);
+}
+
+.side_home, .side_about, .side_logout, .side_profile, .side_location, .side_login, .side_join{
+  margin-top: 3vh;
 }

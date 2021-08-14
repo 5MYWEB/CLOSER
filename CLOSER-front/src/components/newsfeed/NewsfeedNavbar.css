@@ -1,0 +1,15 @@
+.feedcontainer{
+    display: grid;
+}
+.feedList{
+    display: grid;
+	grid-template-columns: repeat(3, 35%);
+	grid-template-rows: 10vw;
+    background-color: #c8c6fc;
+}
+
+.feedNear, .feedFavorite, .feedHot{
+    text-align:center;
+	vertical-align:middle;
+	margin-top: 1vh;
+}

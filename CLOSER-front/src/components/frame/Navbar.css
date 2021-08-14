@@ -1,5 +1,5 @@
 .nav-wrapper {
-  height: 13vh;
+  height: 10vh;
   /* fixed-bottom */
   position: fixed;
   right: 0;
@@ -10,5 +10,5 @@
 }
 
 img {
-  width: 12vw;
+  width: 10vw;
 }

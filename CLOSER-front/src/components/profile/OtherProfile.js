@@ -5,10 +5,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { followAction, getFollowInfoAction } from '../../modules/user';
 import { Row, Col } from 'react-bootstrap';
-
-// import UserFeed from '../components/profile/UserFeed';
-// import UserPost from '../components/profile/UserPost';
-// import UserBookmark from '../components/profile/UserBookmark';
+import UserBadge from './UserBadge';
+import defaultProfile from "../../assets/profile-user-demo.png";
 
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -83,6 +81,11 @@ function OtherProfile({ id }) {
     })
   }
 
+  // 이미지 없을 시 기본 이미지 생성
+  const handleImgError = (e) => {
+    e.target.src = defaultProfile;
+  }
+
   return (
     <div className="container">
       {/* Row-1 : 뒤로가기 */}
@@ -92,7 +95,7 @@ function OtherProfile({ id }) {
       {/* Row-2 : 프로필사진, 닉네임, 자취기간, 위치, 프로필 수정 */}
       <Row>
         <Col xs={3}>
-          <img src="" alt="프로필 사진"></img>
+          <img src={userInfo.profileImg}  alt="userprofile" className="userprofile" onError={handleImgError}/>
         </Col>
         <Col xs={6}>
           <Row>
@@ -115,21 +118,21 @@ function OtherProfile({ id }) {
       </Row>
       {/* Row-3 : 뱃지 */}
       <Row>
-        뱃지 컴포넌트, 라우터
+        <UserBadge userId={id}/>
       </Row>
       {/* Row-4 : 한줄소개 */}
       <Row>
-        {userInfo.addr}
+        {userInfo.intro}
       </Row>
       {/* Row-5 : 팔로잉, 팔로워, 공유하기 */}
       <Row>
-        <Col xs={3}>
+        <Col xs={2}>
           <Link to={`/${userInfo.userId}/following-list`}>팔로잉 {followingListLength}</Link>
         </Col>
-        <Col xs={3}>
+        <Col xs={2}>
           <Link to={`/${userInfo.userId}/follower-list`}>팔로워 {followerListLength}</Link>
         </Col>
-        <Col xs={{ span: 3, offset: 3 }}>
+        <Col xs={{ span: 6, offset: 2 }}>
           공유하기 버튼
         </Col>
       </Row>

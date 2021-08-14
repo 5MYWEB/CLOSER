@@ -26,7 +26,7 @@ const RippleButton = ({ children, cclass, type, onClick }) => {
       className={`ripple-button ${cclass}`}
       onClick={e => {
         const rect = e.target.getBoundingClientRect();
-        console.log(rect.left, rect.top)
+ 
         setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
         onClick && onClick(e);
       }}

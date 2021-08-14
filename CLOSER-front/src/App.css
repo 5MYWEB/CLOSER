@@ -2,6 +2,25 @@
   position: fixed;
   display: block;
   width: 100vw;
-  height: 73vh;
-  overflow: auto;
+  /* 100 - topappbar - navbar */
+  height: 82vh;
+  /* navbar */
+  /* bottom: 13vh; */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+.noTopview {
+  position: fixed;
+  display: block;
+  width: 100vw;
+  height: 92vh;
+  overflow-y: auto;
+  /* 기본설정 visible */
+  overflow-x: hidden;
+}
+
+.noNavview{
+
 }

@@ -2,15 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 // import { connect } from 'react-redux'
 import { bubble as Menu } from 'react-burger-menu'
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import './Sidebar.css';
+import '../../styles/bootstrap.min.css';
+import * as actions from '../../modules/user';
+// import UserBadge from '../profile/UserBadge';
+import defaultProfile from '../../assets/user-on.svg';
 
-import './Sidebar.css'
-
-const mapStateToProps = state => {
-  return {
-    userInfo: state.user.userInfo
-  };
-};
+import homeSolid from '../../assets/sidebar/home-solid.svg';
+import userSolid from '../../assets/sidebar/user-solid.svg';
+import compassSolid from '../../assets/sidebar/compass-solid.svg';
+import questionSolid from '../../assets/sidebar/question-solid.svg';
+import signInSolid from '../../assets/sidebar/sign-in-alt-solid.svg';
+import signOutSolid from '../../assets/sidebar/sign-out-alt-solid.svg';
+import signUpSolid from '../../assets/sidebar/door-open-solid.svg';
 
 class ConnectedSidebar extends React.Component {
   constructor(props) { // render 함수보다 먼저 실행이 되면서 그 컴포넌트를 초기화를 담당
@@ -31,78 +36,176 @@ class ConnectedSidebar extends React.Component {
     this.setState({menuOpen : false})
   }
 
-  // 프로필 표시
-  // const userInfo = state => ( state.user );
+  // 이미지 없을 시 기본 이미지 생성
+  handleImgError = (e) => {
+    e.target.src = defaultProfile;
+  }
+
   render () {
-    const { addr, intro, nickname, profileImg } = this.props.userInfo
-    // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
-    if (this.state.menuOpen) {return (
-      <div>
-        <Menu
-          isOpen={this.state.menuOpen}
-          onStateChange={(state) => this.handleStateChange(state)}
-        >
-          <ul>
-            <p>{addr}</p>
-            <p>{intro}</p>
-            <p>{nickname}</p>
-            <p>{profileImg}</p>
-            <li>
-              <Link to="/" onClick={() => this.closeMenu()}>홈</Link>
-            </li>
-            <li>
-              <Link to="/about" onClick={() => this.closeMenu()}>소개</Link>
-            </li>
-            <li>
-              <Link to="/login" onClick={() => this.closeMenu()}>로그인</Link>
-            </li>
-            <li>
-              <Link to="/" onClick={() => this.closeMenu()}>로그아웃</Link>
-            </li>
-            <li>
-              <Link to="/signup" onClick={() => this.closeMenu()}>회원가입</Link>
-            </li>
-            <li>
-              <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
-            </li>
-          </ul>
-        </Menu>
-      </div>
-    );
+    const { userInfo, isLoggedIn, logoutAction, postCount } = this.props;
+
+    // 사이드바가 열려있을때
+    if (this.state.menuOpen) {
+      // 비로그인시
+      if(isLoggedIn === false){
+        return (
+          <div>
+            <Menu
+              isOpen={this.state.menuOpen}
+              onStateChange={(state) => this.handleStateChange(state)}
+            >
+              <div className="bm-menu-first d-flex justify-content-center">
+                <Link to="/login" onClick={() => this.closeMenu()} className="bm-profile">
+                    <div className="col-4 mx-auto px-0 py-2 profile-img-wrapper">
+                      <img src={defaultProfile}  alt="프로필사진" className="profile-img" />
+                    </div>
+                    <div className="col-8 px-0">
+                      <p className="bm-not-login-text">로그인 해주세요</p> 
+                    </div>
+                </Link>
+              </div>
+              <div>
+                <div className="side_home">
+                  <img src={homeSolid} alt="home" className="bm-icon"/>
+                  <Link to="/" onClick={() => this.closeMenu()} className="link-dark">HOME</Link>
+                </div>
+                <div className="side_about">
+                  <img src={questionSolid} alt="home" className="bm-icon"/>
+                  <Link to="/about" onClick={() => this.closeMenu()} className="link-dark">ABOUT</Link>
+                </div>
+                <div className="side_login">
+                  <img src={signInSolid} alt="home" className="bm-icon"/>
+                  <Link to="/login" onClick={() => this.closeMenu()} className="link-dark">LOGIN</Link>
+                </div>
+                <div className="side_join">
+                  <img src={signUpSolid} alt="home" className="bm-icon"/>
+                  <Link to="/signup" onClick={() => this.closeMenu()} className="link-dark">JOIN</Link>
+                </div>
+              </div>
+            </Menu>
+          </div>
+        );
+      }else{
+        // 로그인시
+        return (
+          <div>
+            <Menu
+              isOpen={this.state.menuOpen}
+              onStateChange={(state) => this.handleStateChange(state)}
+            >
+              <div className="bm-menu-first d-flex justify-content-center">
+                <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()} className="bm-profile">
+                  
+                  {/* 프로필 정보 */}
+                  <div className="row mx-0 ">
+                    
+                    <div className="ms-5 mt-4 mb-2">
+                      {/* 프로필 사진 */}
+                      <div className="profile-img-wrapper">
+                        <img src={userInfo.profileImg}  onError={(e) => this.handleImgError(e)} alt="프로필사진" className="profile-img" />
+                      </div>
+                      {/* 닉네임 */}
+                      <h2 className="row justify-content-start px-3 pt-3 pb-1">
+                        <div className="col px-0 text-start">{userInfo.nickname}</div>
+                      </h2>
+
+                      {/* 아이디 */}
+                      <p className="input-placeholder-style row justify-content-start px-3">@{userInfo.userId}</p>
+                      
+                      {/* <div className="input-placeholder-style row justify-content-start px-3">
+                          {userInfo.addr}
+                      </div>
+
+                      <div className="input-placeholder-style row justify-content-start px-3">
+                        <UserBadge userId={userInfo.userId} />
+                      </div> */}
+
+                    </div>
+
+                    <div className="row px-0 py-3 bm-profile-info">
+                      <div className="col">
+                        <div>{postCount}</div>
+                        <div>게시물</div>
+                      </div>
+                      <div className="col">
+                        <div>{userInfo.following}</div>
+                        <div>팔로잉</div>
+                      </div>
+                      <div className="col">
+                        <div>{userInfo.follower}</div>
+                        <div>팔로워</div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+
+              <div className="bm-menu-second">
+                <div className="side_home">
+                  <img src={homeSolid} alt="home" className="bm-icon"/>
+                  <Link to="/" onClick={() => this.closeMenu()} className="link-dark">HOME</Link>
+                </div>
+                <div className="side_about">
+                  <img src={questionSolid} alt="home" className="bm-icon"/>
+                  <Link to="/about" onClick={() => this.closeMenu()} className="link-dark">ABOUT</Link>
+                </div>
+                <div className="side_profile">
+                  <img src={userSolid} alt="home" className="bm-icon"/>
+                  <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()} className="link-dark">MY PROFILE</Link>
+                </div>
+                <div className="side_location">
+                  <img src={compassSolid} alt="home" className="bm-icon"/>
+                  <Link to={`/change-location/`} onClick={() => this.closeMenu()} className="link-dark">동네 변경</Link>
+                </div>
+              </div>
+              <div className="bm-menu-third">
+                <div className="side_logout">
+                  <img src={signOutSolid} alt="home" className="bm-icon"/>
+                  <Link to="/" onClick={() => {this.closeMenu(); logoutAction();}} className="link-dark">LOGOUT</Link>
+                </div>
+              </div>
+            </Menu>
+          </div>
+        );
+      }
     } else {
-      return (
-        <div>
-          <Menu 
-            isOpen={false}
-            onStateChange={(state) => this.handleStateChange(state)}
-          >
-            <ul>
-              <li>
-                <Link to="/" onClick={this.handleStatus}>홈</Link>
-              </li>
-              <li>
-                <Link to="/about" onClick={this.handleStatus}>소개</Link>
-              </li>
-              <li>
-                <Link to="/login" onClick={this.handleStatus}>로그인</Link>
-              </li>
-              <li>
-                <Link to="/" onClick={this.handleStatus}>로그아웃</Link>
-              </li>
-              <li>
-                <Link to="/signup" onClick={this.handleStatus}>회원가입</Link>
-              </li>
-              <li>
-                <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()}>프로필</Link>
-              </li>
-            </ul>
-          </Menu>
-        </div>
-      )
+      // 사이드바가 닫혀있을때
+      // 비로그인시
+      if(isLoggedIn === false){
+        return (
+          <div>
+            <Menu 
+              isOpen={false}
+              onStateChange={(state) => this.handleStateChange(state)}
+            >
+            </Menu>
+          </div>
+        )
+      }
+      else{
+        // 로그인시
+        return (
+          <div>
+            <Menu 
+              isOpen={false}
+              onStateChange={(state) => this.handleStateChange(state)}
+            >
+            </Menu>
+          </div>
+        )
+      }
     }
   }
 }
 
-const Sidebar = connect(mapStateToProps)(ConnectedSidebar)
+const mapStateToProps = (state) => ({
+  userInfo: state.user.userInfo,
+  isLoggedIn: state.user.isLoggedIn,
+  postCount: state.user.postCount
+});
 
-export default Sidebar;
+const mapDispatchToProps = (dispatch) => ({
+  logoutAction: () => dispatch(actions.logoutAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

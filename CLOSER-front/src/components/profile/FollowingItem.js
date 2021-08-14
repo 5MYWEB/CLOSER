@@ -5,12 +5,15 @@ import PropTypes from 'prop-types';
 import { followAction } from '../../modules/user';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import defaultProfile from "../../assets/profile-user-demo.png";
 
 function FollowingItem({ following }) {
+
 
   const dispatch = useDispatch();
 
   const { userId } = useSelector((state) => state.user.userInfo)
+  let img = following.profileImg;
 
   // 팔로우 취소 버튼 클릭 시
   const onClickFollow = () => {
@@ -27,12 +30,17 @@ function FollowingItem({ following }) {
     })
   }
 
+  // 이미지 없을 시 기본 이미지 생성
+  const handleImgError = (e) => {
+    e.target.src = defaultProfile;
+  }
+
   return (
     <>
       <Container>
         <Row>
           <Col xs={2}>
-            <img src="" alt="프로필 사진" />
+            <img src={img}  alt="userprofile" className="userprofile" onError={handleImgError}/>
           </Col>
           <Col xs={4}>
             <Link to={`/profile/${following.passiveUser}`}>{following.nickname}</Link>

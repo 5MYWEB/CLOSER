@@ -83,4 +83,19 @@ public class UserServiceImpl implements UserService {
     public List<BoardDto> userBookmark(String userId) {
         return sqlSession.getMapper(UserMapper.class).userBookmark(userId);
     }
+
+    @Override
+    public boolean changeLocation(MemberDto memberDto) {
+        return sqlSession.getMapper(UserMapper.class).changeLocation(memberDto)==1;
+    }
+
+    @Override
+    public int countBoardByUser(String userId) {
+        return sqlSession.getMapper(UserMapper.class).countBoardByUser(userId);
+    }
+
+    @Override
+    public boolean usertoken(String userId, String chattoken) {
+        return sqlSession.getMapper(UserMapper.class).usertoken(userId,chattoken);
+    }
 }

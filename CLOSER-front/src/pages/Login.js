@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
-import { getMyInfoAction, loginAction } from '../modules/user'
+import { getMyInfoAction, loginAction, getPostCount } from '../modules/user'
 import { RippleButton } from '../styles/index';
 import '../styles/theme.css'
 
@@ -16,7 +16,7 @@ function Login({ history }) {
   
   const { userId, password } = userInputs;
 
-  const { decodedToken } = useSelector((state) => state.user);
+  const { decodedToken, isLoggedIn } = useSelector((state) => state.user);
 
   const onChange=useCallback(
     e => {
@@ -99,8 +99,9 @@ function Login({ history }) {
     }
   )
 
-  // 로그인에 성공했으면 로그인 유저 정보 가져오기
+  // 로그인에 성공했으면 로그인 유저 정보, 게시글 수 가져오기
   useEffect(() => {
+<<<<<<< HEAD
     if (decodedToken.UserId !== null){
         axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
           .then((response) => {
@@ -112,6 +113,30 @@ function Login({ history }) {
           })
         }
       }, [decodedToken, dispatch, history])
+=======
+    if (isLoggedIn === true && decodedToken.user_id !== null){
+        console.log(decodedToken)
+      axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.user_id}`)
+        .then((res) => {
+          dispatch(getMyInfoAction(res.data))
+          axios.get(`http://localhost:8080/user/totalBoard/${decodedToken.user_id}`)
+            .then((res) => {
+              dispatch(getPostCount(res.data))
+              history.push("/")
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }
+
+      
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [decodedToken])
+>>>>>>> fe72b4d9b3cc5c9129b4d9f8796c20d638177f70
         
   return (
     <div className="wrap-group"> 

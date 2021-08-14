@@ -5,12 +5,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Container, Row, Col } from 'react-bootstrap';
 import { followAction } from '../../modules/user';
+import defaultProfile from "../../assets/profile-user-demo.png";
 
 function FollowerItem({ follower }) {
 
   const dispatch = useDispatch();
 
   const { userId } = useSelector((state) => state.user.userInfo)
+  let img = follower.profileImg;
 
     // 삭제 버튼 클릭 시(타인이 나를 팔로우 하는 것을 취소시킴)
   const onClickFollow = () => {
@@ -27,12 +29,17 @@ function FollowerItem({ follower }) {
     })
   }
 
+  // 이미지 없을 시 기본 이미지 생성
+  const handleImgError = (e) => {
+    e.target.src = defaultProfile;
+  }
+
   return (
     
       <Container>
         <Row>
           <Col xs={2}>
-            <img src="" alt="프로필 사진" />
+            <img src={img}  alt="userprofile" className="userprofile" onError={handleImgError}/>
           </Col>
           <Col xs={4}>
             <Link to={`/profile/${follower.activeUser}`}>{follower.nickname}</Link>

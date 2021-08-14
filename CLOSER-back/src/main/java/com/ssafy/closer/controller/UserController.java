@@ -1,8 +1,14 @@
 package com.ssafy.closer.controller;
 
+import com.ssafy.closer.model.dto.BoardDto;
+import com.ssafy.closer.model.dto.FollowDto;
 import com.ssafy.closer.model.dto.MemberDto;
+import com.ssafy.closer.model.service.FollowService;
+import com.ssafy.closer.model.service.InfoService;
 import com.ssafy.closer.model.service.JwtService;
 import com.ssafy.closer.model.service.UserService;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -15,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +41,12 @@ public class UserController {
 
     @Autowired
     private JwtService jwtService;
+
+    @Autowired
+    private FollowService followService;
+
+    @Autowired
+    private InfoService infoService;
 
     @ApiOperation(value = "로그인 화면으로 이동")
     @GetMapping("/login")
@@ -79,6 +92,9 @@ public class UserController {
             int n = userService.userRegister(memberDto);
 
             if (n > 0) {
+                String token = jwtService.chatcreate(memberDto.getUserId());
+                System.out.println(token);
+                userService.usertoken(memberDto.getUserId(), token);
                 return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
             } else {
                 return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
@@ -163,12 +179,16 @@ public class UserController {
     @ApiOperation(value = "프로필 페이지 정보 (내 프로필, 다른사람 프로필 모두 사용)")
     @PostMapping("/profileinfo")
     public ResponseEntity profileInfo(@RequestParam String userId){
-        logger.debug("조회할 프로필 페이지 id : " + userId);
-
         try{
             MemberDto memberDto = userService.userInfo(userId);
             List<Integer> badge = userService.userbadge(userId);
             memberDto.setBadge(badge);
+
+            // 팔로워 팔로잉 수
+            FollowDto followDto = new FollowDto();
+            followDto.setPassiveUser(userId);
+            memberDto.setFollower(followService.countPassiveUser(followDto));
+            memberDto.setFollowing(followService.countActiveUser(followDto));
 
             if(memberDto!=null){
                 return new ResponseEntity(memberDto,HttpStatus.OK);
@@ -185,18 +205,51 @@ public class UserController {
     @ApiOperation(value = "프로필 페이지 포스트")
     @GetMapping("/board/{userId}")
     public ResponseEntity profilePost(@PathVariable String userId) {
-        return new ResponseEntity(userService.userPost(userId),HttpStatus.OK);
+        List<BoardDto> boardDtos = userService.userPost(userId);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity(boardDtos, HttpStatus.OK);
     }
 
     @ApiOperation(value = "프로필 페이지 피드")
     @GetMapping("/feed/{userId}")
     public ResponseEntity profileFeed(@PathVariable String userId) {
-        return new ResponseEntity(userService.userFeed(userId),HttpStatus.OK);
+        List<BoardDto> boardDtos = userService.userFeed(userId);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity(boardDtos, HttpStatus.OK);
     }
 
     @ApiOperation(value = "프로필 페이지 북마크")
     @GetMapping("/bookmark/{userId}")
     public ResponseEntity profileBookmark(@PathVariable String userId) {
-        return new ResponseEntity(userService.userBookmark(userId),HttpStatus.OK);
+        List<BoardDto> boardDtos = userService.userBookmark(userId);
+        for(int i=0;i<boardDtos.size();i++){
+            boardDtos.get(i).setImgUrls(infoService.detailImage(boardDtos.get(i).getBoard_pk()));
+        }
+        return new ResponseEntity(boardDtos, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "주소 변경")
+    @PutMapping("/change-location")
+    public ResponseEntity changeLocation(@RequestBody Map<String, String> info){
+        String userId = info.get("userId");
+        String addr = info.get("addr");
+        MemberDto memberDto = new MemberDto();
+        memberDto.setUserId(userId);
+        memberDto.setAddr(addr);
+
+        if(userService.changeLocation(memberDto)){
+            return new ResponseEntity(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
+    }
+
+    @ApiOperation(value = "해당 유저가 쓴 글 갯수")
+    @GetMapping("/totalBoard/{userId}")
+    public ResponseEntity totalBoard(@PathVariable String userId){
+        return new ResponseEntity(userService.countBoardByUser(userId), HttpStatus.OK);
     }
 }

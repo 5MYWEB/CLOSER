@@ -1,0 +1,51 @@
+.alarm-item,
+.alarm-item:hover {
+  align-items: center;
+  color: black;
+  border-top: 1px solid rgba(160, 145, 245, .5);
+  border-bottom: 1px solid rgba(160, 145, 245, .5);
+  padding: 0.5rem 0 0.5rem 0;
+}
+
+.row,
+.col {
+  align-items: center;
+}
+
+.alarm-profile-limit {
+  max-height: 2.5rem;
+  width: auto;
+}
+
+.alarm-icon {
+  justify-content: start;
+}
+
+.alarm-content {
+  justify-content: start;
+}
+
+.alarm-unread {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.alarm-date {
+  text-align: end;
+  margin-right: 1rem;
+}
+
+.alarm-icon-comment {
+  color: #a8a6ff;
+}
+
+.alarm-icon-heart {
+  color: #DB4455;
+}
+
+.alarm-icon-bookmark {
+  color: #2b297f
+}
+
+.alarm-icon-users {
+  color: #5552FF
+}

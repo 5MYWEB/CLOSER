@@ -7,7 +7,7 @@ import { Sidebar } from './index'
 import './TopAppBar.css';
 import closerbot from '../../assets/closerbot.png'
 import search from '../../assets/search.png'
-import lowerlogo from '../../assets/logo-lower.png'
+import lowerlogo from '../../assets/logo-upper.png'
 
 const TopAppBar = () => {
   return (
@@ -21,7 +21,9 @@ const TopAppBar = () => {
             <img src={closerbot} alt="closerbot" className="closerbot" />
           </Link>
           
-          <img src={search} alt="search" className="search" />
+          <Link to="/search">
+            <img src={search} alt="search" className="search" />
+          </Link>
         </div>
       </div>
       <Sidebar />

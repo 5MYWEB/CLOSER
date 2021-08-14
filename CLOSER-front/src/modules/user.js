@@ -5,7 +5,7 @@ const initialState = {
   decodedToken: {
     sub: null,
     exp: null,
-    UserId: null,
+    user_id: null,
   },
   userInfo: {
     userId: '',
@@ -20,6 +20,7 @@ const initialState = {
     badge: [],
     following: 0,
     follower: 0,
+    chattoken:'',
   },
   following: false,
   postCount: 0,
@@ -92,7 +93,6 @@ export const refreshInfo = () => ({
     case LOGIN:
       let jwt = require('jsonwebtoken');
       let decodedToken = jwt.decode(action.data.jwtAuthToken)
-
       localStorage.setItem("userToken", action.data.jwtAuthToken);
       localStorage.setItem("decodedToken", decodedToken);
       localStorage.setItem("isLoggedIn", true);

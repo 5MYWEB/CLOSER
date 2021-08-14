@@ -28,4 +28,5 @@ public interface UserMapper {
     List<BoardDto> userBookmark(String userId);
     int changeLocation(MemberDto memberDto);
     int countBoardByUser(String userId);
+    boolean usertoken(String userId, String chattoken);
 }

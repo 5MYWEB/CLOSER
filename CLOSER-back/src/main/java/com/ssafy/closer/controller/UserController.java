@@ -7,6 +7,8 @@ import com.ssafy.closer.model.service.FollowService;
 import com.ssafy.closer.model.service.InfoService;
 import com.ssafy.closer.model.service.JwtService;
 import com.ssafy.closer.model.service.UserService;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -89,6 +92,9 @@ public class UserController {
             int n = userService.userRegister(memberDto);
 
             if (n > 0) {
+                String token = jwtService.chatcreate(memberDto.getUserId());
+                System.out.println(token);
+                userService.usertoken(memberDto.getUserId(), token);
                 return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
             } else {
                 return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);

@@ -1,11 +1,11 @@
 import React from 'react';
-import AlarmList from '../components/alarm/AlarmList';
+import AlarmNavbar from '../components/alarm/AlarmNavbar';
 
 function Alarm() {
 
   return (
     <div>
-      <AlarmList />
+      <AlarmNavbar />
     </div>
   )
 }

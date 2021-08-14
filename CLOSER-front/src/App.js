@@ -14,6 +14,7 @@ import UserFeed from './components/profile/UserFeed';
 import UserBoard from './components/profile/UserBoard';
 import UserBookmark from './components/profile/UserBookmark';
 import UserLocation from './components/profile/UserLocation';
+import AlarmList from './components/alarm/AlarmList';
 
 import './App.css';
 
@@ -136,6 +137,7 @@ function App( { location }) {
         <Route path="/profile/:id/user-board" component={UserBoard} />
         <Route path="/profile/:id/user-bookmark" component={UserBookmark} />
         <Route path="/change-location" component={UserLocation} />
+        <Route path="/alarm/:type" component={AlarmList} />
       </div>
       {/* Navbar를 보여주거나 변형하거나 / 숨김 */}
       { !isNavBar

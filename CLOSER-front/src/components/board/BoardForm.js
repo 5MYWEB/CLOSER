@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-
+import { Container, FormSelect, InputGroup } from 'react-bootstrap';
 import { createBoard } from '../../modules/board';
+import { RippleButton } from '../../styles/index';
 
 const BoardForm = () => {
   
@@ -59,51 +61,85 @@ const BoardForm = () => {
 
   return (
     <>
+      <Container>
+        <div className="m-5">
+          <InputGroup className="mb-3">
+          <label className="input-group-text fw-bolder" htmlFor="kind" style={{color: "#FFFFFF", backgroundColor: "#5552FF"}}>카테고리</label>
+            <FormSelect id="kind" name="kind_pk" value={kind} onChange={onChangeKind} required>
+              <option defaultValue value={0}> -- 게시판 카테고리 -- </option>
+              <option value={1}>한끼레시피</option>
+              <option value={2}>자취꿀팁</option>
+              <option value={3}>홈데코</option>
+              <option value={4}>공동구매</option>
+              <option value={5}>모임</option>
+              <option value={6}>도와주세요</option>
+            </FormSelect>
+          </InputGroup>
 
-          <label htmlFor="kind">카테고리를 선택해주세요 : </label>
-          <select id="kind" name="kind_pk" value={kind} onChange={onChangeKind} required>
-            <option defaultValue value={0}> -- 게시판 카테고리 -- </option>
-            <option value={1}>한끼레시피</option>
-            <option value={2}>자취꿀팁</option>
-            <option value={3}>홈데코</option>
-            <option value={4}>공동구매</option>
-            <option value={5}>모임</option>
-            <option value={6}>도와주세요</option>
-          </select>
+          <label htmlFor="title" className="form-label fw-bolder" style={{color: "#5552FF"}}>Title</label>
+          <InputGroup className="mb-4">
+            <input type="text" className="form-control m-0"
+              name="title"
+              value={title}
+              maxLength={200} 
+              placeholder="제목을 입력하세요"
+              onChange={onChangeTitle} 
+              required />
+          </InputGroup>
 
-          <input 
-            type="text"
-            name="title"
-            value={title}
-            maxLength={200} 
-            placeholder="제목을 입력하세요"
-            onChange={onChangeTitle} 
-            required />
-            <br />
+          <label htmlFor="content" className="form-label fw-bolder" style={{color: "#5552FF"}}>Content</label>
+          <InputGroup className="mb-4">
+            <textarea className="form-control" 
+              value={content}
+              name="content"
+              maxLength={1000} 
+              onChange={onChangeContent}
+              id="content" 
+              style={{ height: "200px"}}
+              required
+            />
+          </InputGroup>
 
-        <textarea 
-          value={content}
-          name="content"
-          placeholder="내용을 입력하세요" 
-          maxLength={1000} 
-          onChange={onChangeContent}
-          required />
-        <br />
+          { 3 < Number(kind) && Number(kind) < 7
+            ? 
+            <div>        
+              <label htmlFor="totalNum" className="form-label fw-bolder" style={{color: "#5552FF"}}>모집인원 (2명 이상 5명 이하)</label>
+              <InputGroup className="mb-3 d-flex justify-content-between">
+                <div className="form-check form-check-inline">
+                  <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio2" value={2} onClick={onChangeTotalNum}/>
+                  <label className="form-check-label mx-1" for="inlineRadio2">2명</label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio3" value={3} onClick={onChangeTotalNum}/>
+                  <label className="form-check-label mx-1" for="inlineRadio3">3명</label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio4" value={4} onClick={onChangeTotalNum}/>
+                  <label className="form-check-label mx-1" for="inlineRadio4">4명</label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio5" value={5} onClick={onChangeTotalNum}/>
+                  <label className="form-check-label mx-1" for="inlineRadio5">5명</label>
+                </div>
+              </InputGroup>
+            </div>
+            : 
+            <div>        
+              <label htmlFor="image-upload" className="form-label fw-bolder" style={{color: "#5552FF"}}>Image</label>
+              <InputGroup className="mb-4">
+                사진 입력 들어가야해요 호영님
+              </InputGroup>
+            </div>
+          }
 
-        { 3 < Number(kind) && Number(kind) < 7
-          ? 
-          <div>
-            <label htmlFor="totalNum">모집인원을 선택하세요 (2명 이상 5명 이하):</label>
-              <br />
-              <input type="radio" name="totalNum" onClick={onChangeTotalNum} value={2} /> 2명
-              <input type="radio" name="totalNum" onClick={onChangeTotalNum} value={3} /> 3명
-              <input type="radio" name="totalNum" onClick={onChangeTotalNum} value={4} /> 4명
-              <input type="radio" name="totalNum" onClick={onChangeTotalNum} value={5} /> 5명
+          <div className="button-group mt-0">
+            <button className="ripple-button cbtn cbtn-lg cbtn-primary" onClick={onSubmitBoard} >업로드</button>
           </div>
-          : ''
-        }
-        
-        <button onClick={onSubmitBoard}>업로드</button>
+          <Link to={`/board/`} className="d-flex justify-content-center">
+            <RippleButton type="button" cclass="cbtn cbtn-none cbtn-lg" children="취소"/>
+          </Link>
+        </div>
+      </Container>
     </>
   )
 }

@@ -150,7 +150,7 @@ const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
       console.log(err)
     })
   }
-
+  
   return (
     <Container ref={ref} className="px-0">
       <br />

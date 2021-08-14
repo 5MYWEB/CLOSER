@@ -168,7 +168,13 @@ const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
             </Row>
             <Row className="mx-2 card-text">
               <Col className="px-0">
-                <span className="text-secondary text-muted" style={{fontSize: "13px"}}>By. {board.nickname}</span>
+                <span className="text-secondary text-muted" style={{fontSize: "13px"}}>
+                  By.&nbsp;
+                  {board.badge !== 0 && 
+                    <span><UserBadgeItem badge={board.badge}/> </span>
+                  }
+                  {board.nickname}
+                </span>
               </Col>
             </Row>
             <Row className="mx-2 card-text mt-2 pt-1 border-top border-2">

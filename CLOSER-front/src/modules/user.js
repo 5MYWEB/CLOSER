@@ -107,7 +107,6 @@ export const refreshInfo = () => ({
       localStorage.removeItem("userToken");
       localStorage.removeItem("decodedToken");
       localStorage.removeItem("isLoggedIn");
-      alert('로그아웃 되었습니다.')
       return {
         ...state,
         isLoggedIn: false,

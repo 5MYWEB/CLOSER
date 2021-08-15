@@ -216,14 +216,14 @@ function SignUp( {history} ) {
         var albumKey = encodeURIComponent(albumName);
         s3.headObject({ Key: albumKey }, function (err, data) {
             if (!err) {
-                return alert("Album already exists.");
+                return console.log("Album already exists.");
             }
             if (err.code !== "NotFound") {
-                return alert("There was an error creating your album: " + err.message);
+                return console.log("There was an error creating your album: " + err.message);
             }
             s3.putObject({ Key: albumKey }, function (err, data) {
                 if (err) {
-                    return alert("There was an error creating your album: " + err.message);
+                    return console.log("There was an error creating your album: " + err.message);
                 }
                 alert("Successfully created album.");
             });

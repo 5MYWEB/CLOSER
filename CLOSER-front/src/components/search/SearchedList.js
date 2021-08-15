@@ -9,7 +9,6 @@ function SearchedList() {
 
   return (
     <div className="p-2">
-    <hr />
     {/* 검색목록이 비어있지 않다면 목록을 불러옴*/}
     {searchedList && searchedList.length !== 0 ? 
       <div>

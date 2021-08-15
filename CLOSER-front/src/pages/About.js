@@ -2,7 +2,7 @@
 import React from 'react';
 import '../styles/theme.css'
 import { RippleButton } from '../styles/index';
-import  ChannelTalk  from '../pages/ChannelTalk';
+import ChannelTalk  from '../pages/ChannelTalk';
 
 /**
  * 함수형 컴포넌트 스니펫입니다.

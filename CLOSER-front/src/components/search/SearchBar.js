@@ -134,7 +134,7 @@ const SearchBar = () => {
               <div className="col-2 px-0">
               </div>
               <div className="col-4 px-0 d-flex">
-                <input type="checkbox" id="scales" name="scales" checked={naverChecked} onClick={onClickChecked} />
+                <input type="checkbox" id="scales" name="scales" defaultChecked={naverChecked} onClick={onClickChecked} />
                 <label htmlFor="scales">네이버검색 포함</label>
               </div>
             </div>

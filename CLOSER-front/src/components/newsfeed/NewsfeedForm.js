@@ -167,9 +167,9 @@ const NewsfeedForm = () => {
               placeholder="무슨 생각을 하고 계신가요?"
               onChange={onChangeText} />
             {/* <input type="submit" value="업로드" /> */}
-            <Link to={`/board/`} className="d-flex justify-content-center">
-              <RippleButton type="button" cclass="cbtn cbtn-primary cbtn-lg" children="업로드"/>
-            </Link>
+            <div className="d-flex justify-content-center">
+              <RippleButton type="submit" cclass="cbtn cbtn-primary cbtn-lg" children="업로드"/>
+            </div>
           </form>
           <br/>
         </div>

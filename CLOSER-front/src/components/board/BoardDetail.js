@@ -329,7 +329,7 @@ const BoardDetail = ({match}) => {
                         </div>
                     :
                     <div className="button-group mt-0">
-                      <button className="ripple-button cbtn cbtn-lg cbtn-none" onClick={onClickJoin} >빠지기</button>
+                      <button className="ripple-button cbtn cbtn-lg cbtn-secondary" onClick={onClickJoin} >빠지기</button>
                     </div>
                   : ''
                 }
@@ -380,7 +380,7 @@ const BoardDetail = ({match}) => {
                     <button className="ripple-button cbtn cbtn-sm cbtn-primary mx-1 fw-bold">수정</button>
                   </Link>
               }
-              <button className="ripple-button cbtn cbtn-sm cbtn-none mx-1 fw-bold" onClick={onClickDelete}>삭제</button> 
+              <button className="ripple-button cbtn cbtn-sm cbtn-secondary mx-1 fw-bold" onClick={onClickDelete}>삭제</button> 
             </div>
           }
         </div>

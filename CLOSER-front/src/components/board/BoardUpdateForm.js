@@ -154,7 +154,7 @@ const BoardUpdateForm = ({match}) => {
         </div>
 
         <Link to={`/board-detail/${pk}/`} className="d-flex justify-content-center">
-          <RippleButton type="button" cclass="cbtn cbtn-none cbtn-lg" children="취소"/>
+          <RippleButton type="button" cclass="cbtn cbtn-secondary cbtn-lg" children="취소"/>
         </Link>
 
       </form>

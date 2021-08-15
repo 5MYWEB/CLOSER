@@ -145,8 +145,17 @@ const BoardUpdateForm = ({match}) => {
               </div>
             </InputGroup>
           </div>
-          : 
-          ""
+          :
+            ""
+            // <div>
+            //   <label htmlFor="image-upload" className="form-label fw-bolder" style={{color: "#5552FF"}}>Image</label>
+            //   <InputGroup className="mb-4">
+            //     <div className="result">{renderPhotos(selectedFiles)}</div>
+            //     <label>
+            //       <input type="file" id="file" multiple onChange={handleImageChange} />
+            //     </label>
+            //   </InputGroup>
+            // </div>
         }
 
         <div className="button-group mt-0">

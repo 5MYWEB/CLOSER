@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -150,6 +150,7 @@ const NewsfeedForm = () => {
 
   useEffect(()=>{
     if(Urls.length!==0 && Urls.length===Files.length) go()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[Urls])
 
 

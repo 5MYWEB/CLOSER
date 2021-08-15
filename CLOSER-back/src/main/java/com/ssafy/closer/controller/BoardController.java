@@ -371,7 +371,7 @@ public class BoardController {
                     InfoDto infoDto = new InfoDto();
                     if(imgUrls.size() > 0) {
                         infoDto.setUserId(userId);
-                        infoDto.setCreated_at(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                        infoDto.setBoard_pk(board_pk);
                     }
                     for (int i=0;i<imgUrls.size();i++){
                         infoDto.setImgUrl(imgUrls.get(i));

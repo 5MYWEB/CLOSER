@@ -5,6 +5,9 @@ import axios from 'axios';
 import AWS from 'aws-sdk';
 import { RippleButton } from '../../styles/index';
 import { createBoard } from '../../modules/board';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImages } from "@fortawesome/free-solid-svg-icons";
+import { Row, Col, Container } from 'react-bootstrap';
 
 const NewsfeedForm = () => {
   var albumBucketName = "photo-album-hy";
@@ -94,7 +97,7 @@ const NewsfeedForm = () => {
 
   const renderPhotos = (source) => {
     return source.map((photo) => {
-      return <img src={photo} alt="" key={photo} />;
+      return <img src={photo} alt="" key={photo}/>;
     });
   };
 
@@ -155,25 +158,41 @@ const NewsfeedForm = () => {
   return (
       <>
         {isLoggedIn &&
-        <div>
-          <form encType="multipart/form-data" onSubmit={onSubmit}>
-            <div className="result">{renderPhotos(selectedFiles)}</div>
-            <label>
-              <input type="file" id="file" multiple onChange={handleImageChange} />
-            </label>
-            <input 
-              type="text" 
-              value={text}
-              maxLength={500} 
-              placeholder="무슨 생각을 하고 계신가요?"
-              onChange={onChangeText} />
-            {/* <input type="submit" value="업로드" /> */}
-            <div className="d-flex justify-content-center">
-              <RippleButton type="submit" cclass="cbtn cbtn-primary cbtn-lg" children="업로드"/>
-            </div>
-          </form>
-          <br/>
-        </div>
+          <div className="mx-5 mt-4 mb-3">
+            <form encType="multipart/form-data" onSubmit={onSubmit}>
+              
+              {/* <div className=" d-flex justify-content-center">
+                <input className="form-control" type="file" multiple onChange={handleImageChange}/>
+              </div> */}
+              
+              <Container>
+                <Row className="mb-3 g-0">
+                  <Col xs={11}>
+                    <input 
+                      type="text" 
+                      className="form-control my-0"
+                      value={text}
+                      maxLength={500}  
+                      placeholder="무슨 생각을 하고 계신가요?"
+                      onChange={onChangeText}
+                    />
+                  </Col>
+                  <Col xs={1} >
+                    <label className="input-file-button" for="input-file">
+                      <FontAwesomeIcon icon={faImages} style={{ color: "#5552FF", width: "100%"}}/> 
+                    </label>
+                    <input type="file" id="input-file" multiple onChange={handleImageChange} style={{display:"none"}}/>
+                  </Col>
+                </Row>
+                <Row>
+                  <div className="result d-flex justify-content-center row row-cols-4 mb-1">{renderPhotos(selectedFiles)}</div>
+                </Row>
+              </Container>
+              <div className="d-flex justify-content-center">
+                <RippleButton type="submit" cclass="cbtn cbtn-primary cbtn-lg" children="업로드"/>
+              </div>
+            </form>
+          </div>
         }
       </>
   )

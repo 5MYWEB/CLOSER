@@ -27,11 +27,15 @@ const initialState = {
   categorySearchUrl: '/recent',
   selected: false,
   searchedList: null,
+  searchedNaverList: null,
+  naverChecked: false,
 };
 
 /* 액션 타입 만들기 */
 const SET_CATEGORY = 'SET_CATEGORY';
 const GET_SEARCHED_LIST = 'GET_SEARCHED_LIST';
+const NAVER_CHECK = 'NAVER_CHECK';
+const GET_SEARCHED_NAVER_LIST = 'GET_SEARCHED_NAVER_LIST';
 
 /* 액션 생성함수 만들기 */
 export const setCategory = (data) => ({
@@ -43,6 +47,16 @@ export const getSearchedList = (data) => ({
   type: GET_SEARCHED_LIST,
   data,
 });
+
+export const naverCheck = () => ({
+  type: NAVER_CHECK,
+});
+
+export const getSearchedNaverList = (data) => ({
+  type: GET_SEARCHED_NAVER_LIST,
+  data,
+});
+
 
 /* 리듀서 선언 */
 const reducer = (state = initialState, action) => {
@@ -58,6 +72,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         searchedList: action.data
+      };
+    case NAVER_CHECK:
+      return {
+        ...state,
+        naverChecked: !state.naverChecked
+      };
+    case GET_SEARCHED_NAVER_LIST:
+      return {
+        ...state,
+        searchedNaverList: action.data
       };
     default:
       return state;

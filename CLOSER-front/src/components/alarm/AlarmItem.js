@@ -63,7 +63,7 @@ function AlarmItem({ alarm, userId }) {
                     { alarm.category_pk === 3 && <FontAwesomeIcon icon={faBookmark} className="alarm-icon-bookmark"/> }
                     { alarm.category_pk === 4 && <FontAwesomeIcon icon={faUsers} className="alarm-icon-users"/> }
                   </div>
-                  <div class="col alarm-date">
+                  <div className="col alarm-date">
                     {dateDiff >= 1
                       ?
                       <div>
@@ -79,7 +79,6 @@ function AlarmItem({ alarm, userId }) {
                 </div>
               </div>
             </div>
-            {/* <div class="row mx-0">읽음(색깔로 대체): {alarm.visited ? 'O' : 'X' }</div> */}
           </div>
         </Link>
       }

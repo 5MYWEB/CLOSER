@@ -66,7 +66,6 @@ const CommentForm = ({board_pk}) => {
         <Col xs={4} className="button-group m-0">
           <RippleButton type="submit" cclass="cbtn cbtn-lg cbtn-primary" children="업로드"/>
         </Col>
-        {/* <input type="submit" value="업로드" class="col-4"/> */}
       </form>
       }
     </div>

@@ -9,7 +9,7 @@ import UserBadgeItem from '../profile/UserBadgeItem';
 import './BoardDetail.css';
 import defaultProfile from '../../assets/profile-user-demo.png';
 import usersSolidImg from '../../assets/users-solid.svg';
-import { Row, Col, Container, Card } from 'react-bootstrap';
+import { Row, Col, Container, Card, Carousel } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
@@ -19,7 +19,7 @@ import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/fre
 
 const BoardDetail = ({match}) => {
   const dispatch = useDispatch();
-  
+
   // 현재 게시글의 정보
   const [board, setBoard] = useState({
     board_pk: null,
@@ -32,6 +32,7 @@ const BoardDetail = ({match}) => {
     location: '',
     nickname: '',
     badge: null,
+    imgUrls: [],
   })
 
   // 현재 게시글의 pk
@@ -58,6 +59,9 @@ const BoardDetail = ({match}) => {
   // 해당 게시글 쓴 사람의 프로필
   const [ writerProfile, setWriterProfile ] = useState("")
 
+  // 이미지 
+  const [ imgUrls, setImgUrls ] = useState([])
+
   useEffect(() => {
     axios.get(`http://localhost:8080/board/${pk}`)
     .then((res) => {
@@ -75,6 +79,7 @@ const BoardDetail = ({match}) => {
         badge: res.data.badge,
         totalNum: res.data.totalNum,
         gatherNum: res.data.gatherNum,
+        imgUrls: res.data.imgUrls,
       })
     })
     .catch((err) =>{
@@ -160,6 +165,13 @@ const BoardDetail = ({match}) => {
       setTimePeriod(`${Math.floor(betweenTimeDay / 365)}년전`);
     }
   }, [board.created_at]);
+
+  // 이미지 링크 세팅
+  useEffect(() => {
+    if(board.imgUrls !== []){
+      setImgUrls(board.imgUrls)
+    }
+  }, [board.imgUrls])
 
 
   // 삭제 버튼을 클릭했을 때 실행되는 함수
@@ -268,6 +280,26 @@ const BoardDetail = ({match}) => {
         <Row className="g-0 mb-3 fs-6">
           <div>{board.content}</div>
         </Row>
+        
+        { imgUrls.length > 0 &&
+          <Carousel>
+            {
+              imgUrls.map((imgUrl, idx) =>{
+                return (
+                  <Carousel.Item key={idx}>
+                    <img
+                      className="d-block w-100"
+                      src={imgUrl}
+                      alt={idx+1}
+                      onError={handleImgError}
+                    />
+                  </Carousel.Item>
+                )
+              })
+            }
+          </Carousel>
+        }
+
         {/* 지역게시판 인원모으기: 글쓴이한테는 버튼이 안 보임 */}
         <div className="g-0 mb-3">
           {board.kind_pk > 3 && board.kind_pk < 7 &&

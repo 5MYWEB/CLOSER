@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { likeBoard } from '../../modules/board';
 import UserBadgeItem from '../profile/UserBadgeItem'
 import { Row, Col, Card, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
 import defaultBoardImg from '../../assets/house-emoji.png';
 // import '../../styles/bootstrap.min.css';
 
 const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
 // function BoardItem({ board }, ref) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // 현재 로그인한 사용자의 아이디 가져오기
   const { userId } = useSelector((state) => state.user.userInfo);
@@ -31,7 +31,7 @@ const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
   const [countComment, setCountComment] = useState(0)
 
   // n시간 전
-  const [ timePeriod, setTimePeriod ] = useState("")
+  // const [ timePeriod, setTimePeriod ] = useState("")
 
   // 이미지 갯수
   const [ imgUrl, setImgUrl ] = useState("")
@@ -88,28 +88,28 @@ const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
   }, [boardLiked])
 
   // 몇시간 전
-  useEffect(() => {
-    const today = new Date();
-    const timeValue = new Date(board.created_at);
+  // useEffect(() => {
+  //   const today = new Date();
+  //   const timeValue = new Date(board.created_at);
 
-    const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
-    const betweenTimeHour = Math.floor(betweenTime / 60);
-    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+  //   const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+  //   const betweenTimeHour = Math.floor(betweenTime / 60);
+  //   const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
 
-    if (betweenTime < 1) setTimePeriod('방금전');
-    else if (betweenTime < 60) {
-      setTimePeriod(`${betweenTime}분전`);
-    }
-    else if (betweenTimeHour < 24) {
-      setTimePeriod(`${betweenTimeHour}시간전`);
-    }
-    else if (betweenTimeDay < 365) {
-        setTimePeriod(`${betweenTimeDay}일전`);
-    }
-    else {
-      setTimePeriod(`${Math.floor(betweenTimeDay / 365)}년전`);
-    }
-  }, []);
+  //   if (betweenTime < 1) setTimePeriod('방금전');
+  //   else if (betweenTime < 60) {
+  //     setTimePeriod(`${betweenTime}분전`);
+  //   }
+  //   else if (betweenTimeHour < 24) {
+  //     setTimePeriod(`${betweenTimeHour}시간전`);
+  //   }
+  //   else if (betweenTimeDay < 365) {
+  //       setTimePeriod(`${betweenTimeDay}일전`);
+  //   }
+  //   else {
+  //     setTimePeriod(`${Math.floor(betweenTimeDay / 365)}년전`);
+  //   }
+  // }, [board.created_at]);
 
   // 이미지 링크 세팅
   useEffect(() => {
@@ -117,38 +117,6 @@ const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
       setImgUrl(board.imgUrls[0])
     }
   }, [board.board_pk, board.imgUrls])
-
-  // 좋아요 버튼을 눌렀을 때
-  const onClickLike = () => {
-    axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
-      kind_pk: 2,
-      userId: userId,
-      flag: "true",
-    })
-    .then(() => {
-      setLiked(!liked)
-      dispatch(likeBoard())
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
-
-  // 북마크 버튼을 눌렀을 때
-  const onClickBookmark = () => {
-    axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
-      kind_pk: 3,
-      userId: userId,
-      flag: "true",
-    })
-    .then(() => {
-      setBookmarked(!bookmarked)
-      dispatch(likeBoard())
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
 
   return (
     <div>
@@ -178,12 +146,39 @@ const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
               </Col>
             </Row>
             <Row className="mx-2 card-text mt-2 pt-1 border-top border-2">
-              <Col className="px-0 text-end">
-                <FontAwesomeIcon icon={faComment}/> { countComment }
-                &nbsp;&nbsp;     
-                <FontAwesomeIcon icon={faHeart}/> { countLike }
-                &nbsp;&nbsp;
-                <FontAwesomeIcon icon={faBookmark}/> {countBookmark}
+              <Col className="px-0 text-end my-1">
+                <div className = "likeAndBookmark">
+                  <div className = "likePart">
+                    <FontAwesomeIcon icon={faComment} className ="align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 
+                    <span className="ms-1 align-middle">{countComment}</span>
+                  </div>
+                  {/* 좋아요 */}
+                  { liked
+                    ?
+                    <div className = "likePart ms-2">
+                      <FontAwesomeIcon icon={fasHeart} className ="heart_full align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 
+                      <span className="ms-1 align-middle">{countLike}</span>
+                    </div>
+                    : 
+                    <div className = "likePart ms-2">
+                      <FontAwesomeIcon icon={faHeart} className ="heart_empty align-middle" alt="heart_empty" style={{ color: "#5552FF"}}/> 
+                      <span className="ms-1 align-middle">{countLike}</span>
+                    </div>
+                  }
+                  {/* 북마크 */}
+                  { bookmarked
+                    ?
+                    <div className = "bookmarkPart ms-2">
+                      <FontAwesomeIcon icon={fasBookmark} className ="bookmark_full align-middle" alt="bookmark_full" style={{ color: "#5552FF"}}/> 
+                      <span className="ms-1 align-middle">{countBookmark}</span>
+                    </div>
+                    : 
+                    <div className = "bookmarkPart ms-2">
+                      <FontAwesomeIcon icon={faBookmark} className ="bookmark_empty align-middle" alt="bookmark_empty" style={{ color: "#5552FF"}}/>
+                      <span className="ms-1 align-middle">{countBookmark}</span>
+                    </div>
+                  }
+                </div>
               </Col>
             </Row>
           </Container>

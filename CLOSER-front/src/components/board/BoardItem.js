@@ -5,13 +5,13 @@ import BoardGlobalItem from './BoardGlobalItem';
 import BoardLocalItem from './BoardLocalItem';
 import NewsfeedItem from '../newsfeed/NewsfeedItem';
 
-const BoardItem = React.forwardRef(({ board }, ref) => {
+const BoardItem = React.forwardRef(({ board, name }, ref) => {
   if (board.kind_pk > 0 && board.kind_pk < 4){
     return <BoardGlobalItem board={board}/>
   } else if (board.kind_pk < 7){
     return <BoardLocalItem board={board}/>
   } else if (board.kind_pk === 7){
-    return <NewsfeedItem board={board} ref={ref}/>
+    return <NewsfeedItem board={board} name={name} ref={ref}/>
   }
 })
 

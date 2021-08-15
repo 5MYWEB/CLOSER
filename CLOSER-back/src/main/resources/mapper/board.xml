@@ -307,4 +307,10 @@
         where U.activeUser=#{userId} and B.kind_pk = 7
     </select>
 
+    <select id="commentKind" parameterType="int" resultType="int">
+        select kind_pk
+        from board
+        where board_pk = #{board_pk}
+    </select>
+
 </mapper>

@@ -81,8 +81,8 @@ function App( { location }) {
   }
 
   useEffect(() => {
-    if (isLoggedIn === true && decodedToken.UserId !== undefined){
-      axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
+    if (isLoggedIn === true && decodedToken.user_id !== undefined){
+      axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.user_id}`)
         .then((response) => {
           dispatch(getMyInfoAction(response.data))
         })

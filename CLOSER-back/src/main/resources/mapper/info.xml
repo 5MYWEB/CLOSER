@@ -56,4 +56,9 @@
         from info
         where kind_pk=4 and board_pk=#{board_pk}
     </select>
+
+    <delete id="deleteImage" parameterType="int">
+        delete from info
+        where board_pk = #{board_pk} and kind_pk = 4
+    </delete>
 </mapper>

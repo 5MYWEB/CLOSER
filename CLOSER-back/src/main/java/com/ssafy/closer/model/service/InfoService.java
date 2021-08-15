@@ -34,4 +34,7 @@ public interface InfoService {
 
     // 이미지 조회
     List<String> detailImage(int board_pk);
+
+    // 이미지 삭제
+    boolean deleteImage(int board_pk);
 }

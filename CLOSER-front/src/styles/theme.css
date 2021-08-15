@@ -173,10 +173,10 @@ input::placeholder {
 }
 
 
-/* .board-badge {
-  height: 1.25rem;
-  width: 1.25rem;
-} */
+.board-badge {
+  height: 1.5rem;
+  width: 1.5rem;
+}
 
 .profile-badge {
   height: 2rem;

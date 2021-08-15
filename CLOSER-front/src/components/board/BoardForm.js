@@ -136,7 +136,7 @@ const BoardForm = () => {
             <button className="ripple-button cbtn cbtn-lg cbtn-primary" onClick={onSubmitBoard} >업로드</button>
           </div>
           <Link to={`/board/`} className="d-flex justify-content-center">
-            <RippleButton type="button" cclass="cbtn cbtn-none cbtn-lg" children="취소"/>
+            <RippleButton type="button" cclass="cbtn cbtn-secondary cbtn-lg" children="취소"/>
           </Link>
         </div>
       </Container>

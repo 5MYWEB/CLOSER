@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
 import defaultBoardImg from '../../assets/house-emoji.png';
+import '../../styles/theme.css'
 // import '../../styles/bootstrap.min.css';
 
 const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
@@ -139,7 +140,7 @@ const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
                 <span className="text-secondary text-muted" style={{fontSize: "13px"}}>
                   By.&nbsp;
                   {board.badge !== 0 && 
-                    <span><UserBadgeItem badge={board.badge}/> </span>
+                    <span><UserBadgeItem badge={board.badge} cclass="board-badge"/> </span>
                   }
                   {board.nickname}
                 </span>

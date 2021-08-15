@@ -32,7 +32,7 @@ const Menu = () => {
       }
       {
       iconLight === 'board'
-          ? <Link to="/board"><RippleIcon src={boardOn} alt="boardOn" id="board" cclass="board" onClick={onClick} /></Link>
+      ? <Link to="/board"><RippleIcon src={boardOn} alt="boardOn" id="board" cclass="board" onClick={onClick} /></Link>
       : <Link to="/board"><RippleIcon src={boardOff} alt="boardOff" id="board" cclass="board" onClick={onClick} /></Link>
       }
       {

@@ -193,7 +193,7 @@ function SignUp( {history} ) {
             return alert("Album names cannot contain slashes.");
         }
         var albumKey = encodeURIComponent(albumName);
-        s3.headObject({ Key: albumKey }, function (err, data) {
+        s3.headObject({ Key: albumKey }, function (err) {
             if (!err) {
                 return console.log("Album already exists.");
             }

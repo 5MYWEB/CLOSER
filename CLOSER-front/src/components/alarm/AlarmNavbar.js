@@ -6,9 +6,9 @@ import './AlarmNavbar.css';
 
 function AlarmNavbar() {
 
-  const { alarmList, userInfo } = useSelector((state) => state.user)
+  const { alarmList, userInfo } = useSelector((state) => state.user);
 
-  const [ unreadCount, setUnreadCount ] = useState(0) 
+  const [ unreadCount, setUnreadCount ] = useState(0);
 
   useEffect(() => {
     // 안읽은 알림 개수
@@ -21,13 +21,15 @@ function AlarmNavbar() {
     .catch((err) => {
       console.log(err)
     })
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alarmList])
+
 
   return(
     <div className="alarmcontainer">
       <div className="tabList">
-        <div className = "alarm-read">
+        <div className="alarm-read">
           <Link to="/alarm/unread/" className="link-light">
             <div>
               미확인
@@ -37,11 +39,12 @@ function AlarmNavbar() {
             </div>
           </Link>
         </div>
-        <div className = "alarm-all">
+        <div className="alarm-all">
           <Link to="/alarm/all/" className="link-light">전체</Link>
         </div>
       </div>
     </div>
+
   )
 }
 

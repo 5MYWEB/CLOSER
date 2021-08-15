@@ -243,6 +243,7 @@ const SearchBar = () => {
           </button>
         </div>
       </div>
+      <hr />
     </div>
   )
 }

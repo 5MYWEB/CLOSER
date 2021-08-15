@@ -1,5 +1,4 @@
 import React, {useState, useRef} from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import AWS from 'aws-sdk';
@@ -9,7 +8,6 @@ import { RippleButton, ShakeButton } from '../../styles/index';
 import '../../styles/theme.css'
 
 const MyProfileUpdate = ({history}) => {
-
   // S3 기본 정보
   var albumBucketName = "photo-album-hy";
   var bucketRegion = "ap-northeast-2";
@@ -240,10 +238,10 @@ const MyProfileUpdate = ({history}) => {
       <div className="paragraph">
         <span className="input-label">프로필 사진</span>
         <div className="ml-1_5rem my-3 pb-4 d-flex justify-content-around align-items-center my-3">
-          <div class="col-6">
+          <div className="col-6 profile-img-wrapper">
             {fileUrl
             ?
-            <img src={fileUrl} alt="프로필사진" onError={handleImgError} class="profile-img"></img>
+            <img src={fileUrl} alt="프로필사진" onError={handleImgError} className="profile-img"></img>
             :
             <label className="input-placeholder-style">
               파일을 선택하세요
@@ -276,7 +274,7 @@ const MyProfileUpdate = ({history}) => {
       <div className="input-role ml-2rem pb-1">
         <h4>"저는 자취를
         <select id="homeAlone" name="homeAlone" value={changedUserInfo.homeAlone} onChange={onChangeHomeAlone} ref={selectInputs} className="mx-2">
-          <option selected disabled hidden> -- 년도 -- </option>
+          <option defaultValue hidden> -- 년도 -- </option>
           <option value="2021">2021년</option>
           <option value="2020">2020년</option>
           <option value="2019">2019년</option>

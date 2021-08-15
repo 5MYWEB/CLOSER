@@ -93,4 +93,9 @@ public class UserServiceImpl implements UserService {
     public int countBoardByUser(String userId) {
         return sqlSession.getMapper(UserMapper.class).countBoardByUser(userId);
     }
+
+    @Override
+    public boolean usertoken(String userId, String chattoken) {
+        return sqlSession.getMapper(UserMapper.class).usertoken(userId,chattoken);
+    }
 }

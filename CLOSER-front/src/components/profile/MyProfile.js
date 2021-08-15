@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import defaultProfile from '../../assets/profile-user-demo.png'
+import defaultProfile from '../../assets/user-on.svg';
 import UserBadge from './UserBadge';
+import { RippleButton } from '../../styles/index';
+
+import compassRegular from '../../assets/profile/compass-regular.svg';
+import calendarRegular from '../../assets/profile/calendar-alt-regular.svg';
+import '../../styles/theme.css'
 import './MyProfile.css';
 
 // import FollowerList from '../components/profile/FollowerList';
@@ -16,111 +20,97 @@ import './MyProfile.css';
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-function MyProfile() {
+function MyProfile({ history }) {
   // const imgRef = useRef(null);
   const { userInfo } = useSelector((state) => state.user);
 
   const now = new Date()
-  const year = now.getFullYear();
-
-  const [followingListLength, setFollowingListLength] = useState(0)
-  const [followerListLength, setFollowerListLength] = useState(0)
-  const [annual, setAnnual] = useState(0)
 
   let img = `https://photo-album-hy.s3.ap-northeast-2.amazonaws.com/${userInfo.userId}/${userInfo.userId}_profile.jpg`
-
-  // 팔로잉, 팔로워 수 가져오기
-  useEffect(() => {
-    axios.post(`http://localhost:8080/follow/${userInfo.userId}/following`)
-        .then((res) => {
-          setFollowingListLength(res.data.length)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-
-    axios.post(`http://localhost:8080/follow/${userInfo.userId}/follower`)
-        .then((res) => {
-          setFollowerListLength(res.data.length)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-
-    setAnnual(year - userInfo.homeAlone + 1)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   // 이미지 없을 시 기본 이미지 생성
   const handleImgError = (e) => {
     e.target.src = defaultProfile;
   }
 
+
+  const onClickUpdate = () => {
+    history.push('/profile-update')
+  }
+
   return (
-      <div className="container">
-        {/* Row-1 : 뒤로가기 */}
-        <div className = "profilepart">
-
-          <div className = "item2">
-            {/* <img ref={imgRef} src={img}  alt="userprofile" className="userprofile" onError={handleImgError}/> */}
-            <img src={img}  alt="userprofile" className="userprofile" onError={handleImgError}/>
+      <div className="page-wrapper">
+        {/* 1. 프로필 사진, 뱃지와 수정 버튼 */}
+        <div className="d-flex row justify-content-between align-items-end mx-0">
+          {/* 프로필사진 */}
+          <div className="col-3 px-0 d-flex justify-content-center">
+            <div className="profile-img-wrapper">
+              <img src={defaultProfile}  alt="userprofile" className="profile-img" onError={handleImgError}/>
+            </div>
+          </div>
+          {/* 뱃지 */}
+          <div className="col-5 px-0"><UserBadge wrapclass="px-3" cclass="profile-badge" userId={userInfo.userId} /></div>
+          {/* 프로필수정버튼  */}
+          <div className="col-4 px-0 d-flex justify-content-end">
+            <RippleButton onClick={onClickUpdate} cclass="cbtn me-0 my-0 cbtn-sm cbtn-primary" children="프로필 수정"/>
           </div>
 
-          <div className = "item3">
-            <h4 className="userName"> {userInfo.nickname}</h4>
+          {/* 2. 닉네임 */}
+          <h2 className="row justify-content-start px-3 pt-3 pb-1">
+            <div className="col px-0 text-start">{userInfo.nickname}</div>
+          </h2>
+
+          {/* 3. 아이디, 소개말 */}
+          <p className="input-placeholder-style row justify-content-start px-3">
+            @{userInfo.userId}
+          </p>
+          <p className="row justify-content-start px-3 pt-3">{userInfo.intro}</p>
+          {/* 4. 위치, 자취년차 */}
+          <div className="row light-font justify-content-start px-3 pt-3">
+            <span className="p-0">
+              <img src={compassRegular} alt="addr-icon" className="profile-icon ps-0 pe-2"/>
+                <span>{userInfo.addr}</span>
+              <img src={calendarRegular} alt="homeAlone-icon" className="profile-icon ps-4 pe-1"/>
+              {userInfo.homeAlone === null
+              ? <span> 마음만은 자취러 </span> 
+              : <span> 자취 {now.getFullYear()-userInfo.homeAlone+1} 년차 </span>}
+            </span>
           </div>
 
-          <div className = "item4">
-            <h6 className="userYear"> {annual} 년차</h6>
+          <div className="row px-3 pt-3 bm-profile-info justify-content-between">
+            <div className="row px-3 col-6 p-0">
+              <div className="col-6 p-0">
+                  <Link to={`/${userInfo.userId}/following-list`} className="link-dark">
+                    {userInfo.following} 팔로잉
+                  </Link>
+              </div>
+              <div className="col-6 p-0">
+                <Link to={`/${userInfo.userId}/follower-list`} className="link-dark">
+                  <div>{userInfo.follower} 팔로워</div>
+                </Link>
+              </div>
+            </div>
+
+            <div className="col-4 ps-0 pe-1 d-flex justify-content-end">
+              <RippleButton cclass="cbtn me-0 my-0 cbtn-sm cbtn-light" children="프로필 공유"/>
+            </div>
           </div>
 
-          <div className = "item5">
-            <button class = "animated-button">
-              <Link to="/profile-update" class="link-dark">프로필 수정</Link>
-            </button>
-          </div>
-
-          <div className = "item6">
-            <h6 className="userLocation"> {userInfo.addr}</h6>
-          </div>
-
-          <div className = "item7">
-            <h6>요리왕</h6>
-          </div>
-          <div className = "item8">
-            <h6>살림왕</h6>
-          </div>
-
-          <div className = "item9">
-            <h6> {userInfo.intro}</h6>
-          </div>
-
-          <div className = "item10">
-            <h6><Link to={`/${userInfo.userId}/following-list`} class="link-dark">팔로잉 {followingListLength}</Link></h6>
-          </div>
-
-          <div className = "item11">
-            <h6><Link to={`/${userInfo.userId}/follower-list`} class="link-dark">팔로워 {followerListLength}</Link></h6>
-          </div>
-
-          <div className = "item12">
-            <button class = "animated-button">
-              <Link to="" class="link-dark">프로필 공유</Link>
-            </button>
-          </div>
         </div>
+
+
 
         <div className="myprofilepost">
           <div className ="myfeed">
-            <Link to={`/profile/${userInfo.userId}/user-feed`} class="link-light" >내 피드</Link>
+            <Link to={`/profile/${userInfo.userId}/user-feed`} className="link-light" >내 피드</Link>
           </div>
 
           <div className ="mypost">
-            <Link to={`/profile/${userInfo.userId}/user-board`} class="link-light">내 포스트</Link>
+            <Link to={`/profile/${userInfo.userId}/user-board`} className="link-light">내 포스트</Link>
           </div>
 
           <div className ="mybookmark">
-            <Link to={`/profile/${userInfo.userId}/user-bookmark`} class="link-light">북마크</Link>
+            <Link to={`/profile/${userInfo.userId}/user-bookmark`} className="link-light">북마크</Link>
           </div>
 
 

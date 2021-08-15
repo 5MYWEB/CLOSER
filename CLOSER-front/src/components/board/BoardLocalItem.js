@@ -153,18 +153,19 @@ const BoardLocalItem = React.forwardRef(({ board }, ref) => {
 
   return (
     <Container ref={ref} className="px-0">
+      <br/>
       {/* 지역게시판 */}
       <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
         <Card className="mx-2 p-2">
           <Row className="mx-2">
-            <Col className="text-start px-0" style={{color: "#5552FF"}}>모집중</Col>
+            { isJoin 
+              ? <Col className="text-start px-0" style={{color: "#5552FF"}}>모집완료</Col>
+              : <Col className="text-start px-0" style={{color: "#5552FF"}}>모집중</Col>
+            }
             <Col className="text-end px-0 text-secondary">{timePeriod}</Col>
           </Row>
           <Row className="mx-2 mb-3 mt-1">
-            { isJoin 
-              ? <Col className="px-0 mt-0 fs-4"> {board.title}</Col>
-              : <Col className="px-0 mt-0 fs-4"><span style={{color: "#5552FF"}}>모집완료</span> {board.title}</Col>
-            }
+            <Col className="px-0 mt-0 fs-4"> {board.title}</Col>
           </Row>
           <Row className="mx-2">
             <h3 className="text-center"><img src={usersSolidImg} alt="참여인원" className="px-0" style={{width: "30px"}}/> &nbsp; {board.gatherNum} / {board.totalNum} 참여</h3>

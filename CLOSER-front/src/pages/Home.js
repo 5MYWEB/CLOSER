@@ -11,6 +11,7 @@ const Home = () => {
         ?
         <span>
           "{userInfo.nickname}님 반갑습니다."
+
         </span>
         :
         <span>

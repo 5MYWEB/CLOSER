@@ -81,7 +81,6 @@ function App( { location }) {
   }
 
   useEffect(() => {
-    console.log(decodedToken)
     if (isLoggedIn === true && decodedToken.UserId !== undefined){
       axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
         .then((response) => {

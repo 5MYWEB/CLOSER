@@ -37,6 +37,7 @@ function AlarmItem({ alarm, userId }) {
     var dateDiff = Math.ceil((today.getTime()-createdTime.getTime())/(1000*3600*24));
     setDateDiff(dateDiff-1)
 
+    return () => {setDateDiff(false); setProfileImg(''); setAlarmLink('') } // cleanup function을 이용
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

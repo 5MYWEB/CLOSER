@@ -102,7 +102,6 @@ function Login({ history }) {
   // 로그인에 성공했으면 로그인 유저 정보, 게시글 수 가져오기
   useEffect(() => {
     if (isLoggedIn === true && decodedToken.user_id !== null){
-        console.log(decodedToken)
       axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.user_id}`)
         .then((res) => {
           dispatch(getMyInfoAction(res.data))

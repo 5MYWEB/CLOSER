@@ -77,6 +77,11 @@ const NewsfeedForm = () => {
             console.log(err)
           })
       setText('')
+      setUrls([])
+      setcheck(false)
+      setUrl('')
+      setFiles([])
+      setSelectedFiles([])
     }
   }
 
@@ -103,7 +108,6 @@ const NewsfeedForm = () => {
       return <img src={photo} alt="" key={photo}/>;
     });
   };
-
 
   function handleFileInput() {
     let lng;

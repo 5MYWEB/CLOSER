@@ -86,6 +86,11 @@ p {
   padding: 4vh 0;
 }
 
+.page-semi-wrapper {
+  margin: 0 2rem;
+  padding-top: 4vh;
+}
+
 
 .comment-list-wrapper {
   
@@ -229,7 +234,11 @@ input::placeholder {
   display: flex;
 }
 
+
+
 /* 버튼 */
+
+/* 리플 버튼 */
 .ripple-button {
   border: none;
   margin: 8px;
@@ -252,7 +261,7 @@ input::placeholder {
   animation: 0.9s ease 1 forwards ripple-effect;
 }
 
-/* 아이콘 */
+/* 리플 아이콘 */
 .ripple-icon {
   width: 25vw;
   height: 13vh;
@@ -285,9 +294,7 @@ input::placeholder {
 }
 
 
-
-
-/* 뒤로가기 버튼 */
+/* 리플 뒤로가기 버튼 */
 /* .back-button {
   
   padding: 1.1rem; */
@@ -368,7 +375,8 @@ height: 6vw;
   z-index: 2;
 }
 
-/* =================================== */
+
+/* ============================= */
 
 /* 일반 버튼 */
 

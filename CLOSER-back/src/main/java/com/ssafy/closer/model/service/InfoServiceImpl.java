@@ -68,4 +68,9 @@ public class InfoServiceImpl implements InfoService {
     public List<String> detailImage(int board_pk) {
         return sqlSession.getMapper(InfoMapper.class).detailImage(board_pk);
     }
+
+    @Override
+    public boolean deleteImage(int board_pk) {
+        return sqlSession.getMapper(InfoMapper.class).deleteImage(board_pk)>=1;
+    }
 }

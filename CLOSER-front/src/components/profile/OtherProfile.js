@@ -115,6 +115,9 @@ function OtherProfile({ id }) {
             : <button onClick={onClickFollow}>팔로우</button>
           }
         </Col>
+        <Col xs={3}>
+          <Link to={`/message/${userInfo.userId}`}>DM</Link>
+        </Col>
       </Row>
       {/* Row-3 : 뱃지 */}
       <Row>

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getMyInfoAction, loginAction, getPostCount } from '../modules/user'
 import { RippleButton } from '../styles/index';
 import '../styles/theme.css'
+import { StreamChat } from 'stream-chat';
 
 function Login({ history }) {
   // Redux store 접근 시 사용
@@ -123,6 +124,8 @@ function Login({ history }) {
       
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [decodedToken])
+
+
         
   return (
     <div className="wrap-group"> 

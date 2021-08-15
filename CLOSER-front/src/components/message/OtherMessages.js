@@ -5,23 +5,14 @@ import { Chat, Channel, ChannelHeader, ChannelList, LoadingIndicator, MessageInp
 import 'stream-chat-react/dist/css/index.css';
 import './Messages.css'
 
-const Messages = () => {
+const Messages = ({match}) => {
 
+    const otherid = match.params.id;
     const { userInfo } = useSelector((state) => (state.user))
     const user_id = userInfo.userId;
     const userToken = userInfo.chattoken;
     const filters = { type: 'messaging', members: { $in: [user_id] } };
     const sort = { last_message_at: -1 };
-
-    // Define values.
-    const api_key = '5gan2md896h2'
-    const api_secret = 'khjmr5fft6getdd9a4ww9c7y4f5pgmuq436sqrv9hjcn6ehsssxa5uj4x8229w5r'
-
-// Initialize a Server Client
-    const serverClient = StreamChat.getInstance(api_key, api_secret);
-// Create User Token
-    const token = serverClient.createToken(user_id);
-    console.log(token)
 
   const [chatClient, setChatClient] = useState(null);
 
@@ -35,7 +26,7 @@ const Messages = () => {
             name: userInfo.nickname,
             image: 'https://getstream.io/random_png/?id=still-thunder-3&name=still-thunder-3',
           },
-          token,
+          userToken,
       );
       setChatClient(client);
     };
@@ -47,10 +38,16 @@ const Messages = () => {
     return <LoadingIndicator />;
   }
 
+    const channel = chatClient.channel('messaging', {
+        name: otherid+'와의 메시지',
+        members: [user_id,otherid],
+    });
+
+
   return (
       <Chat client={chatClient} theme='messaging light'>
         <ChannelList filters={filters} sort={sort} />
-        <Channel>
+        <Channel channel={channel}>
           <Window>
             <ChannelHeader/>
             <MessageList />

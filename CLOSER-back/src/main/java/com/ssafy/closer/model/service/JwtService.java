@@ -39,8 +39,7 @@ public class JwtService {
         builder.setHeaderParam("typ", "JWT"); // 토큰 타입으로 고정 값
 
         // 3. Payload 설정 - claim 정보 포함
-        builder.setSubject("로그인 토큰").setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * expireMin))
-                .claim("user_id", userId); // 토큰 payload에 유저 아이디만 넣는다.
+        builder.claim("user_id", userId); // 토큰 payload에 유저 아이디만 넣는다.
 
         // 4. Signature - Secret Key를 이용해 암호화한다
         builder.signWith(SignatureAlgorithm.HS256, salt.getBytes());

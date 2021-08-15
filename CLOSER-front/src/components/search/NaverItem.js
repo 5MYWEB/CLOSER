@@ -61,7 +61,7 @@ function NaverItem({ board }) {
 
 NaverItem.propTypes = {
   board: PropTypes.shape({
-    title: PropTypes.number,
+    title: PropTypes.string,
     link: PropTypes.string,
     description: PropTypes.string,
     bloggername: PropTypes.string,

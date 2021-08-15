@@ -13,6 +13,8 @@ const CommentItem = ({ comment }) => {
 
   const [writerInfo, setWriterInfo] = useState('')
 
+  const [kindCategory, setKindCategory] = useState(0)
+
   const { userId } = useSelector((state) => state.user.userInfo)
 
   // n시간 전
@@ -52,8 +54,18 @@ const CommentItem = ({ comment }) => {
     else {
       setTimePeriod(`${Math.floor(betweenTimeDay / 365)}년전`);
     }
-  }, [writerInfo.created_at]);
+  }, [comment.created_at]);
 
+  // 댓글이 속한 게시판 종류
+  useEffect(() =>{
+    axios.get(`http://localhost:8080/board/comment/${comment.board_pk}`)
+    .then((res) => {
+      setKindCategory(res.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }, [comment.board_pk])
 
   // 댓글 삭제
   const onClickDelete = () => {
@@ -86,12 +98,12 @@ const CommentItem = ({ comment }) => {
           <Col xs={8}>
             <Row className="g-0 ps-1">
               <Link to = {`/profile/${writerInfo.userId}`}>
-                {/* { board.kind_pk > 0 && board.kind_pk < 4 && board.badge !== 0 &&
+                {/* { kindCategory > 0 && kindCategory < 4 && board.badge !== 0 &&
                   <span style={{color: "#5552FF"}}><UserBadgeItem badge={board.badge}/></span>
-                }
-                { board.kind_pk >= 4 && board.kind_pk <= 6 &&
-                  <span style={{color: "#5552FF", fontSize: "14px"}}>{writerInfo.location.split(' ').slice(1, 3).join(' ')}</span>
                 } */}
+                { kindCategory >= 4 && kindCategory <= 6 &&
+                  <span style={{color: "#5552FF", fontSize: "14px"}}>{writerInfo.addr.split(" ").slice(1, 3).join(" ")}</span>
+                }
                 <span className="text-dark fw-bold"> {writerInfo.nickname}</span>
               </Link>
             </Row>

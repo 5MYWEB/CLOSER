@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { likeBoard } from '../../modules/board';
 import UserBadgeItem from '../profile/UserBadgeItem'
 import { Row, Col, Card, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
 import defaultBoardImg from '../../assets/house-emoji.png';
 import '../../styles/bootstrap.min.css';
 import './BoardItem.css'
 
 const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // 현재 로그인한 사용자의 아이디 가져오기
   const { userId } = useSelector((state) => state.user.userInfo);
@@ -118,38 +118,6 @@ const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
       setImgUrl(board.imgUrls[0])
     }
   }, [board.imgUrls])
-
-  // 좋아요 버튼을 눌렀을 때
-  const onClickLike = () => {
-    axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
-      kind_pk: 2,
-      userId: userId,
-      flag: "true",
-    })
-    .then(() => {
-      setLiked(!liked)
-      dispatch(likeBoard())
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
-
-  // 북마크 버튼을 눌렀을 때
-  const onClickBookmark = () => {
-    axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
-      kind_pk: 3,
-      userId: userId,
-      flag: "true",
-    })
-    .then(() => {
-      setBookmarked(!bookmarked)
-      dispatch(likeBoard())
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
   
   return (
     <Container ref={ref} className="px-0">
@@ -184,11 +152,38 @@ const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
                   {board.nickname}
                 </Col>
                 <Col className="px-0 text-end my-1">
-                  <FontAwesomeIcon icon={faComment}/> { countComment }
-                  &nbsp;&nbsp;     
-                  <FontAwesomeIcon icon={faHeart}/> { countLike }
-                  &nbsp;&nbsp;
-                  <FontAwesomeIcon icon={faBookmark}/> {countBookmark}
+                  <div className = "likeAndBookmark">
+                    <div className = "likePart">
+                      <FontAwesomeIcon icon={faComment} className ="align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 
+                      <span className="ms-1 align-middle">{countComment}</span>
+                    </div>
+                    {/* 좋아요 */}
+                    { liked
+                      ?
+                      <div className = "likePart ms-2">
+                        <FontAwesomeIcon icon={fasHeart} className ="heart_full align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 
+                        <span className="ms-1 align-middle">{countLike}</span>
+                      </div>
+                      : 
+                      <div className = "likePart ms-2">
+                        <FontAwesomeIcon icon={faHeart} className ="heart_empty align-middle" alt="heart_empty" style={{ color: "#5552FF"}}/> 
+                        <span className="ms-1 align-middle">{countLike}</span>
+                      </div>
+                    }
+                    {/* 북마크 */}
+                    { bookmarked
+                      ?
+                      <div className = "bookmarkPart ms-2">
+                        <FontAwesomeIcon icon={fasBookmark} className ="bookmark_full align-middle" alt="bookmark_full" style={{ color: "#5552FF"}}/> 
+                        <span className="ms-1 align-middle">{countBookmark}</span>
+                      </div>
+                      : 
+                      <div className = "bookmarkPart ms-2">
+                        <FontAwesomeIcon icon={faBookmark} className ="bookmark_empty align-middle" alt="bookmark_empty" style={{ color: "#5552FF"}}/>
+                        <span className="ms-1 align-middle">{countBookmark}</span>
+                      </div>
+                    }
+                  </div>
                 </Col>
               </Row>
             </Col>

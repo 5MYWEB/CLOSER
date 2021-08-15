@@ -55,4 +55,6 @@ public interface BoardMapper {
     int countFeedAll(); // 뉴스피드 게시글 총 갯수
     int countFeedNear(String location); // 나와 동일한 위치인 사람들의 피드 갯수
     int countFeedFollow(String userId); // 내가 팔로우 한 사람들의 피드 갯수
+
+    int commentKind(int board_pk); // 해당 댓글이 어떤 카테고리 소속인지
 }

@@ -32,7 +32,7 @@ function AlarmNavbar() {
             <div>
               미확인
               { unreadCount > 0 &&
-                <span class="badge rounded-pill bg-danger m-1">{unreadCount}</span>
+                <span className="badge rounded-pill bg-danger m-1">{unreadCount}</span>
               }
             </div>
           </Link>

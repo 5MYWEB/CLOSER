@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import defaultProfile from '../../assets/user-on.svg';
 import UserBadge from './UserBadge';
 import { RippleButton } from '../../styles/index';
-
 import compassRegular from '../../assets/profile/compass-regular.svg';
 import calendarRegular from '../../assets/profile/calendar-alt-regular.svg';
 import '../../styles/theme.css'

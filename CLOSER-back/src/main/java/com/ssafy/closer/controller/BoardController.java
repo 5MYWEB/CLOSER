@@ -636,4 +636,10 @@ public class BoardController {
         }
     }
 
+    @ApiOperation(value = "댓글이 속한 게시판 종류")
+    @GetMapping("/comment/{board_pk}")
+    public ResponseEntity<String> commentKind(@PathVariable int board_pk) {
+        return new ResponseEntity(boardService.commentKind(board_pk), HttpStatus.OK);
+    }
+
 }

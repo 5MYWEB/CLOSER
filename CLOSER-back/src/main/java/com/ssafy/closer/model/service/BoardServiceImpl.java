@@ -195,4 +195,8 @@ public class BoardServiceImpl implements BoardService {
         return sqlSession.getMapper(BoardMapper.class).countFeedFollow(userId);
     }
 
+    @Override
+    public int commentKind(int board_pk) {
+        return sqlSession.getMapper(BoardMapper.class).commentKind(board_pk);
+    }
 }

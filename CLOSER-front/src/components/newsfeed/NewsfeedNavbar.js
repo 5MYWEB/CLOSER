@@ -7,15 +7,15 @@ function NewsfeedNavbar() {
     <div className="feedcontainer">
         <div className = "feedList">
             <div className = "feedNear">
-              <Link to={"/newsfeed/near"} class="link-light">NEAR</Link>
+              <Link to={"/newsfeed/near"} className="link-light">NEAR</Link>
             </div>
 
             <div className = "feedFavorite">
-              <Link to={"/newsfeed/follow"} class="link-light" >FAVORITE</Link>
+              <Link to={"/newsfeed/follow"} className="link-light" >FAVORITE</Link>
             </div>
 
             <div className = "feedHot">
-              <Link to={"/newsfeed/total"} class="link-light">HOT</Link>
+              <Link to={"/newsfeed/total"} className="link-light">HOT</Link>
             </div>
         </div>
     </div>

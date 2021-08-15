@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import { RippleButton } from '../../styles/index';
 import { createBoard } from '../../modules/board';
 
 const NewsfeedForm = () => {
@@ -60,7 +61,10 @@ const NewsfeedForm = () => {
               maxLength={500} 
               placeholder="무슨 생각을 하고 계신가요?"
               onChange={onChangeText} />
-            <input type="submit" value="업로드" />
+            {/* <input type="submit" value="업로드" /> */}
+            <Link to={`/board/`} className="d-flex justify-content-center">
+              <RippleButton type="button" cclass="cbtn cbtn-primary cbtn-lg" children="업로드"/>
+            </Link>
           </form>
           <br />
         </div>

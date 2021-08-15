@@ -19,10 +19,31 @@
         values (#{userId}, #{category_pk}, #{content}, #{created_at}, #{otherUserId});
     </insert>
 
-    <insert id="alarmBotCreate" parameterType="AlarmDto" useGeneratedKeys="true" keyProperty="alarm_pk" keyColumn="alarm_pk">
-        insert into user_alarm(userId, category_pk, content, created_at, bot_pk)
-        values (#{userId}, #{category_pk}, #{content}, #{created_at}, #{bot_pk});
+    <!-- 일정 요일 선택해서 알림 요청 -->
+    <insert id="alarmBotCreateDay" parameterType="AlarmDto" useGeneratedKeys="true" keyProperty="alarm_pk" keyColumn="alarm_pk">
+        insert into user_bot(bot_pk, userId, content, alarm_day)
+        values (#{bot_pk}, #{userId}, #{content}, #{alarm_day});
     </insert>
+
+    <!-- 현재 요일에 해당하는 요일에 요청한 사람에게 메시지 뿌림 -->
+<!--    <select id="alarmBotReadDay" parameterType="String" resultType="BotDto">-->
+<!--        select content-->
+<!--        from user_bot-->
+<!--        where alarm_date = DATENAME(DW, GETDTE)-->
+<!--    </select>-->
+
+    <!-- 월에 일정 날짜 (1일 - 31일) 선택해서 알림 요청 -->
+    <insert id="alarmBotCreateDate" parameterType="AlarmDto" useGeneratedKeys="true" keyProperty="alarm_pk" keyColumn="alarm_pk">
+        insert into user_bot(bot_pk, userId, content, alarm_date)
+        values (#{bot_pk}, #{userId}, #{content}, #{alarm_day_date});
+    </insert>
+
+    <!-- 현재 날짜에 해당하는 날짜에 요청한 사람에게 메시지 뿌림 -->
+    <select id="alarmBotReadDate" parameterType="String" resultType="BotDto">
+        select userId, day(alarm_day)
+        from user_bot
+        where day(alarm_day) = day(curdate());
+    </select>
 
     <select id="alarmUnread" parameterType="String" resultType="int">
         select count(*)

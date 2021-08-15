@@ -79,7 +79,6 @@ function AlarmItem({ alarm, userId }) {
                 </div>
               </div>
             </div>
-            {/* <div class="row mx-0">읽음(색깔로 대체): {alarm.visited ? 'O' : 'X' }</div> */}
           </div>
         </Link>
       }

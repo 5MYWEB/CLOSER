@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategory, getSearchedList } from '../../modules/search';
-import { Collapse } from 'react-bootstrap';
+import { setCategory, getSearchedList, naverCheck, getSearchedNaverList } from '../../modules/search';
+import { Collapse, FormSelect } from 'react-bootstrap';
 import './SearchBar.css';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,7 +13,7 @@ const SearchBar = () => {
 
   const dispatch = useDispatch();
 
-  const { categoryName, categorySearchUrl } = useSelector((state) => state.search)
+  const { categoryName, categorySearchUrl, naverChecked } = useSelector((state) => state.search)
 
   // 검색 조건
   const [choice, setChoice] = useState(1);
@@ -21,6 +21,8 @@ const SearchBar = () => {
   const [text, setText] = useState('');
   // 검색 카테고리 열고 닫음
   const [open, setOpen] = useState(false);
+  // 검색 카테고리
+  const [value, setValue] = useState("0");
 
   // 검색창에 입력 시
   const onChangeInput = (e) => {
@@ -35,6 +37,12 @@ const SearchBar = () => {
   // 카테고리 선택시 리덕스에 저장
   const onChangeCategory = (e) => {
     dispatch(setCategory(e.target.value))
+    setValue(e.target.value)
+  }
+
+  // 네이버 체크 시
+  const onClickChecked = () => {
+    dispatch(naverCheck())
   }
 
   // 검색 버튼 클릭 시
@@ -65,6 +73,20 @@ const SearchBar = () => {
     .catch((err) => {
       console.log(err)
     })
+    
+    if (naverChecked === true) {
+      axios.get(`http://localhost:8080/search`, {
+        params: {
+          keyword: text,
+        }
+      })
+      .then((res) => {
+        dispatch(getSearchedNaverList(res.data.items))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
   }
 
   return (
@@ -72,14 +94,19 @@ const SearchBar = () => {
 
       <div className="row mx-0 search-category">
         {/* 카테고리 선택 버튼 */}
-        <button
-          onClick={() => setOpen(!open)}
-          aria-controls="example-collapse-text"
-          aria-expanded={open}
-          className="search-category-collapse"
-        >
+        <div className="col-7 offset-1 px-0">
           {categoryName}에서 검색하기
-        </button>
+        </div>
+        <div className="col-4 px-0">
+          <button
+            onClick={() => setOpen(!open)}
+            aria-controls="example-collapse-text"
+            aria-expanded={open}
+            className="search-category-collapse"
+          >
+            카테고리 선택
+          </button>
+        </div>
 
         {/* 카테고리들 */}
         <Collapse in={open}>
@@ -88,7 +115,7 @@ const SearchBar = () => {
             <div className="row mx-0">
               <div className="col px-0">
                 <button
-                  className="search-category-select"
+                  className={"search-category-select" + (value === "0" ? "-selected" : "")}
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}} 
                   type="button" 
                   value={0}
@@ -97,15 +124,18 @@ const SearchBar = () => {
               </div>
               <div className="col px-0">
                 <button
-                  className="search-category-select"
+                  className={"search-category-select" + (value === "9" ? "-selected" : "")}
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}}
                   type="button" 
                   value={9}
                 >뉴스피드
                 </button> 
               </div>
-              <div className="col offset-3 px-0">
-                네이버(체크)
+              <div className="col-2 px-0">
+              </div>
+              <div className="col-4 px-0 d-flex">
+                <input type="checkbox" id="scales" name="scales" checked={naverChecked} onClick={onClickChecked} />
+                <label htmlFor="scales">네이버검색 포함</label>
               </div>
             </div>
 
@@ -113,7 +143,7 @@ const SearchBar = () => {
             <div className="row mx-0 d-flex">
               <div className="col px-0">
                 <button
-                  className="search-category-select"
+                  className={"search-category-select" + (value === "1" ? "-selected" : "")}
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}}
                   type="button" 
                   value={1}
@@ -122,7 +152,7 @@ const SearchBar = () => {
               </div>  
               <div className="col px-0">
                 <button
-                  className="search-category-select"
+                  className={"search-category-select" + (value === "2" ? "-selected" : "")}
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}}
                   type="button" 
                   value={2}
@@ -131,7 +161,7 @@ const SearchBar = () => {
               </div>
               <div className="col px-0">
                 <button
-                  className="search-category-select"
+                  className={"search-category-select" + (value === "3" ? "-selected" : "")}
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}}
                   type="button" 
                   value={3}
@@ -140,7 +170,7 @@ const SearchBar = () => {
               </div>
               <div className="col px-0">
                 <button
-                  className="search-category-select"
+                  className={"search-category-select" + (value === "4" ? "-selected" : "")}
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}}
                   type="button" 
                   value={4}
@@ -153,7 +183,7 @@ const SearchBar = () => {
             <div className="row mx-0">
               <div className="col px-0">
                 <button
-                  className="search-category-select"
+                  className={"search-category-select" + (value === "5" ? "-selected" : "")}
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}}
                   type="button" 
                   value={5}
@@ -162,7 +192,7 @@ const SearchBar = () => {
               </div>
               <div className="col px-0">
                 <button
-                  className="search-category-select"
+                  className={"search-category-select" + (value === "6" ? "-selected" : "")}
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}}
                   type="button" 
                   value={6}
@@ -171,7 +201,7 @@ const SearchBar = () => {
               </div>
               <div className="col px-0">
                 <button
-                  className="search-category-select"
+                  className={"search-category-select" + (value === "7" ? "-selected" : "")}
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}}
                   type="button" 
                   value={7}
@@ -180,7 +210,7 @@ const SearchBar = () => {
               </div>
               <div className="col px-0">
                 <button
-                  className="search-category-select"
+                  className={"search-category-select" + (value === "8" ? "-selected" : "")}
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}}
                   type="button" 
                   value={8}
@@ -193,13 +223,13 @@ const SearchBar = () => {
       </div>
 
       <div className="row mx-0">
-        <div className="col-3 px-0">
-          <select id="kind" name="kind" value={choice} onChange={onChangeChoice}>
+        <div className="col-4 px-0">
+          <FormSelect id="kind" name="kind" value={choice} onChange={onChangeChoice}>
             <option value={1}>제목 + 내용</option>
             <option value={2}>닉네임</option>
-          </select>
+          </FormSelect>
         </div>
-        <div className="col-7 px-0">
+        <div className="col-6 px-0">
           <input 
             type="text" 
             className="searchbar-input"

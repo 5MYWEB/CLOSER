@@ -1,0 +1,26 @@
+.naver-item {
+  padding: 1rem;
+  border-bottom: 0.1px solid rgba(160, 145, 245, .5);
+  color: #0b1f44;
+}
+
+.naver-title {
+  margin-bottom: 0.25rem;
+}
+
+.naver-logo {
+  text-align: center;
+}
+
+.naver-desc {
+  margin-bottom: 0.25rem;
+}
+
+.naver-blogger {
+  font-size: 0.8rem;
+}
+
+.naver-postdate {
+  font-size: 0.8rem;
+  text-align: end;
+}

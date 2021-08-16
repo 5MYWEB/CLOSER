@@ -5,7 +5,7 @@ import axios from 'axios';
 import './AlarmItem.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark, faUsers } from "@fortawesome/free-solid-svg-icons";
-import defaultProfile from '../../assets/profile-user-demo.png'
+import defaultProfile from '../../assets/user-on.svg'
 
 function AlarmItem({ alarm, userId }) {
 

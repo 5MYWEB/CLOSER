@@ -16,6 +16,7 @@ import UserBoard from './components/profile/UserBoard';
 import UserBookmark from './components/profile/UserBookmark';
 import UserLocation from './components/profile/UserLocation';
 import AlarmList from './components/alarm/AlarmList';
+import OtherMessages from "./components/message/OtherMessages";
 import BotAlarm from './components/alarm/BotAlarm';
 
 import './App.css';
@@ -169,7 +170,9 @@ function App( { location, history }) {
         <Route path="/profile/:id/user-bookmark" component={UserBookmark} />
         <Route path="/change-location" component={UserLocation} />
         <Route path="/alarm/:type" component={AlarmList} />
+        <Route path="/message/:id" component={OtherMessages} />
         <Route path="/bot" component={BotAlarm} />
+
       </div>
       {/* Navbar를 보여주거나 변형하거나 / 숨김 */}
       { !isNavBar

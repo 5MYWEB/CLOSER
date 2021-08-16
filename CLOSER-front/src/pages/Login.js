@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom';
 import { getMyInfoAction, loginAction, getPostCount } from '../modules/user'
 import { RippleButton } from '../styles/index';
 import '../styles/theme.css'
@@ -82,9 +83,9 @@ function Login({ history }) {
   // 제출 시 검사 함수 실행 후 로그인 함수 실행
   const onSubmit=(
     e => {
-      e.preventDefault();
-      // 검사 함수로 확인,
-      if (checkAll() === true) {
+      setTimeout( function() {
+        // 검사 함수로 확인,
+        if (checkAll() === true) {
         // 로그인 요청
         axios.post('http://localhost:8080/user/login', userInputs )
           .then((response) => {
@@ -96,8 +97,18 @@ function Login({ history }) {
             console.log(error)
           })
       }
+      }, 350);
+      e.preventDefault();
+
     }
   )
+
+  // 회원가입으로 이동
+  const onClick = ( ) => {
+    setTimeout( function() {
+      history.push('/signup');
+    }, 350);
+  }
 
   // 로그인에 성공했으면 로그인 유저 정보, 게시글 수 가져오기
   useEffect(() => {
@@ -118,6 +129,7 @@ function Login({ history }) {
           console.log(err)
         })
       }
+
 
       
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -163,7 +175,7 @@ function Login({ history }) {
       />
       <div className="button-group">
         <RippleButton type="submit" cclass="cbtn cbtn-lg cbtn-primary" children="로그인"/>
-        <RippleButton type="button" cclass="cbtn cbtn-none cbtn-lg" children="회원가입"/>
+        <RippleButton type="button" cclass="cbtn cbtn-none cbtn-lg" children="회원가입" onClick={onClick}/>
       </div>
       </form>
     </div>

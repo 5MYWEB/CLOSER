@@ -24,7 +24,7 @@ const NewsfeedFakeForm = ({ history }) => {
                   <Col xs={11}>
                     <input 
                       type="text" 
-                      className="form-control my-0" 
+                      className="form-control mx-0 my-0" 
                       placeholder="무슨 생각을 하고 계신가요?"
                     />
                   </Col>

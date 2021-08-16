@@ -1,26 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+// import { connect } from 'react-redux'
 import { bubble as Menu } from 'react-burger-menu'
 import { connect } from 'react-redux';
 import './Sidebar.css';
 import '../../styles/bootstrap.min.css';
 import * as actions from '../../modules/user';
 // import UserBadge from '../profile/UserBadge';
-import defaultProfile from '../../assets/user-on.svg';
+import userBold from '../../assets/user-bold.svg';
 
 import homeSolid from '../../assets/sidebar/home-solid.svg';
-import userSolid from '../../assets/sidebar/user-solid.svg';
+import defaultProfile from '../../assets/user-on.svg';
 import compassSolid from '../../assets/sidebar/compass-solid.svg';
 import questionSolid from '../../assets/sidebar/question-solid.svg';
+import userSolid from '../../assets/sidebar/user-solid.svg';
 import signInSolid from '../../assets/sidebar/sign-in-alt-solid.svg';
 import signOutSolid from '../../assets/sidebar/sign-out-alt-solid.svg';
 import signUpSolid from '../../assets/sidebar/door-open-solid.svg';
 
-class Sidebar extends React.Component {
+class ConnectedSidebar extends React.Component {
   constructor(props) { // render 함수보다 먼저 실행이 되면서 그 컴포넌트를 초기화를 담당
     super(props);
+
     this.state = {
-      menuOpen: false,
+      menuOpen: false,      
     }
   }
 
@@ -49,13 +52,14 @@ class Sidebar extends React.Component {
         return (
           <div>
             <Menu
+              width="75vw"
               isOpen={this.state.menuOpen}
               onStateChange={(state) => this.handleStateChange(state)}
             >
               <div className="bm-menu-first d-flex justify-content-center">
                 <Link to="/login" onClick={() => this.closeMenu()} className="bm-profile">
                     <div className="col-4 mx-auto px-0 py-2 profile-img-wrapper">
-                      <img src={defaultProfile}  alt="프로필사진" className="profile-img" />
+                      <img src={userBold}  alt="프로필사진" className="profile-img" />
                     </div>
                     <div className="col-8 px-0">
                       <p className="bm-not-login-text">로그인 해주세요</p> 
@@ -206,4 +210,4 @@ const mapDispatchToProps = (dispatch) => ({
   logoutAction: () => dispatch(actions.logoutAction()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectedSidebar);

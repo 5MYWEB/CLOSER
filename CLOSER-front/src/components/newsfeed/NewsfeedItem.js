@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Row, Col, Container, Carousel } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark } from "@fortawesome/free-regular-svg-icons";
-import defaultProfile from '../../assets/profile-user-demo.png';
+import defaultProfile from '../../assets/user-on.svg';
 import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
 // import '../../styles/bootstrap.min.css';
 
@@ -143,7 +143,9 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
         <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
           <Row className="g-0 pb-3 mb-3 border-bottom border-2">
             <Col xs={2}>
-              <img src={writerInfo.profileImg} alt="profile" className="userprofile" onError={handleImgError} style={{height: "100%"}} />
+              <div className="board-img-wrapper">
+                <img src={writerInfo.profileImg} alt="profile" className="userprofile profile-img" onError={handleImgError} />
+              </div>
             </Col>
             <Col xs={10}>
               <Row className="g-0 ps-1">

@@ -5,8 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Container, Row, Col } from 'react-bootstrap';
 import { followAction } from '../../modules/user';
-import defaultProfile from "../../assets/profile-user-demo.png";
+import defaultProfile from '../../assets/user-on.svg';
 import { RippleButton } from '../../styles/index';
+import '../../styles/theme.css'
 
 function FollowerItem({ follower }) {
 
@@ -40,7 +41,9 @@ function FollowerItem({ follower }) {
         <Row className="g-0 align-items-center mx-5 pb-3 border-bottom border-2">
           <Col xs={2} className="px-0">
             <Link to={`/profile/${follower.activeUser}`}>
-              <img src={img} alt="userprofile" className="userprofile rounded-circle" onError={handleImgError} style={{width: "100%"}}/>
+              <div className="follow-img-wrapper">
+                <img src={img} alt="userprofile" className="userprofile profile-img" onError={handleImgError}/>
+              </div>
             </Link>
           </Col>
           <Col xs={7} className="px-0">

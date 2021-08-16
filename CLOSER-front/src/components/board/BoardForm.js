@@ -56,9 +56,9 @@ const BoardForm = () => {
     setTotalNum(e.target.value)
   }
 
-  const onClickCancel = () => {
-    history.goBack();
-  }
+  // const onClickCancel = () => {
+  //   history.goBack();
+  // }
 
   // 게시판 게시물 제출
   const onSubmitBoard = (e) => {

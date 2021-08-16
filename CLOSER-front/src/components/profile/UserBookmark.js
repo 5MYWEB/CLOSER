@@ -28,14 +28,18 @@ const UserBookmark = ({ match }) => {
   return (
     <>
       {/* 피드가 비어있지 않다면 피드목록을 불러옴*/}
-      {boardList && 
+      {boardList.length > 0
+      ?
         <div>
           {boardList.map((board) => {
             return (
               <BoardItem key={board.board_pk} board={board} />
             );
           })}
-        </div>}
+        </div>
+      :
+      <div className="d-flex justify-content-center mt-1">북마크한 글이 없어요 :( </div>
+      }
     </>
   )
 };

@@ -1,12 +1,12 @@
 import React, { useRef, useState, useCallback, useEffect  } from 'react';
-import { NaverMap } from 'react-naver-maps';
 import { useSelector } from 'react-redux';
 import useFetch from "../../hooks/useFetch";
 import BoardItem from '../board/BoardItem';
+import { Row, Container } from 'react-bootstrap';
 // import { getBoardList } from '../../modules/board';
 
 
-const NewsfeedHot = ({match}) => {
+const NewsfeedList = ({match, history}) => {
 
   // 리덕스의 boardList, boardCreated, boardDeleted 불러옴
   // const { boardList, boardCreated, boardDeleted } = useSelector((state) => state.board);
@@ -18,6 +18,8 @@ const NewsfeedHot = ({match}) => {
   // infinite scroll
   const [pageNum, setPageNum] = useState(1);
   const { loading, error, list, hasMore } = useFetch(pageNum, name, addr, userId);
+
+  const { boardCreated } = useSelector((state) => state.board)
 
   const observer = useRef();
   const lastBoardElementRef = useCallback((node) => {
@@ -35,19 +37,39 @@ const NewsfeedHot = ({match}) => {
 
   useEffect(() => {
     setPageNum(1)
-  }, [name])
+  }, [name, boardCreated])
+
+
+  useEffect(() => {
+    if(boardCreated){
+      setPageNum(0)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [boardCreated])
 
     
   return (
     <div className="App">
+      { name === "near" &&
+        <div className="ms-3 my-3 fw-bold">
+          내 동네: {addr.split(" ").slice(1, 3).join(" ")}
+        </div>
+      }
+      { list.length === 0 &&
+        <Container className="px-0">
+          <Row className="g-0 my-3">
+            피드글이 없습니다:(
+          </Row>
+        </Container>
+      }
       {list.map((board, i) => {
         const isLastElement = (list.length === i + 1);
         return (
-        isLastElement
-        ? 
-        <BoardItem key={i} board={board} ref={lastBoardElementRef}/>
-        : 
-        <BoardItem key={i} board={board}/>
+          isLastElement
+          ? 
+          <BoardItem key={i} board={board} name={name} ref={lastBoardElementRef}/>
+          : 
+          <BoardItem key={i} board={board} name={name}/>
         )
       })}
 
@@ -57,4 +79,4 @@ const NewsfeedHot = ({match}) => {
   );
 }
 
-export default NewsfeedHot;
+export default NewsfeedList;

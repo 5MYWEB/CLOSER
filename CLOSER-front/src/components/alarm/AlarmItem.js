@@ -5,7 +5,7 @@ import axios from 'axios';
 import './AlarmItem.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark, faUsers } from "@fortawesome/free-solid-svg-icons";
-import defaultProfile from '../../assets/profile-user-demo.png'
+import defaultProfile from '../../assets/user-on.svg'
 
 function AlarmItem({ alarm, userId }) {
 
@@ -37,6 +37,7 @@ function AlarmItem({ alarm, userId }) {
     var dateDiff = Math.ceil((today.getTime()-createdTime.getTime())/(1000*3600*24));
     setDateDiff(dateDiff-1)
 
+    return () => {setDateDiff(false); setProfileImg(''); setAlarmLink('') } // cleanup function을 이용
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -63,7 +64,7 @@ function AlarmItem({ alarm, userId }) {
                     { alarm.category_pk === 3 && <FontAwesomeIcon icon={faBookmark} className="alarm-icon-bookmark"/> }
                     { alarm.category_pk === 4 && <FontAwesomeIcon icon={faUsers} className="alarm-icon-users"/> }
                   </div>
-                  <div class="col alarm-date">
+                  <div className="col alarm-date">
                     {dateDiff >= 1
                       ?
                       <div>
@@ -79,7 +80,6 @@ function AlarmItem({ alarm, userId }) {
                 </div>
               </div>
             </div>
-            {/* <div class="row mx-0">읽음(색깔로 대체): {alarm.visited ? 'O' : 'X' }</div> */}
           </div>
         </Link>
       }

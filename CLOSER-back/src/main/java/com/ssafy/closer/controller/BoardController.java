@@ -346,27 +346,44 @@ public class BoardController {
     // 게시글 수정
     @ApiOperation(value = "해당 게시글 수정")
     @PutMapping("/{board_pk}")
-    public ResponseEntity<String> update(@PathVariable int board_pk, @RequestBody Map<String, String> info) {
+    public ResponseEntity<String> update(@PathVariable int board_pk, @RequestBody Map<String, Object> info) {
         // 로그인한 유저와 해당 글을 쓴 유저가 같은지 확인해야함
-        String userId = info.get("userId");
+        String userId = (String)info.get("userId");
         String user = boardService.findUser(board_pk);
-        int kind_pk = Integer.parseInt(info.get("kind_pk"));
+        int kind_pk = (int)info.get("kind_pk");
+
+        // 이미지 리스트 형식으로 저장
+        ArrayList<String> imgUrls = (ArrayList) info.get("imgUrls");
+
 
         if(userId.equals(user)){
             BoardDto boardDto = new BoardDto();
             boardDto.setBoard_pk(board_pk);
             boardDto.setKind_pk(kind_pk);
-            boardDto.setTitle(info.get("title"));
-            boardDto.setContent(info.get("content"));
+            boardDto.setTitle((String)info.get("title"));
+            boardDto.setContent((String)info.get("content"));
             boardDto.setUpdated_at(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
             if (kind_pk <= 3){ // gboard인 경우
                 boardDto.setUpdated_at(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                if(imgUrls.size() > 0){
+                    // InfoDto (사진) 선언
+                    InfoDto infoDto = new InfoDto();
+                    if(imgUrls.size() > 0) {
+                        infoDto.setUserId(userId);
+                        infoDto.setBoard_pk(board_pk);
+                    }
+                    for (int i=0;i<imgUrls.size();i++){
+                        infoDto.setImgUrl(imgUrls.get(i));
+                        if(infoService.addImage(infoDto)) continue;
+                        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+                    }
+                }
                 if(boardService.gBoardUpdate(boardDto)){ // 수정을 성공했다면
                     return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
                 }
             }else if(kind_pk <= 6){ // lboard인 경우
-                boardDto.setTotalNum(Integer.parseInt(info.get("totalNum")));
+                boardDto.setTotalNum((int)info.get("totalNum"));
                 if(boardService.lBoardUpdate(boardDto)){
                     return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
                 }
@@ -627,6 +644,7 @@ public class BoardController {
             }
 
             // 참가자 수
+            System.out.println(boardService.countJoin(board_pk));
             output.put("countJoin", boardService.countJoin(board_pk));
 
             return new ResponseEntity(output, HttpStatus.OK);
@@ -634,6 +652,21 @@ public class BoardController {
             e.printStackTrace();
             return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
         }
+    }
+
+    @ApiOperation(value = "댓글이 속한 게시판 종류")
+    @GetMapping("/comment/{board_pk}")
+    public ResponseEntity<String> commentKind(@PathVariable int board_pk) {
+        return new ResponseEntity(boardService.commentKind(board_pk), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "게시판 수정 시 이미지 delete")
+    @DeleteMapping("/{board_pk}/delete-image")
+    public ResponseEntity deleteImage(@PathVariable int board_pk){
+        if(infoService.deleteImage(board_pk)){
+            return new ResponseEntity(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
     }
 
 }

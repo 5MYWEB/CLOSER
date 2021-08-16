@@ -16,6 +16,7 @@ import UserBookmark from './components/profile/UserBookmark';
 import UserLocation from './components/profile/UserLocation';
 import AlarmList from './components/alarm/AlarmList';
 import OtherMessages from "./components/message/OtherMessages";
+import BotAlarm from './components/alarm/BotAlarm';
 
 import './App.css';
 
@@ -82,9 +83,8 @@ function App( { location }) {
   }
 
   useEffect(() => {
-    console.log(decodedToken)
-    if (isLoggedIn === true && decodedToken.UserId !== undefined){
-      axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.UserId}`)
+    if (isLoggedIn === true && decodedToken.user_id !== undefined){
+      axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.user_id}`)
         .then((response) => {
           dispatch(getMyInfoAction(response.data))
         })
@@ -140,6 +140,8 @@ function App( { location }) {
         <Route path="/change-location" component={UserLocation} />
         <Route path="/alarm/:type" component={AlarmList} />
         <Route path="/message/:id" component={OtherMessages} />
+        <Route path="/bot" component={BotAlarm} />
+
       </div>
       {/* Navbar를 보여주거나 변형하거나 / 숨김 */}
       { !isNavBar

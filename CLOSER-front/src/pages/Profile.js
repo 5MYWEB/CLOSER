@@ -4,7 +4,7 @@ import MyProfile from '../components/profile/MyProfile'
 import OtherProfile from '../components/profile/OtherProfile'
 
 
-function Profile({match}) {
+function Profile({match, history}) {
 
   // 프로필 페이지의 파라미터로 들어온 아이디
   const id = match.params.id;
@@ -14,7 +14,7 @@ function Profile({match}) {
 
   // 두개가 같으면 마이프로필 페이지, 다르면 타인프로필 페이지
   if (userId === id) {
-    return <MyProfile />
+    return <MyProfile history={history}/>
   } return <OtherProfile id={id} />
 }
 

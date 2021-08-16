@@ -1,14 +1,27 @@
 // useFetch.js
 import { useState, useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import axios from "axios";
+import { resetCreateBoard } from'../modules/board';
 
 function useFetch(page, name, addr, userId) {
+
+  const dispatch = useDispatch();
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [list, setList] = useState([]);
   const [hasMore, setHasMore] = useState(false);
-  
-    const sendBoard = useCallback(async () => {
+
+  const { boardCreated } = useSelector((state) => state.board)
+
+  const sendBoard = useCallback(async () => {
+    // 게시물 생성 시
+    if(page === 0) {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      page = 1
+    }
+
     try {
       await setLoading(true);
       await setError(false);
@@ -31,6 +44,7 @@ function useFetch(page, name, addr, userId) {
       // page가 1이면 name(near, follow, total)이 바뀌었단 뜻이므로 리스트를 초기화 한 뒤 담음 (prev 리스트와 합치지 않음)
       if (page === 1) {
         await setList([...res.data.data]);
+        dispatch(resetCreateBoard())
       } else {
         await setList((prev) => [...new Set([...prev, ...res.data.data])]);
       }
@@ -41,9 +55,17 @@ function useFetch(page, name, addr, userId) {
     }
   }, [addr, name, page, userId]);
 
+
   useEffect(() => {
     sendBoard();
-  }, [sendBoard, page]);
+  }, [sendBoard, page, ]);
+
+  useEffect(() => {
+    if(boardCreated){
+      sendBoard();
+    }
+  }, [sendBoard, boardCreated]);
+
   return { loading, error, list, hasMore };
 }
 

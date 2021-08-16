@@ -6,19 +6,20 @@ import { likeBoard } from '../../modules/board';
 import axios from 'axios';
 import CommentList from '../comment/CommentList';
 import UserBadgeItem from '../profile/UserBadgeItem';
-
 import './BoardDetail.css';
-import heartEmpty from '../../assets/heart_empty.png';
-import heartFull from '../../assets/heart_full.png';
-import bookmarkEmpty from '../../assets/bookmark_empty.png';
-import bookmarkFull from '../../assets/bookmark_full.png';
+import defaultProfile from '../../assets/profile-user-demo.png';
+import usersSolidImg from '../../assets/users-solid.svg';
+import { Row, Col, Container, Card, Carousel } from 'react-bootstrap';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart, faBookmark } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
 
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 const BoardDetail = ({match}) => {
   const dispatch = useDispatch();
-  
+
   // 현재 게시글의 정보
   const [board, setBoard] = useState({
     board_pk: null,
@@ -31,6 +32,7 @@ const BoardDetail = ({match}) => {
     location: '',
     nickname: '',
     badge: null,
+    imgUrls: [],
   })
 
   // 현재 게시글의 pk
@@ -51,6 +53,15 @@ const BoardDetail = ({match}) => {
   const [ bookmarked, setBookmarked] = useState(false)
   const [ joined, setJoined] = useState(false)
 
+  // n시간 전
+  const [ timePeriod, setTimePeriod ] = useState("")
+
+  // 해당 게시글 쓴 사람의 프로필
+  const [ writerProfile, setWriterProfile ] = useState("")
+
+  // 이미지 
+  const [ imgUrls, setImgUrls ] = useState([])
+
   useEffect(() => {
     axios.get(`http://localhost:8080/board/${pk}`)
     .then((res) => {
@@ -68,6 +79,7 @@ const BoardDetail = ({match}) => {
         badge: res.data.badge,
         totalNum: res.data.totalNum,
         gatherNum: res.data.gatherNum,
+        imgUrls: res.data.imgUrls,
       })
     })
     .catch((err) =>{
@@ -101,7 +113,8 @@ const BoardDetail = ({match}) => {
     })
 
     // 참여했는지
-    axios.post(`http://localhost:8080/board/${pk}/join`, {
+    if(pk > 3 && pk < 7){
+      axios.post(`http://localhost:8080/board/${pk}/join`, {
       userId: userId,
       flag: "false",
     })
@@ -111,6 +124,7 @@ const BoardDetail = ({match}) => {
     .catch((err) => {
       console.log(err)
     })
+    }
 
     // 댓글 좋아요 북마크 개수
     axios.post(`http://localhost:8080/board/${pk}/info-cnt`)
@@ -124,6 +138,42 @@ const BoardDetail = ({match}) => {
 
     // eslint-disable-next-line
   }, [boardLiked])
+
+  // 해당 유저의 프로필 사진
+  useEffect(() => {
+    setWriterProfile(`https://photo-album-hy.s3.ap-northeast-2.amazonaws.com/${board.userId}/${board.userId}_profile.jpg`)
+  }, [board.userId])
+
+  // 몇시간 전
+  useEffect(() => {
+    const today = new Date();
+    const timeValue = new Date(board.created_at);
+
+    const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+
+    if (betweenTime < 1) setTimePeriod('방금전');
+    else if (betweenTime < 60) {
+      setTimePeriod(`${betweenTime}분전`);
+    }
+    else if (betweenTimeHour < 24) {
+      setTimePeriod(`${betweenTimeHour}시간전`);
+    }
+    else if (betweenTimeDay < 365) {
+        setTimePeriod(`${betweenTimeDay}일전`);
+    }
+    else {
+      setTimePeriod(`${Math.floor(betweenTimeDay / 365)}년전`);
+    }
+  }, [board.created_at]);
+
+  // 이미지 링크 세팅
+  useEffect(() => {
+    if(board.imgUrls !== []){
+      setImgUrls(board.imgUrls)
+    }
+  }, [board.imgUrls])
 
 
   // 삭제 버튼을 클릭했을 때 실행되는 함수
@@ -195,87 +245,151 @@ const BoardDetail = ({match}) => {
     })
   }
 
+  // 이미지 없을 시 기본 이미지 생성
+  const handleImgError = (e) => {
+    e.target.src = defaultProfile;
+  }
+
   return (
-    <div className="page-wrapper">
-      {/* <div>글 번호 : {board.board_pk}</div> */}
-      {board.kind_pk !== 7 && 
-        <div>제목 : {board.title}</div>
-      }
-      
-        <div>작성자 : 
-        <Link to = {`/profile/${board.userId}`}>
-          {board.nickname}
-          </Link>
-          </div>
-
-
-      { board.kind_pk > 0 && board.kind_pk < 4 && board.badge !== 0 &&
-        <div>뱃지 : <UserBadgeItem badge={board.badge}/></div>
-      }
-      <div>작성시간 : {board.created_at}</div>
-      <div>내용 : {board.content}</div>
-      {board.kind_pk !== 7 && 
-        <div>수정시간 : {board.updated_at}</div>
-      }
-      {/* 지역게시판 인원모으기: 글쓴이한테는 버튼이 안 보임 */}
-      <div>
-        {board.kind_pk > 3 && board.kind_pk < 7
-          ? 
-            board.gatherNum >= board.totalNum
-              ?
-              <div>참여현황: {board.gatherNum} / {board.totalNum} 모집완료!</div>
-              : 
-              <div>참여현황: {board.gatherNum} / {board.totalNum}</div>
-          : ''
+    <Container className="page-wrapper">
+      <div className="mx-5">
+        <Row className="g-0 mb-3">
+          {board.kind_pk !== 7 && 
+            <div className="fw-bolder" style={{fontSize: "20px"}}>{board.title}</div>
+          }
+        </Row>
+        <Row className="g-0 pb-3 mb-3 border-bottom border-2">
+          <Col xs={2}>
+            <img src={writerProfile} alt="profile" className="userprofile" onError={handleImgError} style={{height: "100%"}} />
+          </Col>
+          <Col xs={10}>
+            <Row className="g-0 ps-1">
+              <Link to = {`/profile/${board.userId}`}>
+                { board.kind_pk > 0 && board.kind_pk < 4 && board.badge !== 0 &&
+                  <span style={{color: "#5552FF"}}><UserBadgeItem badge={board.badge} cclass="profile-badge"/></span>
+                }
+                { board.kind_pk >= 4 && board.kind_pk <= 6 &&
+                  <span style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(' ').slice(1, 3).join(' ')}</span>
+                }
+                <span className="text-dark fw-bold"> {board.nickname}</span>
+              </Link>
+            </Row>
+            <Row className="g-0 ps-1">
+              <span className="text-secondary" style={{fontSize: "14px"}}>{timePeriod}</span>
+            </Row>
+          </Col>
+        </Row>
+        <Row className="g-0 mb-3 fs-6">
+          <div>{board.content}</div>
+        </Row>
+        
+        { imgUrls.length > 0 &&
+          <Carousel>
+            {
+              imgUrls.map((imgUrl, idx) =>{
+                return (
+                  <Carousel.Item key={idx}>
+                    <img
+                      className="d-block w-100"
+                      src={imgUrl}
+                      alt={idx+1}
+                      onError={handleImgError}
+                    />
+                  </Carousel.Item>
+                )
+              })
+            }
+          </Carousel>
         }
-        { userId !== board.userId && board.kind_pk > 3 && board.kind_pk < 7
-          ?
-            joined
-            ?
-            <button onClick={onClickJoin}>빠지기</button>
-            :
-            <button onClick={onClickJoin}>참여하기!</button>
-          : ''
-        }
-      </div>
-      
-      {/* 수정 및 삭제 */}
 
-      { userId === board.userId &&
-        <div>
-          <Link to={`/board-update-form/${board.board_pk}/`}>
-            <button>수정</button>
-          </Link>
-          <button onClick={onClickDelete}>삭제</button>
+        {/* 지역게시판 인원모으기: 글쓴이한테는 버튼이 안 보임 */}
+        <div className="g-0 mb-3">
+          {board.kind_pk > 3 && board.kind_pk < 7 &&
+            <Card className="mx-2 p-2">
+              <Row className="mx-2">
+                { board.gatherNum >= board.totalNum 
+                  ? <Col className="text-start px-0" style={{color: "#5552FF"}}>모집완료</Col>
+                  : <Col className="text-start px-0" style={{color: "#5552FF"}}>모집중</Col>
+                }
+              </Row>
+              <Row className="mx-2 my-2">
+                <h3 className="text-center"><img src={usersSolidImg} alt="참여인원" className="px-0" style={{width: "30px"}}/> &nbsp; {board.gatherNum} / {board.totalNum} 참여</h3>
+              </Row>
+              <Row>
+                { userId !== board.userId
+                  ?
+                    !joined
+                    ?
+                      board.gatherNum >= board.totalNum 
+                      ?
+                        <div className="button-group mt-0">
+                          <button className="ripple-button cbtn cbtn-lg cbtn-outline-primary" onClick={onClickJoin} disabled>참여하기</button>
+                        </div>
+                      :
+                        <div className="button-group mt-0">
+                          <button className="ripple-button cbtn cbtn-lg cbtn-primary" onClick={onClickJoin}>참여하기</button>
+                        </div>
+                    :
+                    <div className="button-group mt-0">
+                      <button className="ripple-button cbtn cbtn-lg cbtn-secondary" onClick={onClickJoin} >빠지기</button>
+                    </div>
+                  : ''
+                }
+              </Row>
+            </Card>
+          }
         </div>
-      }
-      <div className = "likeAndBookmark">
-        {/* 좋아요 */}
-        { liked
-          ?
-          <div className = "likePart">
-            <img className ="heart_full" alt="heart_full" src={heartFull} onClick={onClickLike}></img> {countLike}
-          </div>
-          : 
-          <div className = "likePart">
-            <img className ="heart_empty" alt="heart_empty" src={heartEmpty} onClick={onClickLike}></img> {countLike}
-          </div>
-        }
-        {/* 북마크 */}
-        { bookmarked
-          ?
-          <div className = "bookmarkPart">
-            <img className ="bookmark_full" alt="bookmark_full" src={bookmarkFull} onClick={onClickBookmark}></img> {countBookmark}
-          </div>
-          : 
-          <div className = "bookmarkPart">
-            <img className ="bookmark_empty" alt="bookmark_empty" src={bookmarkEmpty} onClick={onClickBookmark}></img> {countBookmark}
-          </div>
-        }
-      </div>
 
-      <CommentList board_pk={Number(pk)} />
-    </div>     
+        <div className="d-flex justify-content-between align-items-center border-bottom border-2 border-secondary pb-1 mb-3" style={{borderBottomColor: "#5552FF"}}>
+          <div className = "likeAndBookmark">
+            {/* 좋아요 */}
+            { liked
+              ?
+              <div className = "likePart ms-2" style={{fontSize: "22px"}}>
+                {/* <img className ="heart_full" alt="heart_full" src={heartFull} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
+                <FontAwesomeIcon icon={fasHeart} className ="heart_full align-middle" alt="heart_full" onClick={onClickLike} style={{ color: "#5552FF"}}/> 
+                <span className="ms-1 align-middle">{countLike}</span>
+              </div>
+              : 
+              <div className = "likePart ms-2" style={{fontSize: "22px"}}>
+                {/* <img className ="heart_empty" alt="heart_empty" src={heartEmpty} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
+                <FontAwesomeIcon icon={faHeart} className ="heart_empty align-middle" alt="heart_empty" onClick={onClickLike} style={{ color: "#5552FF"}}/> 
+                <span className="ms-1 align-middle">{countLike}</span>
+              </div>
+            }
+            {/* 북마크 */}
+            { bookmarked
+              ?
+              <div className = "bookmarkPart ms-3" style={{fontSize: "22px"}}>
+                {/* <img className ="bookmark_full" alt="bookmark_full" src={bookmarkFull} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
+                <FontAwesomeIcon icon={fasBookmark} className ="bookmark_full align-middle" alt="bookmark_full" onClick={onClickBookmark} style={{ color: "#5552FF"}}/> 
+                <span className="ms-1 align-middle">{countBookmark}</span>
+              </div>
+              : 
+              <div className = "bookmarkPart ms-3" style={{fontSize: "22px"}}>
+                {/* <img className ="bookmark_empty" alt="bookmark_empty" src={bookmarkEmpty} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
+                <FontAwesomeIcon icon={faBookmark} className ="bookmark_empty align-middle" alt="bookmark_empty" onClick={onClickBookmark} style={{ color: "#5552FF"}}/>
+                <span className="ms-1 align-middle">{countBookmark}</span>
+              </div>
+            }
+          </div>
+          {/* 수정 및 삭제 */}
+          { userId === board.userId &&
+            <div>
+              {
+                board.kind_pk !== 7 &&
+                  <Link to={`/board-update-form/${board.board_pk}/`}>
+                    <button className="ripple-button cbtn cbtn-sm cbtn-primary mx-1 fw-bold">수정</button>
+                  </Link>
+              }
+              <button className="ripple-button cbtn cbtn-sm cbtn-secondary mx-1 fw-bold" onClick={onClickDelete}>삭제</button> 
+            </div>
+          }
+        </div>
+        
+        <CommentList board_pk={Number(pk)} />
+      </div>
+    </Container>     
   )
 }
 

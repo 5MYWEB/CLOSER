@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { likeBoard } from '../../modules/board';
-import UserBadgeItem from '../profile/UserBadgeItem'
-import { Row, Col, Card, Container, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Row, Col, Container, Carousel } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark } from "@fortawesome/free-regular-svg-icons";
-import { faUsers } from '@fortawesome/free-solid-svg-icons';
-import closerbot from '../../assets/closerbot.png'
+import defaultProfile from '../../assets/profile-user-demo.png';
+import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
 // import '../../styles/bootstrap.min.css';
 
-const NewsfeedItem = React.forwardRef(({ board }, ref) => {
+const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
 // function NewsfeedItem({ board }, ref) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // 현재 로그인한 사용자의 아이디 가져오기
   const { userId } = useSelector((state) => state.user.userInfo);
+
+  // 해당 글 쓴 사람 정보
+  const [writerInfo, setWriterInfo] = useState('')
 
   // 좋아요, 북마크를 눌렀을때 상태 반영 
   const { boardLiked } = useSelector((state) => state.board);
@@ -34,11 +35,8 @@ const NewsfeedItem = React.forwardRef(({ board }, ref) => {
   // n시간 전
   const [ timePeriod, setTimePeriod ] = useState("")
 
-  // 이미지 갯수
-  const [ imgUrl, setImgUrl ] = useState("")
-
-  // 모집 여부
-  const [ isJoin, setIsJoin ] = useState(true)
+  // 이미지 
+  const [ imgUrls, setImgUrls ] = useState([])
 
   useEffect(() => {
     return () => setLiked(false); // cleanup function을 이용
@@ -91,6 +89,18 @@ const NewsfeedItem = React.forwardRef(({ board }, ref) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardLiked])
 
+  // 댓글 작성자 정보 가져오기
+  useEffect(() => {
+    axios.post(`http://localhost:8080/user/profileinfo?userId=${board.userId}`)
+    .then((res) => {
+      setWriterInfo(res.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [board.userId])
+
   // 몇시간 전
   useEffect(() => {
     const today = new Date();
@@ -113,94 +123,106 @@ const NewsfeedItem = React.forwardRef(({ board }, ref) => {
     else {
       setTimePeriod(`${Math.floor(betweenTimeDay / 365)}년전`);
     }
-  }, []);
+  }, [board.created_at]);
 
   // 이미지 링크 세팅
   useEffect(() => {
-    if((board.board_pk <= 3 || board.board_pk == 7) && board.imgUrls !== []){
-      setImgUrl(board.imgUrls[0])
+    if(board.imgUrls !== []){
+      setImgUrls(board.imgUrls)
     }
-  }, [])
+  }, [board.imgUrls])
 
-  // 지역 게시판 모집 중 여부
-  useEffect(() => {
-    if(board.board_pk >= 4 && board.board_pk <= 6){
-      if(board.totalNum == board.gatherNum) {
-        setIsJoin(false)
-      }
-    }
-  }, [])
-
-  // 좋아요 버튼을 눌렀을 때
-  const onClickLike = () => {
-    axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
-      kind_pk: 2,
-      userId: userId,
-      flag: "true",
-    })
-    .then(() => {
-      setLiked(!liked)
-      dispatch(likeBoard())
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
-
-  // 북마크 버튼을 눌렀을 때
-  const onClickBookmark = () => {
-    axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
-      kind_pk: 3,
-      userId: userId,
-      flag: "true",
-    })
-    .then(() => {
-      setBookmarked(!bookmarked)
-      dispatch(likeBoard())
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  // 이미지 없을 시 기본 이미지 생성
+  const handleImgError = (e) => {
+    e.target.src = defaultProfile;
   }
 
   return (
-    <Container ref={ref} className="px-0">
-      {/* <br />
-      {/* 자취 게시판 */}
-      <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
-        <Card className="mx-2">
-          <Row className="g-0">
-            <Col xs={4}>
-            { imgUrl
-              ?
-              <img src={imgUrl} className="img-fluid rounded-start" alt={board.title} />
-              : 
-              <img src={closerbot} className="img-fluid rounded-start" alt="기본이미지" />
-            }
-              
+    <Container className="page-wrapper p-0" ref={ref}>
+      <div className="px-5 py-3 bg-transparent border-bottom border-3">
+        <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
+          <Row className="g-0 pb-3 mb-3 border-bottom border-2">
+            <Col xs={2}>
+              <img src={writerInfo.profileImg} alt="profile" className="userprofile" onError={handleImgError} style={{height: "100%"}} />
             </Col>
-            <Col xs={8}>
-              <Row className="mx-2">{board.title}</Row>
-              <Row className="mx-2">
-                <Col xs={8} className="px-0">
-                {board.nickname}
-                </Col>
-                <Col xs={4} className="px-0 text-end">{timePeriod}</Col>
+            <Col xs={10}>
+              <Row className="g-0 ps-1">
+                <div className="text-dark fw-bold"> 
+                  { name === "near" &&
+                    <span className="me-1" style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(" ").slice(1, 3).join(" ")}</span>
+                  }
+                  {board.nickname}
+                </div>
               </Row>
-              <Row className="mx-2">
-                <Col className="px-0 text-end">
-                  <FontAwesomeIcon icon={faComment}/> { countComment }
-                  &nbsp;&nbsp;     
-                  <FontAwesomeIcon icon={faHeart}/> { countLike }
-                  &nbsp;&nbsp;
-                  <FontAwesomeIcon icon={faBookmark}/> {countBookmark}
-                </Col>
+              <Row className="g-0 ps-1">
+                <span className="text-secondary" style={{fontSize: "14px"}}>{timePeriod}</span>
               </Row>
             </Col>
           </Row>
-        </Card>
-      </Link>
-    </Container>
+          <Row className="g-0 mb-3">
+            <div>{board.content}</div>
+          </Row>
+        </Link>
+
+        { imgUrls.length > 0 &&
+          <Carousel>
+            {
+              imgUrls.map((imgUrl, idx) =>{
+                return (
+                  <Carousel.Item key={idx}>
+                    <img
+                      className="d-block w-100"
+                      src={imgUrl}
+                      alt={idx+1}
+                      onError={handleImgError}
+                    />
+                  </Carousel.Item>
+                )
+              })
+            }
+          </Carousel>
+        }
+
+        <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
+          <div className = "likeAndBookmark mt-2">
+            <div className = "likePart" style={{fontSize: "20px"}}>
+              <FontAwesomeIcon icon={faComment} className ="align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 
+              <span className="ms-1 align-middle">{countComment}</span>
+            </div>
+            {/* 좋아요 */}
+            { liked
+              ?
+              <div className = "likePart ms-3" style={{fontSize: "20px"}}>
+                {/* <img className ="heart_full" alt="heart_full" src={heartFull} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
+                <FontAwesomeIcon icon={fasHeart} className ="heart_full align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 
+                <span className="ms-1 align-middle">{countLike}</span>
+              </div>
+              : 
+              <div className = "likePart ms-3" style={{fontSize: "20px"}}>
+                {/* <img className ="heart_empty" alt="heart_empty" src={heartEmpty} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
+                <FontAwesomeIcon icon={faHeart} className ="heart_empty align-middle" alt="heart_empty" style={{ color: "#5552FF"}}/> 
+                <span className="ms-1 align-middle">{countLike}</span>
+              </div>
+            }
+            {/* 북마크 */}
+            { bookmarked
+              ?
+              <div className = "bookmarkPart ms-3" style={{fontSize: "20px"}}>
+                {/* <img className ="bookmark_full" alt="bookmark_full" src={bookmarkFull} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
+                <FontAwesomeIcon icon={fasBookmark} className ="bookmark_full align-middle" alt="bookmark_full" style={{ color: "#5552FF"}}/> 
+                <span className="ms-1 align-middle">{countBookmark}</span>
+              </div>
+              : 
+              <div className = "bookmarkPart ms-3" style={{fontSize: "20px"}}>
+                {/* <img className ="bookmark_empty" alt="bookmark_empty" src={bookmarkEmpty} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
+                <FontAwesomeIcon icon={faBookmark} className ="bookmark_empty align-middle" alt="bookmark_empty" style={{ color: "#5552FF"}}/>
+                <span className="ms-1 align-middle">{countBookmark}</span>
+              </div>
+            }
+          </div>
+        </Link>
+      </div>
+    </Container>     
   )
 })
 

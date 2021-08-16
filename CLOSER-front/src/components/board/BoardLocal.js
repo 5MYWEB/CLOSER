@@ -15,8 +15,6 @@ function BoardGlobal({ match }) {
   const { userInfo } = useSelector((state) => state.user)
 
   useEffect(() => {
-    console.log(userInfo.imgUrls);
-
     axios.post(`http://localhost:8080/board/lboard/${name}?location=${userInfo.addr}`)
     .then((res) => {
       dispatch(getBoardList(res));
@@ -27,10 +25,12 @@ function BoardGlobal({ match }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardCreated, boardDeleted, boardUpdated, name])
 
-
   return (
     <>
       <div>
+        <div className="ms-3 my-3 fw-bold">
+          내 동네: {userInfo.addr.split(" ").slice(1, 3).join(" ")}
+        </div>
         <div className="fs-3 ms-3 my-3 fw-bold">
           클로저 
           {

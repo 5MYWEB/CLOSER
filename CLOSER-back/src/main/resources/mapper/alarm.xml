@@ -20,9 +20,9 @@
     </insert>
 
     <!-- 일정 요일 선택해서 알림 요청 -->
-    <insert id="alarmBotCreateDay" parameterType="BotDto" useGeneratedKeys="true" keyProperty="bot_pk" keyColumn="bot_pk">
-        insert into user_bot(userId, content, alarm_day)
-        values (#{userId}, #{content}, #{alarm_day});
+    <insert id="alarmBotCreate" parameterType="BotDto" useGeneratedKeys="true" keyProperty="bot_pk" keyColumn="bot_pk">
+        insert into user_bot(userId, content, alarm_day, alarm_date)
+        values (#{userId}, #{content}, #{alarm_day}, #{alarm_date});
     </insert>
 
     <!-- 현재 요일에 해당하는 요일에 요청한 사람에게 메시지 뿌림 -->

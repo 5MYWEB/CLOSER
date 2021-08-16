@@ -34,7 +34,7 @@ function BotAlarm() {
         setText(e.target.value)
     }
 
-    const onChangeDay = (e) => {
+    const onChangeDate = (e) => {
         // dummyDate + e.target.value
         setAlarmDay(e.target.value)
     }
@@ -91,7 +91,7 @@ function BotAlarm() {
         axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {
             userId: userInfo.userId,
             content: text,
-            alarm_day : dummyDate+alarmDay
+            alarm_date : dummyDate+alarmDay
         })
         .then((res) => {
             console.log(res);
@@ -155,7 +155,7 @@ function BotAlarm() {
                 </div>
 
                 <div className="d-flex justify-content-center align-items-end mx-0 my-4">
-                    매월 : <select id="alarmDay" name="alarmDay" value={alarmDay} onChange = {onChangeDay} ref={selectInputs}>
+                    매월 : <select id="alarmDate" name="alarmDate" value={alarmDate} onChange = {onChangeDate} ref={selectInputs}>
                                 <option defaultValue hidden> -- 일 -- </option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -195,7 +195,7 @@ function BotAlarm() {
                         <p> OR </p>
                 </div> 
                 <div className="d-flex justify-content-center align-items-end mx-0 my-4">
-                    매주 : <select id="alarmDate" name="alarmDate" value={alarmDate}  ref={selectInputs}>
+                    매주 : <select id="alarmDay" name="alarmDay" value={alarmDay}  ref={selectInputs}>
                                 <option defaultValue hidden> -- 요일 -- </option>
                                 <option value="mon">월</option>
                                 <option value="tue">화</option>

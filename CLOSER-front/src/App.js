@@ -7,6 +7,7 @@ import { TopAppBar, Navbar, BackButton, WriteButton } from './components/frame/i
 import { Home, About, Login, SignUp, Profile, Newsfeed, Board, Search, Alarm, Messages } from './pages';
 import { BoardSubNavbar1, BoardSubNavbar2, BoardGlobal, BoardLocal, BoardDetail, BoardForm, BoardUpdateForm} from './components/board/index';
 import NewsfeedList from './components/newsfeed/NewsfeedList';
+import NewsfeedWriteForm from './components/newsfeed/NewsfeedWriteForm';
 import FollowingList from './components/profile/FollowingList';
 import FollowerList from './components/profile/FollowerList';
 import MyProfileUpdate from './components/profile/MyProfileUpdate';
@@ -144,6 +145,7 @@ function App( { location, history }) {
         <Route path="/profile/:id" component={Profile} />
         <Route path="/newsfeed" component={Newsfeed} />
         <Route path="/newsfeed/:name" component={NewsfeedList} />
+        <Route path="/feed-create-form" component={NewsfeedWriteForm} />
         <Route path="/board" component={Board} />
         <Route path="/search" component={Search} />
         <Route path="/alarm" component={Alarm} />

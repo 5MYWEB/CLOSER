@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import './AlarmItem.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faComment, faBookmark, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faComment, faBookmark, faUsers, faBell } from "@fortawesome/free-solid-svg-icons";
 import defaultProfile from '../../assets/user-on.svg'
+import closerbot from '../../assets/closerbot.png'
 import '../../styles/theme.css'
 
 function AlarmItem({ alarm, userId }) {
@@ -19,19 +20,23 @@ function AlarmItem({ alarm, userId }) {
     if(alarm.category_pk === 4){
       setAlarmLink(`/profile/${alarm.otherUserId}`)
       // 댓글, 좋아요, 북마크
-    } else {
+    } else if(alarm.category_pk < 4){
       setAlarmLink(`/board-detail/${alarm.board_pk}`)
     } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
-    axios.post(`http://localhost:8080/user/profileinfo?userId=${alarm.otherUserId}`)
-    .then((res) => {
-      setProfileImg(res.data.profileImg)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-
+    if(alarm.category_pk < 5){
+      axios.post(`http://localhost:8080/user/profileinfo?userId=${alarm.otherUserId}`)
+      .then((res) => {
+        setProfileImg(res.data.profileImg)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }else{
+      setProfileImg(closerbot)
+    }
+    
     // 날짜 차이 구하기
     var today = new Date();
     var createdTime = new Date(alarm.created_at);
@@ -56,7 +61,11 @@ function AlarmItem({ alarm, userId }) {
             <div className="row mx-0">
               <div className="col-3 px-0 alarm-profile d-flex justify-content-center align-items-center">
                 <div className="board-img-wrapper g-0 d-flex justify-content-center align-items-center">
-                  <img src={profileImg} alt="프로필사진" className="userprofile profile-img" onError={handleImgError} />
+                  { alarm.category_pk < 5
+                    ? <img src={profileImg} alt="프로필사진" className="userprofile profile-img" onError={handleImgError} />
+                    : <img src={profileImg} alt="프로필사진" className="userprofile profile-img" onError={handleImgError} />
+                  }
+                  
                 </div>
                 {/* <img src={profileImg} alt="프로필사진" onError={handleImgError} className="alarm-profile-limit"/> */}
               </div>
@@ -67,6 +76,7 @@ function AlarmItem({ alarm, userId }) {
                     { alarm.category_pk === 2 && <FontAwesomeIcon icon={faHeart} className="alarm-icon-heart"/> }
                     { alarm.category_pk === 3 && <FontAwesomeIcon icon={faBookmark} className="alarm-icon-bookmark"/> }
                     { alarm.category_pk === 4 && <FontAwesomeIcon icon={faUsers} className="alarm-icon-users"/> }
+                    { alarm.category_pk === 5 && <FontAwesomeIcon icon={faBell} className="alarm-icon-users" style={{color: "#666666"}}/> }
                   </div>
                   <div className="col alarm-date">
                     {dateDiff >= 1
@@ -80,7 +90,10 @@ function AlarmItem({ alarm, userId }) {
                   </div>
                 </div>
                 <div className="row mx-0 alarm-content">
-                  {alarm.content}
+                  { alarm.category_pk < 5 
+                    ? <span>{alarm.content}</span>
+                    : <span><span className="fw-bolder" style={{color: "#5552ff"}}>{alarm.content}</span> (은)는 날입니다</span>
+                  }
                 </div>
               </div>
             </div>

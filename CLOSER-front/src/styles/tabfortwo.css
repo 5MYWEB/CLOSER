@@ -1,6 +1,6 @@
 :root {
-  --nav-length: 3;
-  --nav-width: calc(100% / var(--nav-length));
+  --nav-length2: 2;
+  --nav-width2: calc(100% / var(--nav-length2));
 }
 
 nav {
@@ -11,7 +11,7 @@ nav {
 
 nav button {
   display: block;
-  width: var(--nav-width);
+  width: var(--nav-width2);
 }
 
 /* tab styling */
@@ -56,10 +56,10 @@ nav button {
   line-height: 1;
 }
 
-.nav-underline {
+.nav-underline2 {
   position: absolute;
   bottom: -2px;
-  width: calc(var(--nav-width)*0.6);
+  width: calc(var(--nav-width2)*0.6);
   height: 3px;
   background: #5552FF;
   transition: all .3s ease-in-out;
@@ -67,35 +67,35 @@ nav button {
 
 /* nav underline effect */
 
-nav button:nth-child(1).is-current ~ .nav-underline {
-  left: calc(var(--nav-width) * 0.2);
+nav button:nth-child(1).is-current ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 0.2);
 }
-nav button:nth-child(2).is-current ~ .nav-underline {
-  left: calc(var(--nav-width) * 1.2);
+nav button:nth-child(2).is-current ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 1.2);
 }
-nav button:nth-child(3).is-current ~ .nav-underline {
-  left: calc(var(--nav-width) * 2.2);
+nav button:nth-child(3).is-current ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 2.2);
 }
-nav button:nth-child(4).is-current ~ .nav-underline {
-  left: calc(var(--nav-width) * 3.2);
+nav button:nth-child(4).is-current ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 3.2);
 }
-nav button:nth-child(5).is-current ~ .nav-underline {
-  left: calc(var(--nav-width) * 4.2);
+nav button:nth-child(5).is-current ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 4.2);
 }
-nav button:nth-child(1):hover ~ .nav-underline {
-  left: calc(var(--nav-width) * 0.2);
+nav button:nth-child(1):hover ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 0.2);
 }
-nav button:nth-child(2):hover ~ .nav-underline {
-  left: calc(var(--nav-width) * 1.2);
+nav button:nth-child(2):hover ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 1.2);
 }
-nav button:nth-child(3):hover ~ .nav-underline {
-  left: calc(var(--nav-width) * 2.2);
+nav button:nth-child(3):hover ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 2.2);
 }
-nav button:nth-child(4):hover ~ .nav-underline {
-  left: calc(var(--nav-width) * 3.2);
+nav button:nth-child(4):hover ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 3.2);
 }
-nav button:nth-child(5):hover ~ .nav-underline {
-  left: calc(var(--nav-width) * 4.2);
+nav button:nth-child(5):hover ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 4.2);
 }
 
 /* ripple effect */

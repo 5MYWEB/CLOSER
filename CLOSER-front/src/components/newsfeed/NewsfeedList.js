@@ -1,4 +1,5 @@
 import React, { useRef, useState, useCallback, useEffect  } from 'react';
+import { Redirect } from 'react-router';
 import { useSelector } from 'react-redux';
 import useFetch from "../../hooks/useFetch";
 import BoardItem from '../board/BoardItem';
@@ -6,13 +7,14 @@ import { Row, Container } from 'react-bootstrap';
 // import { getBoardList } from '../../modules/board';
 
 
-const NewsfeedList = ({match}) => {
+const NewsfeedList = ({match, history}) => {
 
   // 리덕스의 boardList, boardCreated, boardDeleted 불러옴
   // const { boardList, boardCreated, boardDeleted } = useSelector((state) => state.board);
 
   const userId  = useSelector((state) => state.user.userInfo.userId);
   const addr  = useSelector((state) => state.user.userInfo.addr);
+  const boardCreated  = useSelector((state) => state.board.boardCreated);
   const name = match.params.name
   
   // infinite scroll
@@ -35,7 +37,10 @@ const NewsfeedList = ({match}) => {
 
   useEffect(() => {
     setPageNum(1)
-  }, [name])
+    if (boardCreated) {
+      window.location.reload()
+    }
+  }, [name, boardCreated])
 
     
   return (

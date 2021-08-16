@@ -223,12 +223,19 @@ const BoardForm = () => {
             </div>
             : 
             <div>        
-              <label htmlFor="image-upload" className="form-label fw-bolder" style={{color: "#5552FF"}}>Image</label>
+              {/* <label htmlFor="image-upload" className="form-label fw-bolder" style={{color: "#5552FF"}}>Image</label> */}
               <InputGroup className="mb-4">
-                <div className="result">{renderPhotos(selectedFiles)}</div>
-                <label>
-                  <input type="file" id="file" multiple onChange={handleImageChange} />
-                </label>
+                {/* <div className="result">{renderPhotos(selectedFiles)}</div> */}
+                {/* <label>
+                  <input type="file" id="file" multiple onChange={handleImageChange} className="form-control" style={{color: "#5552FF"}} />
+                </label> */}
+                <div class="mb-3">
+                  <div><label htmlFor="formFileMultiple" className="form-label fw-bolder mb-0" style={{color: "#5552FF"}}>Image</label></div>
+                  <div class="d-flex justify-content-center">
+                    <input className="form-control" type="file" id="formFileMultiple" multiple onChange={handleImageChange} className="form-control"/>
+                  </div>
+                </div>
+                <div className="result d-flex justify-content-center row row-cols-4 mb-1">{renderPhotos(selectedFiles)}</div>
               </InputGroup>
             </div>
           }

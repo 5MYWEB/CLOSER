@@ -167,11 +167,6 @@ const NewsfeedForm = () => {
         {isLoggedIn &&
           <div className="mx-5 mt-4 mb-3">
             <form encType="multipart/form-data" onSubmit={onSubmit}>
-              
-              {/* <div className=" d-flex justify-content-center">
-                <input className="form-control" type="file" multiple onChange={handleImageChange}/>
-              </div> */}
-              
               <Container>
                 <Row className="mb-3 g-0">
                   <Col xs={11}>

@@ -7,12 +7,13 @@ import './Sidebar.css';
 import '../../styles/bootstrap.min.css';
 import * as actions from '../../modules/user';
 // import UserBadge from '../profile/UserBadge';
-import defaultProfile from '../../assets/user-on.svg';
+import userBold from '../../assets/user-bold.svg';
 
 import homeSolid from '../../assets/sidebar/home-solid.svg';
-import userBold from '../../assets/sidebar/user-bold.svg';
+import defaultProfile from '../../assets/user-on.svg';
 import compassSolid from '../../assets/sidebar/compass-solid.svg';
 import questionSolid from '../../assets/sidebar/question-solid.svg';
+import userSolid from '../../assets/sidebar/user-solid.svg';
 import signInSolid from '../../assets/sidebar/sign-in-alt-solid.svg';
 import signOutSolid from '../../assets/sidebar/sign-out-alt-solid.svg';
 import signUpSolid from '../../assets/sidebar/door-open-solid.svg';
@@ -51,13 +52,14 @@ class ConnectedSidebar extends React.Component {
         return (
           <div>
             <Menu
+              width="75vw"
               isOpen={this.state.menuOpen}
               onStateChange={(state) => this.handleStateChange(state)}
             >
               <div className="bm-menu-first d-flex justify-content-center">
                 <Link to="/login" onClick={() => this.closeMenu()} className="bm-profile">
                     <div className="col-4 mx-auto px-0 py-2 profile-img-wrapper">
-                      <img src={defaultProfile}  alt="프로필사진" className="profile-img" />
+                      <img src={userBold}  alt="프로필사진" className="profile-img" />
                     </div>
                     <div className="col-8 px-0">
                       <p className="bm-not-login-text">로그인 해주세요</p> 
@@ -150,7 +152,7 @@ class ConnectedSidebar extends React.Component {
                   <Link to="/about" onClick={() => this.closeMenu()} className="link-dark">ABOUT</Link>
                 </div>
                 <div className="side_profile">
-                  <img src={userBold} alt="home" className="bm-icon"/>
+                  <img src={userSolid} alt="home" className="bm-icon"/>
                   <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()} className="link-dark">MY PROFILE</Link>
                 </div>
                 <div className="side_location">

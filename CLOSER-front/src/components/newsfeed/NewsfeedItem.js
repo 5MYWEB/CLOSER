@@ -228,7 +228,8 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
               <FontAwesomeIcon icon={faComment} className ="align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 
               <span className="ms-1 align-middle">{countComment}</span>
             </div>
-          </Link>
+          </div>
+        </Link>
           {/* 좋아요 */}
           { liked
             ?
@@ -261,7 +262,6 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
           }
         </div>
         
-      </div>
     </Container>     
   )
 })

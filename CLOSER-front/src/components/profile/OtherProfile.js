@@ -6,7 +6,7 @@ import axios from 'axios';
 import { followAction, getFollowInfoAction } from '../../modules/user';
 import UserBadge from './UserBadge';
 import { RippleButton } from '../../styles/index';
-import defaultProfile from "../../assets/profile-user-demo.png";
+import defaultProfile from '../../assets/user-on.svg';
 import compassRegular from '../../assets/profile/compass-regular.svg';
 import calendarRegular from '../../assets/profile/calendar-alt-regular.svg';
 import '../../styles/theme.css'

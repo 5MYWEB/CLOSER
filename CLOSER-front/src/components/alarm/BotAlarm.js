@@ -14,14 +14,12 @@ function BotAlarm() {
     const [alarmDate, setAlarmDate] = useState('')
     const [alarmSelect, setRadio] = useState('');
 
-    let week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일');
-    let today = new Date().getDay();
-    let todayLabel = week[today];
+    // let week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일');
+    // let today = new Date().getDay();
+    // let todayLabel = week[today];
 
     let date = new Date().getDate()
     let dummyDate = "2021-08-";
-    let birthday = new Date(1995, 11, 17)
-
 
     const selectInputs = useRef();
 
@@ -35,13 +33,10 @@ function BotAlarm() {
     }
 
     const onChangeDate = (e) => {
-        // dummyDate + e.target.value
-        
         setAlarmDate(e.target.value)
     }
 
     const onChangeDay = (e) => {
-        // dummyDate + e.target.value
         console.log(e.target.value)
         setAlarmDay(e.target.value)
     }
@@ -53,7 +48,6 @@ function BotAlarm() {
     const radioChange = (e) => {
         setRadio(e.target.value);
     }
-
 
     // 내용이 빈 값인지 검사하는 함수
     const nullCheck = () => {
@@ -74,13 +68,6 @@ function BotAlarm() {
         return true;
     }
 
-    // 자취시작연도 검사
-    // const checkDayDate = (alarmDay) => {
-    //     if (!checkExistData(alarmDay, "알림 날짜를")) {
-    //         return false
-    //     }
-    //     return true
-    // }
 
       // 피드를 제출할때 작동하는 함수
     const onSubmit = (e) => {

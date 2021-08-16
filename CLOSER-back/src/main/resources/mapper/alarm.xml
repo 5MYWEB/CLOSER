@@ -20,22 +20,30 @@
     </insert>
 
     <!-- 일정 요일 선택해서 알림 요청 -->
-    <insert id="alarmBotCreate" parameterType="BotDto" useGeneratedKeys="true" keyProperty="bot_pk" keyColumn="bot_pk">
+    <insert id="alarmBotInsert" parameterType="BotDto" useGeneratedKeys="true" keyProperty="bot_pk" keyColumn="bot_pk">
         insert into user_bot(userId, content, alarm_day, alarm_date)
         values (#{userId}, #{content}, #{alarm_day}, #{alarm_date});
     </insert>
 
     <!-- 현재 요일에 해당하는 요일에 요청한 사람에게 메시지 뿌림 -->
-    <select id="alarmBotReadDay" parameterType="String" resultType="BotDto">
-        select userId, content
-        from user_bot
-        where alarm_day = DAYOFWEEK(now());
+    <select id="alarmBotCreateDay" >
+--         select userId, content
+--         from user_bot
+--         where alarm_day = DAYOFWEEK(now());
+        INSERT INTO user_alarm (userId, content, category_pk, created_at)
+        SELECT userId, content, 5, now()
+        FROM user_bot
+        where alarm_day = dayofweek(now())
     </select>
 
     <!-- 현재 날짜에 해당하는 날짜에 요청한 사람에게 메시지 뿌림 -->
-    <select id="alarmBotReadDate" parameterType="String" resultType="BotDto">
-        select userId, content, day(alarm_date)
-        from user_bot
+    <select id="alarmBotCreateDate" >
+--         select userId, content, day(alarm_date)
+--         from user_bot
+--         where day(alarm_date) = day(curdate());
+        INSERT INTO user_alarm (userId, content, category_pk, created_at)
+        SELECT userId, content, 5, now()
+        FROM user_bot
         where day(alarm_date) = day(curdate());
     </select>
 

@@ -42,7 +42,7 @@ public class AlarmController {
             logger.debug(botDto.getContent());
 
             logger.debug("봇 알림 생성 : " + botDto);
-            int n = alarmService.alarmBotCreate(botDto);
+            int n = alarmService.alarmBotInsert(botDto);
             if(n > 0){
                 return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
             } else {

@@ -144,25 +144,22 @@ function OtherProfile({ id }) {
               <RippleButton cclass="cbtn me-0 my-0 cbtn-sm cbtn-light" children="프로필 공유" onClick={copyLink}/>
             </div>
           </div>
-
         </div>
-      </div>
-    </div>
 
-    <div className="myprofilepost">
-      <div className ="myfeed">
-        <Link to={`/profile/${userInfo.userId}/user-feed`} className="link-light" >내 피드</Link>
-      </div>
+        <div className="myprofilepost">
+          <div className ="myfeed">
+            <Link to={`/profile/${userInfo.userId}/user-feed`} className="link-light" >내 피드</Link>
+          </div>
+
+          <div className ="mypost">
+            <Link to={`/profile/${userInfo.userId}/user-board`} className="link-light">내 포스트</Link>
+          </div>
 
           <div className ="mybookmark">
             <Link to={`/profile/${userInfo.userId}/user-bookmark`} className="link-light">북마크</Link>
           </div>
-
-      <div className ="mybookmark">
-        <Link to={`/profile/${userInfo.userId}/user-bookmark`} className="link-light">북마크</Link>
+        </div>
       </div>
-    </div>
-  </div>
 
   );
 }

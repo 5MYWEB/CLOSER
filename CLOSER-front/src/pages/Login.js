@@ -33,7 +33,9 @@ function Login({ history }) {
   // 데이터 빈 값 검사
   const checkExistData = (value, name) => {
     if (value === '') {
-      alert(name + " 입력해주세요!")
+      setTimeout( function () {
+        alert(name + " 입력해주세요!")
+      }, 350);
       return false;
     }
     return true;
@@ -124,10 +126,17 @@ function Login({ history }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [decodedToken])
 
+
+  // 회원가입 페이지로 이동
   const goSignup = () => {
-    history.push('/signup')
+    setTimeout( function () {
+      history.push('/signup')
+    }, 350);
+    
   }
-        
+  
+  
+
   return (
     <div className="wrap-group"> 
       <h2 className="phrase">클로저에서 자취<br></br>200퍼센트 즐기기</h2>

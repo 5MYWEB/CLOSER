@@ -18,7 +18,6 @@ function useFetch(page, name, addr, userId) {
   const sendBoard = useCallback(async () => {
     // 게시물 생성 시
     if(page === 0) {
-      console.log('실행')
       // eslint-disable-next-line react-hooks/exhaustive-deps
       page = 1
     }
@@ -46,7 +45,6 @@ function useFetch(page, name, addr, userId) {
       if (page === 1) {
         await setList([...res.data.data]);
         dispatch(resetCreateBoard())
-        console.log(res.data)
       } else {
         await setList((prev) => [...new Set([...prev, ...res.data.data])]);
       }

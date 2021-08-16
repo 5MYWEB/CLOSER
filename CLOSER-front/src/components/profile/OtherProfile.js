@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -72,6 +72,15 @@ function OtherProfile({ id }) {
     e.target.src = defaultProfile;
   }
 
+  // 프로필 공유 로직
+  const textInput = useRef();
+
+  const copyLink = () => {
+    const el = textInput.current
+    el.select()
+    document.execCommand('copy')
+  }
+
   return (
     <div className="page-wrapper">
     {/* 1. 프로필 사진, 뱃지와 수정 버튼 */}
@@ -79,7 +88,7 @@ function OtherProfile({ id }) {
       {/* 프로필사진 */}
       <div className="col-3 px-0 d-flex justify-content-center">
         <div className="profile-img-wrapper">
-          <img src={defaultProfile}  alt="userprofile" className="profile-img" onError={handleImgError}/>
+          <img src={userInfo.profileImg}  alt="userprofile" className="profile-img" onError={handleImgError}/>
         </div>
       </div>
       {/* 뱃지 */}
@@ -130,8 +139,9 @@ function OtherProfile({ id }) {
           </div>
         </div>
 
-        <div className="col-4 ps-0 pe-1 d-flex justify-content-end">
-          <RippleButton cclass="cbtn me-0 my-0 cbtn-sm cbtn-light" children="프로필 공유"/>
+        <div className="col-4 ps-0 pe-1 d-flex justify-content-end profile-share">
+          <input type="text" value={window.location.href} ref={textInput} readOnly  className="profile-share-link"/>
+          <RippleButton cclass="cbtn me-0 my-0 cbtn-sm cbtn-light" children="프로필 공유" onClick={copyLink}/>
         </div>
       </div>
 

@@ -1,8 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom';
 import { getMyInfoAction, loginAction, getPostCount } from '../modules/user'
-import { RippleButton } from '../styles/index';
+import { RippleButton, ShakeButton } from '../styles/index';
 import '../styles/theme.css'
 import { StreamChat } from 'stream-chat';
 
@@ -34,7 +35,9 @@ function Login({ history }) {
   // 데이터 빈 값 검사
   const checkExistData = (value, name) => {
     if (value === '') {
-      alert(name + " 입력해주세요!")
+      setTimeout( function () {
+        alert(name + " 입력해주세요!")
+      }, 350);
       return false;
     }
     return true;
@@ -83,22 +86,35 @@ function Login({ history }) {
   // 제출 시 검사 함수 실행 후 로그인 함수 실행
   const onSubmit=(
     e => {
-      e.preventDefault();
-      // 검사 함수로 확인,
-      if (checkAll() === true) {
+      setTimeout( function() {
+        // 검사 함수로 확인,
+        if (checkAll() === true) {
         // 로그인 요청
         axios.post('http://localhost:8080/user/login', userInputs )
-          .then((response) => {
-            const jwtAuthToken = response.headers["jwt-auth-token"]
-            // response에 유저정보 들어있음
-            dispatch(loginAction({ jwtAuthToken }));
+          .then((res) => {
+            const jwtAuthToken = res.headers["jwt-auth-token"]
+            if(res.status === 200){
+              dispatch(loginAction({ jwtAuthToken }));
+            } else{
+              alert('존재하지 않는 회원정보입니다!')
+            }
           })
-          .catch((error) => {
-            console.log(error)
+          .catch((err) => {
+            console.log(err)
           })
       }
+      }, 350);
+      e.preventDefault();
+
     }
   )
+
+  // 회원가입으로 이동
+  const onClick = ( ) => {
+    setTimeout( function() {
+      history.push('/signup');
+    }, 350);
+  }
 
   // 로그인에 성공했으면 로그인 유저 정보, 게시글 수 가져오기
   useEffect(() => {
@@ -119,13 +135,20 @@ function Login({ history }) {
           console.log(err)
         })
       }
-
-      
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [decodedToken])
 
 
-        
+  // 회원가입 페이지로 이동
+  const goSignup = () => {
+    setTimeout( function () {
+      history.push('/signup')
+    }, 350);
+    
+  }
+  
+  
+
   return (
     <div className="wrap-group"> 
       <h2 className="phrase">클로저에서 자취<br></br>200퍼센트 즐기기</h2>
@@ -165,8 +188,11 @@ function Login({ history }) {
         onChange={onChange}
       />
       <div className="button-group">
-        <RippleButton type="submit" cclass="cbtn cbtn-lg cbtn-primary" children="로그인"/>
-        <RippleButton type="button" cclass="cbtn cbtn-none cbtn-lg" children="회원가입"/>
+        { userId === '' || password === ''
+          ? <ShakeButton cclass="cbtn cbtn-lg cbtn-secondary" children="로그인"/>
+          : <RippleButton type="submit" cclass="cbtn cbtn-lg cbtn-primary" children="로그인"/>
+        } 
+        <RippleButton type="button" cclass="cbtn cbtn-none cbtn-lg" children="회원가입" onClick={goSignup}/>
       </div>
       </form>
     </div>

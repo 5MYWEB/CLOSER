@@ -87,9 +87,9 @@ p {
 }
 
 
-.comment-list-wrapper {
+/* .comment-list-wrapper {
   
-}
+} */
 
 
 /* 단락, signup, profile update에서 사용 */
@@ -111,7 +111,7 @@ p {
   width: 60%;
   margin-top: 3rem;
   margin-left: 1.5rem;
-  padding: 3rem 0;
+  padding: 0;
 }
 
 .input-wrapper {
@@ -172,6 +172,19 @@ input::placeholder {
   margin: auto;
 }
 
+/* 팔로워 팔로우 리스트 프로필 사진 */
+.follow-img-wrapper {
+  position: relative;
+  height: 15vw;
+  width: 15vw;
+}
+
+/* 게시판 프로필 사진 */
+.board-img-wrapper {
+  position: relative;
+  height: 12vw;
+  width: 12vw;
+}
 
 .board-badge {
   height: 1.5rem;
@@ -526,4 +539,8 @@ a:active { text-decoration: none; }
 
 .ml-1_5rem {
   margin-left: 2rem;
+}
+
+.text-main {
+  color: #5552FF;
 }

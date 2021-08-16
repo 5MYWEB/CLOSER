@@ -2,7 +2,10 @@ package com.ssafy.closer.controller;
 
 import com.ssafy.closer.model.dto.AlarmDto;
 import com.ssafy.closer.model.dto.BoardDto;
+import com.ssafy.closer.model.dto.BotDto;
+import com.ssafy.closer.model.dto.MemberDto;
 import com.ssafy.closer.model.service.AlarmService;
+import com.ssafy.closer.model.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
@@ -27,6 +30,29 @@ public class AlarmController {
 
     @Autowired
     private AlarmService alarmService;
+
+    @Autowired
+    private UserService userService;
+
+    // 봇 알람 생성 - 요일
+    @ApiOperation(value="봇 알림 생성")
+    @PostMapping("/user_bot/{id}/create")
+    public ResponseEntity<String> createBotAlarm(@RequestBody BotDto botDto){
+        try {
+            logger.debug(botDto.getContent());
+
+            logger.debug("봇 알림 생성 : " + botDto);
+            int n = alarmService.alarmBotInsert(botDto);
+            if(n > 0){
+                return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+        }
+    }
 
     // 알람 리스트
     @ApiOperation(value = "알람 리스트")

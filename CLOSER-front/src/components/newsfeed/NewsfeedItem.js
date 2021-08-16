@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { likeBoard } from '../../modules/board';
 import { Row, Col, Container, Carousel } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark } from "@fortawesome/free-regular-svg-icons";
-import defaultProfile from '../../assets/profile-user-demo.png';
+import defaultProfile from '../../assets/user-on.svg';
 import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
 // import '../../styles/bootstrap.min.css';
 
 const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
 // function NewsfeedItem({ board }, ref) {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // 현재 로그인한 사용자의 아이디 가져오기
   const { userId } = useSelector((state) => state.user.userInfo);
@@ -110,18 +111,18 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
     const betweenTimeHour = Math.floor(betweenTime / 60);
     const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
 
-    if (betweenTime < 1) setTimePeriod('방금전');
+    if (betweenTime < 1) setTimePeriod('방금 전');
     else if (betweenTime < 60) {
-      setTimePeriod(`${betweenTime}분전`);
+      setTimePeriod(`${betweenTime}분 전`);
     }
     else if (betweenTimeHour < 24) {
-      setTimePeriod(`${betweenTimeHour}시간전`);
+      setTimePeriod(`${betweenTimeHour}시간 전`);
     }
     else if (betweenTimeDay < 365) {
-        setTimePeriod(`${betweenTimeDay}일전`);
+        setTimePeriod(`${betweenTimeDay}일 전`);
     }
     else {
-      setTimePeriod(`${Math.floor(betweenTimeDay / 365)}년전`);
+      setTimePeriod(`${Math.floor(betweenTimeDay / 365)}년 전`);
     }
   }, [board.created_at]);
 
@@ -137,30 +138,68 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
     e.target.src = defaultProfile;
   }
 
+  // 좋아요 버튼을 눌렀을 때
+  const onClickLike = () => {
+    axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
+      kind_pk: 2,
+      userId: userId,
+      flag: "true",
+    })
+    .then(() => {
+      setLiked(!liked)
+      dispatch(likeBoard())
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  // 북마크 버튼을 눌렀을 때
+  const onClickBookmark = () => {
+    axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
+      kind_pk: 3,
+      userId: userId,
+      flag: "true",
+    })
+    .then(() => {
+      setBookmarked(!bookmarked)
+      dispatch(likeBoard())
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
   return (
     <Container className="page-wrapper p-0" ref={ref}>
-      <div className="px-5 py-3 bg-transparent border-bottom border-3">
+      <div className="px-4 py-3 bg-transparent border-bottom border-3">
         <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
-          <Row className="g-0 pb-3 mb-3 border-bottom border-2">
+          <Row className="g-0  align-items-start">
             <Col xs={2}>
-              <img src={writerInfo.profileImg} alt="profile" className="userprofile" onError={handleImgError} style={{height: "100%"}} />
+              <div className="board-img-wrapper">
+                <img src={writerInfo.profileImg} alt="profile" className="userprofile profile-img" onError={handleImgError} />
+              </div>
             </Col>
             <Col xs={10}>
-              <Row className="g-0 ps-1">
-                <div className="text-dark fw-bold"> 
+              <Row className="g-0 pb-4">
+                {/* 주소와 이름 */}
+                <Col xs={10} className="text-dark fw-bold"> 
                   { name === "near" &&
-                    <span className="me-1" style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(" ").slice(1, 3).join(" ")}</span>
+                    // 동만 표시
+                    <span className="me-1" style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(" ").slice(2, 3)}</span>
+                    // ㅇㅇ구 ㅇㅇ동
+                    // <span className="me-1" style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(" ").slice(1, 3).join(" ")}</span>
                   }
                   {board.nickname}
-                </div>
+                  
+                </Col>
+                {/* 작성시간 */}
+                <Col xs={2} className="text-secondary" style={{fontSize: "14px", textAlign: "right"}}>{timePeriod}</Col>
               </Row>
-              <Row className="g-0 ps-1">
-                <span className="text-secondary" style={{fontSize: "14px"}}>{timePeriod}</span>
+              <Row className="g-0 mb-3">
+                <div>{board.content}</div>
               </Row>
             </Col>
-          </Row>
-          <Row className="g-0 mb-3">
-            <div>{board.content}</div>
           </Row>
         </Link>
 
@@ -184,44 +223,45 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
         }
 
         <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
-          <div className = "likeAndBookmark mt-2">
+          <div className = "likeAndBookmark mt-2 d-flex justify-content-end align-items-center">
             <div className = "likePart" style={{fontSize: "20px"}}>
               <FontAwesomeIcon icon={faComment} className ="align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 
               <span className="ms-1 align-middle">{countComment}</span>
             </div>
-            {/* 좋아요 */}
-            { liked
-              ?
-              <div className = "likePart ms-3" style={{fontSize: "20px"}}>
-                {/* <img className ="heart_full" alt="heart_full" src={heartFull} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
-                <FontAwesomeIcon icon={fasHeart} className ="heart_full align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 
-                <span className="ms-1 align-middle">{countLike}</span>
-              </div>
-              : 
-              <div className = "likePart ms-3" style={{fontSize: "20px"}}>
-                {/* <img className ="heart_empty" alt="heart_empty" src={heartEmpty} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
-                <FontAwesomeIcon icon={faHeart} className ="heart_empty align-middle" alt="heart_empty" style={{ color: "#5552FF"}}/> 
-                <span className="ms-1 align-middle">{countLike}</span>
-              </div>
-            }
-            {/* 북마크 */}
-            { bookmarked
-              ?
-              <div className = "bookmarkPart ms-3" style={{fontSize: "20px"}}>
-                {/* <img className ="bookmark_full" alt="bookmark_full" src={bookmarkFull} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
-                <FontAwesomeIcon icon={fasBookmark} className ="bookmark_full align-middle" alt="bookmark_full" style={{ color: "#5552FF"}}/> 
-                <span className="ms-1 align-middle">{countBookmark}</span>
-              </div>
-              : 
-              <div className = "bookmarkPart ms-3" style={{fontSize: "20px"}}>
-                {/* <img className ="bookmark_empty" alt="bookmark_empty" src={bookmarkEmpty} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
-                <FontAwesomeIcon icon={faBookmark} className ="bookmark_empty align-middle" alt="bookmark_empty" style={{ color: "#5552FF"}}/>
-                <span className="ms-1 align-middle">{countBookmark}</span>
-              </div>
-            }
           </div>
         </Link>
-      </div>
+          {/* 좋아요 */}
+          { liked
+            ?
+            <div className = "likePart ms-3" style={{fontSize: "20px"}}>
+              {/* <img className ="heart_full" alt="heart_full" src={heartFull} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
+              <FontAwesomeIcon icon={fasHeart} className ="heart_full align-middle" alt="heart_full" onClick={onClickLike} style={{ color: "#5552FF"}}/> 
+              <span className="ms-1 align-middle">{countLike}</span>
+            </div>
+            : 
+            <div className = "likePart ms-3" style={{fontSize: "20px"}}>
+              {/* <img className ="heart_empty" alt="heart_empty" src={heartEmpty} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
+              <FontAwesomeIcon icon={faHeart} className ="heart_empty align-middle" alt="heart_empty" onClick={onClickLike} style={{ color: "#5552FF"}}/> 
+              <span className="ms-1 align-middle">{countLike}</span>
+            </div>
+          }
+          {/* 북마크 */}
+          { bookmarked
+            ?
+            <div className = "bookmarkPart ms-3" style={{fontSize: "20px"}}>
+              {/* <img className ="bookmark_full" alt="bookmark_full" src={bookmarkFull} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
+              <FontAwesomeIcon icon={fasBookmark} className ="bookmark_full align-middle" alt="bookmark_full" onClick={onClickBookmark} style={{ color: "#5552FF"}}/> 
+              <span className="ms-1 align-middle">{countBookmark}</span>
+            </div>
+            : 
+            <div className = "bookmarkPart ms-3" style={{fontSize: "20px"}}>
+              {/* <img className ="bookmark_empty" alt="bookmark_empty" src={bookmarkEmpty} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
+              <FontAwesomeIcon icon={faBookmark} className ="bookmark_empty align-middle" alt="bookmark_empty" onClick={onClickBookmark} style={{ color: "#5552FF"}}/>
+              <span className="ms-1 align-middle">{countBookmark}</span>
+            </div>
+          }
+        </div>
+        
     </Container>     
   )
 })

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { likeBoard } from '../../modules/board';
 import { Row, Col, Container, Carousel } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark } from "@fortawesome/free-regular-svg-icons";
@@ -12,7 +13,7 @@ import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/fre
 
 const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
 // function NewsfeedItem({ board }, ref) {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // 현재 로그인한 사용자의 아이디 가져오기
   const { userId } = useSelector((state) => state.user.userInfo);
@@ -137,6 +138,38 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
     e.target.src = defaultProfile;
   }
 
+  // 좋아요 버튼을 눌렀을 때
+  const onClickLike = () => {
+    axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
+      kind_pk: 2,
+      userId: userId,
+      flag: "true",
+    })
+    .then(() => {
+      setLiked(!liked)
+      dispatch(likeBoard())
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  // 북마크 버튼을 눌렀을 때
+  const onClickBookmark = () => {
+    axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
+      kind_pk: 3,
+      userId: userId,
+      flag: "true",
+    })
+    .then(() => {
+      setBookmarked(!bookmarked)
+      dispatch(likeBoard())
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
   return (
     <Container className="page-wrapper p-0" ref={ref}>
       <div className="px-5 py-3 bg-transparent border-bottom border-3">
@@ -185,44 +218,45 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
           </Carousel>
         }
 
-        <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
-          <div className = "likeAndBookmark mt-2">
+        <div className = "likeAndBookmark mt-2">
+          <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
             <div className = "likePart" style={{fontSize: "20px"}}>
               <FontAwesomeIcon icon={faComment} className ="align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 
               <span className="ms-1 align-middle">{countComment}</span>
             </div>
-            {/* 좋아요 */}
-            { liked
-              ?
-              <div className = "likePart ms-3" style={{fontSize: "20px"}}>
-                {/* <img className ="heart_full" alt="heart_full" src={heartFull} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
-                <FontAwesomeIcon icon={fasHeart} className ="heart_full align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 
-                <span className="ms-1 align-middle">{countLike}</span>
-              </div>
-              : 
-              <div className = "likePart ms-3" style={{fontSize: "20px"}}>
-                {/* <img className ="heart_empty" alt="heart_empty" src={heartEmpty} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
-                <FontAwesomeIcon icon={faHeart} className ="heart_empty align-middle" alt="heart_empty" style={{ color: "#5552FF"}}/> 
-                <span className="ms-1 align-middle">{countLike}</span>
-              </div>
-            }
-            {/* 북마크 */}
-            { bookmarked
-              ?
-              <div className = "bookmarkPart ms-3" style={{fontSize: "20px"}}>
-                {/* <img className ="bookmark_full" alt="bookmark_full" src={bookmarkFull} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
-                <FontAwesomeIcon icon={fasBookmark} className ="bookmark_full align-middle" alt="bookmark_full" style={{ color: "#5552FF"}}/> 
-                <span className="ms-1 align-middle">{countBookmark}</span>
-              </div>
-              : 
-              <div className = "bookmarkPart ms-3" style={{fontSize: "20px"}}>
-                {/* <img className ="bookmark_empty" alt="bookmark_empty" src={bookmarkEmpty} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
-                <FontAwesomeIcon icon={faBookmark} className ="bookmark_empty align-middle" alt="bookmark_empty" style={{ color: "#5552FF"}}/>
-                <span className="ms-1 align-middle">{countBookmark}</span>
-              </div>
-            }
-          </div>
-        </Link>
+          </Link>
+          {/* 좋아요 */}
+          { liked
+            ?
+            <div className = "likePart ms-3" style={{fontSize: "20px"}}>
+              {/* <img className ="heart_full" alt="heart_full" src={heartFull} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
+              <FontAwesomeIcon icon={fasHeart} className ="heart_full align-middle" alt="heart_full" onClick={onClickLike} style={{ color: "#5552FF"}}/> 
+              <span className="ms-1 align-middle">{countLike}</span>
+            </div>
+            : 
+            <div className = "likePart ms-3" style={{fontSize: "20px"}}>
+              {/* <img className ="heart_empty" alt="heart_empty" src={heartEmpty} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
+              <FontAwesomeIcon icon={faHeart} className ="heart_empty align-middle" alt="heart_empty" onClick={onClickLike} style={{ color: "#5552FF"}}/> 
+              <span className="ms-1 align-middle">{countLike}</span>
+            </div>
+          }
+          {/* 북마크 */}
+          { bookmarked
+            ?
+            <div className = "bookmarkPart ms-3" style={{fontSize: "20px"}}>
+              {/* <img className ="bookmark_full" alt="bookmark_full" src={bookmarkFull} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
+              <FontAwesomeIcon icon={fasBookmark} className ="bookmark_full align-middle" alt="bookmark_full" onClick={onClickBookmark} style={{ color: "#5552FF"}}/> 
+              <span className="ms-1 align-middle">{countBookmark}</span>
+            </div>
+            : 
+            <div className = "bookmarkPart ms-3" style={{fontSize: "20px"}}>
+              {/* <img className ="bookmark_empty" alt="bookmark_empty" src={bookmarkEmpty} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
+              <FontAwesomeIcon icon={faBookmark} className ="bookmark_empty align-middle" alt="bookmark_empty" onClick={onClickBookmark} style={{ color: "#5552FF"}}/>
+              <span className="ms-1 align-middle">{countBookmark}</span>
+            </div>
+          }
+        </div>
+        
       </div>
     </Container>     
   )

@@ -30,8 +30,8 @@
 --         select userId, content
 --         from user_bot
 --         where alarm_day = DAYOFWEEK(now());
-        INSERT INTO user_alarm (userId, content, category_pk, created_at)
-        SELECT userId, content, 5, now()
+        INSERT INTO user_alarm (userId, content, category_pk, created_at, otherUserId)
+        SELECT userId, content, 5, now(), "closerbot"
         FROM user_bot
         where alarm_day = dayofweek(now())
     </select>
@@ -41,8 +41,8 @@
 --         select userId, content, day(alarm_date)
 --         from user_bot
 --         where day(alarm_date) = day(curdate());
-        INSERT INTO user_alarm (userId, content, category_pk, created_at)
-        SELECT userId, content, 5, now()
+        INSERT INTO user_alarm (userId, content, category_pk, created_at, otherUserId)
+        SELECT userId, content, 5, now(), "closerbot"
         FROM user_bot
         where day(alarm_date) = day(curdate());
     </select>

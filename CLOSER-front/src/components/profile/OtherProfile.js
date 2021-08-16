@@ -6,7 +6,7 @@ import axios from 'axios';
 import { followAction, getFollowInfoAction } from '../../modules/user';
 import UserBadge from './UserBadge';
 import { RippleButton } from '../../styles/index';
-import defaultProfile from "../../assets/profile-user-demo.png";
+import defaultProfile from '../../assets/user-on.svg';
 import compassRegular from '../../assets/profile/compass-regular.svg';
 import calendarRegular from '../../assets/profile/calendar-alt-regular.svg';
 import '../../styles/theme.css'
@@ -144,10 +144,7 @@ function OtherProfile({ id }) {
           <RippleButton cclass="cbtn me-0 my-0 cbtn-sm cbtn-light" children="프로필 공유" onClick={copyLink}/>
         </div>
       </div>
-
     </div>
-
-
 
     <div className="myprofilepost">
       <div className ="myfeed">
@@ -161,71 +158,9 @@ function OtherProfile({ id }) {
       <div className ="mybookmark">
         <Link to={`/profile/${userInfo.userId}/user-bookmark`} className="link-light">북마크</Link>
       </div>
-
-
     </div>
   </div>
 
-    // <div className="container">
-    //   {/* Row-2 : 프로필사진, 닉네임, 자취기간, 위치, 프로필 수정 */}
-    //   <Row>
-    //     <Col xs={3}>
-    //       <img src={userInfo.profileImg}  alt="userprofile" className="userprofile" onError={handleImgError}/>
-    //     </Col>
-    //     <Col xs={6}>
-    //       <Row>
-    //         <Col>
-    //           {userInfo.nickname}
-    //         </Col>
-    //         <Col>
-    //           자취 {userInfo.homeAlone}년차
-    //         </Col>
-    //       </Row>
-    //       <Row>
-    //         {userInfo.addr}
-    //       </Row>
-    //     </Col>
-    //     <Col xs={3}>
-    //       {isFollowed ? <button onClick={onClickFollow}>팔로우 취소</button>
-    //         : <button onClick={onClickFollow}>팔로우</button>
-    //       }
-    //     </Col>
-    //   </Row>
-    //   {/* Row-3 : 뱃지 */}
-    //   <Row>
-    //     <UserBadge userId={id}/>
-    //   </Row>
-    //   {/* Row-4 : 한줄소개 */}
-    //   <Row>
-    //     {userInfo.intro}
-    //   </Row>
-    //   {/* Row-5 : 팔로잉, 팔로워, 공유하기 */}
-    //   <Row>
-    //     <Col xs={2}>
-    //       <Link to={`/${userInfo.userId}/following-list`}>팔로잉 {followingListLength}</Link>
-    //     </Col>
-    //     <Col xs={2}>
-    //       <Link to={`/${userInfo.userId}/follower-list`}>팔로워 {followerListLength}</Link>
-    //     </Col>
-    //     <Col xs={{ span: 6, offset: 2 }}>
-    //       공유하기 버튼
-    //     </Col>
-    //   </Row>
-    //   {/* Row-6 : 내피드, 내포스트, 북마크 */}
-    //   <Row>
-    //     <Col>
-    //       <Link to={`/profile/${userInfo.userId}/user-feed`}>내 피드</Link>
-    //     </Col>
-    //     <Col>
-    //       <Link to={`/profile/${userInfo.userId}/user-board`}>내 포스트</Link>
-    //     </Col>
-    //     <Col>
-    //       <Link to={`/profile/${userInfo.userId}/user-bookmark`}>북마크</Link>
-    //     </Col>
-    //   </Row>
-      
-      
-    // </div>
   );
 }
 

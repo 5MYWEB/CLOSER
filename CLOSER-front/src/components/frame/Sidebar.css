@@ -78,8 +78,8 @@
 
 /* Position and sizing of clickable cross button */
 .bm-cross-button {
-  height: 24px;
-  width: 24px;
+  height: 36px;
+  width: 36px;
   /* right: 30px;
   top: 30px; */
 }
@@ -96,11 +96,12 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bm-menu-wrap {
   position: fixed;
   height: 100%;
+  width: 70vw;
 }
 
 /* General sidebar styles */
 .bm-menu {
-  width: 75vw;
+  width: 100%;
   background: #ECECFF;
   font-size: 1.15rem;
 }
@@ -114,7 +115,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bm-item-list {
   display: grid;
   grid-template-rows: 2fr 2fr 2fr;
-  /* background: #ECECFF; */
+  margin: 0;
 }
 
 /* Individual item */

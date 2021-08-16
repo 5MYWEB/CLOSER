@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
 import { getMyInfoAction, refreshInfo } from './modules/user'
-import { TopAppBar, Navbar, BackButton } from './components/frame/index';
+import { TopAppBar, Navbar, BackButton, WriteButton } from './components/frame/index';
 import { Home, About, Login, SignUp, Profile, Newsfeed, Board, Search, Alarm, Messages } from './pages';
 import { BoardSubNavbar1, BoardSubNavbar2, BoardGlobal, BoardLocal, BoardDetail, BoardForm, BoardUpdateForm} from './components/board/index';
 import NewsfeedList from './components/newsfeed/NewsfeedList';
@@ -20,12 +20,27 @@ import BotAlarm from './components/alarm/BotAlarm';
 
 import './App.css';
 
-function App( { location }) {
+function App( { location, history }) {
   const dispatch = useDispatch();
   const { isLoggedIn, decodedToken } = useSelector((state) => state.user);
 
+  const pathElements = location.pathname.split('/')
+
   // 1. 현재 라우터가 어딜 보여주고 있는지 (ex. '/login')
-  const now = '/' + location.pathname.split('/')[1]
+  let now = ''
+
+  if (pathElements.length === 4) {
+    if (pathElements[2] === decodedToken.user_id) {
+      pathElements[2] = 'my'
+    } else {
+      pathElements[2] = 'other'
+    }
+
+    now = pathElements.join('/')
+  } else {
+    now = '/' + location.pathname.split('/')[1]
+  }
+
 
   // 2.
   // TopAppBar를 변형하거나 보여주지 않는 페이지를 모아둔 오브젝트
@@ -35,12 +50,15 @@ function App( { location }) {
     '/board-update-form': null,
     '/messages': <BackButton cclass="message-backbutton" />,
     '/profile': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
+    '/profile/my/user-feed': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
+    '/profile/my/user-board': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
+    '/profile/my/user-bookmark': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/profile-update': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton"/>,
     '/change-location': <BackButton />
   }
 
   const butNormalViewPages = {
-    '/board-detail': null,
+    '/board-detail': null
   }
 
   // NavBar를 변형하거나 보여주지 않는 페이지를 모아둔 오브젝트
@@ -50,8 +68,15 @@ function App( { location }) {
     '/board-update-form': null,
     '/messages': null,
     '/profile': null,
-    '/profile-update': null
+    '/profile-update': null,
+    '/profile/my/user-board': <WriteButton addr='board' />,
+    '/profile/my/user-feed': <WriteButton addr='feed' />,
+    '/profile/my/user-bookmark': null
+    
   }
+
+
+
 
   // 3.
   // TopAppBar를 그대로 보여줄지, 변형하거나 보여주지 말지 결정하는 변수
@@ -113,7 +138,7 @@ function App( { location }) {
         (isTopBar || isNormalView? "view" : "noTopview")
         )
       }>
-        <Route path="/" exact={true} component={Home} />
+        <Route path="/" exact={true} component={Newsfeed} />
         <Route path="/about" component={About} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
@@ -132,8 +157,8 @@ function App( { location }) {
         <Route path="/board-detail/:id" component={BoardDetail} />
         <Route path="/board-create-form/" component={BoardForm} />
         <Route path="/board-update-form/:id" component={BoardUpdateForm} />
-        <Route path="/:id/following-list" component={FollowingList} />
-        <Route path="/:id/follower-list" component={FollowerList} />
+        <Route path="/following-list/:id" component={FollowingList} />
+        <Route path="/follower-list/:id" component={FollowerList} />
         <Route path="/profile-update" component={MyProfileUpdate} />
         <Route path="/profile/:id/user-feed" component={UserFeed} />
         <Route path="/profile/:id/user-board" component={UserBoard} />

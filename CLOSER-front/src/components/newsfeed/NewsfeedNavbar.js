@@ -28,6 +28,7 @@ function NewsfeedNavbar({ history }) {
         <div className="nav-underline"></div> 
       </nav>
     </div>
+
   );
 }
 export default withRouter(NewsfeedNavbar);

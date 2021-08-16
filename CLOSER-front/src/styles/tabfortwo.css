@@ -1,0 +1,116 @@
+:root {
+  --nav-length2: 2;
+  --nav-width2: calc(100% / var(--nav-length2));
+}
+
+nav {
+  position: relative;
+  display: flex;
+  margin: 0 1rem;
+}
+
+nav button {
+  display: block;
+  width: var(--nav-width2);
+}
+
+/* tab styling */
+
+.tabs-wrapper {
+  display: flex;
+  justify-content:space-around;
+  border-radius: 6px 6px 0 0;
+  margin: 1.5rem 0;
+}
+
+.tabs-content {
+  height: 200px;
+  border-radius: 0 0 6px 6px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 90px;
+}
+
+.tabs {
+  width: 100vw;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.tab {
+  color: inherit;
+  background-color: rgba(255, 255, 255, 0);
+  font-family: 'SqoqaHanSansNeo';
+  font-weight: bold;
+  padding: 20px 25px;
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.nav-underline2 {
+  position: absolute;
+  bottom: -2px;
+  width: calc(var(--nav-width2)*0.6);
+  height: 3px;
+  background: #5552FF;
+  transition: all .3s ease-in-out;
+}
+
+/* nav underline effect */
+
+nav button:nth-child(1).is-current ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 0.2);
+}
+nav button:nth-child(2).is-current ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 1.2);
+}
+nav button:nth-child(3).is-current ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 2.2);
+}
+nav button:nth-child(4).is-current ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 3.2);
+}
+nav button:nth-child(5).is-current ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 4.2);
+}
+nav button:nth-child(1):hover ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 0.2);
+}
+nav button:nth-child(2):hover ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 1.2);
+}
+nav button:nth-child(3):hover ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 2.2);
+}
+nav button:nth-child(4):hover ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 3.2);
+}
+nav button:nth-child(5):hover ~ .nav-underline2 {
+  left: calc(var(--nav-width2) * 4.2);
+}
+
+/* ripple effect */
+
+.ripple-tab-item {
+  border: none;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+
+.ripple-tab-item > .ripple {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  background: #c8c6fc;
+  display: block;
+  content: "";
+  border-radius: 9999px;
+  opacity: 1;
+  animation: 0.9s ease 1 forwards ripple-effect;
+}

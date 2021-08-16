@@ -87,13 +87,16 @@ function Login({ history }) {
       if (checkAll() === true) {
         // 로그인 요청
         axios.post('http://localhost:8080/user/login', userInputs )
-          .then((response) => {
-            const jwtAuthToken = response.headers["jwt-auth-token"]
-            // response에 유저정보 들어있음
-            dispatch(loginAction({ jwtAuthToken }));
+          .then((res) => {
+            const jwtAuthToken = res.headers["jwt-auth-token"]
+            if(res.status === 200){
+              dispatch(loginAction({ jwtAuthToken }));
+            } else{
+              alert('존재하지 않는 회원정보입니다!')
+            }
           })
-          .catch((error) => {
-            console.log(error)
+          .catch((err) => {
+            console.log(err)
           })
       }
     }

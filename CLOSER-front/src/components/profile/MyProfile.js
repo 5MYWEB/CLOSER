@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import defaultProfile from '../../assets/user-on.svg';
@@ -24,7 +24,6 @@ function MyProfile({ history }) {
     e.target.src = defaultProfile;
   }
 
-
   const onClickUpdate = () => {
     history.push('/profile-update')
   }
@@ -44,6 +43,15 @@ function MyProfile({ history }) {
 
   // onClickTap
   // ['내 피드', '내 포스트', '북마크']
+
+  // 프로필 공유 로직
+  const textInput = useRef();
+
+  const copyLink = () => {
+    const el = textInput.current
+    el.select()
+    document.execCommand('copy')
+  }
 
   return (
       <div>
@@ -100,24 +108,22 @@ function MyProfile({ history }) {
               </div>
 
               <div className="col-4 ps-0 pe-1 d-flex justify-content-end">
-                <RippleButton cclass="cbtn me-0 my-0 cbtn-sm cbtn-light" children="프로필 공유"/>
+                <input type="text" value={window.location.href} ref={textInput} readOnly  className="profile-share-link"/>
+                <RippleButton cclass="cbtn me-0 my-0 cbtn-sm cbtn-light" children="프로필 공유" onClick={copyLink}/>
               </div>
             </div>
           </div>
+
+          <div className="tabs-wrapper">
+            <nav className="tabs">
+              <RippleTabItem cclass="tab is-current" children={children[0][0]} onClick={onClickTap} addr={children[1][0]} />
+              <RippleTabItem cclass="tab" children={children[0][1]} onClick={onClickTap} addr={children[1][1]} />
+              <RippleTabItem cclass="tab" children={children[0][2]} onClick={onClickTap} addr={children[1][2]} />
+              <div className="nav-underline"></div> 
+            </nav>
+          </div>
+          
         </div>
-
-
-        {/* <RippleTab cclass="ripple-tab" children={children} /> */}
-
-        <div className="tabs-wrapper">
-          <nav className="tabs">
-            <RippleTabItem cclass="tab is-current" children={children[0][0]} onClick={onClickTap} addr={children[1][0]} />
-            <RippleTabItem cclass="tab" children={children[0][1]} onClick={onClickTap} addr={children[1][1]} />
-            <RippleTabItem cclass="tab" children={children[0][2]} onClick={onClickTap} addr={children[1][2]} />
-            <div className="nav-underline"></div> 
-          </nav>
-        </div>
-        
       </div>
 
 

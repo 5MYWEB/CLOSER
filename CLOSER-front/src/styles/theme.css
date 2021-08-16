@@ -417,6 +417,13 @@ height: 6vw;
 
 /* =================================== */
 
+
+
+
+
+
+/* ====================================== */
+
 /* 일반 버튼 */
 
 .cbtn {
@@ -545,9 +552,24 @@ a:active { text-decoration: none; }
 	transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
 } */
 
-.heart_full, .heart_empty{
+
+/* 좋아요, 북마크, 댓글 애니메이션 */
+
+
+.heart_full:active {
+  transform: scale(0.1);
+  opacity: 0.5;
+}
+
+.heart_full{
   width: 9vw;
   height: 5vh;
+  transition: 0.1s;
+}
+
+.heart_full:active, .heart_empty:active {
+  transform: scale(0.1);
+  opacity: 0.5;
 }
 
 .bookmark_full, .bookmark_empty{

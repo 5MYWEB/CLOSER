@@ -9,7 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark } from "@fortawesome/free-regular-svg-icons";
 import defaultProfile from '../../assets/user-on.svg';
 import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
-// import '../../styles/bootstrap.min.css';
+import '../../styles/theme.css';
+
 
 const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
 // function NewsfeedItem({ board }, ref) {

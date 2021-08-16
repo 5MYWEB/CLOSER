@@ -145,7 +145,7 @@ function BotAlarm() {
                     <RadioButton>매주</RadioButton>
                 </RadioGroup> */}
 
-                <div className="d-flex justify-content-center align-items-end mx-0 my-4" >
+                {/* <div className="d-flex justify-content-center align-items-end mx-0 my-4" >
                     <input 
                         type='radio' 
                         id ="radio1"
@@ -163,7 +163,7 @@ function BotAlarm() {
                         defaultValue="null" 
                         ref={selectedSetting} onClick={handleSettingsChange}
                     /> 매월
-                </div>
+                </div> */}
 
                 <div className="d-flex justify-content-center align-items-end mx-0 my-4">
                     매월 : <select id="alarmDate" name="alarmDate" value={alarmDate} onChange = {onChangeDate} ref={selectInputs}>

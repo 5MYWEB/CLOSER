@@ -36,6 +36,13 @@ function BotAlarm() {
 
     const onChangeDate = (e) => {
         // dummyDate + e.target.value
+        
+        setAlarmDate(e.target.value)
+    }
+
+    const onChangeDay = (e) => {
+        // dummyDate + e.target.value
+        console.log(e.target.value)
         setAlarmDay(e.target.value)
     }
     
@@ -85,28 +92,45 @@ function BotAlarm() {
 
   // 백에 저장하는 메소드
     const go=() => {
-        // if (nullCheck()&&checkDayDate()) {
-            if (nullCheck()) {
-        console.log(alarmDay);
-        axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {
-            userId: userInfo.userId,
-            content: text,
-            alarm_date : dummyDate+alarmDay
-        })
-        .then((res) => {
-            console.log(res);
-            // dispatch(createBotAlarm())
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-
+        console.log("alarmDay: " + alarmDay);
+        console.log("alarmDate: " + alarmDate);
+        if(nullCheck()) {
+            if(alarmDate == ""){
+                axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {
+                userId: userInfo.userId,
+                content: text,
+                alarm_day: alarmDay
+            })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+            }
+            else if(alarmDay == "") {
+                axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {
+                    userId: userInfo.userId,
+                    content: text,
+                    alarm_date : dummyDate+alarmDate
+                })
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            }
+                    
+            
         // selected 
         // ? alert("Selected radio: " + selected) 
         // : alert("알림 받을 주기를 선택해주세요!");
         
         setText('')
+                    
         }
+        
     }
 
     if(isLoggedIn == true){
@@ -190,22 +214,21 @@ function BotAlarm() {
                                 <option value="31">31</option>
                                 </select> 일
                 </div>
-                {/* 
                 <div className="d-flex justify-content-center align-items-end mx-0 my-4">
                         <p> OR </p>
                 </div> 
                 <div className="d-flex justify-content-center align-items-end mx-0 my-4">
-                    매주 : <select id="alarmDay" name="alarmDay" value={alarmDay}  ref={selectInputs}>
+                    매주 : <select id="alarmDay" name="alarmDay" value={alarmDay} onChange = {onChangeDay} ref={selectInputs}>
                                 <option defaultValue hidden> -- 요일 -- </option>
-                                <option value="mon">월</option>
-                                <option value="tue">화</option>
-                                <option value="3">수</option>
-                                <option value="4">목</option>
-                                <option value="5">금</option>
-                                <option value="6">토</option>
-                                <option value="7">일</option>
+                                <option value="2">월</option>
+                                <option value="3">화</option>
+                                <option value="4">수</option>
+                                <option value="5">목</option>
+                                <option value="6">금</option>
+                                <option value="7">토</option>
+                                <option value="1">일</option>
                                 </select> 요일
-                </div>*/}
+                </div>
 
                 <div className="d-flex row justify-content-center align-items-end pt-3 mx-0">
                     <RippleButton type="submit" cclass="cbtn cbtn-primary cbtn-lg" children="알림 받기"/>

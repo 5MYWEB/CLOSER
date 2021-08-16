@@ -113,7 +113,8 @@ const BoardDetail = ({match}) => {
     })
 
     // 참여했는지
-    axios.post(`http://localhost:8080/board/${pk}/join`, {
+    if(pk > 3 && pk < 7){
+      axios.post(`http://localhost:8080/board/${pk}/join`, {
       userId: userId,
       flag: "false",
     })
@@ -123,6 +124,7 @@ const BoardDetail = ({match}) => {
     .catch((err) => {
       console.log(err)
     })
+    }
 
     // 댓글 좋아요 북마크 개수
     axios.post(`http://localhost:8080/board/${pk}/info-cnt`)

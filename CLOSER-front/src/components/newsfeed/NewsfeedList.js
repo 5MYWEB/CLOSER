@@ -1,5 +1,4 @@
 import React, { useRef, useState, useCallback, useEffect  } from 'react';
-import { Redirect } from 'react-router';
 import { useSelector } from 'react-redux';
 import useFetch from "../../hooks/useFetch";
 import BoardItem from '../board/BoardItem';

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import useFetch from "../../hooks/useFetch";
 import BoardItem from '../board/BoardItem';
 import { Row, Container } from 'react-bootstrap';
-// import { getBoardList } from '../../modules/board';
+import '../../styles/theme.css'
 
 
 const NewsfeedList = ({match, history}) => {
@@ -52,7 +52,7 @@ const NewsfeedList = ({match, history}) => {
     <div className="App">
       { name === "near" &&
         <div className="ms-3 my-3 fw-bold">
-          내 동네: {addr.split(" ").slice(1, 3).join(" ")}
+          <span>내 동네:</span><span className="text-main"> {addr.split(" ").slice(1, 2).join(" ")}</span>
         </div>
       }
       { list.length === 0 &&

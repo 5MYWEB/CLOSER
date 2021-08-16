@@ -13,6 +13,7 @@ const NewsfeedList = ({match}) => {
 
   const userId  = useSelector((state) => state.user.userInfo.userId);
   const addr  = useSelector((state) => state.user.userInfo.addr);
+  const boardCreated  = useSelector((state) => state.board.boardCreated);
   const name = match.params.name
   
   // infinite scroll
@@ -35,7 +36,7 @@ const NewsfeedList = ({match}) => {
 
   useEffect(() => {
     setPageNum(1)
-  }, [name])
+  }, [name, boardCreated])
 
     
   return (

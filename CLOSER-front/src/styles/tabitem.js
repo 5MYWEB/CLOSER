@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './tab.css'
 
-const RippleTapItem = ({ history, children, cclass, onClick }) => {
+const RippleTapItem = ({ addr, children, cclass, onClick }) => {
   const [coords, setCoords] = useState({ x: -1, y: -1 });
   const [isRippling, setIsRippling] = useState(false);
 
@@ -23,6 +23,7 @@ const RippleTapItem = ({ history, children, cclass, onClick }) => {
   return (
     <button
       className={`ripple-tab-item ${cclass}`}
+      addr={addr}
       onClick={e => {
         const rect = e.target.getBoundingClientRect();
 

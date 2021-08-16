@@ -3,11 +3,13 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import defaultProfile from '../../assets/user-on.svg';
 import UserBadge from './UserBadge';
-import { RippleButton, RippleTab } from '../../styles/index';
-
+import { RippleButton, RippleTabItem } from '../../styles/index';
 import compassRegular from '../../assets/profile/compass-regular.svg';
 import calendarRegular from '../../assets/profile/calendar-alt-regular.svg';
+import '../../styles/tab.css'
 import '../../styles/theme.css'
+
+
 
 function MyProfile({ history }) {
   // const imgRef = useRef(null);
@@ -26,16 +28,21 @@ function MyProfile({ history }) {
   const onClickUpdate = () => {
     history.push('/profile-update')
   }
-
+  
   const children = [
     ['내 피드', '내 포스트', '북마크'],
     [
-      `/${userInfo.userId}/user-feed`,
-      `/${userInfo.userId}/user-board`,
-      `/${userInfo.userId}/user-bookmark`
+      `/profile/${userInfo.userId}/user-feed`,
+      `/profile/${userInfo.userId}/user-board`,
+      `/profile/${userInfo.userId}/user-bookmark`
     ]
   ]
 
+  const onClickTap = ( e ) => {
+    history.push(e.target.getAttribute('addr'))
+  }
+
+  // onClickTap
   // ['내 피드', '내 포스트', '북마크']
 
   return (
@@ -81,12 +88,12 @@ function MyProfile({ history }) {
             <div className="row px-3 pt-3 justify-content-between">
               <div className="row px-3 col-6 p-0">
                 <div className="col-6 p-0">
-                    <Link to={`/${userInfo.userId}/following-list`} className="link-dark">
+                    <Link to={`following-list/${userInfo.userId}/`} className="link-dark">
                       {userInfo.following} 팔로잉
                     </Link>
                 </div>
                 <div className="col-6 p-0">
-                  <Link to={`/${userInfo.userId}/follower-list`} className="link-dark">
+                  <Link to={`follower-list/${userInfo.userId}/`} className="link-dark">
                     <div>{userInfo.follower} 팔로워</div>
                   </Link>
                 </div>
@@ -100,23 +107,17 @@ function MyProfile({ history }) {
         </div>
 
 
-        <RippleTab cclass="ripple-tab" children={children} />
+        {/* <RippleTab cclass="ripple-tab" children={children} /> */}
 
-        <div className="ripple-tab">
-          <div className ="myfeed">
-            <Link to={`/profile/${userInfo.userId}/user-feed`} >내 피드</Link>
-          </div>
-
-          <div className ="mypost">
-            <Link to={`/profile/${userInfo.userId}/user-board`}>내 포스트</Link>
-          </div>
-
-          <div className ="mybookmark">
-            <Link to={`/profile/${userInfo.userId}/user-bookmark`}>북마크</Link>
-          </div>
-
-
+        <div className="tabs-wrapper">
+          <nav className="tabs">
+            <RippleTabItem cclass="tab is-current" children={children[0][0]} onClick={onClickTap} addr={children[1][0]} />
+            <RippleTabItem cclass="tab" children={children[0][1]} onClick={onClickTap} addr={children[1][1]} />
+            <RippleTabItem cclass="tab" children={children[0][2]} onClick={onClickTap} addr={children[1][2]} />
+            <div className="nav-underline"></div> 
+          </nav>
         </div>
+        
       </div>
 
 

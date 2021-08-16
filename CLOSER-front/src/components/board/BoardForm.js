@@ -39,6 +39,10 @@ const BoardForm = () => {
     setTotalNum(e.target.value)
   }
 
+  const onClickCancel = () => {
+    history.goBack();
+  }
+
   // 게시판 게시물 제출
   const onSubmitBoard = (e) => {
     e.preventDefault();
@@ -135,9 +139,9 @@ const BoardForm = () => {
           <div className="button-group mt-0">
             <button className="ripple-button cbtn cbtn-lg cbtn-primary" onClick={onSubmitBoard} >업로드</button>
           </div>
-          <Link to={`/board/`} className="d-flex justify-content-center">
-            <RippleButton type="button" cclass="cbtn cbtn-none cbtn-lg" children="취소"/>
-          </Link>
+          <div className="d-flex justify-content-center">
+            <RippleButton type="button" cclass="cbtn cbtn-none cbtn-lg" onClick={onClickCancel} children="취소"/>
+          </div>
         </div>
       </Container>
     </>

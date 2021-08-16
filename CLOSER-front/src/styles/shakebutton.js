@@ -16,7 +16,7 @@ const ShakeButton = ({ children, cclass }) => {
     }
     
     return(
-        <button onClick = {animate} className={shake ? `shake ${cclass}` : `${cclass}`}>{children}</button>
+        <button onClick={animate} className={shake ? `shake ${cclass}` : `${cclass}`}>{children}</button>
     );
     
 }

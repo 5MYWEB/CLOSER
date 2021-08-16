@@ -644,6 +644,7 @@ public class BoardController {
             }
 
             // 참가자 수
+            System.out.println(boardService.countJoin(board_pk));
             output.put("countJoin", boardService.countJoin(board_pk));
 
             return new ResponseEntity(output, HttpStatus.OK);

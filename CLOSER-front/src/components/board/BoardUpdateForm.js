@@ -77,51 +77,53 @@ const BoardUpdateForm = ({match}) => {
   // 게시물을 제출할때 작동하는 함수
   const onSubmit = useCallback(async (e) => {
     e.preventDefault();
-    if(deletecheck){
+    // if(deletecheck){
+    //   await deleteimg();
+    //   nchangedimg();
+    // }
+    
+    if(check) { // 파일선택을 누른경우 (사진 수정하는 경우)
+      setSelectedFiles([])
       await deleteimg();
-      nchangedimg();
+    }else{ // 사진 수정안하는 경우
+      setUrls([])
+      changedimg()
     }
-
-    if(check) {
-      await deleteimg();
-      handleFileInput();
-    }
-    if(!deletecheck && !check) nchangedimg()
+    // changedimg()
+    // if(!deletecheck && !check) nchangedimg()
   });
 
-  async function deleteimg () { // 이미지 삭제
-    axios.delete(`http://localhost:8080/board/${pk}/delete-image`, {
-      board_pk:pk
-    })
+  async function deleteimg() { // 이미지 삭제
+    axios.delete(`http://localhost:8080/board/${pk}/delete-image`)
         .then(() => {
-          return
+          handleFileInput(); // 새로 들어온 파일을 넣어줌
         })
         .catch((err) => {
           console.log(err)
         })
   }
 
-  const nchangedimg =() =>{ // 게시판 수정 []
-    axios.put(`http://localhost:8080/board/${pk}`, {
-      kind_pk: Number(kind),
-      userId: userId,
-      title: title,
-      content: content,
-      totalNum: totalNum,
-      imgUrls : [],
-    })
-        .then(() => {
-          dispatch(updateBoard())
-          history.push(`/board-detail/${pk}/`)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+  // const nchangedimg =() =>{ // 게시판 수정 []
+  //   axios.put(`http://localhost:8080/board/${pk}`, {
+  //     kind_pk: Number(kind),
+  //     userId: userId,
+  //     title: title,
+  //     content: content,
+  //     totalNum: totalNum,
+  //     imgUrls : [],
+  //   })
+  //       .then(() => {
+  //         dispatch(updateBoard())
+  //         history.push(`/board-detail/${pk}/`)
+  //       })
+  //       .catch((err) => {
+  //         console.log(err)
+  //       })
 
-    // setKind('')
-    // setTitle('')
-    // setContent('')
-  }
+  //   // setKind('')
+  //   // setTitle('')
+  //   // setContent('')
+  // }
 
   const changedimg =() =>{ // 게시판 수정
     axios.put(`http://localhost:8080/board/${pk}`, {
@@ -180,7 +182,6 @@ const BoardUpdateForm = ({match}) => {
         handleUpload(Files[i], i, lng);
       }
     }, 1000);
-
   };
 
   const [Urls, setUrls] = useState([]);
@@ -212,9 +213,10 @@ const BoardUpdateForm = ({match}) => {
     });
   }
 
-  const removeImgs=()=>{
-    setSelectedFiles([])
-    setdeletecheck(true)
+  const removeImgs=(e)=>{
+    console.log(e)
+    // setSelectedFiles([])
+    // setdeletecheck(true)
   }
 
   useEffect(() => {
@@ -306,17 +308,33 @@ const BoardUpdateForm = ({match}) => {
                   </InputGroup>
                 </div>
                 :
-                <div>
-                  <label htmlFor="image-upload" className="form-label fw-bolder"
-                         style={{color: "#5552FF"}}>Image</label>
-                  <InputGroup className="mb-4">
-                    <div className="result">{renderPhotos(selectedFiles)}</div>
-                    <label>
-                      <input type="file" id="file" multiple onChange={handleImageChange}/>
-                    </label>
+                <div>        
+                  {/* <label htmlFor="image-upload" className="form-label fw-bolder" style={{color: "#5552FF"}}>Image</label> */}
+                  <InputGroup className="mb-0">
+                    {/* <div className="result">{renderPhotos(selectedFiles)}</div> */}
+                    {/* <label>
+                      <input type="file" id="file" multiple onChange={handleImageChange} className="form-control" style={{color: "#5552FF"}} />
+                    </label> */}
+                    <div class="mb-3">
+                      <div><label htmlFor="formFileMultiple" className="form-label fw-bolder mb-0" style={{color: "#5552FF"}}>Image</label></div>
+                      <div className="result d-flex justify-content-center row row-cols-4 mb-1">{renderPhotos(selectedFiles)}</div>
+                      <div class="d-flex justify-content-center">
+                        <input className="form-control" type="file" id="formFileMultiple" multiple onChange={handleImageChange} className="form-control"/>
+                      </div>
+                    </div>
                   </InputGroup>
-                  <button onChange={removeImgs}>사진 삭제</button>
                 </div>
+                // <div>
+                //   <label htmlFor="image-upload" className="form-label fw-bolder"
+                //          style={{color: "#5552FF"}}>Image</label>
+                //   <InputGroup className="mb-4">
+                //     <div className="result">{renderPhotos(selectedFiles)}</div>
+                //     <label>
+                //       <input type="file" id="file" multiple onChange={handleImageChange}/>
+                //     </label>
+                //   </InputGroup>
+                //   <button onChange={removeImgs}>사진 삭제</button>
+                // </div>
             }
 
             <div className="button-group mt-0">

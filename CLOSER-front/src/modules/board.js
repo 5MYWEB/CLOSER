@@ -11,6 +11,7 @@ const initialState = {
 
 /* 액션 타입 만들기 */
 const CREATE_BOARD = 'CREATE_BOARD';
+const RESET_CREATE_BOARD = 'RESET_CREATE_BOARD';
 const GET_BOARD_LIST = 'GET_BOARD_LIST';
 const GET_WEEK_BEST_LIST = 'GET_WEEK_BEST_LIST';
 const GET_BEST_LIST = 'GET_BEST_LIST';
@@ -22,6 +23,12 @@ const LIKE_BOARD = 'LIKE_BOARD';
 export const createBoard = () => {
   return {
     type: CREATE_BOARD,
+  }
+};
+
+export const resetCreateBoard = () => {
+  return {
+    type: RESET_CREATE_BOARD,
   }
 };
 
@@ -73,6 +80,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         boardCreated: true,
+      };
+    case RESET_CREATE_BOARD:
+      return {
+        ...state,
+        boardCreated: false,
       };
     case GET_WEEK_BEST_LIST:
       return {

@@ -24,9 +24,6 @@ function OtherProfile({ id }) {
   const [userInfo, setUserInfo] = useState([])
   const [isFollowed, setIsFollowed] = useState(false)
 
-  const [followingListLength, setFollowingListLength] = useState(0)
-  const [followerListLength, setFollowerListLength] = useState(0)
-
   const { userId } = useSelector((state) => state.user.userInfo)
   const { following } = useSelector((state) => state.user)
 
@@ -53,22 +50,6 @@ function OtherProfile({ id }) {
       console.log(err)
     })
 
-    // 팔로잉, 팔로워 수 가져오기
-    axios.post(`http://localhost:8080/follow/${id}/following`)
-    .then((res) => {
-      setFollowingListLength(res.data.length)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-
-    axios.post(`http://localhost:8080/follow/${id}/follower`)
-    .then((res) => {
-      setFollowerListLength(res.data.length)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [following])
 
@@ -102,7 +83,7 @@ function OtherProfile({ id }) {
         </div>
       </div>
       {/* 뱃지 */}
-      <div className="col-5 px-0"><UserBadge wrapclass="px-3" cclass="profile-badge" userId={userInfo.userId} /></div>
+      <div className="col-5 px-0"><UserBadge wrapclass="px-3" cclass="profile-badge" userId={id} /></div>
       {/* 팔로잉, 팔로워  */}
       <div className="col-4 px-0 d-flex justify-content-end">
         {isFollowed 

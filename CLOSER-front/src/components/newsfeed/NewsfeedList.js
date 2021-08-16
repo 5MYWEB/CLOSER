@@ -19,6 +19,8 @@ const NewsfeedList = ({match}) => {
   const [pageNum, setPageNum] = useState(1);
   const { loading, error, list, hasMore } = useFetch(pageNum, name, addr, userId);
 
+  const { boardCreated } = useSelector((state) => state.board)
+
   const observer = useRef();
   const lastBoardElementRef = useCallback((node) => {
     if (loading) return;
@@ -36,6 +38,14 @@ const NewsfeedList = ({match}) => {
   useEffect(() => {
     setPageNum(1)
   }, [name])
+
+
+  useEffect(() => {
+    if(boardCreated){
+      setPageNum(0)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [boardCreated])
 
     
   return (

@@ -5,7 +5,6 @@ import { RippleButton } from '../styles/index';
 import '../styles/theme.css'
 import UserLocation from '../components/profile/UserLocation';
 import { useSelector } from 'react-redux';
-// import { changeAddr } from '../modules/user';
 
 function SignUp( {history} ) {
   const [userInfo, setUserInfo] = useState({
@@ -13,19 +12,12 @@ function SignUp( {history} ) {
     nickname: '',
     password: '',
     email: '',
-    // addr: {
-    //   city: '',
-    //   gu: '',
-    //   dong: ''
-    // },
     addr: '',
-    // 번호만 입력받기
     phone: '',
-    //HowLongLiveAlone
     homeAlone: ''
   });
 
-  const { changedAddr } = useSelector((state)=>state.user)
+  const { changedAddr } = useSelector((state) => state.user)
 
   // 구조분해 할당
   let { userId, nickname, password, email, addr, phone, homeAlone } = userInfo;
@@ -40,9 +32,7 @@ function SignUp( {history} ) {
       addr: changedAddr
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },
-  [changedAddr, userInfo]
-  )
+  },[])
 
   // DOM 선택
   const radioBtn = useRef();
@@ -57,18 +47,7 @@ function SignUp( {history} ) {
       };
 
       const { name, value } = e.target;
-      // console.log(name, value);
 
-      // 주소만 구조가 다르므로 name이 주소 속성이면
-      // if (Object.keys(addr).includes(name)) {
-      //   setUserInfo({
-      //     ...userInfo,
-      //     addr: {
-      //       ...userInfo.addr,
-      //       [name]: value
-      //     }
-      //   });
-      // } else {
         setUserInfo({
           ...userInfo,
           [name]: value
@@ -214,18 +193,18 @@ function SignUp( {history} ) {
             return alert("Album names cannot contain slashes.");
         }
         var albumKey = encodeURIComponent(albumName);
-        s3.headObject({ Key: albumKey }, function (err, data) {
+        s3.headObject({ Key: albumKey }, function (err) {
             if (!err) {
-                return alert("Album already exists.");
+                return console.log("Album already exists.");
             }
             if (err.code !== "NotFound") {
-                return alert("There was an error creating your album: " + err.message);
+                return console.log("There was an error creating your album: " + err.message);
             }
             s3.putObject({ Key: albumKey }, function (err, data) {
                 if (err) {
-                    return alert("There was an error creating your album: " + err.message);
+                    return console.log("There was an error creating your album: " + err.message);
                 }
-                alert("Successfully created album.");
+                // alert("Successfully created album.");
             });
         });
     };
@@ -248,7 +227,7 @@ function SignUp( {history} ) {
         // 회원가입 함수의 파라미터 설정
 
         // 앨범 생성
-          createAlbum(userInfo.userId);
+        createAlbum(userInfo.userId);
 
         // 회원가입 함수 실행
         signup(userInfo);
@@ -274,7 +253,7 @@ function SignUp( {history} ) {
         }}
         type="text"
         name="userId"
-        value={userId}
+        defaultValue={userId}
         onChange={onChange}
       />
       <RippleButton type="button" cclass="cbtn cbtn-sm cbtn-primary" children="중복확인"/>
@@ -282,67 +261,34 @@ function SignUp( {history} ) {
       <input
         type="text"
         name="nickname"
-        value={nickname}
+        defaultValue={nickname}
         onChange={onChange}
       />
       <p>비밀번호를 입력하세요</p>
       <input
         type="password"
         name="password"
-        value={password}
+        defaultValue={password}
         onChange={onChange}
       />
       <p>이메일을 입력하세요</p>
       <input
         type="text"
         name="email"
-        value={email}
+        defaultValue={email}
         onChange={onChange}
       />
-      <p>주소를 입력하세요</p>
-      <UserLocation></UserLocation>
-      <div className="justify-content-center">
-        <div xs={8}>
-          <input 
-            type="text"
-            value={changedAddr}
-            name="addr"
-            // onChange={onChange}
-          />
-        </div>
-      </div>
+
       <br />
-{/*       
-      <label htmlFor="city">Choose a City:</label>
-      <select id="city" name="city" value={addr.city} onChange={onChange}>
-        <option defaultValue value="undefined"> -- 시를 선택해주세요 -- </option>
-        <option value="서울시">서울시</option>
-        <option value="용인시">용인시</option>
-        <option value="인천시">인천시</option>
-        <option value="부산시">부산시</option>
-      </select>
-      <label htmlFor="gu">Choose a gu:</label>
-      <select id="gu" name="gu" value={addr.gu} onChange={onChange}>
-      <option defaultValue value="undefined"> -- 구를 선택해주세요 -- </option>
-        <option value="동작구">동작구</option>
-        <option value="마포구">마포구</option>
-        <option value="서대문구">서대문구</option>
-        <option value="동구">동구</option>
-      </select>
-      <label htmlFor="dong">Choose a dong:</label>
-      <select id="dong" name="dong" value={addr.dong} onChange={onChange}>
-        <option defaultValue value="undefined"> -- 동을 선택해주세요 -- </option>
-        <option value="염리동">염리동</option>
-        <option value="동교동">동교동</option>
-        <option value="서교동">서교동</option>
-        <option value="둔산동">둔산동</option>
-      </select> */}
+      <div name="addr">현재위치: {changedAddr}</div>
+      <UserLocation></UserLocation>
+      <br />
 
       <p>휴대전화 번호를 입력하세요</p>
       <input
         type="text"
         name="phone"
-        value={phone}
+        defaultValue={phone}
         onChange={onChange}
       />
       <div>
@@ -354,7 +300,7 @@ function SignUp( {history} ) {
       <input
         type='radio' 
         name='homeAlone' 
-        value="null" 
+        defaultValue="null" 
         onChange={onChange}
         ref={radioBtn}
       /> 자취하지 않음 / 준비중

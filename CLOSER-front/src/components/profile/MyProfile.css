@@ -122,3 +122,12 @@
 	margin-top: 0.3vh;
 }
 
+.profile-share {
+	overflow: hidden;
+	position: relative;
+}
+
+.profile-share-link {
+	position: absolute;
+	opacity: 0;
+}

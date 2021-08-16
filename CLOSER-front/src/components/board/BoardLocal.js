@@ -15,8 +15,6 @@ function BoardGlobal({ match }) {
   const { userInfo } = useSelector((state) => state.user)
 
   useEffect(() => {
-    console.log(userInfo.imgUrls);
-
     axios.post(`http://localhost:8080/board/lboard/${name}?location=${userInfo.addr}`)
     .then((res) => {
       dispatch(getBoardList(res));

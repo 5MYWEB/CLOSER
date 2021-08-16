@@ -6,7 +6,7 @@ import { Row, Container } from 'react-bootstrap';
 // import { getBoardList } from '../../modules/board';
 
 
-const NewsfeedList = ({match}) => {
+const NewsfeedList = ({match, history}) => {
 
   // 리덕스의 boardList, boardCreated, boardDeleted 불러옴
   // const { boardList, boardCreated, boardDeleted } = useSelector((state) => state.board);
@@ -19,6 +19,8 @@ const NewsfeedList = ({match}) => {
   // infinite scroll
   const [pageNum, setPageNum] = useState(1);
   const { loading, error, list, hasMore } = useFetch(pageNum, name, addr, userId);
+
+  const { boardCreated } = useSelector((state) => state.board)
 
   const observer = useRef();
   const lastBoardElementRef = useCallback((node) => {
@@ -37,6 +39,14 @@ const NewsfeedList = ({match}) => {
   useEffect(() => {
     setPageNum(1)
   }, [name, boardCreated])
+
+
+  useEffect(() => {
+    if(boardCreated){
+      setPageNum(0)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [boardCreated])
 
     
   return (

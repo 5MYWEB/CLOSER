@@ -113,7 +113,8 @@ const BoardDetail = ({match}) => {
     })
 
     // 참여했는지
-    axios.post(`http://localhost:8080/board/${pk}/join`, {
+    if(pk > 3 && pk < 7){
+      axios.post(`http://localhost:8080/board/${pk}/join`, {
       userId: userId,
       flag: "false",
     })
@@ -123,6 +124,7 @@ const BoardDetail = ({match}) => {
     .catch((err) => {
       console.log(err)
     })
+    }
 
     // 댓글 좋아요 북마크 개수
     axios.post(`http://localhost:8080/board/${pk}/info-cnt`)
@@ -264,7 +266,7 @@ const BoardDetail = ({match}) => {
             <Row className="g-0 ps-1">
               <Link to = {`/profile/${board.userId}`}>
                 { board.kind_pk > 0 && board.kind_pk < 4 && board.badge !== 0 &&
-                  <span style={{color: "#5552FF"}}><UserBadgeItem badge={board.badge}/></span>
+                  <span style={{color: "#5552FF"}}><UserBadgeItem badge={board.badge} cclass="profile-badge"/></span>
                 }
                 { board.kind_pk >= 4 && board.kind_pk <= 6 &&
                   <span style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(' ').slice(1, 3).join(' ')}</span>
@@ -329,7 +331,7 @@ const BoardDetail = ({match}) => {
                         </div>
                     :
                     <div className="button-group mt-0">
-                      <button className="ripple-button cbtn cbtn-lg cbtn-none" onClick={onClickJoin} >빠지기</button>
+                      <button className="ripple-button cbtn cbtn-lg cbtn-secondary" onClick={onClickJoin} >빠지기</button>
                     </div>
                   : ''
                 }
@@ -380,7 +382,7 @@ const BoardDetail = ({match}) => {
                     <button className="ripple-button cbtn cbtn-sm cbtn-primary mx-1 fw-bold">수정</button>
                   </Link>
               }
-              <button className="ripple-button cbtn cbtn-sm cbtn-none mx-1 fw-bold" onClick={onClickDelete}>삭제</button> 
+              <button className="ripple-button cbtn cbtn-sm cbtn-secondary mx-1 fw-bold" onClick={onClickDelete}>삭제</button> 
             </div>
           }
         </div>

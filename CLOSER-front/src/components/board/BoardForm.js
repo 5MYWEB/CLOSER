@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -6,9 +6,25 @@ import { useHistory } from 'react-router-dom';
 import { Container, FormSelect, InputGroup } from 'react-bootstrap';
 import { createBoard } from '../../modules/board';
 import { RippleButton } from '../../styles/index';
+import AWS from "aws-sdk";
 
 const BoardForm = () => {
-  
+  var albumBucketName = "photo-album-hy";
+  var bucketRegion = "ap-northeast-2";
+  var IdentityPoolId = "ap-northeast-2:00a0ab54-d07b-4fbc-9601-4362640e9362";
+
+  AWS.config.update({
+    region: bucketRegion,
+    credentials: new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: IdentityPoolId,
+    }),
+  });
+
+  var s3 = new AWS.S3({
+    apiVersion: "2006-03-01",
+    params: { Bucket: albumBucketName },
+  });
+
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -21,6 +37,7 @@ const BoardForm = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [totalNum, setTotalNum] = useState(null)
+  const [check,setcheck] = useState(false); // 이미지가 있는지 확인
 
   // 카테고리 바꿀때
   const onChangeKind = (e) => {
@@ -46,22 +63,103 @@ const BoardForm = () => {
   // 게시판 게시물 제출
   const onSubmitBoard = (e) => {
     e.preventDefault();
-    
+    if(check===true) handleFileInput();
+    else go();
+  };
+
+  const go =()=>{
     axios.post('http://localhost:8080/board/', {
       kind_pk: Number(kind),
       userId: userInfo.userId,
       title: title,
       content: content,
       totalNum: Number(totalNum),
+      imgUrls : Urls,
     })
-    .then((res) => {
-      dispatch(createBoard())
-      history.push(`/board-detail/${res.data.board_pk}/`)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+        .then((res) => {
+          dispatch(createBoard())
+          history.push(`/board-detail/${res.data.board_pk}/`)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+  }
+
+  const [ Files, setFiles] = useState([]);
+  const [ selectedFiles, setSelectedFiles ] = useState([]);
+  // 이미지 미리보기
+  const handleImageChange = (e) => {
+    setSelectedFiles([]) // 이미지 초기화
+    setcheck(true)
+    if (e.target.files) {
+      const fileArray = Array.from(e.target.files)
+      const filesArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
+
+      setFiles((fileArray));
+      setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+      Array.from(e.target.files).map(
+          (file) => URL.revokeObjectURL(file) // avoid memory leak
+      );
+    }
   };
+
+  const renderPhotos = (source) => {
+    return source.map((photo) => {
+      return <img src={photo} alt="" key={photo} />;
+    });
+  };
+
+  function handleFileInput() {
+    let lng;
+    s3.listObjects({ Prefix: userInfo.userId}, function (err, data) {
+      lng = this.data.Contents.length;
+    });
+
+    setTimeout(function () {
+      for (let i = 0; i < Files.length; i++) {
+        handleUpload(Files[i], i,lng);
+      }
+    }, 1000);
+
+  };
+
+  const[Urls,setUrls] = useState([]);
+  const[Url,setUrl] = useState("");
+  function handleUpload (file, i, lng) {
+    return new Promise(function(resolve, reject) {
+      var albumPhotosKey = encodeURIComponent(userInfo.userId) + "/";
+      const photoKey = albumPhotosKey + userInfo.userId + "_" + (lng + i);
+
+      const upload = new AWS.S3.ManagedUpload({
+        params: {
+          Bucket: albumBucketName,
+          Key: photoKey,
+          Body: file,
+        },
+      })
+
+      const promise = upload.promise();
+
+      promise.then(
+          function (data) {
+            setUrl(data.Location);
+          },
+          function (err) {
+            return console.log("There was an error uploading your photo: ", err.message);
+          }
+      );
+    });
+  }
+  useEffect(() => {
+    if (Url !== "") {
+      setUrls((Urls) => [...Urls, Url]);
+    }}, [Url]);
+
+  useEffect(()=>{
+    if(Urls.length!==0 && Urls.length===Files.length) go()
+  },[Urls])
+
+
 
   return (
     <>
@@ -129,9 +227,19 @@ const BoardForm = () => {
             </div>
             : 
             <div>        
-              <label htmlFor="image-upload" className="form-label fw-bolder" style={{color: "#5552FF"}}>Image</label>
-              <InputGroup className="mb-4">
-                사진 입력 들어가야해요 호영님
+              {/* <label htmlFor="image-upload" className="form-label fw-bolder" style={{color: "#5552FF"}}>Image</label> */}
+              <InputGroup className="mb-0">
+                {/* <div className="result">{renderPhotos(selectedFiles)}</div> */}
+                {/* <label>
+                  <input type="file" id="file" multiple onChange={handleImageChange} className="form-control" style={{color: "#5552FF"}} />
+                </label> */}
+                <div class="mb-3">
+                  <div><label htmlFor="formFileMultiple" className="form-label fw-bolder mb-0" style={{color: "#5552FF"}}>Image</label></div>
+                  <div className="result d-flex justify-content-center row row-cols-4 mb-1">{renderPhotos(selectedFiles)}</div>
+                  <div class="d-flex justify-content-center">
+                    <input className="form-control" type="file" id="formFileMultiple" multiple onChange={handleImageChange} className="form-control"/>
+                  </div>
+                </div>
               </InputGroup>
             </div>
           }
@@ -139,9 +247,9 @@ const BoardForm = () => {
           <div className="button-group mt-0">
             <button className="ripple-button cbtn cbtn-lg cbtn-primary" onClick={onSubmitBoard} >업로드</button>
           </div>
-          <div className="d-flex justify-content-center">
-            <RippleButton type="button" cclass="cbtn cbtn-none cbtn-lg" onClick={onClickCancel} children="취소"/>
-          </div>
+          <Link to={`/board/`} className="d-flex justify-content-center">
+            <RippleButton type="button" cclass="cbtn cbtn-secondary cbtn-lg" children="취소"/>
+          </Link>
         </div>
       </Container>
     </>

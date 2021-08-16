@@ -10,6 +10,7 @@ import { faHeart, faComment, faBookmark } from "@fortawesome/free-regular-svg-ic
 import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
 import defaultBoardImg from '../../assets/house-emoji.png';
 import '../../styles/bootstrap.min.css';
+import '../../styles/theme.css'
 import './BoardItem.css'
 
 const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
@@ -147,7 +148,7 @@ const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
                 <Col className="px-0 mt-1">
                   By.&nbsp;
                   {board.badge !== 0 && 
-                    <span><UserBadgeItem badge={board.badge}/> </span>
+                    <span><UserBadgeItem badge={board.badge} cclass="board-badge"/> </span>
                   }
                   {board.nickname}
                 </Col>

@@ -88,7 +88,7 @@ function OtherProfile({ id }) {
       {/* 프로필사진 */}
       <div className="col-3 px-0 d-flex justify-content-center">
         <div className="profile-img-wrapper">
-          <img src={defaultProfile}  alt="userprofile" className="profile-img" onError={handleImgError}/>
+          <img src={userInfo.profileImg}  alt="userprofile" className="profile-img" onError={handleImgError}/>
         </div>
       </div>
       {/* 뱃지 */}

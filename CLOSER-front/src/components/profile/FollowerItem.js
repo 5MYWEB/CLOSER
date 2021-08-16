@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Container, Row, Col } from 'react-bootstrap';
 import { followAction } from '../../modules/user';
 import defaultProfile from "../../assets/profile-user-demo.png";
+import { RippleButton } from '../../styles/index';
 
 function FollowerItem({ follower }) {
 
@@ -35,25 +36,19 @@ function FollowerItem({ follower }) {
   }
 
   return (
-    
-      <Container>
-        <Row>
-          <Col xs={2}>
-            <img src={img}  alt="userprofile" className="userprofile" onError={handleImgError}/>
+      <Container className="my-3">
+        <Row className="g-0 align-items-center mx-5 pb-3 border-bottom border-2">
+          <Col xs={2} className="px-0">
+            <Link to={`/profile/${follower.activeUser}`}>
+              <img src={img} alt="userprofile" className="userprofile rounded-circle" onError={handleImgError} style={{width: "100%"}}/>
+            </Link>
           </Col>
-          <Col xs={4}>
-            <Link to={`/profile/${follower.activeUser}`}>{follower.nickname}</Link>
+          <Col xs={7} className="px-0">
+<Link to={`/profile/${follower.activeUser}`} className="text-dark px-3 fs-5">            {follower.nickname}</Link>
           </Col>
           { follower.passiveUser === userId ?
-            <Col xs={6}>
-              <Row>
-                <Col xs={{ span: 4, offset: 4 }}>
-                  <button onClick={onClickFollow}>삭제</button>
-                </Col>
-                <Col xs={4}>
-                  <button>차단(보류)</button>
-                </Col>
-              </Row>
+            <Col xs={3} className="d-flex justify-content-end">
+              <RippleButton type="button" onClick={onClickFollow} cclass="cbtn cbtn-secondary" children="삭제"/>
             </Col>
             : <div></div>
           }

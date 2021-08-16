@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import defaultProfile from '../../assets/user-on.svg';
@@ -32,9 +32,17 @@ function MyProfile({ history }) {
     e.target.src = defaultProfile;
   }
 
-
   const onClickUpdate = () => {
     history.push('/profile-update')
+  }
+
+  // 프로필 공유 로직
+  const textInput = useRef();
+
+  const copyLink = () => {
+    const el = textInput.current
+    el.select()
+    document.execCommand('copy')
   }
 
   return (
@@ -91,13 +99,11 @@ function MyProfile({ history }) {
             </div>
 
             <div className="col-4 ps-0 pe-1 d-flex justify-content-end">
-              <RippleButton cclass="cbtn me-0 my-0 cbtn-sm cbtn-light" children="프로필 공유"/>
+              <input type="text" value={window.location.href} ref={textInput} readOnly  className="profile-share-link"/>
+              <RippleButton cclass="cbtn me-0 my-0 cbtn-sm cbtn-light" children="프로필 공유" onClick={copyLink}/>
             </div>
           </div>
-
         </div>
-
-
 
         <div className="myprofilepost">
           <div className ="myfeed">
@@ -111,8 +117,6 @@ function MyProfile({ history }) {
           <div className ="mybookmark">
             <Link to={`/profile/${userInfo.userId}/user-bookmark`} className="link-light">북마크</Link>
           </div>
-
-
         </div>
 
 
@@ -182,8 +186,6 @@ function MyProfile({ history }) {
           <Link to={`/profile/${userInfo.userId}/user-bookmark`}>북마크</Link>
         </Col>
       </Row> */}
-
-
       </div>
 
 

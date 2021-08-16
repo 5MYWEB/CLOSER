@@ -113,16 +113,18 @@ const BoardDetail = ({match}) => {
     })
 
     // 참여했는지
-    axios.post(`http://localhost:8080/board/${pk}/join`, {
-      userId: userId,
-      flag: "false",
-    })
-    .then((res) => {
-      setJoined(res.data.joined)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+    if(pk>3 && pk<7) {
+      axios.post(`http://localhost:8080/board/${pk}/join`, {
+        userId: userId,
+        flag: "false",
+      })
+          .then((res) => {
+            setJoined(res.data.joined)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    }
 
     // 댓글 좋아요 북마크 개수
     axios.post(`http://localhost:8080/board/${pk}/info-cnt`)
@@ -264,7 +266,7 @@ const BoardDetail = ({match}) => {
             <Row className="g-0 ps-1">
               <Link to = {`/profile/${board.userId}`}>
                 { board.kind_pk > 0 && board.kind_pk < 4 && board.badge !== 0 &&
-                  <span style={{color: "#5552FF"}}><UserBadgeItem badge={board.badge}/></span>
+                  <span style={{color: "#5552FF"}}><UserBadgeItem badge={board.badge} cclass="profile-badge"/></span>
                 }
                 { board.kind_pk >= 4 && board.kind_pk <= 6 &&
                   <span style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(' ').slice(1, 3).join(' ')}</span>

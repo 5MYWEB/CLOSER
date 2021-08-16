@@ -1,23 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './theme.css'
 
 const RippleButton = ({ children, cclass, type, onClick }) => {
-  const [coords, setCoords] = React.useState({ x: -1, y: -1 });
-  const [isRippling, setIsRippling] = React.useState(false);
+  const [coords, setCoords] = useState({ x: -1, y: -1 });
+  const [isRippling, setIsRippling] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (coords.x !== -1 && coords.y !== -1) {
       setIsRippling(true);
       setTimeout(() => setIsRippling(false), 300);
     } else setIsRippling(false);
   }, [coords]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isRippling) setCoords({ x: -1, y: -1 });
   }, [isRippling]);
 
-  React.useEffect(() => {
-    return () => setIsRippling(false); // cleanup function을 이용
+  useEffect(() => {
+    return () => setCoords({ x: -1, y: -1 }); // cleanup function을 이용
   }, []);
 
   return (

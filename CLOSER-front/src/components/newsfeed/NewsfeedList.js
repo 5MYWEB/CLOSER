@@ -6,7 +6,7 @@ import { Row, Container } from 'react-bootstrap';
 // import { getBoardList } from '../../modules/board';
 
 
-const NewsfeedList = ({match}) => {
+const NewsfeedList = ({match, history}) => {
 
   // 리덕스의 boardList, boardCreated, boardDeleted 불러옴
   // const { boardList, boardCreated, boardDeleted } = useSelector((state) => state.board);
@@ -37,7 +37,7 @@ const NewsfeedList = ({match}) => {
 
   useEffect(() => {
     setPageNum(1)
-  }, [name])
+  }, [name, boardCreated])
 
 
   useEffect(() => {

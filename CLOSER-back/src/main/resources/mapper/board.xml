@@ -202,10 +202,14 @@
     <!-- Read -->
     <!-- Gboard, Lboard, Feed 상세 조회 -->
     <select id="read" parameterType="int" resultType="BoardDto">
-        select *
-        from board
-        where board_pk = #{board_pk}
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge, bd.totalNum as totalNum, bd.gatherNum as gatherNum
+        from board As bd
+                 left join user_badge AS ub
+                           on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
+        where bd.board_pk = #{board_pk}
     </select>
+
+
 
     <!-- update -->
     <!-- gboard 수정 -->

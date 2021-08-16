@@ -6,7 +6,7 @@ import axios from 'axios';
 import { followAction, getFollowInfoAction } from '../../modules/user';
 import UserBadge from './UserBadge';
 import { RippleButton } from '../../styles/index';
-import defaultProfile from "../../assets/profile-user-demo.png";
+import defaultProfile from '../../assets/user-on.svg';
 import compassRegular from '../../assets/profile/compass-regular.svg';
 import calendarRegular from '../../assets/profile/calendar-alt-regular.svg';
 import '../../styles/theme.css'
@@ -88,7 +88,7 @@ function OtherProfile({ id }) {
       {/* 프로필사진 */}
       <div className="col-3 px-0 d-flex justify-content-center">
         <div className="profile-img-wrapper">
-          <img src={defaultProfile}  alt="userprofile" className="profile-img" onError={handleImgError}/>
+          <img src={userInfo.profileImg}  alt="userprofile" className="profile-img" onError={handleImgError}/>
         </div>
       </div>
       {/* 뱃지 */}

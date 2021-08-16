@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import './theme.css'
+import React, { useEffect, useState } from 'react';
+import './tab.css'
 
-const RippleIcon = ({ src, alt, id, cclass, onClick }) => {
+const RippleTapItem = ({ addr, children, cclass, onClick }) => {
   const [coords, setCoords] = useState({ x: -1, y: -1 });
   const [isRippling, setIsRippling] = useState(false);
-  
-  (cclass === 'write-button'
-  ? cclass =  'write-button'
-  : cclass = `ripple-icon ${cclass}`)
 
   useEffect(() => {
     if (coords.x !== -1 && coords.y !== -1) {
@@ -20,20 +16,23 @@ const RippleIcon = ({ src, alt, id, cclass, onClick }) => {
     if (!isRippling) setCoords({ x: -1, y: -1 });
   }, [isRippling]);
 
+  useEffect(() => {
+    return () => setCoords({ x: -1, y: -1 }); // cleanup function을 이용
+  }, []);
+
   return (
-    <div
-      id={id}
-      className={cclass}
+    <button
+      className={`ripple-tab-item ${cclass}`}
+      addr={addr}
       onClick={e => {
         const rect = e.target.getBoundingClientRect();
+
         setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
         onClick && onClick(e);
       }}
     >
-      <img src={src} alt={alt} id={id}></img>
       {isRippling ? (
         <span
-          id={id}
           className="ripple"
           style={{
             left: coords.x,
@@ -43,8 +42,10 @@ const RippleIcon = ({ src, alt, id, cclass, onClick }) => {
       ) : (
         ''
       )}
-    </div>
+      {/* 버튼 내용 */}
+      {children}
+    </button>
   );
 };
 
-export default RippleIcon;
+export default RippleTapItem;

@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import { followAction } from '../../modules/user';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import defaultProfile from "../../assets/profile-user-demo.png";
+import defaultProfile from '../../assets/user-on.svg';
+import { RippleButton } from '../../styles/index';
+import '../../styles/theme.css'
 
 function FollowingItem({ following }) {
 
@@ -37,21 +39,21 @@ function FollowingItem({ following }) {
 
   return (
     <>
-      <Container>
-        <Row>
-          <Col xs={2}>
-            <img src={img}  alt="userprofile" className="userprofile" onError={handleImgError}/>
+      <Container className="my-3">
+        <Row className="g-0 align-items-center mx-5 pb-3 border-bottom border-2">
+          <Col xs={2} className="px-0">
+            <Link to={`/profile/${following.passiveUser}`}>
+              <div className="follow-img-wrapper">
+                <img src={img}  alt="userprofile" className="userprofile profile-img" onError={handleImgError}/>
+              </div>
+            </Link>
           </Col>
-          <Col xs={4}>
-            <Link to={`/profile/${following.passiveUser}`}>{following.nickname}</Link>
+          <Col xs={6} className="px-0">
+            <Link to={`/profile/${following.passiveUser}`} className="text-dark px-3 fs-5">{following.nickname}</Link>
           </Col>
           { following.activeUser === userId ?
-            <Col xs={6}>
-              <Row>
-                <Col xs={{ span: 6, offset: 6 }}>
-                  <button onClick={onClickFollow}>팔로우 취소</button>
-                </Col>
-              </Row>
+            <Col xs={4} className="d-flex justify-content-end">
+              <RippleButton type="button" onClick={onClickFollow} cclass="cbtn cbtn-secondary" children="언팔로우"/>
             </Col>
             : <div></div>
           }

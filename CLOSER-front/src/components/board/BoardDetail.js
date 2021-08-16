@@ -7,12 +7,13 @@ import axios from 'axios';
 import CommentList from '../comment/CommentList';
 import UserBadgeItem from '../profile/UserBadgeItem';
 import './BoardDetail.css';
-import defaultProfile from '../../assets/profile-user-demo.png';
+import defaultProfile from '../../assets/user-on.svg';
 import usersSolidImg from '../../assets/users-solid.svg';
 import { Row, Col, Container, Card, Carousel } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
+import '../../styles/theme.css'
 
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -113,7 +114,8 @@ const BoardDetail = ({match}) => {
     })
 
     // 참여했는지
-    axios.post(`http://localhost:8080/board/${pk}/join`, {
+    if(pk > 3 && pk < 7){
+      axios.post(`http://localhost:8080/board/${pk}/join`, {
       userId: userId,
       flag: "false",
     })
@@ -123,6 +125,7 @@ const BoardDetail = ({match}) => {
     .catch((err) => {
       console.log(err)
     })
+    }
 
     // 댓글 좋아요 북마크 개수
     axios.post(`http://localhost:8080/board/${pk}/info-cnt`)
@@ -258,13 +261,15 @@ const BoardDetail = ({match}) => {
         </Row>
         <Row className="g-0 pb-3 mb-3 border-bottom border-2">
           <Col xs={2}>
-            <img src={writerProfile} alt="profile" className="userprofile" onError={handleImgError} style={{height: "100%"}} />
+            <div className="board-img-wrapper">
+              <img src={writerProfile}  alt="profile" className="userprofile profile-img" onError={handleImgError} />
+            </div>
           </Col>
           <Col xs={10}>
             <Row className="g-0 ps-1">
               <Link to = {`/profile/${board.userId}`}>
                 { board.kind_pk > 0 && board.kind_pk < 4 && board.badge !== 0 &&
-                  <span style={{color: "#5552FF"}}><UserBadgeItem badge={board.badge}/></span>
+                  <span style={{color: "#5552FF"}}><UserBadgeItem badge={board.badge} cclass="profile-badge"/></span>
                 }
                 { board.kind_pk >= 4 && board.kind_pk <= 6 &&
                   <span style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(' ').slice(1, 3).join(' ')}</span>

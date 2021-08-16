@@ -222,14 +222,14 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
           </Carousel>
         }
 
-        <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
-          <div className = "likeAndBookmark mt-2 d-flex justify-content-end align-items-center">
-            <div className = "likePart" style={{fontSize: "20px"}}>
-              <FontAwesomeIcon icon={faComment} className ="align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 
-              <span className="ms-1 align-middle">{countComment}</span>
-            </div>
-          </div>
-        </Link>
+        <div className = "likeAndBookmark mt-2 d-flex justify-content-end align-items-center">
+          <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
+              <div className = "likePart" style={{fontSize: "20px"}}>
+                <FontAwesomeIcon icon={faComment} className ="align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 
+                <span className="ms-1 align-middle">{countComment}</span>
+              </div>
+          </Link>
+        
           {/* 좋아요 */}
           { liked
             ?
@@ -261,7 +261,7 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
             </div>
           }
         </div>
-        
+      </div>
     </Container>     
   )
 })

@@ -1,6 +1,7 @@
 package com.ssafy.closer.model.service;
 
 import com.ssafy.closer.model.dto.AlarmDto;
+import com.ssafy.closer.model.dto.BotDto;
 import com.ssafy.closer.model.mapper.AlarmMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -35,9 +36,9 @@ public class AlarmServiceImpl implements AlarmService {
     }
 
     @Override
-    public int alarmBotCreate(AlarmDto alarmDto) {
-        sqlSession.getMapper(AlarmMapper.class).alarmBotCreate(alarmDto);
-        return alarmDto.getBot_pk();
+    public int alarmBotCreate(BotDto botDto) {
+        sqlSession.getMapper(AlarmMapper.class).alarmBotCreate(botDto);
+        return botDto.getBot_pk();
     }
 
     @Override

@@ -1,5 +1,18 @@
 package com.ssafy.closer.model.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.EntityListeners;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@EntityListeners({AuditingEntityListener.class})
+@Getter
+@Setter
 public class BotDto {
     private int bot_pk; // 봇 알림 pk
     private String userId; // 알림 받는 유저 id = 현재 로그인 한 유저

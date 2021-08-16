@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import { getMyInfoAction, loginAction, getPostCount } from '../modules/user'
-import { RippleButton } from '../styles/index';
+import { RippleButton, ShakeButton } from '../styles/index';
 import '../styles/theme.css'
 
 function Login({ history }) {
@@ -121,10 +121,12 @@ function Login({ history }) {
           console.log(err)
         })
       }
-
-      
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [decodedToken])
+
+  const goSignup = () => {
+    history.push('/signup')
+  }
         
   return (
     <div className="wrap-group"> 
@@ -165,8 +167,11 @@ function Login({ history }) {
         onChange={onChange}
       />
       <div className="button-group">
-        <RippleButton type="submit" cclass="cbtn cbtn-lg cbtn-primary" children="로그인"/>
-        <RippleButton type="button" cclass="cbtn cbtn-none cbtn-lg" children="회원가입"/>
+        { userId === '' || password === ''
+          ? <ShakeButton cclass="cbtn cbtn-lg cbtn-secondary" children="로그인"/>
+          : <RippleButton type="submit" cclass="cbtn cbtn-lg cbtn-primary" children="로그인"/>
+        } 
+        <RippleButton type="button" cclass="cbtn cbtn-none cbtn-lg" children="회원가입" onClick={goSignup}/>
       </div>
       </form>
     </div>

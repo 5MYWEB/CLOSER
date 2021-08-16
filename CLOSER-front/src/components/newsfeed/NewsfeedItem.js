@@ -111,18 +111,18 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
     const betweenTimeHour = Math.floor(betweenTime / 60);
     const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
 
-    if (betweenTime < 1) setTimePeriod('방금전');
+    if (betweenTime < 1) setTimePeriod('방금 전');
     else if (betweenTime < 60) {
-      setTimePeriod(`${betweenTime}분전`);
+      setTimePeriod(`${betweenTime}분 전`);
     }
     else if (betweenTimeHour < 24) {
-      setTimePeriod(`${betweenTimeHour}시간전`);
+      setTimePeriod(`${betweenTimeHour}시간 전`);
     }
     else if (betweenTimeDay < 365) {
-        setTimePeriod(`${betweenTimeDay}일전`);
+        setTimePeriod(`${betweenTimeDay}일 전`);
     }
     else {
-      setTimePeriod(`${Math.floor(betweenTimeDay / 365)}년전`);
+      setTimePeriod(`${Math.floor(betweenTimeDay / 365)}년 전`);
     }
   }, [board.created_at]);
 
@@ -172,30 +172,34 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
 
   return (
     <Container className="page-wrapper p-0" ref={ref}>
-      <div className="px-5 py-3 bg-transparent border-bottom border-3">
+      <div className="px-4 py-3 bg-transparent border-bottom border-3">
         <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
-          <Row className="g-0 pb-3 mb-3 border-bottom border-2">
+          <Row className="g-0  align-items-start">
             <Col xs={2}>
               <div className="board-img-wrapper">
                 <img src={writerInfo.profileImg} alt="profile" className="userprofile profile-img" onError={handleImgError} />
               </div>
             </Col>
             <Col xs={10}>
-              <Row className="g-0 ps-1">
-                <div className="text-dark fw-bold"> 
+              <Row className="g-0 pb-4">
+                {/* 주소와 이름 */}
+                <Col xs={10} className="text-dark fw-bold"> 
                   { name === "near" &&
-                    <span className="me-1" style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(" ").slice(1, 3).join(" ")}</span>
+                    // 동만 표시
+                    <span className="me-1" style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(" ").slice(2, 3)}</span>
+                    // ㅇㅇ구 ㅇㅇ동
+                    // <span className="me-1" style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(" ").slice(1, 3).join(" ")}</span>
                   }
                   {board.nickname}
-                </div>
+                  
+                </Col>
+                {/* 작성시간 */}
+                <Col xs={2} className="text-secondary" style={{fontSize: "14px", textAlign: "right"}}>{timePeriod}</Col>
               </Row>
-              <Row className="g-0 ps-1">
-                <span className="text-secondary" style={{fontSize: "14px"}}>{timePeriod}</span>
+              <Row className="g-0 mb-3">
+                <div>{board.content}</div>
               </Row>
             </Col>
-          </Row>
-          <Row className="g-0 mb-3">
-            <div>{board.content}</div>
           </Row>
         </Link>
 
@@ -218,8 +222,8 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
           </Carousel>
         }
 
-        <div className = "likeAndBookmark mt-2">
-          <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
+        <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
+          <div className = "likeAndBookmark mt-2 d-flex justify-content-end align-items-center">
             <div className = "likePart" style={{fontSize: "20px"}}>
               <FontAwesomeIcon icon={faComment} className ="align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 
               <span className="ms-1 align-middle">{countComment}</span>

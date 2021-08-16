@@ -28,7 +28,7 @@ const UserBookmark = ({ match }) => {
   return (
     <>
       {/* 피드가 비어있지 않다면 피드목록을 불러옴*/}
-      {boardList.length > 0
+      {boardList !== null && boardList.length > 0
       ?
         <div>
           {boardList.map((board) => {

@@ -138,7 +138,11 @@ function App( { location, history }) {
         (isTopBar || isNormalView? "view" : "noTopview")
         )
       }>
-        <Route path="/" exact={true} component={Newsfeed} />
+        { isLoggedIn
+        ? <Route path="/" exact={true} component={Newsfeed} />
+        : <Route path="/" exact={true} component={Login} />}
+        
+        
         <Route path="/about" component={About} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />

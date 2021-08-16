@@ -540,3 +540,7 @@ a:active { text-decoration: none; }
 .ml-1_5rem {
   margin-left: 2rem;
 }
+
+.text-main {
+  color: #5552FF;
+}

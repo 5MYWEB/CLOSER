@@ -1,30 +1,38 @@
 import React from 'react';
 import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
+import { RippleTabItem } from '../../styles/index';
 import './BoardSubNavbar2.css';
 
-function BoardSubNavbar1({match}) {
+function BoardSubNavbar1({match, history}) {
+
+  // 리플 탭 이동하는 주소
+  const children = [
+    ['한끼레시피', '자취팁', '홈데코'],
+    [
+      '/board/subnav1/recipe',
+      '/board/subnav1/tip',
+      '/board/subnav1/deco'
+    ]
+  ]
+
+  const onClickTap = ( e ) => {
+    history.push(e.target.getAttribute('addr'))
+  }
+
   return (
-      <div className = "container2">
-        <div className="boardTabList">
-          <div className="boardTab1">
-          <Link to={"/board/subnav1/recipe"} className="link-light">한끼레시피</Link>
-          </div>
+    <div className="tabs-wrapper2">
+      <nav className="tabs">
+        <RippleTabItem cclass="tab" children={children[0][0]} onClick={onClickTap} addr={children[1][0]} />
+        <RippleTabItem cclass="tab is-current" children={children[0][1]} onClick={onClickTap} addr={children[1][1]} />
+        <RippleTabItem cclass="tab" children={children[0][2]} onClick={onClickTap} addr={children[1][2]} />
+        <div className="nav-underline"></div> 
+      </nav>
 
-          <div className="boardTab2">
-          <Link to={"/board/subnav1/tip" } className="link-light">자취팁</Link>
-          </div>
-
-          <div className="boardTab3">
-          <Link to={"/board/subnav1/deco" } className="link-light">홈데코</Link>
-          </div>
-        </div>
-
-        {/* 정확히 /alarm으로 들어오면, /alarm/unread로 리다이렉트해줌 */}
-        {match.isExact && 
-          <Redirect to="/board/subnav1/tip" />
-        }
-      </div>
+      {/* 기본 설정 */}
+      {match.isExact && 
+        <Redirect to="/board/subnav1/tip" />
+      }
+    </div>
   );
 }
 

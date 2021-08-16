@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import axios from 'axios';
 import AWS from 'aws-sdk';
 import { RippleButton } from '../../styles/index';
@@ -53,7 +53,10 @@ const NewsfeedForm = () => {
   // 피드를 제출할때 작동하는 함수
   const onSubmit = (e) => {
     e.preventDefault();
-    if(check===true) handleFileInput();
+    if(check===true) {
+      handleFileInput();
+      
+    }
     else go();
   };
 
@@ -74,6 +77,11 @@ const NewsfeedForm = () => {
             console.log(err)
           })
       setText('')
+      setUrls([])
+      setcheck(false)
+      setUrl('')
+      setFiles([])
+      setSelectedFiles([])
     }
   }
 
@@ -100,7 +108,6 @@ const NewsfeedForm = () => {
       return <img src={photo} alt="" key={photo}/>;
     });
   };
-
 
   function handleFileInput() {
     let lng;
@@ -178,7 +185,7 @@ const NewsfeedForm = () => {
                     />
                   </Col>
                   <Col xs={1} >
-                    <label className="input-file-button" for="input-file">
+                    <label className="input-file-button" htmlFor="input-file">
                       <FontAwesomeIcon icon={faImages} style={{ color: "#5552FF", width: "100%"}}/> 
                     </label>
                     <input type="file" id="input-file" multiple onChange={handleImageChange} style={{display:"none"}}/>

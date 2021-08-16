@@ -36,4 +36,7 @@ public interface InfoMapper {
 
     // 이미지 조회
     List<String> detailImage(int board_pk);
+
+    // 이미지 삭제
+    int deleteImage(int board_pk);
 }

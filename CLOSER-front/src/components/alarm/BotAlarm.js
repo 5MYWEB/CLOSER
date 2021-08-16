@@ -7,16 +7,21 @@ import { RadioGroup, RadioButton } from 'react-radio-buttons';
 import '../../styles/theme.css'
 
 function BotAlarm() {
-    const { userInfo, isLoggedIn, alarmDay, alarmDate } = useSelector((state) => state.user);
+    const { userInfo, isLoggedIn } = useSelector((state) => state.user);
     const [ inputStatus, setInputStatus ] = useState('')
     const [text, setText] = useState('');
+    const [alarmDay, setAlarmDay] = useState('')
+    const [alarmDate, setAlarmDate] = useState('')
     const [alarmSelect, setRadio] = useState('');
 
-    var week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일');
-    var today = new Date().getDay();
-    var todayLabel = week[today];
+    let week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일');
+    let today = new Date().getDay();
+    let todayLabel = week[today];
 
-    var date = new Date().getDate()
+    let date = new Date().getDate()
+    let dummyDate = "2021-08-";
+    let birthday = new Date(1995, 11, 17)
+
 
     const selectInputs = useRef();
 
@@ -28,6 +33,11 @@ function BotAlarm() {
     const onChangeText = (e) => {
         setText(e.target.value)
     }
+
+    const onChangeDay = (e) => {
+        // dummyDate + e.target.value
+        setAlarmDay(e.target.value)
+    }
     
     const [selected, setSelected] = useState();
     const selectedSetting = useRef();
@@ -36,7 +46,6 @@ function BotAlarm() {
     const radioChange = (e) => {
         setRadio(e.target.value);
     }
-
 
 
     // 내용이 빈 값인지 검사하는 함수
@@ -59,12 +68,12 @@ function BotAlarm() {
     }
 
     // 자취시작연도 검사
-    const checkDayDate = (alarmDay) => {
-        if (!checkExistData(alarmDay, "알림 날짜를")) {
-            return false
-        }
-        return true
-    }
+    // const checkDayDate = (alarmDay) => {
+    //     if (!checkExistData(alarmDay, "알림 날짜를")) {
+    //         return false
+    //     }
+    //     return true
+    // }
 
       // 피드를 제출할때 작동하는 함수
     const onSubmit = (e) => {
@@ -78,13 +87,14 @@ function BotAlarm() {
     const go=() => {
         // if (nullCheck()&&checkDayDate()) {
             if (nullCheck()) {
-        axios.post('http://localhost:8080/user_bot/${userId}/create', {
+        console.log(alarmDay);
+        axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {
             userId: userInfo.userId,
             content: text,
-            alarm_day : alarmDay,
-            alarm_date : alarmDate
+            alarm_day : dummyDate+alarmDay
         })
-        .then(() => {
+        .then((res) => {
+            console.log(res);
             // dispatch(createBotAlarm())
         })
         .catch((err) => {
@@ -145,7 +155,7 @@ function BotAlarm() {
                 </div>
 
                 <div className="d-flex justify-content-center align-items-end mx-0 my-4">
-                    매월 : <select id="alarmDay" name="alarmDay" value={alarmDay}  ref={selectInputs}>
+                    매월 : <select id="alarmDay" name="alarmDay" value={alarmDay} onChange = {onChangeDay} ref={selectInputs}>
                                 <option defaultValue hidden> -- 일 -- </option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -156,6 +166,7 @@ function BotAlarm() {
                                 <option value="7">7</option>
                                 <option value="8">8</option>
                                 <option value="9">9</option>
+                                <option value="10">10</option>
                                 <option value="11">11</option>
                                 <option value="12">12</option>
                                 <option value="13">13</option>
@@ -182,7 +193,7 @@ function BotAlarm() {
                 {/* 
                 <div className="d-flex justify-content-center align-items-end mx-0 my-4">
                         <p> OR </p>
-                </div>
+                </div> 
                 <div className="d-flex justify-content-center align-items-end mx-0 my-4">
                     매주 : <select id="alarmDate" name="alarmDate" value={alarmDate}  ref={selectInputs}>
                                 <option defaultValue hidden> -- 요일 -- </option>
@@ -194,7 +205,7 @@ function BotAlarm() {
                                 <option value="6">토</option>
                                 <option value="7">일</option>
                                 </select> 요일
-                </div> */}
+                </div>*/}
 
                 <div className="d-flex row justify-content-center align-items-end pt-3 mx-0">
                     <RippleButton type="submit" cclass="cbtn cbtn-primary cbtn-lg" children="알림 받기"/>

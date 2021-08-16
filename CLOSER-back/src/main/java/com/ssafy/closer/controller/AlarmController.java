@@ -40,10 +40,9 @@ public class AlarmController {
     public ResponseEntity<String> createBotAlarmDate(@RequestBody BotDto botDto){
         try {
             logger.debug(botDto.getContent());
-            logger.debug(botDto.getDate());
-            logger.debug(botDto.getDay());
+
             logger.debug("봇 알림 생성 : " + botDto);
-            int n = alarmService.alarmBotCreateDate(botDto);
+            int n = alarmService.alarmBotCreateDay(botDto);
             if(n > 0){
                 return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
             } else {

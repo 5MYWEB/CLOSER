@@ -22,7 +22,7 @@
     <!-- 일정 요일 선택해서 알림 요청 -->
     <insert id="alarmBotCreateDay" parameterType="BotDto" useGeneratedKeys="true" keyProperty="bot_pk" keyColumn="bot_pk">
         insert into user_bot(userId, content, alarm_day)
-        values (#{userId}, #{content}, #{date});
+        values (#{userId}, #{content}, #{alarm_day});
     </insert>
 
     <!-- 현재 요일에 해당하는 요일에 요청한 사람에게 메시지 뿌림 -->
@@ -35,7 +35,7 @@
     <!-- 월에 일정 날짜 (1일 - 31일) 선택해서 알림 요청 -->
     <insert id="alarmBotCreateDate" parameterType="BotDto" useGeneratedKeys="true" keyProperty="bot_pk" keyColumn="bot_pk">
         insert into user_bot(userId, content, alarm_date)
-        values (#{userId}, #{content}, #{date});
+        values (#{userId}, #{content}, #{alarm_date});
     </insert>
 
     <!-- 현재 날짜에 해당하는 날짜에 요청한 사람에게 메시지 뿌림 -->

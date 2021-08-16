@@ -43,7 +43,7 @@ public class AlarmController {
             logger.debug(botDto.getDate());
             logger.debug(botDto.getDay());
             logger.debug("봇 알림 생성 : " + botDto);
-            int n = alarmService.alarmBotCreate(botDto);
+            int n = alarmService.alarmBotCreateDate(botDto);
             if(n > 0){
                 return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
             } else {

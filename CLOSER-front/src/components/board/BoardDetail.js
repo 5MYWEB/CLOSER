@@ -7,12 +7,13 @@ import axios from 'axios';
 import CommentList from '../comment/CommentList';
 import UserBadgeItem from '../profile/UserBadgeItem';
 import './BoardDetail.css';
-import defaultProfile from '../../assets/profile-user-demo.png';
+import defaultProfile from '../../assets/user-on.svg';
 import usersSolidImg from '../../assets/users-solid.svg';
 import { Row, Col, Container, Card, Carousel } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
+import '../../styles/theme.css'
 
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -260,7 +261,9 @@ const BoardDetail = ({match}) => {
         </Row>
         <Row className="g-0 pb-3 mb-3 border-bottom border-2">
           <Col xs={2}>
-            <img src={writerProfile} alt="profile" className="userprofile" onError={handleImgError} style={{height: "100%"}} />
+            <div className="board-img-wrapper">
+              <img src={writerProfile}  alt="profile" className="userprofile profile-img" onError={handleImgError} />
+            </div>
           </Col>
           <Col xs={10}>
             <Row className="g-0 ps-1">

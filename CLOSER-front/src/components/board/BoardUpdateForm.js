@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import {Carousel, Container, FormSelect, InputGroup} from 'react-bootstrap';
+import { Container, FormSelect, InputGroup} from 'react-bootstrap';
 import { updateBoard } from '../../modules/board';
 import { RippleButton } from '../../styles/index';
 import AWS from "aws-sdk";
@@ -41,7 +41,7 @@ const BoardUpdateForm = ({match}) => {
   const [totalNum, setTotalNum] = useState(null)
   const [imgUrl, setImgUrl] = useState([]); // 기존의 이미지
   const [check, setcheck] = useState(false) // 이미지 수정했는지 체크
-  const [deletecheck, setdeletecheck] = useState(false) // 이미지 삭제했는지 체크
+  // const [deletecheck, setdeletecheck] = useState(false) // 이미지 삭제했는지 체크
 
   // 원래 내용을 state에 담아줌
   useEffect(() => {
@@ -81,14 +81,18 @@ const BoardUpdateForm = ({match}) => {
     //   await deleteimg();
     //   nchangedimg();
     // }
-    
-    if(check) { // 파일선택을 누른경우 (사진 수정하는 경우)
-      setSelectedFiles([])
-      await deleteimg();
-    }else{ // 사진 수정안하는 경우
-      setUrls([])
+    if(kind <= 3){
+      if(check) { // 파일선택을 누른경우 (사진 수정하는 경우)
+        setSelectedFiles([])
+        await deleteimg();
+      }else{ // 사진 수정안하는 경우
+        setUrls([])
+        changedimg()
+      }
+    }else if(kind <= 6){
       changedimg()
     }
+    
     // changedimg()
     // if(!deletecheck && !check) nchangedimg()
   });
@@ -127,11 +131,11 @@ const BoardUpdateForm = ({match}) => {
 
   const changedimg =() =>{ // 게시판 수정
     axios.put(`http://localhost:8080/board/${pk}`, {
-      kind_pk: Number(kind),
+      kind_pk: kind,
       userId: userId,
       title: title,
       content: content,
-      totalNum: totalNum,
+      totalNum: Number(totalNum),
       imgUrls : Urls,
     })
         .then(() => {
@@ -213,11 +217,11 @@ const BoardUpdateForm = ({match}) => {
     });
   }
 
-  const removeImgs=(e)=>{
-    console.log(e)
-    // setSelectedFiles([])
-    // setdeletecheck(true)
-  }
+  // const removeImgs=(e)=>{
+  //   console.log(e)
+  //   // setSelectedFiles([])
+  //   // setdeletecheck(true)
+  // }
 
   useEffect(() => {
     if (Url !== "") {
@@ -287,23 +291,23 @@ const BoardUpdateForm = ({match}) => {
                   <InputGroup className="mb-3 d-flex justify-content-between">
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio2" value={2}
-                             onClick={onChangeTotalNum} checked={2 === Number(totalNum)}/>
-                      <label className="form-check-label mx-1" for="inlineRadio2">2명</label>
+                             onChange={onChangeTotalNum} checked={2 === Number(totalNum)}/>
+                      <label className="form-check-label mx-1" htmlFor="inlineRadio2">2명</label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio3" value={3}
-                             onClick={onChangeTotalNum} checked={3 === Number(totalNum)}/>
-                      <label className="form-check-label mx-1" for="inlineRadio3">3명</label>
+                             onChange={onChangeTotalNum} checked={3 === Number(totalNum)}/>
+                      <label className="form-check-label mx-1" htmlFor="inlineRadio3">3명</label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio4" value={4}
-                             onClick={onChangeTotalNum} checked={4 === Number(totalNum)}/>
-                      <label className="form-check-label mx-1" for="inlineRadio4">4명</label>
+                             onChange={onChangeTotalNum} checked={4 === Number(totalNum)}/>
+                      <label className="form-check-label mx-1" htmlFor="inlineRadio4">4명</label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio5" value={5}
-                             onClick={onChangeTotalNum} checked={5 === Number(totalNum)}/>
-                      <label className="form-check-label mx-1" for="inlineRadio5">5명</label>
+                             onChange={onChangeTotalNum} checked={5 === Number(totalNum)}/>
+                      <label className="form-check-label mx-1" htmlFor="inlineRadio5">5명</label>
                     </div>
                   </InputGroup>
                 </div>
@@ -315,10 +319,10 @@ const BoardUpdateForm = ({match}) => {
                     {/* <label>
                       <input type="file" id="file" multiple onChange={handleImageChange} className="form-control" style={{color: "#5552FF"}} />
                     </label> */}
-                    <div class="mb-3">
+                    <div className="mb-3">
                       <div><label htmlFor="formFileMultiple" className="form-label fw-bolder mb-0" style={{color: "#5552FF"}}>Image</label></div>
                       <div className="result d-flex justify-content-center row row-cols-4 mb-1">{renderPhotos(selectedFiles)}</div>
-                      <div class="d-flex justify-content-center">
+                      <div className="d-flex justify-content-center">
                         <input className="form-control" type="file" id="formFileMultiple" multiple onChange={handleImageChange} className="form-control"/>
                       </div>
                     </div>

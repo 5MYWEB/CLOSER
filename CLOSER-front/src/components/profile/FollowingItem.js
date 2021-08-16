@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import { followAction } from '../../modules/user';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import defaultProfile from "../../assets/profile-user-demo.png";
+import defaultProfile from '../../assets/user-on.svg';
 import { RippleButton } from '../../styles/index';
+import '../../styles/theme.css'
 
 function FollowingItem({ following }) {
 
@@ -42,7 +43,9 @@ function FollowingItem({ following }) {
         <Row className="g-0 align-items-center mx-5 pb-3 border-bottom border-2">
           <Col xs={2} className="px-0">
             <Link to={`/profile/${following.passiveUser}`}>
-              <img src={img}  alt="userprofile" className="userprofile rounded-circle" onError={handleImgError} style={{width: "100%"}}/>
+              <div className="follow-img-wrapper">
+                <img src={img}  alt="userprofile" className="userprofile profile-img" onError={handleImgError}/>
+              </div>
             </Link>
           </Col>
           <Col xs={6} className="px-0">

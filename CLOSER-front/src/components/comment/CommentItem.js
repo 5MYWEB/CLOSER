@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { deleteComment } from '../../modules/comment';
 import { Container, Row, Col } from 'react-bootstrap';
-import defaultProfile from '../../assets/profile-user-demo.png';
+import defaultProfile from '../../assets/user-on.svg';
 
 const CommentItem = ({ comment }) => {
 
@@ -93,7 +93,9 @@ const CommentItem = ({ comment }) => {
       <Container>
         <Row className="g-0 mb-1">
           <Col xs={2}>
-            <img src={writerInfo.profileImg} alt="profile" className="userprofile" onError={handleImgError} style={{height: "100%"}} />
+            <div className="board-img-wrapper">
+              <img src={writerInfo.profileImg} alt="profile" className="userprofile profile-img" onError={handleImgError} />
+            </div>
           </Col>
           <Col xs={8}>
             <Row className="g-0 ps-1">

@@ -6,6 +6,7 @@ import './AlarmItem.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment, faBookmark, faUsers } from "@fortawesome/free-solid-svg-icons";
 import defaultProfile from '../../assets/user-on.svg'
+import '../../styles/theme.css'
 
 function AlarmItem({ alarm, userId }) {
 
@@ -53,8 +54,11 @@ function AlarmItem({ alarm, userId }) {
         <Link to={alarmLink}>
           <div className={"alarm-item " + (alarm.visited === true && "alarm-unread")}>
             <div className="row mx-0">
-              <div className="col-3 px-0 alarm-profile d-flex justify-content-center">
-                <img src={profileImg} alt="프로필사진" onError={handleImgError} className="alarm-profile-limit"/>
+              <div className="col-3 px-0 alarm-profile d-flex justify-content-center align-items-center">
+                <div className="board-img-wrapper g-0 d-flex justify-content-center align-items-center">
+                  <img src={profileImg} alt="프로필사진" className="userprofile profile-img" onError={handleImgError} />
+                </div>
+                {/* <img src={profileImg} alt="프로필사진" onError={handleImgError} className="alarm-profile-limit"/> */}
               </div>
               <div className="col px-0">
                 <div className="row">

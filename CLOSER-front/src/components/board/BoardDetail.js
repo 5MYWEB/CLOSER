@@ -145,7 +145,7 @@ const BoardDetail = ({match}) => {
   // 몇시간 전
   useEffect(() => {
     const today = new Date();
-    const timeValue = new Date(board.created_at);
+    const timeValue = new Date(board.updated_at);
 
     const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
     const betweenTimeHour = Math.floor(betweenTime / 60);
@@ -164,7 +164,7 @@ const BoardDetail = ({match}) => {
     else {
       setTimePeriod(`${Math.floor(betweenTimeDay / 365)}년전`);
     }
-  }, [board.created_at]);
+  }, [board.updated_at]);
 
   // 이미지 링크 세팅
   useEffect(() => {

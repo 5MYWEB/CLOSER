@@ -42,6 +42,12 @@ public class AlarmServiceImpl implements AlarmService {
     }
 
     @Override
+    public int alarmBotCreateDay(BotDto botDto) {
+        sqlSession.getMapper(AlarmMapper.class).alarmBotCreateDay(botDto);
+        return botDto.getBot_pk();
+    }
+
+    @Override
     public int alarmUnread(String userId) {
         return sqlSession.getMapper(AlarmMapper.class).alarmUnread(userId);
     }

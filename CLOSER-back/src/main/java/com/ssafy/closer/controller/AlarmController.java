@@ -37,7 +37,7 @@ public class AlarmController {
     // 봇 알람 생성
     @ApiOperation(value="봇 알림 생성")
     @PostMapping("/user_bot/{id}/create")
-    public ResponseEntity<String> createBotAlarm(@RequestBody BotDto botDto){
+    public ResponseEntity<String> createBotAlarmDate(@RequestBody BotDto botDto){
         try {
             logger.debug(botDto.getContent());
             logger.debug(botDto.getDate());

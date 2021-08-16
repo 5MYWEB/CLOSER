@@ -63,7 +63,9 @@ public class UserController {
         logger.debug("login 정보 - " + loginInfo);
         try {
             Map<String, String> user = userService.login(loginInfo);
-
+            System.out.println(loginInfo.get("userId"));
+            String ctoken = jwtService.chatcreate(loginInfo.get("userId"));
+            System.out.println("ctoken "+ctoken);
             // 로그인에 성공했다면 토큰을 만듭시당.
             if (user != null) {
                 logger.debug(user.toString());
@@ -92,9 +94,9 @@ public class UserController {
             int n = userService.userRegister(memberDto);
 
             if (n > 0) {
-                String token = jwtService.chatcreate(memberDto.getUserId());
-                System.out.println(token);
-                userService.usertoken(memberDto.getUserId(), token);
+//                String token = jwtService.chatcreate(memberDto.getUserId());
+//                System.out.println(token);
+//                userService.usertoken(memberDto.getUserId(), token);
                 return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
             } else {
                 return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);

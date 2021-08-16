@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { getMyInfoAction, loginAction, getPostCount } from '../modules/user'
 import { RippleButton, ShakeButton } from '../styles/index';
 import '../styles/theme.css'
+import { StreamChat } from 'stream-chat';
 
 function Login({ history }) {
   // Redux store 접근 시 사용

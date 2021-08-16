@@ -5,11 +5,12 @@ import { Chat, Channel, ChannelHeader, ChannelList, LoadingIndicator, MessageInp
 import 'stream-chat-react/dist/css/index.css';
 import './Messages.css'
 
-const Messages = () => {
+const Messages = ({match}) => {
 
+    const otherid = match.params.id;
     const { userInfo } = useSelector((state) => (state.user))
     const user_id = userInfo.userId;
-    const userToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYWRtaW4ifQ.guLbQlTdye1i7VGavDsvzX3uLawv_MyLPhChBuyelMM";
+    const userToken = userInfo.chattoken;
     const filters = { type: 'messaging', members: { $in: [user_id] } };
     const sort = { last_message_at: -1 };
 
@@ -37,10 +38,16 @@ const Messages = () => {
     return <LoadingIndicator />;
   }
 
+    const channel = chatClient.channel('messaging', {
+        name: otherid+'와의 메시지',
+        members: [user_id,otherid],
+    });
+
+
   return (
       <Chat client={chatClient} theme='messaging light'>
         <ChannelList filters={filters} sort={sort} />
-        <Channel>
+        <Channel channel={channel}>
           <Window>
             <ChannelHeader/>
             <MessageList />

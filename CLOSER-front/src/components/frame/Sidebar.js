@@ -10,7 +10,7 @@ import * as actions from '../../modules/user';
 import defaultProfile from '../../assets/user-on.svg';
 
 import homeSolid from '../../assets/sidebar/home-solid.svg';
-import userSolid from '../../assets/sidebar/user-solid.svg';
+import userBold from '../../assets/sidebar/user-bold.svg';
 import compassSolid from '../../assets/sidebar/compass-solid.svg';
 import questionSolid from '../../assets/sidebar/question-solid.svg';
 import signInSolid from '../../assets/sidebar/sign-in-alt-solid.svg';
@@ -150,7 +150,7 @@ class ConnectedSidebar extends React.Component {
                   <Link to="/about" onClick={() => this.closeMenu()} className="link-dark">ABOUT</Link>
                 </div>
                 <div className="side_profile">
-                  <img src={userSolid} alt="home" className="bm-icon"/>
+                  <img src={userBold} alt="home" className="bm-icon"/>
                   <Link to={`/profile/${userInfo.userId}`} onClick={() => this.closeMenu()} className="link-dark">MY PROFILE</Link>
                 </div>
                 <div className="side_location">

@@ -20,8 +20,7 @@ const WriteButton = ( {history, addr} ) => {
   return (
     (addr === 'board')
     ? <RippleIcon src={pencilSolid} alt="pencilSolid" id="pencilSolid" cclass="write-button" onClick={onClickWriteBoard}/>
-    : <RippleIcon src={pencilSolid} alt="pencilSolid" id="pencilSolid" cclass="write-button" onClick={onClickWriteBoard}/>
-    // : <RippleIcon src={pencilSolid} alt="pencilSolid" id="pencilSolid" cclass="write-button" onClick={onClickWriteNewsfeed} />
+    : <RippleIcon src={pencilSolid} alt="pencilSolid" id="pencilSolid" cclass="write-button" onClick={onClickWriteNewsfeed} />
   )
 }
 

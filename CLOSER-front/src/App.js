@@ -39,8 +39,6 @@ function App( { location, history }) {
     now = '/' + location.pathname.split('/')[1]
   }
 
-  console.log(now)
-
 
   // 2.
   // TopAppBar를 변형하거나 보여주지 않는 페이지를 모아둔 오브젝트

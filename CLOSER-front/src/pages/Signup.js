@@ -179,12 +179,12 @@ function SignUp( {history} ) {
   }
 
   // 주소 검사
-  const checkAddr = (addr) => {
-    if(!checkExistData(addr, '주소를')) {
-      return false
-    }
-    return true
-  }
+  // const checkAddr = (addr) => {
+  //   if(!checkExistData(addr, '주소를')) {
+  //     return false
+  //   }
+  //   return true
+  // }
 
   // 폰번호 검사
   const checkPhone = (phone) => {
@@ -212,8 +212,8 @@ function SignUp( {history} ) {
       return false;
     } else if (!checkEmail(email)) {
       return false;
-    } else if (!checkAddr(addr)) {
-      return false;
+    // } else if (!checkAddr(addr)) {
+    //   return false;
     } else if (!checkPhone(phone)) {
       return false;
     } else if (!checkHomeAlone(homeAlone)) {

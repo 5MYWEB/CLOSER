@@ -113,16 +113,18 @@ const BoardDetail = ({match}) => {
     })
 
     // 참여했는지
-    axios.post(`http://localhost:8080/board/${pk}/join`, {
-      userId: userId,
-      flag: "false",
-    })
-    .then((res) => {
-      setJoined(res.data.joined)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+    if(pk>3 && pk<7) {
+      axios.post(`http://localhost:8080/board/${pk}/join`, {
+        userId: userId,
+        flag: "false",
+      })
+          .then((res) => {
+            setJoined(res.data.joined)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    }
 
     // 댓글 좋아요 북마크 개수
     axios.post(`http://localhost:8080/board/${pk}/info-cnt`)
@@ -145,7 +147,7 @@ const BoardDetail = ({match}) => {
   // 몇시간 전
   useEffect(() => {
     const today = new Date();
-    const timeValue = new Date(board.updated_at);
+    const timeValue = new Date(board.created_at);
 
     const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
     const betweenTimeHour = Math.floor(betweenTime / 60);
@@ -164,7 +166,7 @@ const BoardDetail = ({match}) => {
     else {
       setTimePeriod(`${Math.floor(betweenTimeDay / 365)}년전`);
     }
-  }, [board.updated_at]);
+  }, [board.created_at]);
 
   // 이미지 링크 세팅
   useEffect(() => {
@@ -264,7 +266,7 @@ const BoardDetail = ({match}) => {
             <Row className="g-0 ps-1">
               <Link to = {`/profile/${board.userId}`}>
                 { board.kind_pk > 0 && board.kind_pk < 4 && board.badge !== 0 &&
-                  <span style={{color: "#5552FF"}}><UserBadgeItem badge={board.badge}/></span>
+                  <span style={{color: "#5552FF"}}><UserBadgeItem badge={board.badge} cclass="profile-badge"/></span>
                 }
                 { board.kind_pk >= 4 && board.kind_pk <= 6 &&
                   <span style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(' ').slice(1, 3).join(' ')}</span>

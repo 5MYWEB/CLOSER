@@ -27,8 +27,8 @@ const Menu = () => {
     <div className="d-flex nav-wrapper align-items-center justify-content-between">
       {
       iconLight === 'newsfeed'
-      ? <Link to="/newsfeed"><RippleIcon src={newsfeedOn} alt="newsfeedOn" id="newsfeed" cclass="newsfeed" onClick={onClick} /></Link>
-      : <Link to="/newsfeed"><RippleIcon src={newsfeedOff} alt="newsfeedOff" id="newsfeed" cclass="newsfeed" onClick={onClick} /></Link>
+      ? <Link to="/newsfeed"><RippleIcon src={newsfeedOn} alt="newsfeedOn" id="newsfeed"  onClick={onClick} /></Link>
+      : <Link to="/newsfeed"><RippleIcon src={newsfeedOff} alt="newsfeedOff" id="newsfeed"  onClick={onClick} /></Link>
       }
       {
       iconLight === 'board'
@@ -37,13 +37,13 @@ const Menu = () => {
       }
       {
       iconLight === 'alerts'
-      ? <Link to="/alarm"><RippleIcon src={alertsOn} alt="alertsOn" id="alerts" cclass="alerts" onClick={onClick} /></Link> 
-      : <Link to="/alarm"><RippleIcon src={alertsOff} alt="alertsOff" id="alerts" cclass="alerts" onClick={onClick} /></Link>
+      ? <Link to="/alarm"><RippleIcon src={alertsOn} alt="alertsOn" id="alerts" onClick={onClick} /></Link> 
+      : <Link to="/alarm"><RippleIcon src={alertsOff} alt="alertsOff" id="alerts" onClick={onClick} /></Link>
       }
       {
       iconLight === 'messages'
-          ? <Link to="/messages"><RippleIcon src={messagesOn} alt="messagesOn" id="messages" cclass="messages" onClick={onClick} /></Link>
-          : <Link to="/messages"><RippleIcon src={messagedOff} alt="messagedOff" id="messages" cclass="messages" onClick={onClick} /></Link>
+          ? <Link to="/messages"><RippleIcon src={messagesOn} alt="messagesOn" id="messages" onClick={onClick} /></Link>
+          : <Link to="/messages"><RippleIcon src={messagedOff} alt="messagedOff" id="messages" onClick={onClick} /></Link>
       }
     </div>
   )

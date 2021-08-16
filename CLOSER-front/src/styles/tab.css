@@ -23,6 +23,12 @@ nav button {
   margin: 1.5rem 0;
 }
 
+.tabs-wrapper2 {
+  display: flex;
+  justify-content:space-around;
+  border-radius: 6px 6px 0 0;
+}
+
 .tabs-content {
   height: 200px;
   border-radius: 0 0 6px 6px;

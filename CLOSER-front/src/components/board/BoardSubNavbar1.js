@@ -20,7 +20,7 @@ function BoardSubNavbar1({match, history}) {
   }
 
   return (
-    <div className="tabs-wrapper">
+    <div className="tabs-wrapper2">
       <nav className="tabs">
         <RippleTabItem cclass="tab" children={children[0][0]} onClick={onClickTap} addr={children[1][0]} />
         <RippleTabItem cclass="tab is-current" children={children[0][1]} onClick={onClickTap} addr={children[1][1]} />

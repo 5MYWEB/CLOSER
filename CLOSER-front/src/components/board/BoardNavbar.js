@@ -1,9 +1,11 @@
-import React from 'react';
-import { withRouter  } from 'react-router-dom';
+import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { RippleTabItem2 } from '../../styles/index';
 import './BoardNavbar.css';
 
 function BoardNavbar({ history }) {
+
+  const [nowTab, setNowTab] = useState('/board/subnav1/')
 
   const children = [
     ['자취 게시판', '지역 게시판'],
@@ -15,16 +17,18 @@ function BoardNavbar({ history }) {
 
   const onClickTap = ( e ) => {
     history.push(e.target.getAttribute('addr'))
+    setNowTab(e.target.getAttribute('addr'))
   }
 
   return (
-    <div className="tabs-wrapper">
+    <div className="tabs-wrapper2">
       <nav className="tabs">
-        <RippleTabItem2 cclass="tab is-current" children={children[0][0]} onClick={onClickTap} addr={children[1][0]} />
-        <RippleTabItem2 cclass="tab" children={children[0][1]} onClick={onClickTap} addr={children[1][1]} />
+        <RippleTabItem2 cclass={nowTab === children[1][0]? "tab is-current":"tab"} children={children[0][0]} onClick={onClickTap} addr={children[1][0]} />
+        <RippleTabItem2 cclass={nowTab === children[1][1]? "tab is-current":"tab"} children={children[0][1]} onClick={onClickTap} addr={children[1][1]} />
         <div className="nav-underline2"></div> 
       </nav>
     </div>
+
   );
 }
 

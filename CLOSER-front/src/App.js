@@ -60,15 +60,6 @@ function App( { location, history }) {
     '/board-detail': null
   }
 
-  // const onClickWriteNewsfeed = () => {
-  //   history.push('/board-create-form/')
-  // }
-
-  const onClickWriteBoard = () => {
-    history.push('/board-create-form/')
-  }
-
-
   // NavBar를 변형하거나 보여주지 않는 페이지를 모아둔 오브젝트
   const noNavBarPages = {
     '/board-detail': null,
@@ -146,7 +137,7 @@ function App( { location, history }) {
         (isTopBar || isNormalView? "view" : "noTopview")
         )
       }>
-        <Route path="/" exact={true} component={Home} />
+        <Route path="/" exact={true} component={Newsfeed} />
         <Route path="/about" component={About} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />

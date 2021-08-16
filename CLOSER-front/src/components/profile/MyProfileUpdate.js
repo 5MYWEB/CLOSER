@@ -77,13 +77,13 @@ const MyProfileUpdate = ({history}) => {
   // 닉네임 중복체크
   const onDoubleCheck = () => {
     axios.post(`http://localhost:8080/user/userNicknameCheck?nickname=${changedUserInfo.nickname}`)
-        .then((res) => {
-          alert(res.data)
-          setDoubleChecked(true)
-        })
-        .catch((err) => {
-          alert(err.response.data)
-        })
+      .then((res) => {
+        alert(res.data)
+        setDoubleChecked(true)
+      })
+      .catch((err) => {
+        alert(err.response.data)
+      })
   }
 
   // 자취기간 변경

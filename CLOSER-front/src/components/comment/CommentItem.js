@@ -103,7 +103,7 @@ const CommentItem = ({ comment }) => {
                 {/* { kindCategory > 0 && kindCategory < 4 && board.badge !== 0 &&
                   <span style={{color: "#5552FF"}}><UserBadgeItem badge={board.badge}/></span>
                 } */}
-                { kindCategory >= 4 && kindCategory <= 6 &&
+                { writerInfo.addr && kindCategory >= 4 && kindCategory <= 6 &&
                   <span style={{color: "#5552FF", fontSize: "14px"}}>{writerInfo.addr.split(" ").slice(1, 3).join(" ")}</span>
                 }
                 <span className="text-dark fw-bold"> {writerInfo.nickname}</span>

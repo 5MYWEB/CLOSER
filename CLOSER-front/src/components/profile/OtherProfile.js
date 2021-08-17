@@ -1,21 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { followAction, getFollowInfoAction } from '../../modules/user';
 import UserBadge from './UserBadge';
-import { RippleButton } from '../../styles/index';
+import { RippleButton, RippleTabItem } from '../../styles/index';
 import defaultProfile from '../../assets/user-on.svg';
 import compassRegular from '../../assets/profile/compass-regular.svg';
 import calendarRegular from '../../assets/profile/calendar-alt-regular.svg';
+import '../../styles/tab.css'
 import '../../styles/theme.css'
 import './MyProfile.css';
 
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-function OtherProfile({ id }) {
+function OtherProfile({ id, history }) {
 
   const dispatch = useDispatch();
 
@@ -81,8 +82,22 @@ function OtherProfile({ id }) {
     document.execCommand('copy')
   }
 
+  const children = [
+    ['피드', '포스트', '북마크'],
+    [
+      `/profile/${userInfo.userId}/user-feed`,
+      `/profile/${userInfo.userId}/user-board`,
+      `/profile/${userInfo.userId}/user-bookmark`
+    ]
+  ]
+
+  const onClickTap = ( e ) => {
+    history.push(e.target.getAttribute('addr'))
+  }
+
   return (
-    <div className="page-wrapper">
+   <> 
+    <div className="page-semi-wrapper">
     {/* 1. 프로필 사진, 뱃지와 수정 버튼 */}
     <div className="d-flex row justify-content-between align-items-end mx-0">
       {/* 프로필사진 */}
@@ -146,21 +161,16 @@ function OtherProfile({ id }) {
       </div>
     </div>
 
-    <div className="myprofilepost">
-      <div className ="myfeed">
-        <Link to={`/profile/${userInfo.userId}/user-feed`} className="link-light" >내 피드</Link>
-      </div>
-
-      <div className ="mypost">
-        <Link to={`/profile/${userInfo.userId}/user-board`} className="link-light">내 포스트</Link>
-      </div>
-
-      <div className ="mybookmark">
-        <Link to={`/profile/${userInfo.userId}/user-bookmark`} className="link-light">북마크</Link>
-      </div>
-    </div>
   </div>
-
+    <div className="tabs-wrapper">
+      <nav className="tabs">
+        <RippleTabItem cclass="tab is-current" children={children[0][0]} onClick={onClickTap} addr={children[1][0]} />
+        <RippleTabItem cclass="tab" children={children[0][1]} onClick={onClickTap} addr={children[1][1]} />
+        <RippleTabItem cclass="tab" children={children[0][2]} onClick={onClickTap} addr={children[1][2]} />
+        <div className="nav-underline"></div> 
+      </nav>
+    </div>
+  </>
   );
 }
 
@@ -168,4 +178,4 @@ OtherProfile.propTypes = {
   id: PropTypes.string,
 }
 
-export default OtherProfile;
+export default withRouter(OtherProfile);

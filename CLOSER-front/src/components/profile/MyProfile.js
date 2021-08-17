@@ -87,8 +87,8 @@ function MyProfile({ history }) {
                 <img src={compassRegular} alt="addr-icon" className="profile-icon ps-0 pe-2"/>
                   <span>{userInfo.addr}</span>
                 <img src={calendarRegular} alt="homeAlone-icon" className="profile-icon ps-4 pe-1"/>
-                {userInfo.homeAlone === null
-                ? <span> 마음만은 자취러 </span> 
+                {userInfo.homeAlone === 0
+                ? <span> 자취희망러 </span> 
                 : <span> 자취 {now.getFullYear()-userInfo.homeAlone+1} 년차 </span>}
               </span>
             </div>

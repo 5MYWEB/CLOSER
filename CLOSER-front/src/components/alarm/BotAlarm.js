@@ -19,7 +19,7 @@ function BotAlarm( { history }) {
     const dateRadioBtn = useRef();
 
     const onChangeText = (e) => {
-        const { name, value } = e.target;
+        const { value } = e.target;
         setText(value)
     }
 
@@ -49,18 +49,30 @@ function BotAlarm( { history }) {
         return true;
     }
 
+    function checkAll() {
+        if (checkExistData(text, '알림 받을 내용을')) {
+            return false
+        } else if (nowRadio === 'day') {
+            if (checkExistData(alarmDay, '알림 받을 요일을')) {
+                return false
+            }
+        } else if (nowRadio === 'date') {
+            if (checkExistData(alarmDate, '알림 받을 날짜를')) {
+                return false
+            }
+        }
+        return true;
+    }
+
 
       // 피드를 제출할때 작동하는 함수
     const onSubmit = (e) => {
         e.preventDefault();
-        checkExistData(text, '알림 받을 내용을')
-        if (nowRadio === 'day') {
-            checkExistData(alarmDay, '알림 받을 요일을')
-        } else {
-            checkExistData(alarmDate, '알림 받을 날짜를')
-        }
+        if (checkAll() === true) {
             go();
-        // }
+        }
+        
+
     };
 
   // 백에 저장하는 메소드

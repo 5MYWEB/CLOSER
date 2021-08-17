@@ -1,7 +1,8 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux'
-import { getMyInfoAction, loginAction, getPostCount } from '../modules/user'
+import { useDispatch } from 'react-redux'
+import { loginAction } from '../modules/user'
+// import { getMyInfoAction, loginAction, getPostCount } from '../modules/user'
 import { RippleButton, ShakeButton } from '../styles/index';
 import '../styles/theme.css'
 
@@ -16,7 +17,7 @@ function Login({ history }) {
   
   const { userId, password } = userInputs;
 
-  const { decodedToken, isLoggedIn } = useSelector((state) => state.user);
+  // const { decodedToken, isLoggedIn } = useSelector((state) => state.user);
 
   const onChange=useCallback(
     e => {

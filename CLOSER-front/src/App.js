@@ -48,6 +48,7 @@ function App( { location }) {
   const noTopAppBarPages = {
     '/login': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/signup': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
+    '/about': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/board-detail': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/board-detail/other/': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/board-detail/other/tip': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
@@ -72,6 +73,7 @@ function App( { location }) {
   const noNavBarPages = {
     '/login': null,
     '/signup': null,
+    '/about': null,
     '/board/other/tip': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,
     '/board/other/recipe': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,
     '/board/other/deco': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,

@@ -6,8 +6,8 @@ import backButton from '../../assets/arrow-left-solid.svg'
 
 const BackButton = ({ history, cclass, wrapclass}) => {
   
-  // 뒤로가기를 막는 로직
-  const url = history.location.pathname.split("/")[1];
+  
+  // const url = history.location.pathname.split("/")[1];
 
   const onClick = () => {
     setTimeout( function() {

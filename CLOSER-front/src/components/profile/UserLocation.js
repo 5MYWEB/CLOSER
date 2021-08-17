@@ -123,6 +123,9 @@ const UserLocation = ({ history }) => {
         axios.post(`http://localhost:8080/user/profileinfo?userId=${userInfo.userId}`)
         .then((res) => {
           dispatch(getMyInfoAction(res.data))
+          setTimeout( function () {
+            history.goBack();
+          }, 350);
         })
         .catch((err) => {
           console.log(err)

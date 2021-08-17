@@ -96,12 +96,12 @@ function MyProfile({ history }) {
             <div className="row px-3 pt-3 justify-content-between">
               <div className="row px-3 col-6 p-0">
                 <div className="col-6 p-0">
-                    <Link to={`following-list/${userInfo.userId}/`} className="link-dark">
-                      {userInfo.following} 팔로잉
-                    </Link>
+                  <Link to={`/following-list/${userInfo.userId}/`} className="link-dark">
+                    {userInfo.following} 팔로잉
+                  </Link>
                 </div>
                 <div className="col-6 p-0">
-                  <Link to={`follower-list/${userInfo.userId}/`} className="link-dark">
+                  <Link to={`/follower-list/${userInfo.userId}/`} className="link-dark">
                     <div>{userInfo.follower} 팔로워</div>
                   </Link>
                 </div>

@@ -299,7 +299,7 @@ function SignUp( {history} ) {
         // 회원가입 함수의 파라미터 설정
 
         // 앨범 생성
-        
+
         createAlbum(userInfo.userId);
 
         // 회원가입 함수 실행
@@ -320,7 +320,7 @@ function SignUp( {history} ) {
             <span className="necessary unfollow">*</span>
           </div>
           <div className="row mx-0">
-            <div className="col-9 px-0">
+            <div className="col-8 px-0">
               <input
                 placeholder="아이디를 입력하세요"
                 onFocus={(e) => {
@@ -335,7 +335,7 @@ function SignUp( {history} ) {
                 onChange={(e) => {onChange(e); onChangeUserId(e);}}
               />
             </div>
-            <div className="col-3 px-0">
+            <div className="col-4 px-0">
               {userIdChecked ? 
                 <RippleButton disabled onClick={userIdCheck} type="button" cclass="cbtn cbtn-sm cbtn-green" children="확인완료"/>
                 :
@@ -353,7 +353,7 @@ function SignUp( {history} ) {
             <span className="necessary unfollow">*</span>
           </div>
           <div className="row mx-0">
-            <div className="col-9 px-0">
+            <div className="col-8 px-0">
               <input
                 placeholder="닉네임을 입력하세요"
                 onFocus={(e) => {
@@ -368,7 +368,7 @@ function SignUp( {history} ) {
                 onChange={(e) => {onChange(e); onChangeNickname(e);}}
               />
             </div>
-            <div className="col-3 px-0">
+            <div className="col-4 px-0">
               {nicknameChecked ? 
                 <RippleButton disabled onClick={nicknameCheck} type="button" cclass="cbtn cbtn-sm cbtn-green" children="확인완료"/>
                 :

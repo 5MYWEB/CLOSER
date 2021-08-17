@@ -1,31 +1,43 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RippleButton } from '../../styles/index';
-import { RadioGroup, RadioButton } from 'react-radio-buttons';
+// import { RadioGroup, RadioButton } from 'react-radio-buttons';
 import '../../styles/theme.css'
+// import { RippleTabItem2 } from '../../styles/index';
+
+
 
 function BotAlarm() {
     const { userInfo, isLoggedIn } = useSelector((state) => state.user);
-    const [ inputStatus, setInputStatus ] = useState('')
+    // const [ inputStatus, setInputStatus ] = useState('')
     const [text, setText] = useState('');
     const [alarmDay, setAlarmDay] = useState('')
     const [alarmDate, setAlarmDate] = useState('')
-    const [alarmSelect, setRadio] = useState('');
-
+    // const [alarmSelect, setRadio] = useState('');
     // let week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일');
     // let today = new Date().getDay();
     // let todayLabel = week[today];
 
-    let date = new Date().getDate()
+    // let date = new Date().getDate()
     let dummyDate = "2021-08-";
 
     const selectInputs = useRef();
 
-    const handleClickRadioButton = (radioBtnName) => {
-        setInputStatus(radioBtnName)
-    }
+    // const [nowTab, setNowTab] = useState('')
+
+    // const children = [
+    //     ['매주', '매월'],
+    //     [
+    //         '',
+    //         ''
+    //     ]
+    // ]
+
+    // const handleClickRadioButton = (radioBtnName) => {
+    //     setInputStatus(radioBtnName)
+    // }
 
     // 사용자가 알림 내용을 입력할때 작동하는 함수
     const onChangeText = (e) => {
@@ -41,32 +53,32 @@ function BotAlarm() {
         setAlarmDay(e.target.value)
     }
     
-    const [selected, setSelected] = useState();
-    const selectedSetting = useRef();
-    const handleSettingsChange = e => setSelected(e.target.id);
+    // const [selected, setSelected] = useState();
+    // const selectedSetting = useRef();
+    // const handleSettingsChange = e => setSelected(e.target.id);
 
-    const radioChange = (e) => {
-        setRadio(e.target.value);
-    }
+    // const radioChange = (e) => {
+    //     setRadio(e.target.value);
+    // }
 
     // 내용이 빈 값인지 검사하는 함수
-    const nullCheck = () => {
-        if (text === '') {
-        alert('알림 내용을 입력해주세요!')
-        return false
-        }
-        return true
-    }
+    // const nullCheck = () => {
+    //     if (text === '') {
+    //     alert('알림 내용을 입력해주세요!')
+    //     return false
+    //     }
+    //     return true
+    // }
 
     // 데이터 빈 값 검사
-    const checkExistData = (value, name) => {
-        console.log(value)
-        if (value === '') {
-            alert(name + ' 입력해주세요!')
-            return false;
-        }
-        return true;
-    }
+    // const checkExistData = (value, name) => {
+    //     console.log(value)
+    //     if (value === '') {
+    //         alert(name + ' 입력해주세요!')
+    //         return false;
+    //     }
+    //     return true;
+    // }
 
 
       // 피드를 제출할때 작동하는 함수
@@ -78,11 +90,12 @@ function BotAlarm() {
     };
 
   // 백에 저장하는 메소드
-    const go=() => {
+    const go= () => {
         console.log("alarmDay: " + alarmDay);
         console.log("alarmDate: " + alarmDate);
-        if(nullCheck()) {
-            if(alarmDate == ""){
+        // if(nullCheck()) {
+            
+            if(alarmDate === ""){
                 axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {
                 userId: userInfo.userId,
                 content: text,
@@ -95,7 +108,7 @@ function BotAlarm() {
                 console.log(err)
             })
             }
-            else if(alarmDay == "") {
+            else if(alarmDay === "") {
                 axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {
                     userId: userInfo.userId,
                     content: text,
@@ -116,17 +129,17 @@ function BotAlarm() {
         
         setText('')
                     
-        }
+        // }
         
     }
 
-    if(isLoggedIn == true){
+    if(isLoggedIn === true){
         return (
             <div className="page-wrapper">
                 <form encType="multipart/form-data" onSubmit={onSubmit}>
-                <div className="d-flex row justify-content-between align-items-end mx-0">
-                    <p className="row justify-content-center px-3 pt-4">알림 받고 싶은 정보와 날짜를 입력하면 </p>
-                    <p className="row justify-content-center px-3 pt-3">클로저봇이 알려드려요 ! </p>
+                <div className="d-flex row justify-content-center align-items-center mx-0">
+                    <div className="pt-4">받고싶은<span className="fw-bolder" style={{color: "#5552FF", fontSize:"1.3em"}}> 알림</span>과 <span className="fw-bolder" style={{color: "#5552FF" , fontSize:"1.3em"}}>날짜</span>를 입력하면 </div>
+                    <div className="pt-3"><span className="fw-bolder" style={{color: "#5552FF" , fontSize:"1.3em"}}>클로저봇</span>이 알려드려요 ! </div>
                 </div>
 
                 <div className="d-flex row justify-content-center align-items-end pt-3 mx-0 my-4">
@@ -141,10 +154,17 @@ function BotAlarm() {
                 </div>
 
                 {/* <RadioGroup className="d-flex justify-content-center align-items-end mx-0 my-4">
-                    <RadioButton>매월</RadioButton>
+                    <RadioButton>매월 </RadioButton>
                     <RadioButton>매주</RadioButton>
                 </RadioGroup> */}
 
+                {/* <div className="d-flex row justify-content-center align-items-end mx-0">
+                    <nav className="tabs">
+                    <RippleTabItem2  />
+                    <RippleTabItem2/>
+                        <div className="nav-underline2"></div> 
+                    </nav>
+                </div> */}
                 {/* <div className="d-flex justify-content-center align-items-end mx-0 my-4" >
                     <input 
                         type='radio' 
@@ -166,7 +186,7 @@ function BotAlarm() {
                 </div> */}
 
                 <div className="d-flex justify-content-center align-items-end mx-0 my-4">
-                    매월 : <select id="alarmDate" name="alarmDate" value={alarmDate} onChange = {onChangeDate} ref={selectInputs}>
+                    매월 :<select id="alarmDate" name="alarmDate" value={alarmDate} onChange = {onChangeDate} ref={selectInputs}>
                                 <option defaultValue hidden> -- 일 -- </option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -202,7 +222,7 @@ function BotAlarm() {
                                 </select> 일
                 </div>
                 <div className="d-flex justify-content-center align-items-end mx-0 my-4">
-                        <p> OR </p>
+                        <span className="fw-bolder" style={{color: "#5552FF", fontSize:"1.3em"}}> OR </span>
                 </div> 
                 <div className="d-flex justify-content-center align-items-end mx-0 my-4">
                     매주 : <select id="alarmDay" name="alarmDay" value={alarmDay} onChange = {onChangeDay} ref={selectInputs}>
@@ -214,7 +234,7 @@ function BotAlarm() {
                                 <option value="6">금</option>
                                 <option value="7">토</option>
                                 <option value="1">일</option>
-                                </select> 요일
+                                </select>요일
                 </div>
 
                 <div className="d-flex row justify-content-center align-items-end pt-3 mx-0">
@@ -240,5 +260,7 @@ function BotAlarm() {
     }
     
 }
+
+
 
 export default BotAlarm;

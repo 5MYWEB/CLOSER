@@ -93,6 +93,7 @@ function Login({ history }) {
             const jwtAuthToken = res.headers["jwt-auth-token"]
             if(res.status === 200){
               dispatch(loginAction({ jwtAuthToken }));
+              history.push('/')
             } else{
               alert('존재하지 않는 회원정보입니다!')
             }
@@ -106,28 +107,29 @@ function Login({ history }) {
 
     }
   )
-
+  
+  // App.js로 이전함
   // 로그인에 성공했으면 로그인 유저 정보, 게시글 수 가져오기
-  useEffect(() => {
-    if (isLoggedIn === true && decodedToken.user_id !== null){
-      axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.user_id}`)
-        .then((res) => {
-          dispatch(getMyInfoAction(res.data))
-          axios.get(`http://localhost:8080/user/totalBoard/${decodedToken.user_id}`)
-            .then((res) => {
-              dispatch(getPostCount(res.data))
-              history.push('/')
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-      }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [decodedToken])
+  // useEffect(() => {
+  //   if (isLoggedIn === true && decodedToken.user_id !== null){
+  //     axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.user_id}`)
+  //       .then((res) => {
+  //         dispatch(getMyInfoAction(res.data))
+  //         axios.get(`http://localhost:8080/user/totalBoard/${decodedToken.user_id}`)
+  //           .then((res) => {
+  //             dispatch(getPostCount(res.data))
+  //             history.push('/')
+  //           })
+  //           .catch((err) => {
+  //             console.log(err)
+  //           })
+  //       })
+  //       .catch((err) => {
+  //         console.log(err)
+  //       })
+  //     }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   }, [decodedToken])
 
 
   // 회원가입 페이지로 이동
@@ -136,7 +138,6 @@ function Login({ history }) {
       history.push('/signup')
     }, 350);
   }
-  
   
 
   return (

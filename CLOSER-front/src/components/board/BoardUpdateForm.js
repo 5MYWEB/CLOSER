@@ -131,7 +131,7 @@ const BoardUpdateForm = ({match}) => {
 
   const changedimg =() =>{ // 게시판 수정
     axios.put(`http://localhost:8080/board/${pk}`, {
-      kind_pk: kind,
+      kind_pk: Number(kind),
       userId: userId,
       title: title,
       content: content,

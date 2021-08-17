@@ -1,28 +1,39 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import defaultProfile from '../../assets/user-on.svg';
 import UserBadge from './UserBadge';
 import { RippleButton, RippleTabItem } from '../../styles/index';
+import { uploadProfileImg } from '../../modules/user';
 import compassRegular from '../../assets/profile/compass-regular.svg';
 import calendarRegular from '../../assets/profile/calendar-alt-regular.svg';
-import '../../styles/tab.css'
-import '../../styles/theme.css'
-
+import '../../styles/tab.css';
+import '../../styles/theme.css';
 
 
 function MyProfile({ history }) {
   // const imgRef = useRef(null);
-  const { userInfo } = useSelector((state) => state.user);
+  const { userInfo, imgUploaded } = useSelector((state) => state.user);
 
   const [profileImg, setProfileImg] = useState('')
 
-  const now = new Date()
+  const now = new Date();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setProfileImg(userInfo.profileImg)
   }, [userInfo])
+
+  useEffect(() => {
+    dispatch(uploadProfileImg())
+  }, [])
+
+  useEffect(() => {
+    setProfileImg(`https://photo-album-hy.s3.ap-northeast-2.amazonaws.com/${userInfo.userId}/${userInfo.userId}_profile.jpg`)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imgUploaded])
 
   // 이미지 없을 시 기본 이미지 생성
   const handleImgError = (e) => {

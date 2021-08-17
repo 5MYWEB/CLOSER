@@ -28,6 +28,7 @@ const initialState = {
   postCount: 0,
   changedAddr: '',
   alarmList: null,
+  imgUploaded: false,
 };
 
 /* 액션 타입 만들기 */
@@ -42,6 +43,7 @@ const GET_FOLLOW_INFO = 'GET_FOLLOW_INFO';
 const CHANGE_ADDR = 'CHANGE_ADDR';
 const GET_ALARM_LIST = 'GET_ALARM_LIST';
 const REFRESH_INFO = 'REFRESH_INFO';
+const UPLOAD_PROFILE_IMG = 'UPLOAD_PROFILE_IMG';
 
 /* 액션 생성함수 만들기 */
 // 액션 생성함수를 만들고 export 키워드를 사용해서 내보내주세요.
@@ -84,6 +86,10 @@ export const getAlarmList = (data) => ({
 
 export const refreshInfo = () => ({
   type: REFRESH_INFO,
+})
+
+export const uploadProfileImg = () => ({
+  type: UPLOAD_PROFILE_IMG,
 })
 
 
@@ -173,6 +179,12 @@ export const refreshInfo = () => ({
         userToken: localStorage.getItem("userToken"),
         decodedToken: refreshedDecodedToken,
       }
+    case UPLOAD_PROFILE_IMG:
+      console.log(action.data)
+      return {
+        ...state,
+        imgUploaded: !state.imgUploaded,
+      };
     default:
       return state;
   }

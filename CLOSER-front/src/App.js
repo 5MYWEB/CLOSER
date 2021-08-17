@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, withRouter} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
-import { getMyInfoAction, refreshInfo } from './modules/user'
+import { getMyInfoAction, refreshInfo, getPostCount } from './modules/user'
 import { TopAppBar, Navbar, BackButton, WriteButton, WriteButtonWithNav } from './components/frame/index';
 import { About, Login, SignUp, Profile, Newsfeed, Board, Search, Alarm, Messages } from './pages';
 import { BoardSubNavbar1, BoardSubNavbar2, BoardGlobal, BoardLocal, BoardDetail, BoardForm, BoardUpdateForm} from './components/board/index';
@@ -17,6 +17,8 @@ import UserBookmark from './components/profile/UserBookmark';
 import UserLocation from './components/profile/UserLocation';
 import AlarmList from './components/alarm/AlarmList';
 import BotAlarm from './components/alarm/BotAlarm';
+import OtherMessages from "./components/message/OtherMessages";
+import GroupMessages from "./components/message/GroupMessages";
 
 import './App.css';
 
@@ -54,6 +56,7 @@ function App( { location }) {
     '/board-update-form': null,
     '/feed-create-form': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/messages': <BackButton cclass="message-backbutton" />,
+    '/Omessages': <BackButton cclass="message-backbutton" />,
     '/profile': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/profile/my/user-feed': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/profile/my/user-board': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
@@ -85,6 +88,7 @@ function App( { location }) {
     '/feed-create-form': null,
     '/alarm': <Navbar externaladdr='alerts'/>,
     '/messages': null,
+    '/Omessages': null,
     '/profile': null,
     '/profile-update': null,
     '/profile/my/user-board': <WriteButton addr='board' />,
@@ -127,14 +131,21 @@ function App( { location }) {
   }
 
   useEffect(() => {
-    if (isLoggedIn === true && decodedToken.user_id !== undefined){
+    if (isLoggedIn === true && decodedToken.user_id !== undefined && decodedToken.user_id !== null){
       axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.user_id}`)
-        .then((response) => {
-          dispatch(getMyInfoAction(response.data))
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+      .then((res) => {
+        dispatch(getMyInfoAction(res.data))
+        axios.get(`http://localhost:8080/user/totalBoard/${decodedToken.user_id}`)
+          .then((res) => {
+            dispatch(getPostCount(res.data))
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [decodedToken])
@@ -150,7 +161,7 @@ function App( { location }) {
       <div className={ "my-auto " + 
         (
         // messages는 topappbar와 navbar 둘 다 없는 화면
-        now === '/messages'? "" :
+        now === '/messages' || now === '/Omessages'? "" :
         // 탑바가 있거나, 없더라도 노말뷰를 원하는 페이지목록에 들어가 있으면
         // 다른 컴포넌트가 그 자리를 차지) view를 제공,
         // 아니면 noTopview를 제공
@@ -172,7 +183,7 @@ function App( { location }) {
         <Route path="/board" component={Board} />
         <Route path="/search" component={Search} />
         <Route path="/alarm" component={Alarm} />
-        <Route path="/messages" component={Messages} />
+        <Route exact path="/messages" component={Messages} />
         <Route path="/board/subnav1/" component={BoardSubNavbar1} />
         <Route path="/board/subnav2/" component={BoardSubNavbar2} />
         <Route path="/board/subnav1/:name" component={BoardGlobal} />
@@ -189,6 +200,9 @@ function App( { location }) {
         <Route path="/change-location" component={UserLocation} />
         <Route path="/alarm/:type" component={AlarmList} />
         <Route path="/bot" component={BotAlarm} />
+        <Route path="/Omessages/:id" component={OtherMessages} />
+        <Route path="/messages/:board_pk" component={GroupMessages} />
+
       </div>
       {/* Navbar를 보여주거나 변형하거나 / 숨김 */}
       { !isNavBar

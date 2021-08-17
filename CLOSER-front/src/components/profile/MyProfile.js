@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { Redirect } from 'react-router';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import defaultProfile from '../../assets/user-on.svg';
@@ -15,9 +16,13 @@ function MyProfile({ history }) {
   // const imgRef = useRef(null);
   const { userInfo } = useSelector((state) => state.user);
 
+  const [profileImg, setProfileImg] = useState('')
+
   const now = new Date()
 
-  let img = `https://photo-album-hy.s3.ap-northeast-2.amazonaws.com/${userInfo.userId}/${userInfo.userId}_profile.jpg`
+  useEffect(() => {
+    setProfileImg(userInfo.profileImg)
+  }, [userInfo])
 
   // 이미지 없을 시 기본 이미지 생성
   const handleImgError = (e) => {
@@ -55,13 +60,14 @@ function MyProfile({ history }) {
 
   return (
       <div>
+        <Redirect to={`/profile/${userInfo.userId}/user-feed`} />
         <div className="page-semi-wrapper">
           {/* 1. 프로필 사진, 뱃지와 수정 버튼 */}
           <div className="d-flex row justify-content-between align-items-end mx-0">
             {/* 프로필사진 */}
             <div className="col-3 px-0 d-flex justify-content-center">
               <div className="profile-img-wrapper">
-                <img src={defaultProfile}  alt="userprofile" className="profile-img" onError={handleImgError}/>
+                <img src={profileImg}  alt="userprofile" className="profile-img" onError={handleImgError}/>
               </div>
             </div>
             {/* 뱃지 */}

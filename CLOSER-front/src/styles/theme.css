@@ -164,33 +164,6 @@ input::placeholder {
 }
 
 
-/* 글쓰기 아이콘 */
-.write-button {
-  /* fixed-bottom */
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  margin: 1rem;
-  z-index: 1030;
-}
-
-.write-button img {
-  height: 8vh;
-  width: 8vh;
-}
-
-.write-button > .ripple {
-  width: 10px;
-  height: 10px;
-  position: absolute;
-  background: #bebdfaad;
-  display: block;
-  content: "";
-  border-radius: 9999px;
-  opacity: 1;
-  animation: 0.9s ease 1 forwards ripple-effect;
-}
-
 /* 프로필 사진 (profile update) */
 .profile-img-wrapper {
   position: relative;
@@ -422,7 +395,59 @@ height: 6vw;
 
 /* =================================== */
 
+/* 글쓰기 아이콘 */
+.write-button {
+  /* fixed-bottom */
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  margin: 1rem;
+  z-index: 1030;
+}
 
+.write-button img {
+  height: 8vh;
+  width: 8vh;
+}
+
+.write-button > .ripple {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  background: #bebdfaad;
+  display: block;
+  content: "";
+  border-radius: 9999px;
+  opacity: 1;
+  animation: 0.9s ease 1 forwards ripple-effect;
+}
+
+/* nav바와 함께있어서 조금 올라와있는 글쓰기버튼 */
+
+.write-button-with-nav {
+  /* fixed-bottom */
+  position: fixed;
+  right: 0;
+  bottom: 10vh;
+  z-index: 1030;
+}
+
+.write-button-with-nav img {
+  height: 10vh;
+  width: 10vh;
+}
+
+.write-button-with-nav > .ripple {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  background: #bebdfaad;
+  display: block;
+  content: "";
+  border-radius: 9999px;
+  opacity: 1;
+  animation: 0.9s ease 1 forwards ripple-effect;
+}
 
 
 

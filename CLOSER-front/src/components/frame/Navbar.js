@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { RippleIcon } from '../../styles/index';
 import newsfeedOn from '../../assets/newsfeed-on.svg'
 import newsfeedOff from '../../assets/newsfeed-off.svg'
@@ -13,15 +13,27 @@ import messagedOff from '../../assets/messages-off.svg'
 import './Navbar.css';
 import '../../styles/theme.css'
 
-const Menu = () => {
+const Navbar = ({externaladdr, history}) => {
 
   const [iconLight, setIconLight] = useState('');
+  
+  useEffect(() => {
+    setIconLight(externaladdr)
+  }, [externaladdr]);
+
 
   const onClick = (e) => {
       // now에 클릭한 아이콘의 id를 값으로 넣음
       setIconLight(e.target.id);
     }
 
+  const onClickMessages = (e) => {
+    // now에 클릭한 아이콘의 id를 값으로 넣음
+    setIconLight(e.target.id);
+    setTimeout( function () {
+      history.push('/messages')
+    }, 350);
+  }
 
   return (
     <div className="d-flex nav-wrapper align-items-center justify-content-between">
@@ -42,10 +54,10 @@ const Menu = () => {
       }
       {
       iconLight === 'messages'
-          ? <Link to="/messages"><RippleIcon src={messagesOn} alt="messagesOn" id="messages" onClick={onClick} /></Link>
-          : <Link to="/messages"><RippleIcon src={messagedOff} alt="messagedOff" id="messages" onClick={onClick} /></Link>
+          ? <RippleIcon src={messagesOn} alt="messagesOn" id="messages" onClick={onClickMessages} />
+          : <RippleIcon src={messagedOff} alt="messagedOff" id="messages" onClick={onClickMessages} />
       }
     </div>
   )
 }
-export default Menu;
+export default withRouter(Navbar);

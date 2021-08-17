@@ -38,7 +38,7 @@ function MyProfile({ history }) {
   ]
 
   const onClickTap = ( e ) => {
-    history.push(e.target.getAttribute('addr'))
+    history.replace(e.target.getAttribute('addr'))
   }
 
   // onClickTap

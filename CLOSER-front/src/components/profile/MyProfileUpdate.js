@@ -182,7 +182,7 @@ const MyProfileUpdate = ({history}) => {
             axios.post(`http://localhost:8080/user/profileinfo?userId=${userInfo.userId}`)
                 .then((res) => {
                   dispatch(getMyInfoAction(res.data))
-                  history.goBack();
+                  history.push(`/profile/${userInfo.userId}`, 'profile');
                 })
                 .catch((err) => {
                   console.log(err)

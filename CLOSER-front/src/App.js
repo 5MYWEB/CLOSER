@@ -59,7 +59,7 @@ function App( { location }) {
     '/profile/my/user-board': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/profile/my/user-bookmark': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/profile-update': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton"/>,
-    '/change-location': <BackButton />
+    '/change-location': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton"/>
   }
 
   const butNormalViewPages = {
@@ -89,7 +89,8 @@ function App( { location }) {
     '/profile-update': null,
     '/profile/my/user-board': <WriteButton addr='board' />,
     '/profile/my/user-feed': <WriteButton addr='feed' />,
-    '/profile/my/user-bookmark': null
+    '/profile/my/user-bookmark': null,
+    '/change-location': null
     
   }
 
@@ -192,9 +193,9 @@ function App( { location }) {
       {/* Navbar를 보여주거나 변형하거나 / 숨김 */}
       { !isNavBar
       ? noNavBarPages[now]
-      // : <Navbar />
+      : <Navbar />
       // 테스트용
-      : <><Navbar /><p>{now}</p></>
+      // : <><Navbar /><p>{now}</p></>
       }
     </div>
   );

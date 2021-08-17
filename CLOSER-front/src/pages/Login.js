@@ -100,7 +100,7 @@ function Login({ history }) {
           .catch((err) => {
             console.log(err)
           })
-      }
+        }
       }, 350);
       e.preventDefault();
 
@@ -116,9 +116,7 @@ function Login({ history }) {
           axios.get(`http://localhost:8080/user/totalBoard/${decodedToken.user_id}`)
             .then((res) => {
               dispatch(getPostCount(res.data))
-              setTimeout( function () {
-                history.push('/')
-              }, 2000);
+              history.push('/')
             })
             .catch((err) => {
               console.log(err)

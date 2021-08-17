@@ -70,7 +70,7 @@ function SignUp( {history} ) {
   
   // 데이터 빈 값 검사
   const checkExistData = (value, name) => {
-    console.log(value)
+    // console.log(value)
     if (value === '') {
       alert(name + ' 입력해주세요!')
       return false;
@@ -231,10 +231,9 @@ function SignUp( {history} ) {
 
   // 회원가입 함수
   const signup = (userInfo) => {
-    const request = axios.post('http://localhost:8080/user/regist', userInfo )
+    axios.post('http://localhost:8080/user/regist', userInfo )
       .then((response) =>{
         console.log(response);
-        console.log(request);
         history.push('/login')
       })
     return null
@@ -300,6 +299,7 @@ function SignUp( {history} ) {
         // 회원가입 함수의 파라미터 설정
 
         // 앨범 생성
+        
         createAlbum(userInfo.userId);
 
         // 회원가입 함수 실행
@@ -313,7 +313,7 @@ function SignUp( {history} ) {
   return (
     <div className="container">
       <form onSubmit={onSubmit}>
-        {/* 아아디 */}
+        {/* 아이디 */}
         <div>
           <div className="mt-2">
             <span className="input-label">아이디</span>
@@ -450,7 +450,7 @@ function SignUp( {history} ) {
         {/* 위치 */}
         <div className="user-location">
           <div className="input-label d-flex align-items-center" name="addr">
-            저는&nbsp;&nbsp;<input type="text" value={changedAddr} className="user-location-input"/>&nbsp;&nbsp;주민입니다!
+            저는&nbsp;&nbsp;<input type="text" defaultValue={changedAddr} readOnly className="user-location-input"/>&nbsp;&nbsp;주민입니다!
           </div>
           <div className="user-location-map">
             <UserLocation></UserLocation>

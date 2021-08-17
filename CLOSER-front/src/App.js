@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
 import { getMyInfoAction, refreshInfo } from './modules/user'
 import { TopAppBar, Navbar, BackButton, WriteButton } from './components/frame/index';
-import { Home, About, Login, SignUp, Profile, Newsfeed, Board, Search, Alarm, Messages } from './pages';
+import { About, Login, SignUp, Profile, Newsfeed, Board, Search, Alarm, Messages } from './pages';
 import { BoardSubNavbar1, BoardSubNavbar2, BoardGlobal, BoardLocal, BoardDetail, BoardForm, BoardUpdateForm} from './components/board/index';
 import NewsfeedList from './components/newsfeed/NewsfeedList';
 import NewsfeedWriteForm from './components/newsfeed/NewsfeedWriteForm';

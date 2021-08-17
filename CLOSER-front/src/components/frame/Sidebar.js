@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import './Sidebar.css';
 import '../../styles/bootstrap.min.css';
 import * as actions from '../../modules/user';
-// import UserBadge from '../profile/UserBadge';
+import UserBadge from '../profile/UserBadge';
 import userBold from '../../assets/user-bold.svg';
 
 import homeSolid from '../../assets/sidebar/home-solid.svg';
@@ -114,13 +114,13 @@ class ConnectedSidebar extends React.Component {
                       {/* 아이디 */}
                       <p className="input-placeholder-style row justify-content-start px-3">@{userInfo.userId}</p>
                       
-                      {/* <div className="input-placeholder-style row justify-content-start px-3">
+                      <div className="input-placeholder-style row justify-content-start px-3">
                           {userInfo.addr}
                       </div>
 
                       <div className="input-placeholder-style row justify-content-start px-3">
                         <UserBadge userId={userInfo.userId} />
-                      </div> */}
+                      </div>
 
                     </div>
 

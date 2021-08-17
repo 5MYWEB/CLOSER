@@ -19,7 +19,8 @@ function BotAlarm() {
     const dateRadioBtn = useRef();
 
     const onChangeText = (e) => {
-        setText(e.target.value)
+        const { name, value } = e.target;
+        setText(value)
     }
 
     const onChangeDayRadio = (e) => {
@@ -53,7 +54,12 @@ function BotAlarm() {
       // 피드를 제출할때 작동하는 함수
     const onSubmit = (e) => {
         e.preventDefault();
-        // if(checkDayDate()){
+        checkExistData(text, '알림 받을 내용을')
+        if (nowRadio === 'day') {
+            checkExistData(alarmDay, '알림 받을 요일을')
+        } else {
+            checkExistData(alarmDate, '알림 받을 날짜를')
+        }
             go();
         // }
     };
@@ -62,7 +68,6 @@ function BotAlarm() {
     const go= () => {
         console.log("alarmDay: " + alarmDay);
         console.log("alarmDate: " + alarmDate);
-        // if(nullCheck()) {
             
             if(nowRadio === "date"){
                 axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {

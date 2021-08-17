@@ -2,10 +2,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { RenderAfterNavermapsLoaded, NaverMap, Marker } from "react-naver-maps";
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { changeAddr } from '../../modules/user';
 import { Container, Row, Col } from 'react-bootstrap';
 import { getMyInfoAction } from '../../modules/user';
+import { RippleButton } from '../../styles/index';
+
 
 function NaverMapAPI() {
   const dispatch = useDispatch();
@@ -88,7 +89,7 @@ function NaverMapAPI() {
   );
 }
 
-const UserLocation = () => {
+const UserLocation = ({ history }) => {
   const { isLoggedIn, userInfo, changedAddr } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -131,8 +132,16 @@ const UserLocation = () => {
       })
   }
 
+  // 취소 시 홈으로 돌아가기
+  const goHome = () => {
+    setTimeout( function () {
+      history.push('/signup')
+    }, 350);
+  }
+  
+
   return (
-    <Container className="px-0 mt-3">
+    <Container className="px-0">
       <RenderAfterNavermapsLoaded	   // Render후 Navermap로드
         ncpClientId={'6md51fbo47'} // 자신의 네이버 계정에서 발급받은 Client ID
         error={<p>Maps Load Error</p>}
@@ -144,21 +153,20 @@ const UserLocation = () => {
       
       { isLoggedIn === true &&
         <div>
-          <h5 className="my-2">현재 나의 위치</h5>
-          <Row className="justify-content-center">
+          <h5 className="m-2">현재 나의 위치</h5>
+          <Row className="justify-content-center m-2">
             <Col>
               <div>{ changedAddr }</div>
             </Col>
           </Row>
           <br />
           {/* Row-6 : 취소, 저장 */}
-          <Row className="justify-content-center">
-            <Col >
-              <Link to={`/`}><button>취소</button></Link>
+          <Row className="justify-content-center mx-0">
+            <Col xs={6} className="text-center px-0">
+              <RippleButton onClick={goHome} cclass="cbtn cbtn-lg cbtn-secondary" children="취소"/>
             </Col>
-            <Col>
-            <button onClick={onClickSave}>저장</button>
-              
+            <Col xs={6} className="text-center px-0">
+              <RippleButton onClick={onClickSave} cclass="cbtn cbtn-lg cbtn-primary" children="저장"/>
             </Col>
           </Row>
         </div>

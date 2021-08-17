@@ -37,8 +37,9 @@ function SignUp( {history} ) {
       ...userInfo,
       addr: changedAddr
     })
+    console.log(addr)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  },[changedAddr])
 
   // DOM 선택
   const radioBtn = useRef();
@@ -449,7 +450,7 @@ function SignUp( {history} ) {
         {/* 위치 */}
         <div className="user-location">
           <div className="input-label d-flex align-items-center" name="addr">
-            저는&nbsp;&nbsp;<input type="text" value={changedAddr} readOnly className="user-location-input"/>&nbsp;&nbsp;주민입니다!
+            저는&nbsp;&nbsp;<input type="text" value={changedAddr} className="user-location-input"/>&nbsp;&nbsp;주민입니다!
           </div>
           <div className="user-location-map">
             <UserLocation></UserLocation>

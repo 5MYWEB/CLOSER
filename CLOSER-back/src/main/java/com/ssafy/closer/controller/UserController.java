@@ -70,6 +70,8 @@ public class UserController {
                 String token = jwtService.create(user.get("userId")); // 토큰에 유저 아이디만 넣는다.
                 user.put("token", token);
 
+                String ctoken = jwtService.createToken(loginInfo.get("userId"),null,null);
+                System.out.println("Chat token : "+ctoken);
                 // 토큰 정보는 response의 헤더로 보내자
                 response.setHeader("jwt-auth-token", token);
                 return new ResponseEntity(SUCCESS, HttpStatus.OK);
@@ -92,8 +94,8 @@ public class UserController {
             int n = userService.userRegister(memberDto);
 
             if (n > 0) {
-                String token = jwtService.chatcreate(memberDto.getUserId());
-                System.out.println(token);
+                String token = jwtService.createToken(memberDto.getUserId(),null,null);
+                System.out.println("Chat token : "+token);
                 userService.usertoken(memberDto.getUserId(), token);
                 return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
             } else {

@@ -6,13 +6,14 @@ import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { followAction, getFollowInfoAction } from '../../modules/user';
 import UserBadge from './UserBadge';
-import { RippleButton, RippleTabItem } from '../../styles/index';
+import { RippleButton, RippleTabItem, RippleIcon } from '../../styles/index';
 import defaultProfile from '../../assets/user-on.svg';
 import compassRegular from '../../assets/profile/compass-regular.svg';
 import calendarRegular from '../../assets/profile/calendar-alt-regular.svg';
 import '../../styles/tab.css'
 import '../../styles/theme.css'
 import './MyProfile.css';
+import dmImg from '../../../src/assets/message-write.svg';
 
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -96,6 +97,11 @@ function OtherProfile({ id, history }) {
     history.push(e.target.getAttribute('addr'))
   }
 
+  // 1:1 채팅창으로 이동
+  const OtherChat = () =>{
+    history.push(`/Omessages/${userInfo.userId}`)
+  }
+
   return (
     <> 
       <div className="page-semi-wrapper">
@@ -110,14 +116,20 @@ function OtherProfile({ id, history }) {
           </div>
           {/* 뱃지 */}
           <div className="col-5 px-0"><UserBadge wrapclass="px-3" cclass="profile-badge" userId={id} /></div>
+
           {/* 팔로잉, 팔로워  */}
           <div className="col-4 px-0 d-flex justify-content-end">
-            {isFollowed 
-              ? 
-                <RippleButton onClick={onClickFollow} cclass="cbtn me-0 my-0 cbtn-sm cbtn-secondary">팔로우 취소</RippleButton>
-              : 
-                <RippleButton onClick={onClickFollow} cclass="cbtn me-0 my-0 cbtn-sm cbtn-primary">팔로우</RippleButton>
-            }
+            <div className="col">
+              <RippleIcon src={dmImg} alt="dmImage" id="dmImage" cclass="p-4 m-0" onClick={OtherChat} />
+            </div>
+            <div className="col">
+              {isFollowed
+                  ?
+                  <RippleButton onClick={onClickFollow} cclass="cbtn m-0 cbtn-sm cbtn-secondary">언팔로우</RippleButton>
+                  :
+                  <RippleButton onClick={onClickFollow} cclass="cbtn m-0 cbtn-sm cbtn-primary">팔로우</RippleButton>
+              }
+            </div>
           </div>
 
           {/* 2. 닉네임 */}
@@ -154,7 +166,6 @@ function OtherProfile({ id, history }) {
                   <div>{userInfo.follower} 팔로워</div>
                 </Link>
               </div>
-              <Link to={`/Omessages/${userInfo.userId}`}>DM</Link>
             </div>
              
 

@@ -116,6 +116,11 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>io.getstream.client</groupId>
+            <artifactId>stream-java</artifactId>
+            <version>3.2.4</version>
+        </dependency>
 
     </dependencies>
     <build>

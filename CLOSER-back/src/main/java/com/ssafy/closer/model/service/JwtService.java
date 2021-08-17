@@ -1,5 +1,7 @@
 package com.ssafy.closer.model.service;
 
+import com.sun.istack.NotNull;
+import com.sun.istack.Nullable;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -9,7 +11,11 @@ import org.springframework.stereotype.Service;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Map;
 
 @Service
@@ -53,25 +59,6 @@ public class JwtService {
         return jwt;
     }
 
-    public String chatcreate(final String userId) {
-        // 1. JWT토큰을 만들어줄 빌더를 선언.
-        final JwtBuilder builder = Jwts.builder();
-
-        // JWT Token = Header + PayLoad + Signature
-        // 2. Header 설정
-        String jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.";
-
-        // 3. Payload 설정 - claim 정보 포함
-        builder.claim("user_id", userId); // 토큰 payload에 유저 아이디만 넣는다.
-
-        // 5. 직렬화처리
-        String cl = builder.compact().substring(20);
-        jwt += cl;
-        jwt += "G_tyJqCy1p3b4p7QfLWhj-qFUv3XraYbCUPOX_w-yUY";
-        return jwt;
-    }
-
-
     /**
      * 전달받은 토큰이 제대로 생성된건지 확인하고 문제가 있다면 예외발생
      *
@@ -99,4 +86,19 @@ public class JwtService {
         System.out.println("JwtService : claims / " + claims);
         return claims.getBody();
     }
+    //챗토큰 생성
+    @NotNull
+    public static String createToken(
+            @NotNull String userId, @Nullable Date expiresAt, @Nullable Date issuedAt) {
+        String apiSecret = "khjmr5fft6getdd9a4ww9c7y4f5pgmuq436sqrv9hjcn6ehsssxa5uj4x8229w5r";
+        Key signingKey =
+                new SecretKeySpec(
+                        apiSecret.getBytes(StandardCharsets.UTF_8), SignatureAlgorithm.HS256.getJcaName());
+
+        return Jwts.builder()
+                .claim("user_id", userId)
+                .signWith(SignatureAlgorithm.HS256, signingKey)
+                .compact();
+    }
+
 }

@@ -154,7 +154,9 @@ function OtherProfile({ id, history }) {
                   <div>{userInfo.follower} 팔로워</div>
                 </Link>
               </div>
+              <Link to={`/Omessages/${userInfo.userId}`}>DM</Link>
             </div>
+             
 
             <div className="col-4 ps-0 pe-1 d-flex justify-content-end profile-share">
               <input type="text" value={window.location.href} ref={textInput} readOnly  className="profile-share-link"/>

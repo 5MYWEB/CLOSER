@@ -44,7 +44,7 @@
 
 
 /* 리액트 로고 없애기 */
-.str-chat__header-hamburger + .str-chat__avatar {
+.str-chat__header-hamburger + .str-chat__avatar  {
   display: none;
 }
 

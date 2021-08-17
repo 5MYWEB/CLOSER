@@ -8,7 +8,6 @@ import NewsfeedFakeForm from '../components/newsfeed/NewsfeedFakeForm';
 function Newsfeed({match}) {
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  console.log(isLoggedIn)
   return (
     <div>
       { isLoggedIn

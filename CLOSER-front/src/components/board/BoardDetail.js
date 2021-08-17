@@ -208,6 +208,15 @@ const BoardDetail = ({match}) => {
 
   };
 
+  const onClickUpdate = () =>{
+    setTimeout( function() {
+      history.replace(`/board-update-form/${board.board_pk}/`)
+    }, 350);
+  }
+  
+
+
+
   // 좋아요 버튼을 눌렀을 때
   const onClickLike = () => {
     axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
@@ -415,9 +424,7 @@ const BoardDetail = ({match}) => {
             <div>
               {
                 board.kind_pk !== 7 &&
-                <Link to={`/board-update-form/${board.board_pk}/`}>
-                  <button className="ripple-button cbtn cbtn-sm cbtn-primary mx-1 fw-bold">수정</button>
-                </Link>
+                <RippleButton cclass="cbtn cbtn-sm cbtn-primary mx-1 fw-bold" onClick={onClickUpdate} children="수정"/>
               }
               <RippleButton cclass="cbtn cbtn-secondary cbtn-sm mx-1 fw-bold" onClick={onClickDelete} children="삭제"/>
             </div>

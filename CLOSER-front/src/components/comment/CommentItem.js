@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { deleteComment } from '../../modules/comment';
+import { RippleButton } from '../../styles/index';
 import { Container, Row, Col } from 'react-bootstrap';
+
 import defaultProfile from '../../assets/user-on.svg';
 
 const CommentItem = ({ comment }) => {
@@ -69,18 +71,21 @@ const CommentItem = ({ comment }) => {
 
   // 댓글 삭제
   const onClickDelete = () => {
-    axios.delete(`http://localhost:8080/board/${comment.board_pk}/comment/${comment.info_pk}/`, {
-      data: {
-        userId: userId
-      }
-    })
-    .then((res) => {
-      console.log(res);
-      dispatch(deleteComment())
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+    setTimeout( function() {
+      axios.delete(`http://localhost:8080/board/${comment.board_pk}/comment/${comment.info_pk}/`, {
+        data: {
+          userId: userId
+        }
+      })
+      .then((res) => {
+        console.log(res);
+        dispatch(deleteComment())
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }, 350);
+
   }
 
   // 이미지 없을 시 기본 이미지 생성
@@ -116,7 +121,7 @@ const CommentItem = ({ comment }) => {
           <Col xs={2}>
             { userId === comment.userId &&
               <Row className="g-0 ps-1">
-                <button className="ripple-button cbtn cbtn-sm cbtn-primary" onClick={onClickDelete}>삭제</button>
+                <RippleButton cclass="cbtn cbtn-sm cbtn-secondary mx-0 px-0" onClick={onClickDelete} children="삭제" />
               </Row>
             }
           </Col>

@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios'
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { RippleButton } from '../../styles/index';
 import '../../styles/theme.css'
 
 
-function BotAlarm() {
+function BotAlarm( { history }) {
     const { userInfo, isLoggedIn } = useSelector((state) => state.user);
     const [text, setText] = useState('');
     const [alarmDay, setAlarmDay] = useState('')
@@ -36,13 +36,12 @@ function BotAlarm() {
     }
 
     const onChangeDay = (e) => {
-        console.log(e.target.value)
         setAlarmDay(e.target.value)
     }
 
     //데이터 빈 값 검사
     const checkExistData = (value, name) => {
-        console.log(value)
+        // console.log(value)
         if (value === '') {
             alert(name + ' 입력해주세요!')
             return false;
@@ -66,8 +65,8 @@ function BotAlarm() {
 
   // 백에 저장하는 메소드
     const go= () => {
-        console.log("alarmDay: " + alarmDay);
-        console.log("alarmDate: " + alarmDate);
+        // console.log("alarmDay: " + alarmDay);
+        // console.log("alarmDate: " + alarmDate);
             
             if(nowRadio === "date"){
                 axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {
@@ -97,6 +96,15 @@ function BotAlarm() {
             }
         setText('')
     }
+
+
+    // 로그인안했을때 로그인 유도 버튼
+    const onClickLogin = () =>{
+        setTimeout( function() {
+            history.push('/login')
+        }, 350);
+    }
+
 
     if(isLoggedIn === true){
         return (
@@ -212,9 +220,7 @@ function BotAlarm() {
                 </div>
 
                 <div className="d-flex justify-content-center align-items-end mx-0 my-4">
-                    <Link to={`/login/`} className="d-flex justify-content-center">
-                        <RippleButton type="submit" cclass="cbtn cbtn-primary cbtn-light" children="로그인 하기"/>
-                    </Link>
+                    <RippleButton type="submit" cclass="cbtn cbtn-md cbtn-primary" onClick={onClickLogin} children="로그인 하기"/>
                 </div>
             </div>
         );
@@ -223,4 +229,4 @@ function BotAlarm() {
 
 
 
-export default BotAlarm;
+export default withRouter(BotAlarm);

@@ -493,6 +493,7 @@ height: 6vw;
   background: #c2c2c2;
   border-radius: 8px;
   color: #818181;
+  pointer-events: none;
 }
 
 .cbtn-none {

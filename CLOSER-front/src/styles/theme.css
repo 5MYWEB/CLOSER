@@ -600,3 +600,20 @@ a:active { text-decoration: none; }
 .text-main {
   color: #5552FF;
 }
+
+input[type='radio'],
+input[type='radio']:checked {
+  appearance: none;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 100%;
+  margin-right: 0.2rem;
+}
+
+input[type='radio'] {
+  background-color: #ffffff;
+  border: 1px solid #5b0a76;
+}
+input[type='radio']:checked {
+  background-color: #c3a0ebf3;
+}

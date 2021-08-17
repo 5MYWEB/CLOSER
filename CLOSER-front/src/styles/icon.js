@@ -7,7 +7,10 @@ const RippleIcon = ({ src, alt, id, cclass, onClick }) => {
   
   (cclass === 'write-button'
   ? cclass =  'write-button'
-  : cclass = `ripple-icon ${cclass}`)
+  : (cclass === 'message-button'
+  ? cclass =  `message-button ${cclass}`
+  :cclass = `ripple-icon ${cclass}`
+  ))
 
   useEffect(() => {
     if (coords.x !== -1 && coords.y !== -1) {

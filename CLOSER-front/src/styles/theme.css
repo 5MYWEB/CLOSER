@@ -395,6 +395,38 @@ height: 6vw;
 
 /* =================================== */
 
+/* 프로필 dm 아이콘 */
+
+.message-button {
+
+  width: 14vw;
+  height: 6vh;
+  margin: 1rem;
+  z-index: 1;
+}
+
+.message-button img {
+  height: 5vh;
+  width: 5vh;
+}
+
+.message-button > .ripple {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  background: #bebdfaad;
+  display: block;
+  content: "";
+  border-radius: 9999px;
+  opacity: 1;
+  animation: 0.9s ease 1 forwards ripple-effect;
+}
+
+
+
+
+/* ===================================== */
+
 /* 글쓰기 아이콘 */
 .write-button {
   /* fixed-bottom */

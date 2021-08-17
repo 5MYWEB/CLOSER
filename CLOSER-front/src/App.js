@@ -22,7 +22,7 @@ import GroupMessages from "./components/message/GroupMessages";
 
 import './App.css';
 
-function App( { location, history }) {
+function App( { location }) {
   const dispatch = useDispatch();
   const { isLoggedIn, decodedToken } = useSelector((state) => state.user);
 
@@ -44,13 +44,17 @@ function App( { location, history }) {
   }
   console.log(now)
 
-
   // 2.
   // TopAppBar를 변형하거나 보여주지 않는 페이지를 모아둔 오브젝트
   const noTopAppBarPages = {
+    '/login': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
+    '/signup': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/board-detail': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
-    '/board-create-form': null,
+    '/board-detail/other/': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
+    '/board-detail/other/tip': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
+    '/board-create-form': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/board-update-form': null,
+    '/feed-create-form': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/messages': <BackButton cclass="message-backbutton" />,
     '/Omessages': <BackButton cclass="message-backbutton" />,
     '/profile': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
@@ -58,7 +62,7 @@ function App( { location, history }) {
     '/profile/my/user-board': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/profile/my/user-bookmark': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/profile-update': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton"/>,
-    '/change-location': <BackButton />,
+    '/change-location': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton"/>
   }
 
   const butNormalViewPages = {
@@ -67,14 +71,21 @@ function App( { location, history }) {
 
   // NavBar를 변형하거나 보여주지 않는 페이지를 모아둔 오브젝트
   const noNavBarPages = {
+    '/login': null,
+    '/signup': null,
     '/board/other/tip': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,
+    '/board/other/recipe': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,
+    '/board/other/deco': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,
     '/board/other/getter': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,
     '/board/other/purchase': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,
     '/board/other/sos': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,
     '/board-detail': null,
+    '/board-detail/other/': null,
+    '/board-detail/other/tip': null,
     '/board-create-form': null,
     '/board-update-form': null,
     '/newsfeed': <div><Navbar externaladdr='newsfeed'/><WriteButtonWithNav addr='newsfeed' /></div>,
+    '/feed-create-form': null,
     '/alarm': <Navbar externaladdr='alerts'/>,
     '/messages': null,
     '/Omessages': null,
@@ -83,6 +94,8 @@ function App( { location, history }) {
     '/profile/my/user-board': <WriteButton addr='board' />,
     '/profile/my/user-feed': <WriteButton addr='feed' />,
     '/profile/my/user-bookmark': null,
+    '/change-location': null
+    
   }
 
 
@@ -195,6 +208,8 @@ function App( { location, history }) {
       { !isNavBar
       ? noNavBarPages[now]
       : <Navbar />
+      // 테스트용
+      // : <><Navbar /><p>{now}</p></>
       }
     </div>
   );

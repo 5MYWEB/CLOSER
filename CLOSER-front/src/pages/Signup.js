@@ -234,7 +234,7 @@ function SignUp( {history} ) {
     axios.post('http://localhost:8080/user/regist', userInfo )
       .then((response) =>{
         console.log(response);
-        history.push('/login')
+        history.push('/login', 'singed')
       })
     return null
   };

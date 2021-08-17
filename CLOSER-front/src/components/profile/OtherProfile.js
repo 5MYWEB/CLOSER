@@ -94,7 +94,7 @@ function OtherProfile({ id, history }) {
   ]
 
   const onClickTap = ( e ) => {
-    history.push(e.target.getAttribute('addr'))
+    history.replace(e.target.getAttribute('addr'))
   }
 
   // 1:1 채팅창으로 이동

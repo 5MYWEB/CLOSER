@@ -184,7 +184,7 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
             <Col xs={10}>
               <Row className="g-0 pb-4">
                 {/* 주소와 이름 */}
-                <Col xs={10} className="text-dark fw-bold"> 
+                <Col xs={9} className="text-dark fw-bold"> 
                   { name === "near" &&
                     // 동만 표시
                     <span className="me-1" style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(" ").slice(2, 3)}</span>
@@ -195,7 +195,7 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
                   
                 </Col>
                 {/* 작성시간 */}
-                <Col xs={2} className="text-secondary" style={{fontSize: "14px", textAlign: "right"}}>{timePeriod}</Col>
+                <Col xs={3} className="text-secondary" style={{fontSize: "14px", textAlign: "right"}}>{timePeriod}</Col>
               </Row>
               <Row className="g-0 mb-3">
                 <div>{board.content}</div>

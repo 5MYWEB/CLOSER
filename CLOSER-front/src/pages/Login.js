@@ -100,13 +100,12 @@ function Login({ history }) {
           .catch((err) => {
             console.log(err)
           })
-      }
+        }
       }, 350);
       e.preventDefault();
 
     }
   )
-
 
   // 로그인에 성공했으면 로그인 유저 정보, 게시글 수 가져오기
   useEffect(() => {
@@ -117,7 +116,7 @@ function Login({ history }) {
           axios.get(`http://localhost:8080/user/totalBoard/${decodedToken.user_id}`)
             .then((res) => {
               dispatch(getPostCount(res.data))
-              history.push("/")
+              history.push('/')
             })
             .catch((err) => {
               console.log(err)
@@ -136,7 +135,6 @@ function Login({ history }) {
     setTimeout( function () {
       history.push('/signup')
     }, 350);
-    
   }
   
   

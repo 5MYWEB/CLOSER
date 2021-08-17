@@ -47,10 +47,30 @@
   border: 0;
   color: white;
   padding: 0.5rem;
-  width: 96px;
+  width: 85px;
 }
 
 .search-category-select-selected {
+  background: #5552FF;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  border: 0;
+  color: white;
+  padding: 0.5rem;
+  width: 85px;
+}
+
+.search-category-total-select {
+  background: #c8c6fc;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  border: 0;
+  color: white;
+  padding: 0.5rem;
+  width: 96px;
+}
+
+.search-category-total-select-selected {
   background: #5552FF;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
   border-radius: 8px;

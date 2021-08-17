@@ -11,8 +11,7 @@ const NewsfeedList = ({match, history}) => {
   // 리덕스의 boardList, boardCreated, boardDeleted 불러옴
   // const { boardList, boardCreated, boardDeleted } = useSelector((state) => state.board);
 
-  const userId  = useSelector((state) => state.user.userInfo.userId);
-  const addr  = useSelector((state) => state.user.userInfo.addr);
+  const { userId, addr }  = useSelector((state) => state.user.userInfo);
   const name = match.params.name
   
   // infinite scroll
@@ -52,7 +51,9 @@ const NewsfeedList = ({match, history}) => {
     <div className="App">
       { name === "near" &&
         <div className="ms-3 my-3 fw-bold">
-          <span>내 동네:</span><span className="text-main"> {addr.split(" ").slice(1, 2).join(" ")}</span>
+          { addr !== null && addr !== '' && addr !== undefined &&
+            <span><span>내 동네:</span><span className="text-main"> {addr.split(" ").slice(1, 2).join(" ")}</span></span>
+          }
         </div>
       }
       { list.length === 0 &&

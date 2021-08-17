@@ -183,6 +183,7 @@ const MyProfileUpdate = ({history}) => {
             axios.post(`http://localhost:8080/user/profileinfo?userId=${userInfo.userId}`)
                 .then((res) => {
                   dispatch(getMyInfoAction(res.data))
+                  history.goBack();
                 })
                 .catch((err) => {
                   console.log(err)
@@ -272,7 +273,7 @@ const MyProfileUpdate = ({history}) => {
         : <span> {date.getFullYear()-changedUserInfo.homeAlone+1} 년차 </span>}
       </div>
       <div className="input-role input-bolder ml-2rem pb-1">
-        <h4>"저는 자취를</h4>
+        <h4 className="ps-3">"저는 자취를</h4>
         <select id="homeAlone" name="homeAlone" value={changedUserInfo.homeAlone} onChange={onChangeHomeAlone} ref={selectInputs} className="mx-auto py-0 form-select">
           <option defaultValue hidden> -- 년도 -- </option>
           <option value="2021">2021년</option>
@@ -286,7 +287,7 @@ const MyProfileUpdate = ({history}) => {
           <option value="2013">2013년</option>
           <option value="2012">2012년 이전</option>
         </select>
-        <h4 className="text-end">부터 했어요!"</h4>
+        <h4 className="pe-3 text-end">부터 했어요!"</h4>
       </div>
 
       {/* 4. .한줄 소개 */}

@@ -3,7 +3,7 @@ import { Route, withRouter} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
 import { getMyInfoAction, refreshInfo } from './modules/user'
-import { TopAppBar, Navbar, BackButton, WriteButton } from './components/frame/index';
+import { TopAppBar, Navbar, BackButton, WriteButton, WriteButtonWithNav } from './components/frame/index';
 import { Home, About, Login, SignUp, Profile, Newsfeed, Board, Search, Alarm, Messages } from './pages';
 import { BoardSubNavbar1, BoardSubNavbar2, BoardGlobal, BoardLocal, BoardDetail, BoardForm, BoardUpdateForm} from './components/board/index';
 import NewsfeedList from './components/newsfeed/NewsfeedList';
@@ -40,6 +40,7 @@ function App( { location, history }) {
   } else {
     now = '/' + location.pathname.split('/')[1]
   }
+  console.log(now)
 
 
   // 2.
@@ -63,9 +64,15 @@ function App( { location, history }) {
 
   // NavBar를 변형하거나 보여주지 않는 페이지를 모아둔 오브젝트
   const noNavBarPages = {
+    '/board/other/tip': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,
+    '/board/other/getter': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,
+    '/board/other/purchase': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,
+    '/board/other/sos': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,
     '/board-detail': null,
     '/board-create-form': null,
     '/board-update-form': null,
+    '/newsfeed': <div><Navbar externaladdr='newsfeed'/><WriteButtonWithNav addr='newsfeed' /></div>,
+    '/alarm': <Navbar externaladdr='alerts'/>,
     '/messages': null,
     '/profile': null,
     '/profile-update': null,

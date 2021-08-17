@@ -178,11 +178,11 @@ const MyProfileUpdate = ({history}) => {
       // 수정 요청
       axios.put('http://localhost:8080/user/mypage', changedUserInfo)
           .then((res) => {
-            console.log(res)
             // 정보다시 받아오는 요청
             axios.post(`http://localhost:8080/user/profileinfo?userId=${userInfo.userId}`)
                 .then((res) => {
                   dispatch(getMyInfoAction(res.data))
+                  history.goBack();
                 })
                 .catch((err) => {
                   console.log(err)
@@ -209,7 +209,7 @@ const MyProfileUpdate = ({history}) => {
         <span className="input-label">닉네임</span>
         <span className="necessary unfollow">*</span>
       </div>
-      <div class="input-wrapper d-flex flex-row align-items-center">
+      <div className="row mx-0 mt-3 justify-content-start align-items-start">
         <input
           placeholder="닉네임을 입력하세요"
           onFocus={(e) => {
@@ -222,13 +222,13 @@ const MyProfileUpdate = ({history}) => {
           value={changedUserInfo.nickname}
           name="nickname"
           onChange={onChangeNickname}
-          class="col-8"
+          class="col-7 px-0 me-0"
         />
-        <div class="col-4">
+        <div class="col-3 mt-1">
           {doubleChecked ? 
-            <RippleButton disabled onClick={onDoubleCheck} type="button" cclass="cbtn cbtn-sm cbtn-green" children="확인완료"/>
+            <RippleButton disabled onClick={onDoubleCheck} type="button" cclass="cbtn cbtn-sm cbtn-green m-0" children="확인완료"/>
             :
-            <RippleButton onClick={onDoubleCheck} type="button" cclass="cbtn cbtn-sm cbtn-primary" children="중복확인"/>
+            <RippleButton onClick={onDoubleCheck} type="button" cclass="cbtn cbtn-sm cbtn-primary m-0" children="중복확인"/>
           }
         </div>
       </div>
@@ -267,13 +267,13 @@ const MyProfileUpdate = ({history}) => {
       {/* 3. 자취기간 */}
       <div className="paragraph">
         <span className="input-label">자취기간: </span>
-        {changedUserInfo.homeAlone === null
-        ? <span> 0년차 (자취경험없음) </span> 
+        {changedUserInfo.homeAlone === 0
+        ? <span> 0년차<span className="ps-2 input-placeholder-style"> "자취 희망러"로 표시됩니다 </span></span>
         : <span> {date.getFullYear()-changedUserInfo.homeAlone+1} 년차 </span>}
       </div>
-      <div className="input-role ml-2rem pb-1">
-        <h4>"저는 자취를
-        <select id="homeAlone" name="homeAlone" value={changedUserInfo.homeAlone} onChange={onChangeHomeAlone} ref={selectInputs} className="mx-2">
+      <div className="input-role input-bolder ml-2rem pb-1">
+        <h4 className="ps-3">"저는 자취를</h4>
+        <select id="homeAlone" name="homeAlone" value={changedUserInfo.homeAlone} onChange={onChangeHomeAlone} ref={selectInputs} className="mx-auto py-0 form-select">
           <option defaultValue hidden> -- 년도 -- </option>
           <option value="2021">2021년</option>
           <option value="2020">2020년</option>
@@ -285,8 +285,9 @@ const MyProfileUpdate = ({history}) => {
           <option value="2014">2014년</option>
           <option value="2013">2013년</option>
           <option value="2012">2012년 이전</option>
+          <option value="0">자취경험없음</option>
         </select>
-        부터 했어요!"</h4>
+        <h4 className="pe-3 text-end">부터 했어요!"</h4>
       </div>
 
       {/* 4. .한줄 소개 */}

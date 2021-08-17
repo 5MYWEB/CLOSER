@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import AWS from 'aws-sdk';
-import { getMyInfoAction } from '../../modules/user';
+import { getMyInfoAction, uploadProfileImg } from '../../modules/user';
 import defaultProfile from '../../assets/user-on.svg';
 import { RippleButton, ShakeButton } from '../../styles/index';
 import '../../styles/theme.css'
@@ -177,21 +177,23 @@ const MyProfileUpdate = ({history}) => {
     if (doubleChecked === true){
       // 수정 요청
       axios.put('http://localhost:8080/user/mypage', changedUserInfo)
-          .then((res) => {
-            // 정보다시 받아오는 요청
-            axios.post(`http://localhost:8080/user/profileinfo?userId=${userInfo.userId}`)
-                .then((res) => {
-                  dispatch(getMyInfoAction(res.data))
-                  // history.goBack();
-                  history.push(`profile/${userInfo.userId}`);
-                })
-                .catch((err) => {
-                  console.log(err)
-                })
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+        .then((res) => {
+          // 정보다시 받아오는 요청
+          axios.post(`http://localhost:8080/user/profileinfo?userId=${userInfo.userId}`)
+            .then((res) => {
+              dispatch(getMyInfoAction(res.data))
+              // s3에 사진이 업로드 되기까지 기다리는 시간
+              setTimeout( function () {
+                history.goBack();
+              }, 500);
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     } else{
       alert('닉네임 중복체크를 해주세요!')
     }

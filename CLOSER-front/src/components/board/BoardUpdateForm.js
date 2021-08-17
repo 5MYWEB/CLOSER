@@ -75,6 +75,7 @@ const BoardUpdateForm = ({match}) => {
   }
 
   // 게시물을 제출할때 작동하는 함수
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const onSubmit = useCallback(async (e) => {
     e.preventDefault();
     // if(deletecheck){
@@ -231,6 +232,7 @@ const BoardUpdateForm = ({match}) => {
 
   useEffect(() => {
     if (check && Urls.length === Files.length) changedimg()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Urls])
 
   // 이미지 링크 세팅
@@ -246,7 +248,7 @@ const BoardUpdateForm = ({match}) => {
           <form encType="multipart/form-data" onSubmit={onSubmit} className="m-5">
             <InputGroup className="mb-3">
               <label className="input-group-text fw-bolder" htmlFor="kind"
-                     style={{color: "#FFFFFF", backgroundColor: "#5552FF"}}>카테고리</label>
+                style={{color: "#FFFFFF", backgroundColor: "#5552FF"}}>카테고리</label>
               {0 < kind && kind < 4
                   ?
                   <FormSelect id="kind" name="kind" value={kind} onChange={onChangeKind}>
@@ -291,22 +293,22 @@ const BoardUpdateForm = ({match}) => {
                   <InputGroup className="mb-3 d-flex justify-content-between">
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio2" value={2}
-                             onChange={onChangeTotalNum} checked={2 === Number(totalNum)}/>
+                        onChange={onChangeTotalNum} checked={2 === Number(totalNum)}/>
                       <label className="form-check-label mx-1" htmlFor="inlineRadio2">2명</label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio3" value={3}
-                             onChange={onChangeTotalNum} checked={3 === Number(totalNum)}/>
+                        onChange={onChangeTotalNum} checked={3 === Number(totalNum)}/>
                       <label className="form-check-label mx-1" htmlFor="inlineRadio3">3명</label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio4" value={4}
-                             onChange={onChangeTotalNum} checked={4 === Number(totalNum)}/>
+                        onChange={onChangeTotalNum} checked={4 === Number(totalNum)}/>
                       <label className="form-check-label mx-1" htmlFor="inlineRadio4">4명</label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio5" value={5}
-                             onChange={onChangeTotalNum} checked={5 === Number(totalNum)}/>
+                        onChange={onChangeTotalNum} checked={5 === Number(totalNum)}/>
                       <label className="form-check-label mx-1" htmlFor="inlineRadio5">5명</label>
                     </div>
                   </InputGroup>
@@ -323,7 +325,7 @@ const BoardUpdateForm = ({match}) => {
                       <div><label htmlFor="formFileMultiple" className="form-label fw-bolder mb-0" style={{color: "#5552FF"}}>Image</label></div>
                       <div className="result d-flex justify-content-center row row-cols-4 mb-1">{renderPhotos(selectedFiles)}</div>
                       <div className="d-flex justify-content-center">
-                        <input className="form-control" type="file" id="formFileMultiple" multiple onChange={handleImageChange} className="form-control"/>
+                        <input className="form-control" type="file" id="formFileMultiple" multiple onChange={handleImageChange}/>
                       </div>
                     </div>
                   </InputGroup>

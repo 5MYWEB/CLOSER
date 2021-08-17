@@ -140,7 +140,7 @@ const BoardUpdateForm = ({match}) => {
     })
         .then(() => {
           dispatch(updateBoard())
-          history.push(`/board-detail/${pk}/`)
+          history.push(`/board-detail/${pk}/`, 'created')
         })
         .catch((err) => {
           console.log(err)

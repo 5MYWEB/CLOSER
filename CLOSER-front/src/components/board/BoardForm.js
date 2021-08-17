@@ -78,7 +78,7 @@ const BoardForm = () => {
     })
         .then((res) => {
           dispatch(createBoard())
-          history.push(`/board-detail/${res.data.board_pk}/`)
+          history.push(`/board-detail/${res.data.board_pk}/`, 'created')
         })
         .catch((err) => {
           console.log(err)

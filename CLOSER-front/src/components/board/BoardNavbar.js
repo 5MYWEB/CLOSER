@@ -16,7 +16,7 @@ function BoardNavbar({ history }) {
   ]
 
   const onClickTap = ( e ) => {
-    history.push(e.target.getAttribute('addr'))
+    history.replace(e.target.getAttribute('addr'))
     setNowTab(e.target.getAttribute('addr'))
   }
 

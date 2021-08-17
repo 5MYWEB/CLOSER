@@ -52,7 +52,9 @@ const NewsfeedList = ({match, history}) => {
     <div className="App">
       { name === "near" &&
         <div className="ms-3 my-3 fw-bold">
-          <span>내 동네:</span><span className="text-main"> {addr.split(" ").slice(1, 2).join(" ")}</span>
+          { addr !== null && addr !== '' && addr !== undefined &&
+            <span><span>내 동네:</span><span className="text-main"> {addr.split(" ").slice(1, 2).join(" ")}</span></span>
+          }
         </div>
       }
       { list.length === 0 &&

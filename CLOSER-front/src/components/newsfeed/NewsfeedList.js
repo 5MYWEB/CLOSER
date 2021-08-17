@@ -11,8 +11,7 @@ const NewsfeedList = ({match, history}) => {
   // 리덕스의 boardList, boardCreated, boardDeleted 불러옴
   // const { boardList, boardCreated, boardDeleted } = useSelector((state) => state.board);
 
-  const userId  = useSelector((state) => state.user.userInfo.userId);
-  const addr  = useSelector((state) => state.user.userInfo.addr);
+  const { userId, addr }  = useSelector((state) => state.user.userInfo);
   const name = match.params.name
   
   // infinite scroll

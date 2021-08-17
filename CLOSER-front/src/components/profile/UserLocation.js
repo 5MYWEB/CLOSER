@@ -107,6 +107,7 @@ const UserLocation = ({ history }) => {
       })
     }else{
       setChangedUserInfo({
+        ...changedUserinfo,
         addr: changedAddr
       })
     }
@@ -135,7 +136,7 @@ const UserLocation = ({ history }) => {
   // 취소 시 홈으로 돌아가기
   const goHome = () => {
     setTimeout( function () {
-      history.push('/signup')
+      history.push('/')
     }, 350);
   }
   

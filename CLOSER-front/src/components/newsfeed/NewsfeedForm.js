@@ -30,8 +30,7 @@ const NewsfeedForm = () => {
   const dispatch = useDispatch();
 
   // 리덕스 user에서 userId 받아옴 
-  const {userId} = useSelector((state) => state.user.userInfo);
-  const {isLoggedIn} = useSelector((state) => state.user);
+  const { userInfo, isLoggedIn } = useSelector((state) => state.user);
 
   const [text, setText] = useState('');
   const [check,setcheck] = useState(false); // 이미지가 있는지 확인
@@ -65,7 +64,7 @@ const NewsfeedForm = () => {
     if (nullCheck()) {
       axios.post('http://localhost:8080/board/', {
         kind_pk: 7,
-        userId: userId,
+        userId: userInfo.userId,
         title: null,
         content: text,
         imgUrls : Urls,
@@ -111,7 +110,7 @@ const NewsfeedForm = () => {
 
   function handleFileInput() {
     let lng;
-    s3.listObjects({ Prefix: userId}, function (err, data) {
+    s3.listObjects({ Prefix: userInfo.userId}, function (err, data) {
       lng = this.data.Contents.length;
     });
 
@@ -127,8 +126,8 @@ const NewsfeedForm = () => {
   const[Url,setUrl] = useState("");
   function handleUpload (file, i, lng) {
     return new Promise(function(resolve, reject) {
-      var albumPhotosKey = encodeURIComponent(userId) + "/";
-      const photoKey = albumPhotosKey + userId + "_" + (lng + i);
+      var albumPhotosKey = encodeURIComponent(userInfo.userId) + "/";
+      const photoKey = albumPhotosKey + userInfo.userId + "_" + (lng + i);
 
       const upload = new AWS.S3.ManagedUpload({
         params: {

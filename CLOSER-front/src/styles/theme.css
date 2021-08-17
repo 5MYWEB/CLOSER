@@ -411,8 +411,8 @@ height: 6vw;
 }
 
 .message-button > .ripple {
-  width: 10px;
-  height: 10px;
+  width: 5px;
+  height: 5px;
   position: absolute;
   background: #bebdfaad;
   display: block;

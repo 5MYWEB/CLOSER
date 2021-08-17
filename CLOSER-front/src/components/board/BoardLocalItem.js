@@ -152,7 +152,7 @@ const BoardLocalItem = React.forwardRef(({ board }, ref) => {
                 { liked
                   ?
                   <div className = "likePart ms-2">
-                    <FontAwesomeIcon icon={fasHeart} className ="heart_full align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 
+                    <FontAwesomeIcon icon={fasHeart} className ="heart_full align-middle" alt="heart_full" style={{ color: "#FF5D5D"}}/> 
                     <span className="ms-1 align-middle">{countLike}</span>
                   </div>
                   : 
@@ -165,7 +165,7 @@ const BoardLocalItem = React.forwardRef(({ board }, ref) => {
                 { bookmarked
                   ?
                   <div className = "bookmarkPart ms-2">
-                    <FontAwesomeIcon icon={fasBookmark} className ="bookmark_full align-middle" alt="bookmark_full" style={{ color: "#5552FF"}}/> 
+                    <FontAwesomeIcon icon={fasBookmark} className ="bookmark_full align-middle" alt="bookmark_full" style={{ color: "#3ED3A3"}}/> 
                     <span className="ms-1 align-middle">{countBookmark}</span>
                   </div>
                   : 

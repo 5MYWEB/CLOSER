@@ -99,7 +99,9 @@ function OtherProfile({ id, history }) {
 
   // 1:1 채팅창으로 이동
   const OtherChat = () =>{
-    history.push(`/Omessages/${userInfo.userId}`)
+    setTimeout( function() {
+      history.push(`/Omessages/${userInfo.userId}`)
+    }, 350);
   }
 
   return (

@@ -178,7 +178,6 @@ const MyProfileUpdate = ({history}) => {
       // 수정 요청
       axios.put('http://localhost:8080/user/mypage', changedUserInfo)
           .then((res) => {
-            console.log(res)
             // 정보다시 받아오는 요청
             axios.post(`http://localhost:8080/user/profileinfo?userId=${userInfo.userId}`)
                 .then((res) => {
@@ -268,8 +267,8 @@ const MyProfileUpdate = ({history}) => {
       {/* 3. 자취기간 */}
       <div className="paragraph">
         <span className="input-label">자취기간: </span>
-        {changedUserInfo.homeAlone === null
-        ? <span> 0년차 (자취경험없음) </span> 
+        {changedUserInfo.homeAlone === 0
+        ? <span> 0년차<span className="ps-2 input-placeholder-style"> "자취 희망러"로 표시됩니다 </span></span>
         : <span> {date.getFullYear()-changedUserInfo.homeAlone+1} 년차 </span>}
       </div>
       <div className="input-role input-bolder ml-2rem pb-1">
@@ -286,6 +285,7 @@ const MyProfileUpdate = ({history}) => {
           <option value="2014">2014년</option>
           <option value="2013">2013년</option>
           <option value="2012">2012년 이전</option>
+          <option value="0">자취경험없음</option>
         </select>
         <h4 className="pe-3 text-end">부터 했어요!"</h4>
       </div>

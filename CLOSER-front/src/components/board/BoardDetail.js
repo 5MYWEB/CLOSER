@@ -128,7 +128,7 @@ const BoardDetail = ({match}) => {
       console.log(err)
     })
 
-  }, [boardLiked])
+  }, [boardLiked, pk])
 
   useEffect(()=>{
     // 참여했는지
@@ -144,7 +144,7 @@ const BoardDetail = ({match}) => {
             console.log(err)
           })
     }
-  }, [board, boardLiked])
+  }, [board, boardLiked, pk])
 
   // 해당 유저의 프로필 사진
   useEffect(() => {
@@ -182,6 +182,9 @@ const BoardDetail = ({match}) => {
 
   // 삭제 버튼을 클릭했을 때 실행되는 함수
   const onClickDelete = () => {
+    
+    setTimeout( function() {
+
     // 삭제 의사 확인
     if (window.confirm('정말 삭제하시겠습니까?')) {
       axios.delete(`http://localhost:8080/board/${board.board_pk}/`, {
@@ -200,7 +203,19 @@ const BoardDetail = ({match}) => {
             console.log(err)
           })
     }
+    
+    }, 350);
+
   };
+
+  const onClickUpdate = () =>{
+    setTimeout( function() {
+      history.replace(`/board-update-form/${board.board_pk}/`)
+    }, 350);
+  }
+  
+
+
 
   // 좋아요 버튼을 눌렀을 때
   const onClickLike = () => {
@@ -375,7 +390,7 @@ const BoardDetail = ({match}) => {
                   <div className="likePart ms-2" style={{fontSize: "22px"}}>
                     {/* <img className ="heart_full" alt="heart_full" src={heartFull} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
                     <FontAwesomeIcon icon={fasHeart} className="heart_full align-middle" alt="heart_full"
-                                     onClick={onClickLike} style={{color: "#5552FF"}}/>
+                                     onClick={onClickLike} style={{color: "#FF5D5D"}}/>
                     <span className="ms-1 align-middle">{countLike}</span>
                   </div>
                   :
@@ -392,7 +407,7 @@ const BoardDetail = ({match}) => {
                   <div className="bookmarkPart ms-3" style={{fontSize: "22px"}}>
                     {/* <img className ="bookmark_full" alt="bookmark_full" src={bookmarkFull} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
                     <FontAwesomeIcon icon={fasBookmark} className="bookmark_full align-middle" alt="bookmark_full"
-                                     onClick={onClickBookmark} style={{color: "#5552FF"}}/>
+                                     onClick={onClickBookmark} style={{color: "#3ED3A3"}}/>
                     <span className="ms-1 align-middle">{countBookmark}</span>
                   </div>
                   :
@@ -409,12 +424,9 @@ const BoardDetail = ({match}) => {
             <div>
               {
                 board.kind_pk !== 7 &&
-                <Link to={`/board-update-form/${board.board_pk}/`}>
-                  <button className="ripple-button cbtn cbtn-sm cbtn-primary mx-1 fw-bold">수정</button>
-                </Link>
+                <RippleButton cclass="cbtn cbtn-sm cbtn-primary mx-1 fw-bold" onClick={onClickUpdate} children="수정"/>
               }
-              <button className="ripple-button cbtn cbtn-sm cbtn-secondary mx-1 fw-bold" onClick={onClickDelete}>삭제
-              </button>
+              <RippleButton cclass="cbtn cbtn-secondary cbtn-sm mx-1 fw-bold" onClick={onClickDelete} children="삭제"/>
             </div>
             }
           </div>

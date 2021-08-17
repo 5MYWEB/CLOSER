@@ -291,21 +291,15 @@ function SignUp( {history} ) {
         // 자취 n년차 int 형변환
         userInfo.homeAlone *= 1
 
-        // 백으로 보내질 주소(공백으로 구분)
-        // userInfo.addr = String(userInfo.addr.city + ' ' + userInfo.addr.gu + ' ' + userInfo.addr.dong);
-
-        console.log(userInfo)
-
-        // 회원가입 함수의 파라미터 설정
+        // console.log(userInfo)
 
         // 앨범 생성
-
         createAlbum(userInfo.userId);
 
         // 회원가입 함수 실행
         signup(userInfo);
 
-        // props.setIsSignedUp(true);
+
       }
     }
   )

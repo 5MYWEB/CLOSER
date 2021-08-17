@@ -236,7 +236,7 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
             ?
             <div className = "likePart ms-3" style={{fontSize: "20px"}}>
               {/* <img className ="heart_full" alt="heart_full" src={heartFull} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
-              <FontAwesomeIcon icon={fasHeart} className ="heart_full align-middle" alt="heart_full" onClick={onClickLike} style={{ color: "#5552FF"}}/> 
+              <FontAwesomeIcon icon={fasHeart} className ="heart_full align-middle" alt="heart_full" onClick={onClickLike} style={{ color: "#FF5D5D"}}/> 
               <span className="ms-1 align-middle">{countLike}</span>
             </div>
             : 
@@ -251,7 +251,7 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
             ?
             <div className = "bookmarkPart ms-3" style={{fontSize: "20px"}}>
               {/* <img className ="bookmark_full" alt="bookmark_full" src={bookmarkFull} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
-              <FontAwesomeIcon icon={fasBookmark} className ="bookmark_full align-middle" alt="bookmark_full" onClick={onClickBookmark} style={{ color: "#5552FF"}}/> 
+              <FontAwesomeIcon icon={fasBookmark} className ="bookmark_full align-middle" alt="bookmark_full" onClick={onClickBookmark} style={{ color: "#3ED3A3"}}/> 
               <span className="ms-1 align-middle">{countBookmark}</span>
             </div>
             : 

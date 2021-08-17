@@ -42,13 +42,13 @@ function App( { location }) {
   } else {
     now = '/' + location.pathname.split('/')[1]
   }
-  console.log(now)
 
   // 2.
   // TopAppBar를 변형하거나 보여주지 않는 페이지를 모아둔 오브젝트
   const noTopAppBarPages = {
     '/login': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/signup': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
+    '/about': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/board-detail': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/board-detail/other/': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/board-detail/other/tip': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
@@ -73,6 +73,7 @@ function App( { location }) {
   const noNavBarPages = {
     '/login': null,
     '/signup': null,
+    '/about': null,
     '/board/other/tip': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,
     '/board/other/recipe': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,
     '/board/other/deco': <div><Navbar externaladdr='board'/><WriteButtonWithNav addr='board' /></div>,

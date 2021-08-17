@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { Redirect } from 'react-router';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import defaultProfile from '../../assets/user-on.svg';
@@ -15,9 +16,13 @@ function MyProfile({ history }) {
   // const imgRef = useRef(null);
   const { userInfo } = useSelector((state) => state.user);
 
+  const [profileImg, setProfileImg] = useState('')
+
   const now = new Date()
 
-  let img = `https://photo-album-hy.s3.ap-northeast-2.amazonaws.com/${userInfo.userId}/${userInfo.userId}_profile.jpg`
+  useEffect(() => {
+    setProfileImg(userInfo.profileImg)
+  }, [userInfo])
 
   // 이미지 없을 시 기본 이미지 생성
   const handleImgError = (e) => {
@@ -55,13 +60,14 @@ function MyProfile({ history }) {
 
   return (
       <div>
+        <Redirect to={`/profile/${userInfo.userId}/user-feed`} />
         <div className="page-semi-wrapper">
           {/* 1. 프로필 사진, 뱃지와 수정 버튼 */}
           <div className="d-flex row justify-content-between align-items-end mx-0">
             {/* 프로필사진 */}
             <div className="col-3 px-0 d-flex justify-content-center">
               <div className="profile-img-wrapper">
-                <img src={defaultProfile}  alt="userprofile" className="profile-img" onError={handleImgError}/>
+                <img src={profileImg}  alt="userprofile" className="profile-img" onError={handleImgError}/>
               </div>
             </div>
             {/* 뱃지 */}
@@ -87,8 +93,8 @@ function MyProfile({ history }) {
                 <img src={compassRegular} alt="addr-icon" className="profile-icon ps-0 pe-2"/>
                   <span>{userInfo.addr}</span>
                 <img src={calendarRegular} alt="homeAlone-icon" className="profile-icon ps-4 pe-1"/>
-                {userInfo.homeAlone === null
-                ? <span> 마음만은 자취러 </span> 
+                {userInfo.homeAlone === 0
+                ? <span> 자취희망러 </span> 
                 : <span> 자취 {now.getFullYear()-userInfo.homeAlone+1} 년차 </span>}
               </span>
             </div>
@@ -96,12 +102,12 @@ function MyProfile({ history }) {
             <div className="row px-3 pt-3 justify-content-between">
               <div className="row px-3 col-6 p-0">
                 <div className="col-6 p-0">
-                    <Link to={`following-list/${userInfo.userId}/`} className="link-dark">
-                      {userInfo.following} 팔로잉
-                    </Link>
+                  <Link to={`/following-list/${userInfo.userId}/`} className="link-dark">
+                    {userInfo.following} 팔로잉
+                  </Link>
                 </div>
                 <div className="col-6 p-0">
-                  <Link to={`follower-list/${userInfo.userId}/`} className="link-dark">
+                  <Link to={`/follower-list/${userInfo.userId}/`} className="link-dark">
                     <div>{userInfo.follower} 팔로워</div>
                   </Link>
                 </div>

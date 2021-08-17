@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { connect } from 'react-redux'
 import { bubble as Menu } from 'react-burger-menu'
 import { connect } from 'react-redux';
 import './Sidebar.css';
 import '../../styles/bootstrap.min.css';
 import * as actions from '../../modules/user';
-// import UserBadge from '../profile/UserBadge';
+import UserBadge from '../profile/UserBadge';
 import userBold from '../../assets/user-bold.svg';
 
 import homeSolid from '../../assets/sidebar/home-solid.svg';
@@ -107,23 +106,21 @@ class ConnectedSidebar extends React.Component {
                         <img src={userInfo.profileImg}  onError={(e) => this.handleImgError(e)} alt="프로필사진" className="profile-img" />
                       </div>
                       {/* 닉네임 */}
-                      <h2 className="row justify-content-start px-3 pt-3 pb-1">
-                        <div className="col px-0 text-start">{userInfo.nickname}</div>
-                      </h2>
+                      <div className="row justify-content-start p-3 pt-0 pb-1 h2">
+                        <span className="col-5 px-0 text-start">{userInfo.nickname}</span>
+                        <span className="input-placeholder-style col-7 px-0 justify-content-start">
+                          <UserBadge userId={userInfo.userId} />
+                        </span>
+                      </div>
 
                       {/* 아이디 */}
                       <p className="input-placeholder-style row justify-content-start px-3">@{userInfo.userId}</p>
                       
-                      {/* <div className="input-placeholder-style row justify-content-start px-3">
+                      <div className="input-placeholder-style row justify-content-start px-3">
                           {userInfo.addr}
                       </div>
 
-                      <div className="input-placeholder-style row justify-content-start px-3">
-                        <UserBadge userId={userInfo.userId} />
-                      </div> */}
-
                     </div>
-
                     <div className="row px-0 py-3 bm-profile-info">
                       <div className="col">
                         <div>{postCount}</div>

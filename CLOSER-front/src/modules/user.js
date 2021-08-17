@@ -117,7 +117,21 @@ export const refreshInfo = () => ({
         isLoggedIn: false,
         userToken: null,
         decodedToken: null,
-        userInfo: null,
+        userInfo: {
+          userId: '',
+          nickname: '',
+          password: '',
+          email:  '',
+          addr: '',
+          homeAlone: null,
+          intro: '',
+          profileImg: null,
+          phone: null,
+          badge: [],
+          following: 0,
+          follower: 0,
+          chattoken:'',
+        },
       };
     case GET_MY_INFO:
       return {

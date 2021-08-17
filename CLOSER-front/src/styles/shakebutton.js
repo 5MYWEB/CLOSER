@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './shakebutton.css'
 
 const ShakeButton = ({ children, cclass }) => {
@@ -14,6 +14,10 @@ const ShakeButton = ({ children, cclass }) => {
         setTimeout(() => setShake(false), 500);
         
     }
+
+    useEffect(() => {
+    return () => setShake({ x: -1, y: -1 }); // cleanup function을 이용
+    }, []);
     
     return(
         <button onClick={animate} className={shake ? `shake ${cclass}` : `${cclass}`}>{children}</button>

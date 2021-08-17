@@ -13,8 +13,8 @@ import { Row, Col, Container, Card, Carousel } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
-import '../../styles/theme.css';
-
+import '../../styles/theme.css'
+import { RippleButton } from '../../styles';
 
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -67,30 +67,33 @@ const BoardDetail = ({match}) => {
 
   useEffect(() => {
     axios.get(`http://localhost:8080/board/${pk}`)
-        .then((res) => {
-          setBoard({
-            ...board,
-            board_pk: res.data.board_pk,
-            kind_pk: res.data.kind_pk,
-            title: res.data.title,
-            userId: res.data.userId,
-            content: res.data.content,
-            created_at: res.data.created_at,
-            updated_at: res.data.updated_at,
-            location: res.data.location,
-            nickname: res.data.nickname,
-            badge: res.data.badge,
-            totalNum: res.data.totalNum,
-            gatherNum: res.data.gatherNum,
-            imgUrls: res.data.imgUrls,
-          })
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+    .then((res) => {
+      setBoard({
+        ...board,
+        board_pk: res.data.board_pk,
+        kind_pk: res.data.kind_pk,
+        title: res.data.title,
+        userId: res.data.userId,
+        content: res.data.content,
+        created_at: res.data.created_at,
+        updated_at: res.data.updated_at,
+        location: res.data.location,
+        nickname: res.data.nickname,
+        badge: res.data.badge,
+        totalNum: res.data.totalNum,
+        gatherNum: res.data.gatherNum,
+        imgUrls: res.data.imgUrls,
+      })
+    })
+    .catch((err) =>{
+      console.log(err)
+    })
+    // eslint-disable-next-line
+  }, [boardLiked])
 
-    // 좋아요 눌렀는지
-    axios.post(`http://localhost:8080/board/${pk}/info`, {
+  useEffect(()=>{
+     // 좋아요 눌렀는지
+     axios.post(`http://localhost:8080/board/${pk}/info`, {
       kind_pk: 2,
       userId: userId,
       flag: "false",
@@ -115,8 +118,21 @@ const BoardDetail = ({match}) => {
           console.log(err)
         })
 
+    // 댓글 좋아요 북마크 개수
+    axios.post(`http://localhost:8080/board/${pk}/info-cnt`)
+    .then((res) => {
+      setCountLike(res.data.countLike)
+      setCountBookmark(res.data.countBookmark)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
+  }, [boardLiked])
+
+  useEffect(()=>{
     // 참여했는지
-    if (board.kind_pk > 3 && board.kind_pk < 7) {
+    if(board.kind_pk > 3 && board.kind_pk < 7){
       axios.post(`http://localhost:8080/board/${pk}/join`, {
         userId: userId,
         flag: "false",
@@ -128,19 +144,7 @@ const BoardDetail = ({match}) => {
             console.log(err)
           })
     }
-
-    // 댓글 좋아요 북마크 개수
-    axios.post(`http://localhost:8080/board/${pk}/info-cnt`)
-        .then((res) => {
-          setCountLike(res.data.countLike)
-          setCountBookmark(res.data.countBookmark)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-
-    // eslint-disable-next-line
-  }, [boardLiked])
+  }, [board, boardLiked])
 
   // 해당 유저의 프로필 사진
   useEffect(() => {
@@ -329,35 +333,27 @@ const BoardDetail = ({match}) => {
                 </h3>
               </Row>
               <Row>
-                {userId !== board.userId
+                { userId !== board.userId
+                  ?
+                    joined === false
                     ?
-                    joined===false
-                        ?
-                        board.gatherNum >= board.totalNum
-                            ?
-                            <div className="button-group mt-0">
-                              <button className="ripple-button cbtn cbtn-lg cbtn-outline-primary" onClick={onClickJoin}
-                                      disabled>참여하기
-                              </button>
-                            </div>
-                            :
-                            <div className="button-group mt-0">
-                              <button className="ripple-button cbtn cbtn-lg cbtn-primary" onClick={onClickJoin}>참여하기
-                              </button>
-                            </div>
-                        :
-                        <div>
-                          <div className="button-group mt-0">
-                            <button className="ripple-button cbtn cbtn-lg cbtn-secondary" onClick={onClickJoin}>빠지기
-                            </button>
-                          </div>
-                          <div className="button-group mt-0">
-                            <button className="ripple-button cbtn cbtn-lg cbtn-primary" onClick={GroupChat}>그룹채팅 참여하기
-                            </button>
-                          </div>
+                      board.gatherNum >= board.totalNum 
+                      ?
+                        <div className="button-group mt-0">
+                          <RippleButton cclass="cbtn cbtn-lg cbtn-disabled" onClick={onClickJoin} children="모집완료"/>
+                          {/* <RippleButton className="ripple-button cbtn cbtn-lg cbtn-outline-primary" onClick={onClickJoin} disabled>참여하기</RippleButton> */}
                         </div>
-
-                    : ''
+                      :
+                        <div className="button-group mt-0">
+                          <RippleButton cclass="cbtn cbtn-lg cbtn-primary" onClick={onClickJoin} children="참여하기"/>
+                          {/* <RippleButton className="ripple-button cbtn cbtn-lg cbtn-primary" onClick={onClickJoin}>참여하기</RippleButton> */}
+                        </div>
+                    :
+                    <div className="button-group mt-0">
+                      <RippleButton cclass="cbtn cbtn-lg cbtn-secondary" onClick={onClickJoin} children="빠지기"/>
+                      {/* <button className="ripple-button cbtn cbtn-lg cbtn-secondary" onClick={onClickJoin} >빠지기</button> */}
+                    </div>
+                  : ''
                 }
               </Row>
             </Card>

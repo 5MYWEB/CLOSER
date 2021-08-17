@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom';
 import { getMyInfoAction, loginAction, getPostCount } from '../modules/user'
 import { RippleButton, ShakeButton } from '../styles/index';
 import '../styles/theme.css'
@@ -108,13 +107,6 @@ function Login({ history }) {
     }
   )
 
-  // 회원가입으로 이동
-  const onClick = ( ) => {
-    setTimeout( function() {
-      history.push('/signup');
-    }, 350);
-  }
-
   // 로그인에 성공했으면 로그인 유저 정보, 게시글 수 가져오기
   useEffect(() => {
     if (isLoggedIn === true && decodedToken.user_id !== null){
@@ -143,7 +135,6 @@ function Login({ history }) {
     setTimeout( function () {
       history.push('/signup')
     }, 350);
-    
   }
   
   

@@ -143,7 +143,7 @@ const SearchBar = () => {
             <div className="row mx-0 d-flex">
               <div className="col px-0">
                 <button
-                  className={"search-category-select" + (value === "1" ? "-selected" : "")}
+                  className={"search-category-total-select" + (value === "1" ? "-selected" : "")}
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}}
                   type="button" 
                   value={1}
@@ -156,7 +156,7 @@ const SearchBar = () => {
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}}
                   type="button" 
                   value={2}
-                >한끼레시피
+                >한끼 레시피
                 </button> 
               </div>
               <div className="col px-0">
@@ -165,7 +165,7 @@ const SearchBar = () => {
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}}
                   type="button" 
                   value={3}
-                >자취꿀팁
+                >자취 꿀팁
                 </button>
               </div>
               <div className="col px-0">
@@ -174,7 +174,7 @@ const SearchBar = () => {
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}}
                   type="button" 
                   value={4}
-                >홈데코
+                >홈 데코
                 </button>
               </div>
             </div>
@@ -183,7 +183,7 @@ const SearchBar = () => {
             <div className="row mx-0">
               <div className="col px-0">
                 <button
-                  className={"search-category-select" + (value === "5" ? "-selected" : "")}
+                  className={"search-category-total-select" + (value === "5" ? "-selected" : "")}
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}}
                   type="button" 
                   value={5}
@@ -196,7 +196,7 @@ const SearchBar = () => {
                   onClick={(e) => {setOpen(!open); onChangeCategory(e);}}
                   type="button" 
                   value={6}
-                >공동구매
+                >공동 구매
                 </button>
               </div>
               <div className="col px-0">
@@ -229,10 +229,10 @@ const SearchBar = () => {
             <option value={2}>닉네임</option>
           </FormSelect>
         </div>
-        <div className="col-6 px-0">
+        <div className="col-6 px-0 d-flex justify-content-center">
           <input 
             type="text" 
-            className="searchbar-input"
+            className="searchbar-input mx-0"
             value={text}
             placeholder="검색어를 입력하세요"
             onChange={onChangeInput}/>

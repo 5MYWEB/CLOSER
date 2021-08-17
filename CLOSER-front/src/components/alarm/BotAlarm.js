@@ -1,43 +1,43 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RippleButton } from '../../styles/index';
-import { RadioGroup, RadioButton } from 'react-radio-buttons';
+// import { RadioGroup, RadioButton } from 'react-radio-buttons';
 import '../../styles/theme.css'
-import { RippleTabItem2 } from '../../styles/index';
+// import { RippleTabItem2 } from '../../styles/index';
 
 
 
 function BotAlarm() {
     const { userInfo, isLoggedIn } = useSelector((state) => state.user);
-    const [ inputStatus, setInputStatus ] = useState('')
+    // const [ inputStatus, setInputStatus ] = useState('')
     const [text, setText] = useState('');
     const [alarmDay, setAlarmDay] = useState('')
     const [alarmDate, setAlarmDate] = useState('')
-    const [alarmSelect, setRadio] = useState('');
+    // const [alarmSelect, setRadio] = useState('');
     // let week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일');
     // let today = new Date().getDay();
     // let todayLabel = week[today];
 
-    let date = new Date().getDate()
+    // let date = new Date().getDate()
     let dummyDate = "2021-08-";
 
     const selectInputs = useRef();
 
-    const [nowTab, setNowTab] = useState('')
+    // const [nowTab, setNowTab] = useState('')
 
-    const children = [
-        ['매주', '매월'],
-        [
-            '',
-            ''
-        ]
-    ]
+    // const children = [
+    //     ['매주', '매월'],
+    //     [
+    //         '',
+    //         ''
+    //     ]
+    // ]
 
-    const handleClickRadioButton = (radioBtnName) => {
-        setInputStatus(radioBtnName)
-    }
+    // const handleClickRadioButton = (radioBtnName) => {
+    //     setInputStatus(radioBtnName)
+    // }
 
     // 사용자가 알림 내용을 입력할때 작동하는 함수
     const onChangeText = (e) => {
@@ -53,32 +53,32 @@ function BotAlarm() {
         setAlarmDay(e.target.value)
     }
     
-    const [selected, setSelected] = useState();
-    const selectedSetting = useRef();
-    const handleSettingsChange = e => setSelected(e.target.id);
+    // const [selected, setSelected] = useState();
+    // const selectedSetting = useRef();
+    // const handleSettingsChange = e => setSelected(e.target.id);
 
-    const radioChange = (e) => {
-        setRadio(e.target.value);
-    }
+    // const radioChange = (e) => {
+    //     setRadio(e.target.value);
+    // }
 
     // 내용이 빈 값인지 검사하는 함수
-    const nullCheck = () => {
-        if (text === '') {
-        alert('알림 내용을 입력해주세요!')
-        return false
-        }
-        return true
-    }
+    // const nullCheck = () => {
+    //     if (text === '') {
+    //     alert('알림 내용을 입력해주세요!')
+    //     return false
+    //     }
+    //     return true
+    // }
 
     // 데이터 빈 값 검사
-    const checkExistData = (value, name) => {
-        console.log(value)
-        if (value === '') {
-            alert(name + ' 입력해주세요!')
-            return false;
-        }
-        return true;
-    }
+    // const checkExistData = (value, name) => {
+    //     console.log(value)
+    //     if (value === '') {
+    //         alert(name + ' 입력해주세요!')
+    //         return false;
+    //     }
+    //     return true;
+    // }
 
 
       // 피드를 제출할때 작동하는 함수
@@ -90,12 +90,12 @@ function BotAlarm() {
     };
 
   // 백에 저장하는 메소드
-    const go=() => {
+    const go= () => {
         console.log("alarmDay: " + alarmDay);
         console.log("alarmDate: " + alarmDate);
         // if(nullCheck()) {
             
-            if(alarmDate == ""){
+            if(alarmDate === ""){
                 axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {
                 userId: userInfo.userId,
                 content: text,
@@ -108,7 +108,7 @@ function BotAlarm() {
                 console.log(err)
             })
             }
-            else if(alarmDay == "") {
+            else if(alarmDay === "") {
                 axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {
                     userId: userInfo.userId,
                     content: text,
@@ -133,7 +133,7 @@ function BotAlarm() {
         
     }
 
-    if(isLoggedIn == true){
+    if(isLoggedIn === true){
         return (
             <div className="page-wrapper">
                 <form encType="multipart/form-data" onSubmit={onSubmit}>

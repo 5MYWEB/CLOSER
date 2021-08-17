@@ -7,6 +7,7 @@ import backButton from '../../assets/arrow-left-solid.svg'
 const BackButton = ({ history, cclass, wrapclass}) => {
   
   const onClick = ( ) => {
+    console.log(history.location.pathname)
     setTimeout( function() {
       history.goBack();
     }, 350);

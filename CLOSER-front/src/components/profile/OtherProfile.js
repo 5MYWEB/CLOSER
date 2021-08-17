@@ -95,12 +95,13 @@ function OtherProfile({ id }) {
       <div className="col-5 px-0"><UserBadge wrapclass="px-3" cclass="profile-badge" userId={id} /></div>
       {/* 팔로잉, 팔로워  */}
       <div className="col-4 px-0 d-flex justify-content-end">
-        {isFollowed 
-          ? 
+        {isFollowed
+            ?
             <RippleButton onClick={onClickFollow} cclass="cbtn me-0 my-0 cbtn-sm cbtn-secondary">팔로우 취소</RippleButton>
-          : 
+            :
             <RippleButton onClick={onClickFollow} cclass="cbtn me-0 my-0 cbtn-sm cbtn-primary">팔로우</RippleButton>
         }
+        <Link to={`/Omessages/${userInfo.userId}`}>DM</Link>
       </div>
 
       {/* 2. 닉네임 */}

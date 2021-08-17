@@ -587,7 +587,19 @@ a:active { text-decoration: none; }
   z-index: 1030;
   border-top: 0.1px solid rgba(160, 145, 245, .5);
 }
-
+/*그룹채팅방에서 햄버거 가리는 용도*/
+.white-square{
+  width: 50px;
+  height: 45px;
+  position: fixed;
+  top: 10px;
+  right: 0px;
+  margin-right: var(--xs-m);
+  padding: var(--xs-p) var(--xs-p) var(--xs-p) 0px;
+  z-index: 100000;
+  opacity: .99;
+  background-color: white;
+}
 /* 간단한 css 속성 */
 .ml-2rem {
   margin-left: 2rem;
@@ -599,4 +611,6 @@ a:active { text-decoration: none; }
 
 .text-main {
   color: #5552FF;
+
+
 }

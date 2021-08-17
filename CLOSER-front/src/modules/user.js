@@ -1,3 +1,5 @@
+import { StreamChat } from 'stream-chat';
+
 /* 초기 상태 선언 */
 const initialState = {
   isLoggedIn: false,
@@ -104,10 +106,13 @@ export const refreshInfo = () => ({
         decodedToken: decodedToken,
       };
     case LOGOUT:
+      const client = StreamChat.getInstance('5gan2md896h2');
+      const disconnect = client.disconnectUser();
       localStorage.removeItem("userToken");
       localStorage.removeItem("decodedToken");
       localStorage.removeItem("isLoggedIn");
       return {
+        disconnect,
         ...state,
         isLoggedIn: false,
         userToken: null,

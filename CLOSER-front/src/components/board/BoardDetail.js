@@ -128,7 +128,7 @@ const BoardDetail = ({match}) => {
       console.log(err)
     })
 
-  }, [boardLiked])
+  }, [boardLiked, pk])
 
   useEffect(()=>{
     // 참여했는지
@@ -144,7 +144,7 @@ const BoardDetail = ({match}) => {
             console.log(err)
           })
     }
-  }, [board, boardLiked])
+  }, [board, boardLiked, pk])
 
   // 해당 유저의 프로필 사진
   useEffect(() => {

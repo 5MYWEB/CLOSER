@@ -101,6 +101,8 @@ function BotAlarm( { history }) {
                 })
                 .then((res) => {
                     console.log(res);
+                    // window.alert('알림이 설정되었습니다')
+                    // history.goback()
                 })
                 .catch((err) => {
                     console.log(err)

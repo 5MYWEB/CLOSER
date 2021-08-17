@@ -99,7 +99,9 @@ function OtherProfile({ id, history }) {
 
   // 1:1 채팅창으로 이동
   const OtherChat = () =>{
-    history.push(`/Omessages/${userInfo.userId}`)
+    setTimeout( function() {
+      history.push(`/Omessages/${userInfo.userId}`)
+    }, 350);
   }
 
   return (
@@ -107,28 +109,32 @@ function OtherProfile({ id, history }) {
       <div className="page-semi-wrapper">
         <Redirect to={`/profile/${id}/user-feed`} />
       {/* 1. 프로필 사진, 뱃지와 수정 버튼 */}
-        <div className="d-flex row justify-content-between align-items-end mx-0">
-          {/* 프로필사진 */}
-          <div className="col-3 px-0 d-flex justify-content-center">
-            <div className="profile-img-wrapper">
-              <img src={userInfo.profileImg}  alt="userprofile" className="profile-img" onError={handleImgError}/>
+        <div className="d-flex row justify-content-start align-items-end mx-0">
+          <div className="row align-items-end">
+            {/* 프로필사진 */}
+            <div className="col-3 px-0 d-flex justify-content-center">
+              <div className="profile-img-wrapper">
+                <img src={userInfo.profileImg}  alt="userprofile" className="profile-img" onError={handleImgError}/>
+              </div>
             </div>
-          </div>
-          {/* 뱃지 */}
-          <div className="col-5 px-0"><UserBadge wrapclass="px-3" cclass="profile-badge" userId={id} /></div>
+            {/* 뱃지 */}
+            <div className="col-4 px-0"><UserBadge wrapclass="px-1" cclass="profile-badge" userId={id} /></div>
 
-          {/* 팔로잉, 팔로워  */}
-          <div className="col-4 px-0 d-flex justify-content-end">
-            <div className="col">
-              <RippleIcon src={dmImg} alt="dmImage" id="dmImage" cclass="p-4 m-0" onClick={OtherChat} />
-            </div>
-            <div className="col">
-              {isFollowed
-                  ?
-                  <RippleButton onClick={onClickFollow} cclass="cbtn m-0 cbtn-sm cbtn-secondary">언팔로우</RippleButton>
-                  :
-                  <RippleButton onClick={onClickFollow} cclass="cbtn m-0 cbtn-sm cbtn-primary">팔로우</RippleButton>
-              }
+            {/* 팔로우, 언팔로우, DM보내기 버튼  */}
+            <div className="col-5 px-0 d-flex justify-content-around align-items-center">
+              {/* DM 아이콘 */}
+              <div className="col-4">
+                <RippleIcon src={dmImg} alt="dmImage" id="dmImage" cclass="message-button p-4 m-0" onClick={OtherChat} />
+              </div>
+              {/* 팔로우 언팔로우 */}
+              <div className="col-7 row justify-content-end">
+                {isFollowed
+                    ?
+                    <RippleButton onClick={onClickFollow} cclass="cbtn m-0 cbtn-sm cbtn-secondary">언팔로우</RippleButton>
+                    :
+                    <RippleButton onClick={onClickFollow} cclass="cbtn m-0 cbtn-sm cbtn-primary">팔로우</RippleButton>
+                }
+              </div>
             </div>
           </div>
 
@@ -148,9 +154,9 @@ function OtherProfile({ id, history }) {
               <img src={compassRegular} alt="addr-icon" className="profile-icon ps-0 pe-2"/>
                 <span>{userInfo.addr}</span>
               <img src={calendarRegular} alt="homeAlone-icon" className="profile-icon ps-4 pe-1"/>
-              {userInfo.homeAlone === null
-              ? <span> 마음만은 자취러 </span> 
-              : <span> 자취 {now.getFullYear()-userInfo.homeAlone+1} 년차 </span>}
+              {userInfo.homeAlone === 0
+                ? <span> 자취희망러 </span> 
+                : <span> 자취 {now.getFullYear()-userInfo.homeAlone+1} 년차 </span>}
             </span>
           </div>
 
@@ -167,7 +173,6 @@ function OtherProfile({ id, history }) {
                 </Link>
               </div>
             </div>
-             
 
             <div className="col-4 ps-0 pe-1 d-flex justify-content-end profile-share">
               <input type="text" value={window.location.href} ref={textInput} readOnly  className="profile-share-link"/>

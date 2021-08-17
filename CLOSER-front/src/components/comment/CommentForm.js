@@ -34,19 +34,24 @@ const CommentForm = ({board_pk}) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (nullCheck()){
-      axios.post(`http://localhost:8080/board/${board_pk}/comment`, {
-          reply: text,
-          userId: userInfo.userId
+    setTimeout( function() {
+
+      if (nullCheck()){
+        axios.post(`http://localhost:8080/board/${board_pk}/comment`, {
+            reply: text,
+            userId: userInfo.userId
+          })
+        .then(() => {
+          dispatch(createComment())
         })
-      .then(() => {
-        dispatch(createComment())
-      })
-      .catch((err) =>{
-        console.log(err)
-      })
-      setText('')
-    }
+        .catch((err) =>{
+          console.log(err)
+        })
+        setText('')
+      }
+
+    }, 350);
+
   };
 
   return (

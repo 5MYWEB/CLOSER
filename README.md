@@ -172,9 +172,9 @@
 |   GET    | /search  | 신규 사용자 생성(회원가입) |
 |GET| /search/{kind_pk}/popular         | [인기순] 게시판(GBoard, LBoard) 중 한개 선택 시|
 |GET|/search/{kind_pk}/recent          | [최신순] 게시판(GBoard, LBoard) 중 한개 선택 시                           |
-|GET|          |   /search/feed/popular                         |[인기순] 뉴스피드 선택 시 
-|GET|          |          /search/feed/recent                  |[최신순] 뉴스피드 선택 시
-|GET||/search/gboard/popular|[인기순] 자취게시판(GBoard) 선택 시
+|GET|  /search/feed/popular                         |[인기순] 뉴스피드 선택 시 
+|GET|    /search/feed/recent                  |[최신순] 뉴스피드 선택 시
+|GET|/search/gboard/popular|[인기순] 자취게시판(GBoard) 선택 시
 |GET|/search/gboard/recent          |                            |[최신순] 자취게시판(GBoard) 선택 시
 |GET|/search/lboard/popular          |                            |[인기순] 지역게시판(LBoard) 선택 시
 |GET|/search/lBoard/recent          |                            |[최신순] 지역게시판(LBoard) 선택 시

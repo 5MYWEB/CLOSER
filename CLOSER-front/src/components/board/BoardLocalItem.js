@@ -112,12 +112,10 @@ const BoardLocalItem = React.forwardRef(({ board }, ref) => {
 
   // 지역 게시판 모집 중 여부
   useEffect(() => {
-    if(board.board_pk >= 4 && board.board_pk <= 6){
-      if(board.totalNum === board.gatherNum) {
-        setIsJoin(false)
-      }
+    if(board.totalNum <= board.gatherNum) {
+      setIsJoin(false)
     }
-  }, [board.board_pk, board.totalNum, board.gatherNum])
+  }, [board.totalNum, board.gatherNum])
 
   return (
     <Container ref={ref} className="px-0">
@@ -126,9 +124,9 @@ const BoardLocalItem = React.forwardRef(({ board }, ref) => {
       <Link to={`/board-detail/${board.board_pk}`} className="text-decoration-none text-dark">
         <Card className="mx-2 p-2">
           <Row className="mx-2">
-            { isJoin 
-              ? <Col className="text-start px-0" style={{color: "#5552FF"}}>모집완료</Col>
-              : <Col className="text-start px-0" style={{color: "#5552FF"}}>모집중</Col>
+            { isJoin === true
+              ? <Col className="text-start px-0" style={{color: "#5552FF"}}>모집중</Col>
+              : <Col className="text-start px-0" style={{color: "#5552FF"}}>모집완료</Col>
             }
             <Col className="text-end px-0 text-secondary">{timePeriod}</Col>
           </Row>
@@ -139,10 +137,10 @@ const BoardLocalItem = React.forwardRef(({ board }, ref) => {
             <h3 className="text-center"><img src={usersSolidImg} alt="참여인원" className="px-0" style={{width: "30px"}}/> &nbsp; {board.gatherNum} / {board.totalNum} 참여</h3>
           </Row>
           <Row className="mx-2 mt-3">
-            <Col className="px-0">
+            <Col xs={8} className="px-0">
               By. <span style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(" ").slice(1, 3).join(" ")}</span> {board.nickname}
             </Col>
-            <Col className="px-0 text-end my-1">
+            <Col xs={4} className="px-0 text-end my-1">
               <div className = "likeAndBookmark">
                 <div className = "likePart">
                   <FontAwesomeIcon icon={faComment} className ="align-middle" alt="heart_full" style={{ color: "#5552FF"}}/> 

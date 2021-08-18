@@ -114,10 +114,10 @@ const BoardWeekBestItem = React.forwardRef(({ board }, ref) => {
 
   // 이미지 링크 세팅
   useEffect(() => {
-    if((board.board_pk <= 3 || board.board_pk === 7) && board.imgUrls !== []){
+    if((board.kind_pk <= 3 || board.kind_pk === 7) && board.imgUrls !== []){
       setImgUrl(board.imgUrls[0])
     }
-  }, [board.board_pk, board.imgUrls])
+  }, [board.kind_pk, board.imgUrls])
 
   return (
     <div>

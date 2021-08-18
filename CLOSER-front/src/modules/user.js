@@ -28,6 +28,7 @@ const initialState = {
   postCount: 0,
   changedAddr: '',
   alarmList: null,
+  unreadAlarmCount: 0,
   imgUploaded: false,
 };
 
@@ -42,6 +43,7 @@ const FOLLOW = 'FOLLOW';
 const GET_FOLLOW_INFO = 'GET_FOLLOW_INFO';
 const CHANGE_ADDR = 'CHANGE_ADDR';
 const GET_ALARM_LIST = 'GET_ALARM_LIST';
+const GET_UNREAD_ALARM = 'GET_UNREAD_ALARM';
 const REFRESH_INFO = 'REFRESH_INFO';
 const UPLOAD_PROFILE_IMG = 'UPLOAD_PROFILE_IMG';
 
@@ -81,6 +83,11 @@ export const changeAddr = (data) => ({
 
 export const getAlarmList = (data) => ({
   type: GET_ALARM_LIST,
+  data,
+});
+
+export const getUnreadAlram = (data) => ({
+  type: GET_UNREAD_ALARM,
   data,
 });
 
@@ -169,6 +176,12 @@ export const uploadProfileImg = () => ({
         ...state,
         alarmList: action.data,
       };
+    case GET_UNREAD_ALARM:
+      console.log(action.data)
+      return {
+        ...state,
+        unreadAlarmCount: action.data,
+      };
     case REFRESH_INFO:
       const refreshedUserToken = localStorage.getItem("userToken");
       const refreshedJwt = require('jsonwebtoken');
@@ -180,7 +193,6 @@ export const uploadProfileImg = () => ({
         decodedToken: refreshedDecodedToken,
       }
     case UPLOAD_PROFILE_IMG:
-      console.log(action.data)
       return {
         ...state,
         imgUploaded: !state.imgUploaded,

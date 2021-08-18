@@ -29,7 +29,6 @@ const initialState = {
   changedAddr: '',
   alarmList: null,
   unreadAlarmCount: 0,
-  imgUploaded: false,
 };
 
 /* 액션 타입 만들기 */
@@ -45,7 +44,6 @@ const CHANGE_ADDR = 'CHANGE_ADDR';
 const GET_ALARM_LIST = 'GET_ALARM_LIST';
 const GET_UNREAD_ALARM = 'GET_UNREAD_ALARM';
 const REFRESH_INFO = 'REFRESH_INFO';
-const UPLOAD_PROFILE_IMG = 'UPLOAD_PROFILE_IMG';
 
 /* 액션 생성함수 만들기 */
 // 액션 생성함수를 만들고 export 키워드를 사용해서 내보내주세요.
@@ -93,10 +91,6 @@ export const getUnreadAlram = (data) => ({
 
 export const refreshInfo = () => ({
   type: REFRESH_INFO,
-})
-
-export const uploadProfileImg = () => ({
-  type: UPLOAD_PROFILE_IMG,
 })
 
 
@@ -181,7 +175,6 @@ export const uploadProfileImg = () => ({
         alarmList: action.data,
       };
     case GET_UNREAD_ALARM:
-      console.log(action.data)
       return {
         ...state,
         unreadAlarmCount: action.data,
@@ -196,11 +189,6 @@ export const uploadProfileImg = () => ({
         userToken: localStorage.getItem("userToken"),
         decodedToken: refreshedDecodedToken,
       }
-    case UPLOAD_PROFILE_IMG:
-      return {
-        ...state,
-        imgUploaded: !state.imgUploaded,
-      };
     default:
       return state;
   }

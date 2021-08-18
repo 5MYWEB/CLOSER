@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import FollowingItem from './FollowingItem';
 import { getFollowInfoAction } from '../../modules/user';
 
@@ -40,8 +39,8 @@ const FollowingList = ({match}) => {
             );
           })}
         </div> :
-        <div>
-          아직 내가 팔로우하는 사람이 없습니다:(
+        <div className="g-0 align-items-center mx-5 my-2 fs-4">
+          아무도 팔로우하지 않고 있어요:(
         </div> }
     </>
   )

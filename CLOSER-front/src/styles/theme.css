@@ -697,7 +697,7 @@ input[type='radio']:checked {
 
 input[type='radio'] {
   background-color: #ffffff;
-  border: 1px solid #5b0a76;
+  border: 2px solid #ffffff;
 }
 input[type='radio']:checked {
   background-color: #c3a0ebf3;

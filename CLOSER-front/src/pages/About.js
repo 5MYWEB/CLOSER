@@ -13,9 +13,9 @@ import closerbot from '../assets/closerbot.png'
 function About(){
 
    //채널 톡 고유키, 로그인 하지 않아도 이용할 수 있도록 설정
-    ChannelTalk.boot({
-    "pluginKey": "dc94467c-67fb-4db2-8837-0d7f05ee1e96" 
-    });
+    // ChannelTalk.boot({
+    // "pluginKey": "dc94467c-67fb-4db2-8837-0d7f05ee1e96" 
+    // });
 
 
     return (

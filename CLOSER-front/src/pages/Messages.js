@@ -7,19 +7,21 @@ import './Messages.css'
 
 const Messages = () => {
 
-    const { userInfo } = useSelector((state) => (state.user))
+    const { userInfo, isLoggedIn } = useSelector((state) => (state.user))
     const user_id = userInfo.userId;
     const userToken = userInfo.chattoken;
     const filters = { type: 'messaging', members: { $in: [user_id] } };
     const sort = { last_message_at: -1 };
     const client = StreamChat.getInstance('5gan2md896h2');
-    client.connectUser(
-        {
-            id: user_id,
-            name: userInfo.nickname,
-        },
-        userToken,
-    );
+    if (isLoggedIn === true){
+        client.connectUser(
+            {
+                id: user_id,
+                name: userInfo.nickname,
+            },
+            userToken,
+        );
+    }
 
     return (
         <Chat client={client} theme='messaging light'>

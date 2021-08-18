@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, withRouter} from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
 import { getMyInfoAction, refreshInfo, getPostCount, getUnreadAlram } from './modules/user'
@@ -22,8 +22,9 @@ import GroupMessages from "./components/message/GroupMessages";
 
 import './App.css';
 
-function App( { location }) {
+function App( { location, history }) {
   const dispatch = useDispatch();
+  
   const { isLoggedIn, decodedToken } = useSelector((state) => state.user);
 
   const pathElements = location.pathname.split('/')
@@ -113,7 +114,24 @@ function App( { location }) {
     
   }
 
-
+  // 로그인이 필요한 페이지들
+  const loginRequiredPages = [
+    '/alarm',
+    '/alarm/my/',
+    '/alarm/other/',
+    '/board-create-form',
+    '/feed-create-form',
+    '/board-update-form/my/',
+    '/board-update-form/other/',
+    '/profile-update',
+    '/change-location',
+    '/bot',
+    '/messages',
+    '/Omessages/my',
+    '/Omessages/other',
+    '/messages/my',
+    '/messages/other',
+  ]
 
 
   // 3.
@@ -137,6 +155,13 @@ function App( { location }) {
 
   if (now in butNormalViewPages) {
     isNormalView = true
+  }
+
+  // 로그인이 필요한 페이지에 로그인하지 않고 들어가면 로그인 하라는 페이지 나옴
+  if (loginRequiredPages.includes(now) && !isLoggedIn) {
+    setTimeout( function (){
+      history.push('/about')
+    }, 350)
   }
 
   // 로그인 상태 유지

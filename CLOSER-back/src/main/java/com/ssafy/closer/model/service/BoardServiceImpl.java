@@ -3,7 +3,6 @@ package com.ssafy.closer.model.service;
 import com.ssafy.closer.model.dto.BoardDto;
 import com.ssafy.closer.model.dto.JoinDto;
 import com.ssafy.closer.model.mapper.BoardMapper;
-import com.ssafy.closer.model.mapper.GBoardMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

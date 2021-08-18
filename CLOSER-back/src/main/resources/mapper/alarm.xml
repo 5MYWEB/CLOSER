@@ -6,7 +6,7 @@
     <select id="alarmList" parameterType="String" resultType="AlarmDto">
         select *
         from user_alarm
-        where userId=#{userId}
+        where userId=#{userId} and otherUserId!=#{userId};
     </select>
 
     <insert id="alarmBoardCreate" parameterType="AlarmDto" useGeneratedKeys="true" keyProperty="alarm_pk" keyColumn="alarm_pk">
@@ -50,7 +50,7 @@
     <select id="alarmUnread" parameterType="String" resultType="int">
         select count(*)
         from user_alarm
-        where userId=#{userId} and visited=false
+        where userId=#{userId} and visited=false and otherUserId!=#{userId};
     </select>
 
     <update id="readAll" parameterType="String">

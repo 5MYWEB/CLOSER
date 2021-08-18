@@ -92,7 +92,6 @@
 
 | HTTP verb | URL 패턴 |            설명            |
 | :-------: | :------: | :------------------------: |
-|   POST    | /regist  | 신규 사용자 생성(회원가입) |
 |  DELETE   | /user    | 회원탈퇴                           |
 | GET          | /user/board/{userId}         |     프로필 페이지 포스트                       |
 | GET          | /user/bookmark/{userId}         |     프로필 페이지 북마크                     |
@@ -101,7 +100,7 @@
 | GET/POST          | /user/login         |     로그인 화면으로 이동                   |
 | GET          | /user/logout         |     로그아웃                   |
 | PUT          | /user/mypage         |     개인정보 수정                   |
-| POST          | /user/profileinfo         |     프로필 페이지 정보(내 프로핑, 다른 사람 프로필 모두 사용)                   |
+| POST          | /user/profileinfo         |     프로필 페이지 정보(내 프로필, 다른 사람 프로필 모두 사용)                   |
 | POST          | /user/regist         |  회원가입                 |
 | GET          | /user/totalBoard/{userId}         |     해당 유저가 쓴 글 갯수                   |
 | POST          | /user/userIdCheck         |     아이디 중복 확인                   |
@@ -114,9 +113,9 @@
 
 | HTTP verb | URL 패턴 |            설명            |
 | :-------: | :------: | :------------------------: |
-|   POST    | /regist  | 신규 사용자 생성(회원가입) |
-|           |          |                            |
-|           |          |                            |
+|   POST    | /follow/{id}/follow  | 팔로우 or 언팔로우 |
+|  POST         |     /follow/{id}/follower   |          팔로워 리스트                  |
+|      POST     |     /follow/{id}/following     |          팔로잉 리스트                  |
 
 ##### c. Alarm
 
@@ -125,9 +124,10 @@
 
 | HTTP verb | URL 패턴 |            설명            |
 | :-------: | :------: | :------------------------: |
-|   POST    | /regist  | 신규 사용자 생성(회원가입) |
-|           |          |                            |
-|           |          |                            |
+|   POST    | /alarm  | 알람 리스트 |
+|POST|    /alarm/read-all      |   모두 읽음 표시                         |
+|POST|   /alarm/unreadCount       |              안읽은 알람 갯수              |
+|POST|     /alarm/user_bot/{id}/create     |               봇 알림 생성             |
 
 ##### d. Board
 
@@ -136,9 +136,31 @@
 
 | HTTP verb | URL 패턴 |            설명            |
 | :-------: | :------: | :------------------------: |
-|   POST    | /regist  | 신규 사용자 생성(회원가입) |
-|           |          |                            |
-|           |          |                            |
+|   POST    | /board  | 신규 사용자 생성(회원가입) |
+|     GET/PUT/DELETE      |   /board/{board_pk}       |     게시글 상세 보기, 해당 게시글 수정, 해당 게시글 삭제                      |
+|        GET/POST   |   /board/{board_pk}/comment        |      댓글 리스트, 댓글 생성                      |
+|        DELETE   |     /board/{board_pk}/comment/{info_pk}     |     특정 댓글 삭제                       |
+|        DELETE   |    /board/{board_pk}/delete-image      |        게시판 수정 시 이미지 delete                   |
+|        POST   |     /board/{board_pk}/info     |          좋아요, 북마크 클릭 및 정보                  |
+|        POST   |     /board/{board_pk}/info-cnt     |         댓글, 좋아요, 북마크 수                   |
+|        POST   |    /board/{board_pk}/join      |           지역게시판 모임 참가                 |
+|        GET   |     /board/comment/{board_pk}      |                   댓글이 속한 게시판 종류         |
+|        GET   |   /board/feed/follow/{page}        |팔로우 한 유저들의 피드글 정보를 반환한다                         |
+|        GET   |    /board/feed/near/{page}       |         같은 동네 유저들의 피드글 정보를 반환한다                   |
+|        GET   |    /board/feed/total/{page}       |       모든 유저들의 피드글 정보를 반환한다                     |
+|        POST   |     /board/gBoard/all      |       자취 게시판 cnt 많은 순으로 게시글 보여줌                     |
+|        POST   |     /board/gBoard/deco/best      |      자취게시판 - 홈데코 인기글                     |
+|        POST   |     /board/gBoard/deco/new      |       자취 게시판 - 홈데코 최신글                     |
+|        POST   |     /board/gBoard/deco/weekbest      |       자취 게시판 - 홈데코 한주 인기글                     |
+|        POST   |     /board/gBoard/recipe/best      |       자취 게시판 - 한끼레시피 인기글                     |
+|        POST   |     /board/gBoard/recipe/new      |       자취 게시판 - 한끼레시피 최신글                     |
+|        POST   |     /board/gBoard/recipe/weekbest      |       자취 게시판 - 한끼레시피 한주 인기글 |
+|        POST   |     /board/gBoard/tip/best      |       자취 게시판 - 자취팁 인기글                  |
+|        POST   |     /board/gBoard/tip/new      |       자취 게시판 - 자취팁 최신글                     |
+|        POST   |     /board/gBoard/tip/weekbest      |       자취 게시판 - 자취팁 한주 인기글                     |
+|        POST   |     /board/lBoard/getter      |       자취 게시판 - 클로저모임 최신글                     |
+|        POST   |     /board/lBoard/purchase      |       자취 게시판 - 공동구매 최신글                     |
+|        POST   |     /board/lBoard/sos      |       자취 게시판 - 도와주세요 최신글                     |
 
 ##### e. Search
 
@@ -147,9 +169,17 @@
 
 | HTTP verb | URL 패턴 |            설명            |
 | :-------: | :------: | :------------------------: |
-|   POST    | /regist  | 신규 사용자 생성(회원가입) |
-|           |          |                            |
-|           |          |                            |
+|   GET    | /search  | 신규 사용자 생성(회원가입) |
+|GET| /search/{kind_pk}/popular         | [인기순] 게시판(GBoard, LBoard) 중 한개 선택 시|
+|GET|/search/{kind_pk}/recent          | [최신순] 게시판(GBoard, LBoard) 중 한개 선택 시                           |
+|GET|          |   /search/feed/popular                         |[인기순] 뉴스피드 선택 시 
+|GET|          |          /search/feed/recent                  |[최신순] 뉴스피드 선택 시
+|GET||/search/gboard/popular|[인기순] 자취게시판(GBoard) 선택 시
+|GET|/search/gboard/recent          |                            |[최신순] 자취게시판(GBoard) 선택 시
+|GET|/search/lboard/popular          |                            |[인기순] 지역게시판(LBoard) 선택 시
+|GET|/search/lBoard/recent          |                            |[최신순] 지역게시판(LBoard) 선택 시
+|GET|/search/popular          |                            |[인기순] 전체게시판 선택 시
+|GET|/search/recent          |                            |[최신순] 전체게시판 선택 시
 
 
 

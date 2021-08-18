@@ -66,21 +66,19 @@ function BotAlarm() {
     }
 
 
-    // 피드를 제출할때 작동하는 함수
+    // 클로저봇 알림 제출할때 작동하는 함수
     const onSubmit = (e) => {
         e.preventDefault();
-        // if (checkAll() === true) {
+        if (checkAll() === true) {
             go();
-        // }
-        
-
+        }
     };
 
   // 백에 저장하는 메소드
     const go= () => {
         console.log("alarmDay: " + alarmDay);
         console.log("alarmDate: " + alarmDate);
-            console.log("nowRadio = " + nowRadio )
+        console.log("nowRadio = " + nowRadio )
             if(nowRadio === "date"){
                 axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {
                 userId: userInfo.userId,
@@ -143,7 +141,7 @@ function BotAlarm() {
                     onChange={onChangeDayRadio}
                     ref={dayRadioBtn}
                     /> 
-                    <label className="col-3" for="dayRadio">매월</label>
+                    <label className="col-3" htmlFor="dayRadio">매월</label>
                 </div>
                 <div className="d-flex row form-check col-5">
                     <input
@@ -155,7 +153,7 @@ function BotAlarm() {
                     onChange={onChangeDateRadio}
                     ref={dateRadioBtn}
                     />
-                    <label className="col-3" for="dateRadio">매주</label>
+                    <label className="col-3" htmlFor="dateRadio">매주</label>
                 </div>
             </div>
 

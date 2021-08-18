@@ -30,11 +30,10 @@ const FollowingList = ({match}) => {
 
   return (
     <>
-      <Link to={`/profile/${userId}`}>뒤로가기</Link>
-
       {followingList.length !== 0 ? 
         <div>
           <div className="g-0 align-items-center mx-5 my-2 fs-4">{followingList.length} 명을 <span style={{color: "#5552FF"}}>팔로우</span>하고 있습니다.</div>
+          <br />
           {followingList.map((following) => {
             return (
               <FollowingItem key={following.follow_pk} following={following} />

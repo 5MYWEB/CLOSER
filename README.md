@@ -242,10 +242,13 @@
 + 피드 목록 
 > Near : 나와 같은 동네 유저가 쓴 글 
 <img src="/uploads/ca690dffee4bac954de86dcd59a8a654/피드_최신.png" width="300" hegiht="300"/>    
+
 > Favorite : 내가 좋아요 한 유저가 쓴 글 
 <img src="/uploads/4eaef1fa9864277e557c77122ae66776/피드_팔로우.png" width="300" hegiht="300"/>    
+
 > All : 동네 구분 없이 모든 유저가 쓴 글 
 <img src="/uploads/ebcb6a6397e857225e3b8e8a7fd689c5/피드_전체.png" width="300" hegiht="300"/>       
+
 + 피드 작성 
 <img src="/uploads/d45bf20efe3a697deb1f96e8845235c8/피드_글작성.png" width="300" hegiht="300"/>
 

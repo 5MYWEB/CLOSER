@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, withRouter} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
-import { getMyInfoAction, refreshInfo, getPostCount } from './modules/user'
+import { getMyInfoAction, refreshInfo, getPostCount, getUnreadAlram } from './modules/user'
 import { TopAppBar, Navbar, BackButton, WriteButton, WriteButtonWithNav } from './components/frame/index';
 import { About, Login, SignUp, Profile, Newsfeed, Board, Search, Alarm, Messages } from './pages';
 import { BoardSubNavbar1, BoardSubNavbar2, BoardGlobal, BoardLocal, BoardDetail, BoardForm, BoardUpdateForm} from './components/board/index';
@@ -139,6 +139,15 @@ function App( { location }) {
         axios.get(`http://localhost:8080/user/totalBoard/${decodedToken.user_id}`)
           .then((res) => {
             dispatch(getPostCount(res.data))
+            axios.post(`http://localhost:8080/alarm/unreadCount`, {
+                userId: decodedToken.user_id
+              })
+              .then((res) => {
+                dispatch(getUnreadAlram(res.data.countAlarm))
+              })
+              .catch((err) => {
+                console.log(err)
+              })
           })
           .catch((err) => {
             console.log(err)

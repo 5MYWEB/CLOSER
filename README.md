@@ -93,8 +93,19 @@
 | HTTP verb | URL 패턴 |            설명            |
 | :-------: | :------: | :------------------------: |
 |   POST    | /regist  | 신규 사용자 생성(회원가입) |
-|           |          |                            |
-|           |          |                            |
+|  DELETE   | /user    | 회원탈퇴                           |
+| GET          | /user/board/{userId}         |     프로필 페이지 포스트                       |
+| GET          | /user/bookmark/{userId}         |     프로필 페이지 북마크                     |
+| PUT          | /user/change-location         |     주소 변경                    |
+| GET          | /user/feed/{userId}         |     프로필 페이지 피드                    |
+| GET/POST          | /user/login         |     로그인 화면으로 이동                   |
+| GET          | /user/logout         |     로그아웃                   |
+| PUT          | /user/mypage         |     개인정보 수정                   |
+| POST          | /user/profileinfo         |     프로필 페이지 정보(내 프로핑, 다른 사람 프로필 모두 사용)                   |
+| POST          | /user/regist         |  회원가입                 |
+| GET          | /user/totalBoard/{userId}         |     해당 유저가 쓴 글 갯수                   |
+| POST          | /user/userIdCheck         |     아이디 중복 확인                   |
+| POST          | /user/userNicknameCheck     |     닉네임 중복확인       |
 
 ##### b. Follow
 

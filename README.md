@@ -184,21 +184,87 @@
 
 > - 사용자에게 보여지는 URL입니다.
 > - /src/App.js에서 정의합니다.
-> - (흠 이건 어떻게 나눠야할지 잘 모르겠어서...!!! 기능별로 묶어서 진행해주세요!!!!)
 
 ##### a. User 
 
-> 유저 페이지입니다.
+> 유저 관련 페이지입니다.
 
-| Component |  URL   |     설명      |
-| :-------: | :----: | :-----------: |
-|   Login   | /login | 로그인 페이지 |
-|           |        |               |
-|           |        |               |
+|    Component    |            URL             |        설명        |
+| :-------------: | :------------------------: | :----------------: |
+|      Login      |           /login           |       로그인       |
+|     SignUp      |          /signup           |      회원가입      |
+|     Profile     |        /profile/:id        |       프로필       |
+|  FollowingList  |    /following-list/:id     |   팔로잉 리스트    |
+|  FollowerList   |     /follower-list/:id     |   팔로워 리스트    |
+| MyProfileUpdate |      /profile-update       |  유저 프로필 수정  |
+|    UserFeed     |   /profile/:id/user-feed   |  유저 피드 리스트  |
+|    UserBoard    |  /profile/:id/user-board   | 유저 게시물 리스트 |
+|  UserBookmark   | /profile/:id/user-bookmark | 유저 북마크 리스트 |
+|  UserLocation   |      /change-location      |   유저 위치 수정   |
 
-##### b. ?!??!?!
 
 
+##### b. Board
+
+> 피드, 게시물 관련 페이지입니다. 
+
+|     Component     |          URL           |           설명           |
+| :---------------: | :--------------------: | :----------------------: |
+|     Newsfeed      |       /newsfeed        |         뉴스피드         |
+|   NewsfeedList    |    /newsfeed/:name     |    피드 항목별 리스트    |
+| NewsfeedWriteForm |   /feed-create-form    |        피드 작성         |
+|       Board       |         /board         |          게시판          |
+|  BoardSubNavbar1  |    /board/subnav1/     |        자취게시판        |
+|  BoardSubNavbar2  |    /board/subnav2/     |        지역게시판        |
+|    BoardGlobal    |  /board/subnav1/:name  | 자취게시판 항목별 리스트 |
+|    BoardLocal     |  /board/subnav2/:name  | 지역게시판 항목별 리스트 |
+|     BoardForm     |  /board-create-form/   |       게시물 작성        |
+|  BoardUpdateForm  | /board-update-form/:id |       게시물 수정        |
+|    BoardDetail    |   /board-detail/:id    |       게시물 상세        |
+
+
+
+##### c. Alarm
+
+> 알림 관련 페이지입니다.
+
+| Component |     URL      |        설명        |
+| :-------: | :----------: | :----------------: |
+|   Alarm   |    /alarm    |    알림 리스트     |
+| AlarmList | /alarm/:type | 알림 항목별 리스트 |
+| BotAlarm  |     /bot     | 클로저봇 알림 설정 |
+
+
+
+##### d. Search
+
+> 검색 관련 페이지입니다.
+
+| Component |   URL   | 설명 |
+| :-------: | :-----: | :--: |
+|  Search   | /search | 검색 |
+
+
+
+##### e. Message
+
+> 검색 관련 페이지입니다.
+
+|   Component   |         URL         |  설명   |
+| :-----------: | :-----------------: | :-----: |
+|   Messages    |      /messages      |   DM    |
+| OtherMessages |   /Omessages/:id    | 1대1 DM |
+| GroupMessages | /messages/:board_pk | 그룹 DM |
+
+
+
+##### f. Other
+
+> 검색 관련 페이지입니다.
+
+| Component |  URL   |                 설명                 |
+| :-------: | :----: | :----------------------------------: |
+|   About   | /about | 비회원 제한 기능 사용 시 연결 페이지 |
 
 
 
@@ -276,7 +342,7 @@
 > 내 프로필에서 나의 정보와 내가 쓴 글, 북마크 한 글 확인 가능  
 ---
 ### D. 팔로우/언팔로우 기능  
----  
+---
 ### E. 알림 기능 
 <img src="/uploads/6f7e318eace5de84949cb3446504d861/스크린샷_2021-08-18_오후_3.10.39.png" width="300" hegiht="300"/>
 

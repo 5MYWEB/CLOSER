@@ -29,7 +29,7 @@
         select *
         from info
         where kind_pk=#{kind_pk} and board_pk=#{board_pk}
-        order by info_pk desc
+        order by info_pk asc
     </select>
 
     <insert id="createComment" parameterType="InfoDto">

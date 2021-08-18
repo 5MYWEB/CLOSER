@@ -329,9 +329,9 @@ const BoardDetail = ({match}) => {
           <Row className="g-0 mb-3 fs-6">
             <div>
             {/* 줄바꿈 처리 */}
-              { board.content.split("\n").map((line) => {
+              { board.content.split("\n").map((line, idx) => {
                   return (
-                  <span>
+                  <span key={idx}>
                     {line}
                     <br/>
                   </span>

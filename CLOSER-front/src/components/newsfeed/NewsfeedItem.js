@@ -198,7 +198,14 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
                 <Col xs={3} className="text-secondary" style={{fontSize: "14px", textAlign: "right"}}>{timePeriod}</Col>
               </Row>
               <Row className="g-0 mb-3">
-                <div>{board.content}</div>
+                { board.content.split("\n").map((line) => {
+                    return (
+                    <span>
+                      {line}
+                      <br/>
+                    </span>
+                    )
+                })}
               </Row>
             </Col>
           </Row>

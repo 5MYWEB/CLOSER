@@ -3,7 +3,15 @@ import { useSelector } from 'react-redux';
 import { StreamChat } from 'stream-chat';
 import { Chat, Channel, ChannelHeader, ChannelList, MessageInput, MessageList, Thread, Window } from 'stream-chat-react';
 import 'stream-chat-react/dist/css/index.css';
+
 import './Messages.css'
+
+// const customStyles: CustomStyles = {
+//     '--primary-color': 'green',
+//     '--md-font': '1.2rem',
+//     '--xs-m': '1.2rem',
+//     '--xs-p': '1.2rem',
+//   };
 
 const Messages = () => {
 

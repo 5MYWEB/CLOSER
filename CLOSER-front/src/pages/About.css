@@ -79,22 +79,22 @@
 
 @keyframes float {
 	0% {
-		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		/* box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6); */
 		transform: translatey(0px);
 	}
 	50% {
-		box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
+		/* box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2); */
 		transform: translatey(-20px);
 	}
 	100% {
-		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		/* box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6); */
 		transform: translatey(0px);
 	}
 }
 
 .avatar {
 	transform: translatey(0px);
-	animation: float 6s ease-in-out infinite;
+	animation: float 2s ease-in-out infinite;
 }
 
 /* .shadow {
@@ -109,7 +109,7 @@
 
 /* move animation */
 
-@keyframes move {
+/* @keyframes move {
   0%   {left:0px; bottom:300px;}
   100%  {left:0px; bottom:0px;}
 }
@@ -117,10 +117,4 @@
 .moving {
   position: relative;
   animation: move 1s linear 2s alternate;
-  /* animation: name duration timing-function delay iteration-count direction fill-mode; */
-  /* animation-name: move;
-  animation-duration: 1s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate; */
-}
+} */

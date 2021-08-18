@@ -310,7 +310,17 @@ const BoardDetail = ({match}) => {
             </Col>
           </Row>
           <Row className="g-0 mb-3 fs-6">
-            <div>{board.content}</div>
+            <div>
+            {/* 줄바꿈 처리 */}
+              { board.content.split("\n").map((line) => {
+                  return (
+                  <span>
+                    {line}
+                    <br/>
+                  </span>
+                  )
+              })}
+            </div>
           </Row>
 
           {imgUrls.length > 0 &&

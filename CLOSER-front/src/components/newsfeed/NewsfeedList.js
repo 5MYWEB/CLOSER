@@ -46,6 +46,8 @@ const NewsfeedList = ({match, history}) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardCreated])
 
+  // 출력용 이름
+  const tabName = name.toUpperCase()
     
   return (
     <div className="App">
@@ -58,8 +60,8 @@ const NewsfeedList = ({match, history}) => {
       }
       { list.length === 0 &&
         <Container className="px-0">
-          <Row className="g-0 my-3">
-            피드글이 없습니다:(
+          <Row className="g-0 my-3 text-center">
+            피드글이 없네요! <br/> {tabName} 피드에 첫 피드를 남겨보세요!
           </Row>
         </Container>
       }

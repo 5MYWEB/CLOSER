@@ -60,11 +60,14 @@ function App( { location }) {
     '/profile': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/following-list/my/': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/follower-list/my/': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
-    '/following-list/other/': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
-    '/follower-list/other/': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
+    '/following-list': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
+    '/follower-list': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/profile/my/user-feed': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/profile/my/user-board': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/profile/my/user-bookmark': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
+    '/profile/other/user-feed': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
+    '/profile/other/user-board': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
+    '/profile/other/user-bookmark': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton" />,
     '/profile-update': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton"/>,
     '/change-location': <BackButton wrapclass="back-button-wrapper" cclass="normal-backbutton"/>
   }
@@ -98,11 +101,14 @@ function App( { location }) {
     '/following-list/my/': null,
     '/follower-list/my/': null,
     '/following-list/other/': null,
-    '/follower-list/other/': null,
+    '/follower-list': null,
     '/profile-update': null,
     '/profile/my/user-board': <WriteButton addr='board' />,
     '/profile/my/user-feed': <WriteButton addr='feed' />,
     '/profile/my/user-bookmark': null,
+    '/profile/other/user-board': null,
+    '/profile/other/user-feed': null,
+    '/profile/other/user-bookmark': null,
     '/change-location': null
     
   }

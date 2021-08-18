@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import FollowerItem from './FollowerItem';
 import { getFollowInfoAction } from '../../modules/user';
@@ -32,7 +31,7 @@ const FollowerList = ({match}) => {
     <>
       {followerList.length !== 0 ? 
         <div>
-          <div className="g-0 align-items-center mx-5 my-2 fs-4">{followerList.length} 명이 나를 <span style={{color: "#5552FF"}}>팔로우</span>합니다.</div>
+          <div className="g-0 align-items-center mx-5 my-2 fs-4">{followerList.length} 명의 <span style={{color: "#5552FF"}}>팔로워</span>가 있습니다.</div>
           <br />
           {followerList.map((follower) => {
             return (
@@ -41,7 +40,7 @@ const FollowerList = ({match}) => {
           })}
         </div> :
         <div>
-          아직 나를 팔로우하는 사람이 없습니다:(
+          아직 팔로워가 없습니다:(
         </div> }
     </>
   )

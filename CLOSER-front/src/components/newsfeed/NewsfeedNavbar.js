@@ -7,7 +7,7 @@ function NewsfeedNavbar({ history }) {
 
   // 리플 탭 이동하는 주소
   const children = [
-    ['NEAR', 'FAVORITE', 'HOT'],
+    ['NEAR', 'FAVORITE', 'ALL'],
     [
       `/newsfeed/near`,
       `/newsfeed/follow`,

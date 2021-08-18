@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import AWS from 'aws-sdk';
 import { RippleButton } from '../../styles/index';
@@ -28,12 +28,23 @@ const NewsfeedForm = () => {
 
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // 리덕스 user에서 userId 받아옴 
   const { userInfo, isLoggedIn } = useSelector((state) => state.user);
 
   const [text, setText] = useState('');
   const [check,setcheck] = useState(false); // 이미지가 있는지 확인
+
+
+  // 로그인한 사용자가 아니면 about페이지로 이동
+  const goToAbout = () => {
+    if(!isLoggedIn){
+      setTimeout(function() {
+        history.push('/about')
+      })
+    }
+  }
 
   // 사용자가 피드 내용을 입력할때 작동하는 함수
   const onChangeText = (e) => {
@@ -69,12 +80,12 @@ const NewsfeedForm = () => {
         content: text,
         imgUrls : Urls,
       })
-          .then(() => {
-            dispatch(createBoard())
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+        .then(() => {
+          dispatch(createBoard())
+        })
+        .catch((err) => {
+          console.log(err)
+        })
       setText('')
       setUrls([])
       setcheck(false)
@@ -149,6 +160,7 @@ const NewsfeedForm = () => {
       );
     });
   }
+
   useEffect(() => {
     if (Url !== "") {
       setUrls((Urls) => [...Urls, Url]);
@@ -160,10 +172,9 @@ const NewsfeedForm = () => {
   },[Urls])
 
 
-
   return (
       <>
-        {isLoggedIn &&
+        {/* {isLoggedIn && */}
           <div className="mx-5 mt-4 mb-3">
             <form encType="multipart/form-data" onSubmit={onSubmit}>
               <Container>
@@ -176,6 +187,7 @@ const NewsfeedForm = () => {
                       maxLength={500}  
                       placeholder="무슨 생각을 하고 계신가요?"
                       onChange={onChangeText}
+                      onClick={goToAbout}
                     />
                   </Col>
                   <Col xs={1} >
@@ -194,7 +206,7 @@ const NewsfeedForm = () => {
               </div>
             </form>
           </div>
-        }
+        {/* } */}
       </>
   )
 }

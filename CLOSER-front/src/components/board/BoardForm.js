@@ -157,6 +157,7 @@ const BoardForm = () => {
 
   useEffect(()=>{
     if(Urls.length!==0 && Urls.length===Files.length) go()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[Urls])
 
 
@@ -233,11 +234,11 @@ const BoardForm = () => {
                 {/* <label>
                   <input type="file" id="file" multiple onChange={handleImageChange} className="form-control" style={{color: "#5552FF"}} />
                 </label> */}
-                <div class="mb-3">
+                <div className="mb-3">
                   <div><label htmlFor="formFileMultiple" className="form-label fw-bolder mb-0" style={{color: "#5552FF"}}>Image</label></div>
                   <div className="result d-flex justify-content-center row row-cols-4 mb-1">{renderPhotos(selectedFiles)}</div>
-                  <div class="d-flex justify-content-center">
-                    <input className="form-control" type="file" id="formFileMultiple" multiple onChange={handleImageChange} className="form-control"/>
+                  <div className="d-flex justify-content-center">
+                    <input className="form-control" type="file" id="formFileMultiple" multiple onChange={handleImageChange}/>
                   </div>
                 </div>
               </InputGroup>

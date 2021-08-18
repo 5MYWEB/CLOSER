@@ -43,6 +43,7 @@ const BoardDetail = ({match}) => {
 
   // 현재 로그인한 사용자의 아이디 가져오기
   const {userId} = useSelector((state) => state.user.userInfo);
+  const {isLoggedIn} = useSelector((state) => state.user);
 
   // 좋아요, 북마크를 눌렀을때 상태 반영 
   const {boardLiked} = useSelector((state) => state.board);
@@ -93,7 +94,7 @@ const BoardDetail = ({match}) => {
 
   useEffect(()=>{
      // 좋아요 눌렀는지
-     axios.post(`http://localhost:8080/board/${pk}/info`, {
+    axios.post(`http://localhost:8080/board/${pk}/info`, {
       kind_pk: 2,
       userId: userId,
       flag: "false",
@@ -128,6 +129,7 @@ const BoardDetail = ({match}) => {
       console.log(err)
     })
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardLiked, pk])
 
   useEffect(()=>{
@@ -144,6 +146,7 @@ const BoardDetail = ({match}) => {
             console.log(err)
           })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [board, boardLiked, pk])
 
   // 해당 유저의 프로필 사진
@@ -216,9 +219,13 @@ const BoardDetail = ({match}) => {
   
 
 
-
   // 좋아요 버튼을 눌렀을 때
   const onClickLike = () => {
+    if(!isLoggedIn){
+      setTimeout(() => {
+        history.push('/about')  
+      }, 350);
+    }
     axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
       kind_pk: 2,
       userId: userId,
@@ -235,6 +242,11 @@ const BoardDetail = ({match}) => {
 
   // 북마크 버튼을 눌렀을 때
   const onClickBookmark = () => {
+    if(!isLoggedIn){
+      setTimeout(() => {
+        history.push('/about')  
+      }, 350);
+    }
     axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
       kind_pk: 3,
       userId: userId,
@@ -251,6 +263,11 @@ const BoardDetail = ({match}) => {
 
   // 참여하기 버튼을 눌렀을 때
   const onClickJoin = () => {
+    if(!isLoggedIn){
+      setTimeout(() => {
+        history.push('/about')  
+      }, 350);
+    }
     axios.post(`http://localhost:8080/board/${board.board_pk}/join`, {
       userId: userId,
       flag: 'true',
@@ -312,9 +329,9 @@ const BoardDetail = ({match}) => {
           <Row className="g-0 mb-3 fs-6">
             <div>
             {/* 줄바꿈 처리 */}
-              { board.content.split("\n").map((line) => {
+              { board.content.split("\n").map((line, idx) => {
                   return (
-                  <span>
+                  <span key={idx}>
                     {line}
                     <br/>
                   </span>
@@ -354,7 +371,7 @@ const BoardDetail = ({match}) => {
               </Row>
               <Row className="mx-2 my-2">
                 <h3 className="text-center"><img src={usersSolidImg} alt="참여인원" className="px-0"
-                                                 style={{width: "30px"}}/> &nbsp; {board.gatherNum} / {board.totalNum} 참여
+                    style={{width: "30px"}}/> &nbsp; {board.gatherNum} / {board.totalNum} 참여
                 </h3>
               </Row>
               <Row>
@@ -400,14 +417,14 @@ const BoardDetail = ({match}) => {
                   <div className="likePart ms-2" style={{fontSize: "22px"}}>
                     {/* <img className ="heart_full" alt="heart_full" src={heartFull} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
                     <FontAwesomeIcon icon={fasHeart} className="heart_full align-middle" alt="heart_full"
-                                     onClick={onClickLike} style={{color: "#FF5D5D"}}/>
+                      onClick={onClickLike} style={{color: "#FF5D5D"}}/>
                     <span className="ms-1 align-middle">{countLike}</span>
                   </div>
                   :
                   <div className="likePart ms-2" style={{fontSize: "22px"}}>
                     {/* <img className ="heart_empty" alt="heart_empty" src={heartEmpty} onClick={onClickLike} style={{height: "25px", width: "25px"}} /> {countLike} */}
                     <FontAwesomeIcon icon={faHeart} className="heart_empty align-middle" alt="heart_empty"
-                                     onClick={onClickLike} style={{color: "#5552FF"}}/>
+                      onClick={onClickLike} style={{color: "#5552FF"}}/>
                     <span className="ms-1 align-middle">{countLike}</span>
                   </div>
               }
@@ -417,14 +434,14 @@ const BoardDetail = ({match}) => {
                   <div className="bookmarkPart ms-3" style={{fontSize: "22px"}}>
                     {/* <img className ="bookmark_full" alt="bookmark_full" src={bookmarkFull} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
                     <FontAwesomeIcon icon={fasBookmark} className="bookmark_full align-middle" alt="bookmark_full"
-                                     onClick={onClickBookmark} style={{color: "#3ED3A3"}}/>
+                      onClick={onClickBookmark} style={{color: "#3ED3A3"}}/>
                     <span className="ms-1 align-middle">{countBookmark}</span>
                   </div>
                   :
                   <div className="bookmarkPart ms-3" style={{fontSize: "22px"}}>
                     {/* <img className ="bookmark_empty" alt="bookmark_empty" src={bookmarkEmpty} onClick={onClickBookmark} style={{height: "25px", width: "25px"}} /> {countBookmark} */}
                     <FontAwesomeIcon icon={faBookmark} className="bookmark_empty align-middle" alt="bookmark_empty"
-                                     onClick={onClickBookmark} style={{color: "#5552FF"}}/>
+                      onClick={onClickBookmark} style={{color: "#5552FF"}}/>
                     <span className="ms-1 align-middle">{countBookmark}</span>
                   </div>
               }

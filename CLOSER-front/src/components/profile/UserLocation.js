@@ -118,7 +118,7 @@ const UserLocation = ({ history }) => {
   const onClickSave = () => {
     axios.put('http://localhost:8080/user/change-location', {userId:changedUserinfo.userId, addr:changedUserinfo.addr})
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         // 정보다시 받아오는 요청
         axios.post(`http://localhost:8080/user/profileinfo?userId=${userInfo.userId}`)
         .then((res) => {

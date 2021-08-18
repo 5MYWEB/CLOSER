@@ -1,11 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import defaultProfile from '../../assets/user-on.svg';
 import UserBadge from './UserBadge';
 import { RippleButton, RippleTabItem } from '../../styles/index';
-import { uploadProfileImg } from '../../modules/user';
 import compassRegular from '../../assets/profile/compass-regular.svg';
 import calendarRegular from '../../assets/profile/calendar-alt-regular.svg';
 import '../../styles/tab.css';
@@ -20,15 +19,10 @@ function MyProfile({ history }) {
 
   const now = new Date();
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     setProfileImg(userInfo.profileImg)
   }, [userInfo])
 
-  useEffect(() => {
-    dispatch(uploadProfileImg())
-  }, [])
 
   useEffect(() => {
     setProfileImg(`https://photo-album-hy.s3.ap-northeast-2.amazonaws.com/${userInfo.userId}/${userInfo.userId}_profile.jpg`)

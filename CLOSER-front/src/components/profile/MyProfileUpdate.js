@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import AWS from 'aws-sdk';
-import { getMyInfoAction, uploadProfileImg } from '../../modules/user';
+import { getMyInfoAction } from '../../modules/user';
 import defaultProfile from '../../assets/user-on.svg';
 import { RippleButton, ShakeButton } from '../../styles/index';
 import '../../styles/theme.css'
@@ -78,7 +78,7 @@ const MyProfileUpdate = ({history}) => {
   const onDoubleCheck = () => {
     axios.post(`http://localhost:8080/user/userNicknameCheck?nickname=${changedUserInfo.nickname}`)
       .then((res) => {
-        alert(res.data)
+        // console.log(res.data)
         setDoubleChecked(true)
       })
       .catch((err) => {
@@ -185,7 +185,7 @@ const MyProfileUpdate = ({history}) => {
               // s3에 사진이 업로드 되기까지 기다리는 시간
               setTimeout( function () {
                 history.goBack();
-              }, 500);
+              }, 750);
             })
             .catch((err) => {
               console.log(err)
@@ -225,9 +225,9 @@ const MyProfileUpdate = ({history}) => {
           value={changedUserInfo.nickname}
           name="nickname"
           onChange={onChangeNickname}
-          class="col-7 px-0 me-0"
+          className="col-7 px-0 me-0"
         />
-        <div class="col-3 mt-1">
+        <div className="col-3 mt-1">
           {doubleChecked ? 
             <RippleButton disabled onClick={onDoubleCheck} type="button" cclass="cbtn cbtn-sm cbtn-green m-0" children="확인완료"/>
             :
@@ -252,7 +252,7 @@ const MyProfileUpdate = ({history}) => {
             }
           </div>
           
-          <div class="col-6">
+          <div className="col-6">
           {/* 사진 받아오는 input(label의 형태) */}
           <label className="cbtn-sm cbtn-primary" htmlFor="input-file" >
             업로드

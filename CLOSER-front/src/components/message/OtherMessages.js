@@ -7,6 +7,7 @@ import './Messages.css'
 import axios from "axios";
 
 const OtherMessages = ({match}) => {
+    
     const other_id = match.params.id;
     const { userInfo } = useSelector((state) => (state.user))
     const user_id = userInfo.userId;
@@ -15,6 +16,7 @@ const OtherMessages = ({match}) => {
     const sort = { last_message_at: -1 };
     const client = StreamChat.getInstance('5gan2md896h2');
     const [nickname,setNickname] = useState("");
+
     useEffect(()=>{
         axios.post(`http://localhost:8080/user/profileinfo?userId=${other_id}`)
             .then((res) => {
@@ -23,6 +25,7 @@ const OtherMessages = ({match}) => {
             .catch((err) => {
                 console.log(err)
             })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     client.connectUser(
@@ -33,8 +36,8 @@ const OtherMessages = ({match}) => {
         userToken,
     );
 
-    useEffect(async ()=>{
-        if(nickname!=="") {
+    useEffect( ()=>{
+        async function hoyeong () {if(nickname!=="") {
             console.log(`nickname: ${nickname}`)
             const channel = await client.channel('messaging', {
                 name: `${userInfo.nickname}와 ${nickname}의 대화`,
@@ -42,7 +45,9 @@ const OtherMessages = ({match}) => {
             });
             channel.create();
             channel.watch();
-        }
+        }}
+        hoyeong()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[nickname])
 
 

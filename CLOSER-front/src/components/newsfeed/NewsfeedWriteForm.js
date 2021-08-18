@@ -31,7 +31,6 @@ const NewsfeedWriteForm = () => {
 
   // 리덕스 user에서 userId 받아옴 
   const {userId} = useSelector((state) => state.user.userInfo);
-  const {isLoggedIn} = useSelector((state) => state.user);
 
   const [text, setText] = useState('');
   const [check,setcheck] = useState(false); // 이미지가 있는지 확인
@@ -165,56 +164,33 @@ const NewsfeedWriteForm = () => {
 
   return (
       <>
-        {isLoggedIn &&
-          <div className="mx-5 mt-4 mb-3">
-            <form encType="multipart/form-data" onSubmit={onSubmit}>
-              <Container>
-                {/* <Row className="mb-3 g-0"> */}
-                  {/* <Col> */}
-                    {/* <input 
-                      type="text" 
-                      className="form-control my-0"
-                      value={text}
-                      maxLength={500}  
-                      placeholder="무슨 생각을 하고 계신가요?"
-                      onChange={onChangeText}
-                    /> */}
-                    {/* <label htmlFor="content" className="form-label fw-bolder" style={{color: "#5552FF"}}>Content</label>
-                    <textarea className="form-control my-0 d-flex justify-content-center " 
-                    value={text}
-                    maxLength={500}
-                    onChange={onChangeText}
-                    id="content" 
-                    style={{ height: "200px"}}
-                    placeholder="무슨 생각을 하고 계신가요?"
-                    />
-                  </Col>
-                </Row> */}
-                <label htmlFor="content" className="form-label fw-bolder" style={{color: "#5552FF"}}>Content</label>
-                <InputGroup className="mb-4">
-                    <textarea className="form-control my-0 d-flex justify-content-center " 
-                    value={text}
-                    maxLength={500}
-                    onChange={onChangeText}
-                    id="content" 
-                    style={{ height: "200px"}}
-                    placeholder="무슨 생각을 하고 계신가요?"
-                    />
-                </InputGroup>
-                <div class="mb-3 g-0">
-                  <div><label htmlFor="formFileMultiple" className="form-label fw-bolder mb-0" style={{color: "#5552FF"}}>Image</label></div>
-                  <div className="result d-flex justify-content-center row row-cols-4 mb-1">{renderPhotos(selectedFiles)}</div>
-                  <div class="d-flex justify-content-center">
-                    <input className="form-control" type="file" id="formFileMultiple" multiple onChange={handleImageChange} />
-                  </div>
+        <div className="mx-5 mt-4 mb-3">
+          <form encType="multipart/form-data" onSubmit={onSubmit}>
+            <Container>
+              <label htmlFor="content" className="form-label fw-bolder" style={{color: "#5552FF"}}>Content</label>
+              <InputGroup className="mb-4">
+                  <textarea className="form-control my-0 d-flex justify-content-center " 
+                  value={text}
+                  maxLength={500}
+                  onChange={onChangeText}
+                  id="content" 
+                  style={{ height: "200px"}}
+                  placeholder="무슨 생각을 하고 계신가요?"
+                  />
+              </InputGroup>
+              <div className="mb-3 g-0">
+                <div><label htmlFor="formFileMultiple" className="form-label fw-bolder mb-0" style={{color: "#5552FF"}}>Image</label></div>
+                <div className="result d-flex justify-content-center row row-cols-4 mb-1">{renderPhotos(selectedFiles)}</div>
+                <div className="d-flex justify-content-center">
+                  <input className="form-control" type="file" id="formFileMultiple" multiple onChange={handleImageChange} />
                 </div>
-              </Container>
-              <div className="d-flex justify-content-center">
-                <RippleButton type="submit" cclass="cbtn cbtn-primary cbtn-lg" children="업로드"/>
               </div>
-            </form>
-          </div>
-        }
+            </Container>
+            <div className="d-flex justify-content-center">
+              <RippleButton type="submit" cclass="cbtn cbtn-primary cbtn-lg" children="업로드"/>
+            </div>
+          </form>
+        </div>
       </>
   )
 }

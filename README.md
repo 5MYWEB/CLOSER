@@ -1,5 +1,4 @@
 # CLOSER
-
 > 프론트 담당: 김지윤, 서민수
 >
 > 백엔드 담당: 김호영, 이민지, 조혜인
@@ -58,17 +57,15 @@
 > 여기서는 폴더 구조 보여주면 돼요! (폴더 구조 캡쳐 등으로 하면 될듯)
 
 #### 1. Back-End
-
-
+<img src="/uploads/1e09506c9adf5a3aa40a37539ebba594/스크린샷_2021-08-18_오후_10.21.30.png" width="700" hegiht="700"/>
 
 #### 2. Front-End
-
-
+<img src="/uploads/6a01128cf88d6da8140d41d073f7e6c9/스크린샷_2021-08-18_오후_10.21.57.png" width="700" hegiht="700"/>
 
 ### B. Model
 
 > 데이터베이스에서 모델의 ERD는 아래와 같습니다.
-
+<img src="/uploads/b2f4e04638ccc71bbcb4b4e05f471ab9/스크린샷_2021-08-18_오후_11.09.20.png" width="700" hegiht="700"/>
 
 
 
@@ -92,9 +89,19 @@
 
 | HTTP verb | URL 패턴 |            설명            |
 | :-------: | :------: | :------------------------: |
-|   POST    | /regist  | 신규 사용자 생성(회원가입) |
-|           |          |                            |
-|           |          |                            |
+|  DELETE   | /user    | 회원탈퇴                           |
+| GET          | /user/board/{userId}         |     프로필 페이지 포스트                       |
+| GET          | /user/bookmark/{userId}         |     프로필 페이지 북마크                     |
+| PUT          | /user/change-location         |     주소 변경                    |
+| GET          | /user/feed/{userId}         |     프로필 페이지 피드                    |
+| GET/POST          | /user/login         |     로그인 화면으로 이동                   |
+| GET          | /user/logout         |     로그아웃                   |
+| PUT          | /user/mypage         |     개인정보 수정                   |
+| POST          | /user/profileinfo         |     프로필 페이지 정보(내 프로필, 다른 사람 프로필 모두 사용)                   |
+| POST          | /user/regist         |  회원가입                 |
+| GET          | /user/totalBoard/{userId}         |     해당 유저가 쓴 글 갯수                   |
+| POST          | /user/userIdCheck         |     아이디 중복 확인                   |
+| POST          | /user/userNicknameCheck     |     닉네임 중복확인       |
 
 ##### b. Follow
 
@@ -103,9 +110,9 @@
 
 | HTTP verb | URL 패턴 |            설명            |
 | :-------: | :------: | :------------------------: |
-|   POST    | /regist  | 신규 사용자 생성(회원가입) |
-|           |          |                            |
-|           |          |                            |
+|   POST    | /follow/{id}/follow  | 팔로우 or 언팔로우 |
+|  POST         |     /follow/{id}/follower   |          팔로워 리스트                  |
+|      POST     |     /follow/{id}/following     |          팔로잉 리스트                  |
 
 ##### c. Alarm
 
@@ -114,9 +121,10 @@
 
 | HTTP verb | URL 패턴 |            설명            |
 | :-------: | :------: | :------------------------: |
-|   POST    | /regist  | 신규 사용자 생성(회원가입) |
-|           |          |                            |
-|           |          |                            |
+|   POST    | /alarm  | 알람 리스트 |
+|POST|    /alarm/read-all      |   모두 읽음 표시                         |
+|POST|   /alarm/unreadCount       |              안읽은 알람 갯수              |
+|POST|     /alarm/user_bot/{id}/create     |               봇 알림 생성             |
 
 ##### d. Board
 
@@ -125,9 +133,31 @@
 
 | HTTP verb | URL 패턴 |            설명            |
 | :-------: | :------: | :------------------------: |
-|   POST    | /regist  | 신규 사용자 생성(회원가입) |
-|           |          |                            |
-|           |          |                            |
+|   POST    | /board  | 신규 사용자 생성(회원가입) |
+|     GET/PUT/DELETE      |   /board/{board_pk}       |     게시글 상세 보기, 해당 게시글 수정, 해당 게시글 삭제                      |
+|        GET/POST   |   /board/{board_pk}/comment        |      댓글 리스트, 댓글 생성                      |
+|        DELETE   |     /board/{board_pk}/comment/{info_pk}     |     특정 댓글 삭제                       |
+|        DELETE   |    /board/{board_pk}/delete-image      |        게시판 수정 시 이미지 delete                   |
+|        POST   |     /board/{board_pk}/info     |          좋아요, 북마크 클릭 및 정보                  |
+|        POST   |     /board/{board_pk}/info-cnt     |         댓글, 좋아요, 북마크 수                   |
+|        POST   |    /board/{board_pk}/join      |           지역게시판 모임 참가                 |
+|        GET   |     /board/comment/{board_pk}      |                   댓글이 속한 게시판 종류         |
+|        GET   |   /board/feed/follow/{page}        |팔로우 한 유저들의 피드글 정보를 반환한다                         |
+|        GET   |    /board/feed/near/{page}       |         같은 동네 유저들의 피드글 정보를 반환한다                   |
+|        GET   |    /board/feed/total/{page}       |       모든 유저들의 피드글 정보를 반환한다                     |
+|        POST   |     /board/gBoard/all      |       자취 게시판 cnt 많은 순으로 게시글 보여줌                     |
+|        POST   |     /board/gBoard/deco/best      |      자취게시판 - 홈데코 인기글                     |
+|        POST   |     /board/gBoard/deco/new      |       자취 게시판 - 홈데코 최신글                     |
+|        POST   |     /board/gBoard/deco/weekbest      |       자취 게시판 - 홈데코 한주 인기글                     |
+|        POST   |     /board/gBoard/recipe/best      |       자취 게시판 - 한끼레시피 인기글                     |
+|        POST   |     /board/gBoard/recipe/new      |       자취 게시판 - 한끼레시피 최신글                     |
+|        POST   |     /board/gBoard/recipe/weekbest      |       자취 게시판 - 한끼레시피 한주 인기글 |
+|        POST   |     /board/gBoard/tip/best      |       자취 게시판 - 자취팁 인기글                  |
+|        POST   |     /board/gBoard/tip/new      |       자취 게시판 - 자취팁 최신글                     |
+|        POST   |     /board/gBoard/tip/weekbest      |       자취 게시판 - 자취팁 한주 인기글                     |
+|        POST   |     /board/lBoard/getter      |       자취 게시판 - 클로저모임 최신글                     |
+|        POST   |     /board/lBoard/purchase      |       자취 게시판 - 공동구매 최신글                     |
+|        POST   |     /board/lBoard/sos      |       자취 게시판 - 도와주세요 최신글                     |
 
 ##### e. Search
 
@@ -136,9 +166,17 @@
 
 | HTTP verb | URL 패턴 |            설명            |
 | :-------: | :------: | :------------------------: |
-|   POST    | /regist  | 신규 사용자 생성(회원가입) |
-|           |          |                            |
-|           |          |                            |
+|   GET    | /search  | 신규 사용자 생성(회원가입) |
+|GET| /search/{kind_pk}/popular         | [인기순] 게시판(GBoard, LBoard) 중 한개 선택 시|
+|GET|/search/{kind_pk}/recent          | [최신순] 게시판(GBoard, LBoard) 중 한개 선택 시                           |
+|GET|  /search/feed/popular                         |[인기순] 뉴스피드 선택 시 
+|GET|    /search/feed/recent                  |[최신순] 뉴스피드 선택 시
+|GET|/search/gboard/popular|[인기순] 자취게시판(GBoard) 선택 시
+|GET|/search/gboard/recent          | [최신순] 자취게시판(GBoard) 선택 시
+|GET|/search/lboard/popular          |[인기순] 지역게시판(LBoard) 선택 시
+|GET|/search/lBoard/recent          | [최신순] 지역게시판(LBoard) 선택 시
+|GET|/search/popular          | [인기순] 전체게시판 선택 시
+|GET|/search/recent          | [최신순] 전체게시판 선택 시
 
 
 
@@ -146,21 +184,87 @@
 
 > - 사용자에게 보여지는 URL입니다.
 > - /src/App.js에서 정의합니다.
-> - (흠 이건 어떻게 나눠야할지 잘 모르겠어서...!!! 기능별로 묶어서 진행해주세요!!!!)
 
 ##### a. User 
 
-> 유저 페이지입니다.
+> 유저 관련 페이지입니다.
 
-| Component |  URL   |     설명      |
-| :-------: | :----: | :-----------: |
-|   Login   | /login | 로그인 페이지 |
-|           |        |               |
-|           |        |               |
+|    Component    |            URL             |        설명        |
+| :-------------: | :------------------------: | :----------------: |
+|      Login      |           /login           |       로그인       |
+|     SignUp      |          /signup           |      회원가입      |
+|     Profile     |        /profile/:id        |       프로필       |
+|  FollowingList  |    /following-list/:id     |   팔로잉 리스트    |
+|  FollowerList   |     /follower-list/:id     |   팔로워 리스트    |
+| MyProfileUpdate |      /profile-update       |  유저 프로필 수정  |
+|    UserFeed     |   /profile/:id/user-feed   |  유저 피드 리스트  |
+|    UserBoard    |  /profile/:id/user-board   | 유저 게시물 리스트 |
+|  UserBookmark   | /profile/:id/user-bookmark | 유저 북마크 리스트 |
+|  UserLocation   |      /change-location      |   유저 위치 수정   |
 
-##### b. ?!??!?!
 
 
+##### b. Board
+
+> 피드, 게시물 관련 페이지입니다. 
+
+|     Component     |          URL           |           설명           |
+| :---------------: | :--------------------: | :----------------------: |
+|     Newsfeed      |       /newsfeed        |         뉴스피드         |
+|   NewsfeedList    |    /newsfeed/:name     |    피드 항목별 리스트    |
+| NewsfeedWriteForm |   /feed-create-form    |        피드 작성         |
+|       Board       |         /board         |          게시판          |
+|  BoardSubNavbar1  |    /board/subnav1/     |        자취게시판        |
+|  BoardSubNavbar2  |    /board/subnav2/     |        지역게시판        |
+|    BoardGlobal    |  /board/subnav1/:name  | 자취게시판 항목별 리스트 |
+|    BoardLocal     |  /board/subnav2/:name  | 지역게시판 항목별 리스트 |
+|     BoardForm     |  /board-create-form/   |       게시물 작성        |
+|  BoardUpdateForm  | /board-update-form/:id |       게시물 수정        |
+|    BoardDetail    |   /board-detail/:id    |       게시물 상세        |
+
+
+
+##### c. Alarm
+
+> 알림 관련 페이지입니다.
+
+| Component |     URL      |        설명        |
+| :-------: | :----------: | :----------------: |
+|   Alarm   |    /alarm    |    알림 리스트     |
+| AlarmList | /alarm/:type | 알림 항목별 리스트 |
+| BotAlarm  |     /bot     | 클로저봇 알림 설정 |
+
+
+
+##### d. Search
+
+> 검색 관련 페이지입니다.
+
+| Component |   URL   | 설명 |
+| :-------: | :-----: | :--: |
+|  Search   | /search | 검색 |
+
+
+
+##### e. Message
+
+> 검색 관련 페이지입니다.
+
+|   Component   |         URL         |  설명   |
+| :-----------: | :-----------------: | :-----: |
+|   Messages    |      /messages      |   DM    |
+| OtherMessages |   /Omessages/:id    | 1대1 DM |
+| GroupMessages | /messages/:board_pk | 그룹 DM |
+
+
+
+##### f. Other
+
+> 검색 관련 페이지입니다.
+
+| Component |  URL   |                 설명                 |
+| :-------: | :----: | :----------------------------------: |
+|   About   | /about | 비회원 제한 기능 사용 시 연결 페이지 |
 
 
 
@@ -182,35 +286,78 @@
 >
 >- 프로필 기능
 >    - 뱃지 (한달에 한번 업데이트)
->    - 팔로우 / 언팔로우
->    - 내 북마크 / 내 피드 / 내 포스트
 >    - 프로필 url 공유
 >    - 네이버 지도 api를 통한 현재 위치 정보 가져오기
 >- 게시판
 >  - 덤프 데이터
 >  - 자취 게시판
 >    - 베스트 게시판 (좋아요 + 댓글 기반)
->  - 지역 게시판
->  - 뉴스피드
 >
 >- 검색 기능
 >  - 네이버 검색
 >  - 제목+내용 / 유저 검색
 >  - 전체 게시판 검색 / 세부 게시판 검색
->- 알림(클로저봇) 기능
->  - 매주 알림 기능 (분리수거 하는 날)
->  - 한 달에 한 번 알림 기능 (공과금 내는 날)
 >- DM 기능
 >  - 1대1 대화
 >  - 다대다 대화는 지금 될지 안될지 모름
 >- 
 
-### A. 프로필 기능
 
+### A. 뉴스피드 기능 
 
++ 피드 목록 
+> Near : 나와 같은 동네 유저가 쓴 글 
+<img src="/uploads/ca690dffee4bac954de86dcd59a8a654/피드_최신.png" width="300" hegiht="300"/>    
 
+> Favorite : 내가 좋아요 한 유저가 쓴 글 
+<img src="/uploads/4eaef1fa9864277e557c77122ae66776/피드_팔로우.png" width="300" hegiht="300"/>    
 
+> All : 동네 구분 없이 모든 유저가 쓴 글 
+<img src="/uploads/ebcb6a6397e857225e3b8e8a7fd689c5/피드_전체.png" width="300" hegiht="300"/>       
 
++ 피드 작성 
+<img src="/uploads/d45bf20efe3a697deb1f96e8845235c8/피드_글작성.png" width="300" hegiht="300"/>
+
+> 피드 글작성    
+<img src="/uploads/3f52f9416d0c3fa5e746bf95849a95ab/피드_글완성.png" width="300" hegiht="300"/>
+
+> 피드 글 작성 완료  
+---  
+### B. 게시판 기능  
++ 자취 게시판 : 자취 꿀팁을 서로 공유할 수 있는 게시판    
++ 지역 게시판 : 우리 지역 내에서 모임을 모집할 수 있는 게시판 
+<img src="/uploads/fe4b5491abab6bc305bfb046fba5ba3b/지역게시판_공동구매.png" width="300" hegiht="300"/>
+
+> 1인 가구가 사용하기엔 많은 물건을 같은 동네 자취생들과 나눌 수 있는 공동구매 게시판    
+<img src="/uploads/50d4760673872cecf0f31c1d7cd86941/지역게시판_클로저모임.png" width="300" hegiht="300"/>
+
+> 같은 동네 자취생들끼리 원하는 모임을 개설하고 인원을 모집할 수 있는 클로저모임 게시판    
+<img src="/uploads/e258d2797e8b2b2d3ce6a392882ba960/지역게시판_도와주세요.png" width="300" hegiht="300"/>
+
+> 급하게 필요한 게 있거나 위험한 상황일 때 주변의 자취생들에게 부탁을 요청할 수 있는 도와주세요 게시판  
+---  
+### C. 프로필 기능
+<img src="/uploads/0f3c91d0660a2b5d4cada4e013e19286/스크린샷_2021-08-18_오후_4.32.36.png" width="300" hegiht="300"/>
+
+> 내 프로필에서 나의 정보와 내가 쓴 글, 북마크 한 글 확인 가능  
+---
+### D. 팔로우/언팔로우 기능  
+---
+### E. 알림 기능 
+<img src="/uploads/6f7e318eace5de84949cb3446504d861/스크린샷_2021-08-18_오후_3.10.39.png" width="300" hegiht="300"/>
+
+> 다른 유저가 나의 글을 좋아요, 북마크를 하거나 댓글을 달면 알림 수신  
+---  
+### F. 클로저봇 알림 기능 
+<img src="/uploads/1aa71ce8bdbcd8a8ca16f4a9f4322507/클로저봇알림_매주.png" width="300" hegiht="300"/>
+<img src="/uploads/5f61cfe3a2e61f05dc2884eebf707c53/클로저봇알림_매월.png" width="300" hegiht="300"/>
+
+> 클로저봇 알림을 통해 매주, 매월 해야 하는 일정을 적어  
+<img src="/uploads/360d6591dd9557abd4d74369861f4681/클로저봇알림.png" width="300" hegiht="300"/>
+
+> 알림 수신 가능  
+---  
+### G. DM 기능  
 ## 6. 발전방향
 
 > 여기에는 저희가 하지 못했거나, 이런 걸 더 추가하면 좋겠다! 하는 기능들을 넣으면 좋을거 같아요

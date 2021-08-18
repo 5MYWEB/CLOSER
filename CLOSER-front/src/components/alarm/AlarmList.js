@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AlarmItem from './AlarmItem';
-import { getAlarmList } from '../../modules/user';
+import { getAlarmList, getUnreadAlram } from '../../modules/user';
 import './AlarmList.css';
 import { RippleButton } from '../../styles/index';
 
@@ -13,12 +13,9 @@ function AlarmList({match}) {
   const dispatch = useDispatch();
 
   const { userId } = useSelector((state) => state.user.userInfo)
-  const { alarmList } = useSelector((state) => state.user)
+  const { alarmList, unreadAlarmCount } = useSelector((state) => state.user)
 
   const [ unreadList, setUnreadList ] = useState([])
-
-  const [ unreadCount, setUnreadCount ] = useState(null)
-  
 
 
   useEffect(() => {
@@ -33,7 +30,7 @@ function AlarmList({match}) {
     })
   
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [unreadCount])
+  }, [unreadAlarmCount])
 
   useEffect(() => {
     if(alarmList !== null){
@@ -47,7 +44,7 @@ function AlarmList({match}) {
       userId: userId
     })
     .then((res) => {
-      setUnreadCount(res.data.countAlarm)
+      dispatch(getUnreadAlram(res.data.countAlarm))
     })
     .catch((err) => {
       console.log(err)

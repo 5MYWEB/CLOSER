@@ -1,31 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import axios from 'axios';
 import { RippleTabItem2 } from '../../styles/index';
 import './AlarmNavbar.css';
 import '../../styles/theme.css'
 
 function AlarmNavbar({history}) {
 
-  const { alarmList, userInfo } = useSelector((state) => state.user);
-  const [ unreadCount, setUnreadCount ] = useState(0);
+  const { unreadAlarmCount } = useSelector((state) => state.user);
   const [nowTab, setNowTab] = useState('/alarm/unread/')
-
-  useEffect(() => {
-    // 안읽은 알림 개수
-    axios.post(`http://localhost:8080/alarm/unreadCount`, {
-      userId: userInfo.userId
-    })
-    .then((res) => {
-      setUnreadCount(res.data.countAlarm)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [alarmList])
+  // const unreadCountPill =div <span className="badge rounded-pill bg-danger m-1 alarm-fixed">{unreadCount}</span>
 
   const children = [
     ['미확인', '전체'],
@@ -40,11 +24,10 @@ function AlarmNavbar({history}) {
     setNowTab(e.target.getAttribute('addr'))
   }
 
-
   return(
   <div className="tabs-wrapper2">
-    { unreadCount > 0 &&
-      <span className="badge rounded-pill bg-danger m-1 alarm-fixed">{unreadCount}</span>
+    { unreadAlarmCount > 0 &&
+      <span className="badge rounded-pill bg-danger m-1 alarm-fixed">{unreadAlarmCount}</span>
     }
     <nav className="tabs">
       <RippleTabItem2 cclass={nowTab === children[1][0]? "tab is-current":"tab"} children={children[0][0]} onClick={onClickTap} addr={children[1][0]} />
@@ -52,8 +35,6 @@ function AlarmNavbar({history}) {
       <div className="nav-underline2"></div> 
     </nav>
   </div>
-
-
   )
 }
 

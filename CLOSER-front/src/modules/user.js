@@ -129,7 +129,11 @@ export const uploadProfileImg = () => ({
         ...state,
         isLoggedIn: false,
         userToken: null,
-        decodedToken: null,
+        decodedToken: {
+          sub: null,
+          exp: null,
+          user_id: null,
+        },
         userInfo: {
           userId: '',
           nickname: '',

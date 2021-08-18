@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { likeBoard } from '../../modules/board';
@@ -15,9 +15,11 @@ import '../../styles/theme.css';
 const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
 // function NewsfeedItem({ board }, ref) {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // 현재 로그인한 사용자의 아이디 가져오기
   const { userId } = useSelector((state) => state.user.userInfo);
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   // 해당 글 쓴 사람 정보
   const [writerInfo, setWriterInfo] = useState('')
@@ -141,6 +143,11 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
 
   // 좋아요 버튼을 눌렀을 때
   const onClickLike = () => {
+    if(!isLoggedIn){
+      setTimeout(() => {
+        history.push('/about')  
+      }, 350);
+    }
     axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
       kind_pk: 2,
       userId: userId,
@@ -157,6 +164,11 @@ const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
 
   // 북마크 버튼을 눌렀을 때
   const onClickBookmark = () => {
+    if(!isLoggedIn){
+      setTimeout(() => {
+        history.push('/about')  
+      }, 350);
+    }
     axios.post(`http://localhost:8080/board/${board.board_pk}/info`, {
       kind_pk: 3,
       userId: userId,

@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import AWS from 'aws-sdk';
-import { getMyInfoAction, uploadProfileImg } from '../../modules/user';
+import { getMyInfoAction } from '../../modules/user';
 import defaultProfile from '../../assets/user-on.svg';
 import { RippleButton, ShakeButton } from '../../styles/index';
 import '../../styles/theme.css'
@@ -185,7 +185,7 @@ const MyProfileUpdate = ({history}) => {
               // s3에 사진이 업로드 되기까지 기다리는 시간
               setTimeout( function () {
                 history.goBack();
-              }, 500);
+              }, 750);
             })
             .catch((err) => {
               console.log(err)

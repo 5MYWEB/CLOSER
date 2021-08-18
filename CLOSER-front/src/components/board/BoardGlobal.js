@@ -70,8 +70,8 @@ function BoardGlobal({ match }) {
           </Container>
           :
           <Container className="px-0">
-            <Row className="g-0 mt-2">
-              이번주 베스트 게시글이 없습니다:(
+            <Row className="g-0 mt-2 text-center">
+              이번주 베스트 게시글이 없습니다 :(
             </Row>
           </Container>
           
@@ -100,7 +100,9 @@ function BoardGlobal({ match }) {
             </div>
             : 
             <div>
-              게시글이 없습니다:(
+              <Row className="g-0 mt-2">
+                게시판이 비어있어요 <br/> 첫 게시물을 남겨보세요!
+              </Row>
             </div>
           }
         </div>
@@ -123,7 +125,7 @@ function BoardGlobal({ match }) {
             : 
             <Container className="px-0">
               <Row className="g-0 mt-2">
-                게시글이 없습니다:(
+                게시판이 비어있어요 <br/> 첫 게시물을 남겨보세요!
               </Row>
             </Container> 
           } 

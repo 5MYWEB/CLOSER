@@ -52,7 +52,8 @@ function BotAlarm( { history }) {
     function checkAll() {
         if (checkExistData(text, '알림 받을 내용을')) {
             return false
-        } else if (nowRadio === 'day') {
+        } 
+        else if (nowRadio === 'day') {
             if (checkExistData(alarmDay, '알림 받을 요일을')) {
                 return false
             }
@@ -68,18 +69,18 @@ function BotAlarm( { history }) {
       // 피드를 제출할때 작동하는 함수
     const onSubmit = (e) => {
         e.preventDefault();
-        if (checkAll() === true) {
+        // if (checkAll() === true) {
             go();
-        }
+        // }
         
 
     };
 
   // 백에 저장하는 메소드
     const go= () => {
-        // console.log("alarmDay: " + alarmDay);
-        // console.log("alarmDate: " + alarmDate);
-            
+        console.log("alarmDay: " + alarmDay);
+        console.log("alarmDate: " + alarmDate);
+            console.log("nowRadio = " + nowRadio )
             if(nowRadio === "date"){
                 axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {
                 userId: userInfo.userId,
@@ -146,6 +147,7 @@ function BotAlarm( { history }) {
                         className="form-check-label col-1 my-auto mx-0"
                         type='radio' 
                         name='dayInput' 
+                        border= '1px solid #5b0a76'
                         defaultValue="null" 
                         checked = {nowRadio==="day"}
                         onChange={onChangeDayRadio}

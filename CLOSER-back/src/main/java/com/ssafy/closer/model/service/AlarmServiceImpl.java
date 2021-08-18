@@ -37,13 +37,13 @@ public class AlarmServiceImpl implements AlarmService {
         return alarmDto.getAlarm_pk();
     }
 
-    @Scheduled(cron ="0 * * * * *") // 매일 0시 실행
+    @Scheduled(cron ="0 0 7 * * *") // 매일 0시 실행
     @Override
     public void alarmBotCreateDay() {
         sqlSession.getMapper(AlarmMapper.class).alarmBotCreateDay();
     }
 
-    @Scheduled(cron ="0 * * * * *")
+    @Scheduled(cron ="0 0 7 * * *")
     @Override
     public void alarmBotCreateDate() {
         sqlSession.getMapper(AlarmMapper.class).alarmBotCreateDate();

@@ -175,11 +175,11 @@
 |GET|  /search/feed/popular                         |[인기순] 뉴스피드 선택 시 
 |GET|    /search/feed/recent                  |[최신순] 뉴스피드 선택 시
 |GET|/search/gboard/popular|[인기순] 자취게시판(GBoard) 선택 시
-|GET|/search/gboard/recent          |                            |[최신순] 자취게시판(GBoard) 선택 시
-|GET|/search/lboard/popular          |                            |[인기순] 지역게시판(LBoard) 선택 시
-|GET|/search/lBoard/recent          |                            |[최신순] 지역게시판(LBoard) 선택 시
-|GET|/search/popular          |                            |[인기순] 전체게시판 선택 시
-|GET|/search/recent          |                            |[최신순] 전체게시판 선택 시
+|GET|/search/gboard/recent          | [최신순] 자취게시판(GBoard) 선택 시
+|GET|/search/lboard/popular          |[인기순] 지역게시판(LBoard) 선택 시
+|GET|/search/lBoard/recent          | [최신순] 지역게시판(LBoard) 선택 시
+|GET|/search/popular          | [인기순] 전체게시판 선택 시
+|GET|/search/recent          | [최신순] 전체게시판 선택 시
 
 
 

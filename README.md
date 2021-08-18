@@ -263,11 +263,13 @@
 > 다른 유저가 나의 글을 좋아요, 북마크를 하거나 댓글을 달면 알림 수신 
 
 ### F. 클로저봇 알림 기능 
-![클로저봇알림_매주](/uploads/1aa71ce8bdbcd8a8ca16f4a9f4322507/클로저봇알림_매주.png)
-![클로저봇알림_매월](/uploads/5f61cfe3a2e61f05dc2884eebf707c53/클로저봇알림_매월.png)
+<!-- ![클로저봇알림_매주](/uploads/1aa71ce8bdbcd8a8ca16f4a9f4322507/클로저봇알림_매주.png) -->
+<img src="/uploads/1aa71ce8bdbcd8a8ca16f4a9f4322507/클로저봇알림_매주.png" width="400" hegiht="400"/>
+<!-- ![클로저봇알림_매월](/uploads/5f61cfe3a2e61f05dc2884eebf707c53/클로저봇알림_매월.png) -->
+<img src="/uploads/5f61cfe3a2e61f05dc2884eebf707c53/클로저봇알림_매월" width="400" hegiht="400"/>
 > 클로저봇 알림을 통해 매주, 매월 해야 하는 일정을 적어 
 
-![클로저봇알림](/uploads/360d6591dd9557abd4d74369861f4681/클로저봇알림.png)
+<img src="/uploads/360d6591dd9557abd4d74369861f4681/클로저봇알림.png" width="400" hegiht="400"/>
 > 알림 수신 가능 
 
 ### G. DM 기능 

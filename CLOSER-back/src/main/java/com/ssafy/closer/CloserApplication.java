@@ -9,12 +9,19 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.annotation.PostConstruct;
 import java.util.Arrays;
+import java.util.TimeZone;
 
 @EnableJpaAuditing
 @SpringBootApplication
 @EnableScheduling
 public class CloserApplication implements WebMvcConfigurer {
+
+    @PostConstruct
+    void started() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(CloserApplication.class, args);
@@ -22,7 +29,6 @@ public class CloserApplication implements WebMvcConfigurer {
 
     @Autowired
     private JwtInterceptor jwtInterceptor;
-
     /**
      * JWTInterceptor를 설치한다.
      */

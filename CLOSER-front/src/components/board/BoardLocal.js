@@ -28,9 +28,16 @@ function BoardGlobal({ match }) {
   return (
     <>
       <div>
-        <div className="ms-3 my-3 fw-bold">
-          내 동네: {userInfo.addr.split(" ").slice(1, 3).join(" ")}
-        </div>
+        { userInfo.isLoggedIn
+          ? 
+          <div className="ms-3 my-3 fw-bold">
+            내 동네: {userInfo.addr.split(" ").slice(1, 3).join(" ")}
+          </div>
+          :
+          <div className="ms-3 my-3 fw-bold">
+            내 동네: 미확인(전체)
+          </div>
+        }
         <div className="fs-3 ms-3 my-3 fw-bold">
           클로저 
           {

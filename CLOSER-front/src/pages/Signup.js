@@ -37,7 +37,7 @@ function SignUp( {history} ) {
       ...userInfo,
       addr: changedAddr
     })
-    console.log(addr)
+    // console.log(addr)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[changedAddr])
 
@@ -233,7 +233,7 @@ function SignUp( {history} ) {
   const signup = (userInfo) => {
     axios.post('http://localhost:8080/user/regist', userInfo )
       .then((response) =>{
-        console.log(response);
+        // console.log(response);
         history.push('/login', 'singed')
       })
     return null

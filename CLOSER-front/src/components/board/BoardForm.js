@@ -78,7 +78,7 @@ const BoardForm = () => {
     })
         .then((res) => {
           dispatch(createBoard())
-          history.push(`/board-detail/${res.data.board_pk}/`, 'created')
+          history.replace(`/board-detail/${res.data.board_pk}/`)
         })
         .catch((err) => {
           console.log(err)
@@ -210,19 +210,19 @@ const BoardForm = () => {
               <InputGroup className="mb-3 d-flex justify-content-between">
                 <div className="form-check form-check-inline">
                   <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio2" value={2} onClick={onChangeTotalNum}/>
-                  <label className="form-check-label mx-1" for="inlineRadio2">2명</label>
+                  <label className="form-check-label mx-1" htmlFor="inlineRadio2">2명</label>
                 </div>
                 <div className="form-check form-check-inline">
                   <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio3" value={3} onClick={onChangeTotalNum}/>
-                  <label className="form-check-label mx-1" for="inlineRadio3">3명</label>
+                  <label className="form-check-label mx-1" htmlFor="inlineRadio3">3명</label>
                 </div>
                 <div className="form-check form-check-inline">
                   <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio4" value={4} onClick={onChangeTotalNum}/>
-                  <label className="form-check-label mx-1" for="inlineRadio4">4명</label>
+                  <label className="form-check-label mx-1" htmlFor="inlineRadio4">4명</label>
                 </div>
                 <div className="form-check form-check-inline">
                   <input className="form-check-input" type="radio" name="totalNum" id="inlineRadio5" value={5} onClick={onChangeTotalNum}/>
-                  <label className="form-check-label mx-1" for="inlineRadio5">5명</label>
+                  <label className="form-check-label mx-1" htmlFor="inlineRadio5">5명</label>
                 </div>
               </InputGroup>
             </div>

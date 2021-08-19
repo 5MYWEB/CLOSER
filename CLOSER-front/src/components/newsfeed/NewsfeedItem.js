@@ -12,7 +12,7 @@ import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/fre
 import '../../styles/theme.css';
 
 
-const NewsfeedItem = React.forwardRef(({ board, name }, ref) => {
+const NewsfeedItem = React.forwardRef(({ board, name, key }, ref) => {
 // function NewsfeedItem({ board }, ref) {
   const dispatch = useDispatch();
   const history = useHistory();

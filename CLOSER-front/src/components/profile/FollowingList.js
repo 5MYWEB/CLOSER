@@ -39,7 +39,7 @@ const FollowingList = ({match}) => {
             );
           })}
         </div> :
-        <div className="g-0 align-items-center mx-5 my-2 fs-4">
+        <div className="g-0 align-items-center text-center pt-5 mx-5 my-2 fs-4">
           아무도 팔로우하지 않고 있어요:(
         </div> }
     </>

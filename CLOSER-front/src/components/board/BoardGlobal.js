@@ -4,7 +4,9 @@ import axios from 'axios'
 import { getBoardList, getWeekBestList, getBestList } from '../../modules/board';
 import BoardWeekBestItem from './BoardWeekBestItem';
 import BoardItem from './BoardItem';
+import { RippleButton } from '../../styles/index';
 import { Row, Col, Container } from 'react-bootstrap';
+
 
 function BoardGlobal({ match }) {
 
@@ -44,7 +46,9 @@ function BoardGlobal({ match }) {
   }, [boardCreated, boardDeleted, boardUpdated, name])
 
   const onClickToggle = () => {
-    setToggle(!toggle)
+    setTimeout( function () {
+      setToggle(!toggle)
+    }, 250);
   }
 
   return (
@@ -85,7 +89,7 @@ function BoardGlobal({ match }) {
           {/* 토글 버튼 */}
           <div className="fs-3 d-flex justify-content-between align-items-center">
             <span className="ms-3 fw-bold"><span className="fw-bolder" style={{color: "#5552FF"}}>최신</span> {name === 'recipe' ? '레시피' : name ==='tip' ? '자취 꿀팁' : name === 'deco' ? '홈데코' : '' }</span>
-            <button className="ripple-button cbtn cbtn-sm cbtn-primary" onClick={onClickToggle}>인기순</button>
+            <RippleButton cclass="cbtn cbtn-sm cbtn-primary" onClick={onClickToggle} children="인기순" />
           </div>
           
           {/* 목록이 비어있지 않다면 목록을 불러옴*/}
@@ -111,7 +115,7 @@ function BoardGlobal({ match }) {
           {/* 토글 버튼 */}
           <div className="fs-3 d-flex justify-content-between align-items-center">
             <span className="ms-3 fw-bold"><span className="fw-bolder" style={{color: "#5552FF"}}>인기</span> {name === 'recipe' ? '레시피' : name ==='tip' ? '자취 꿀팁' : name === 'deco' ? '홈데코' : '' }</span>
-            <button className="ripple-button cbtn cbtn-sm cbtn-primary" onClick={onClickToggle}>최신순</button>
+            <RippleButton cclass="cbtn cbtn-sm cbtn-primary" onClick={onClickToggle} children="최신순" />
           </div>
           {/* 피드가 비어있지 않다면 피드목록을 불러옴*/}
           {boardList.length !== 0 ? 

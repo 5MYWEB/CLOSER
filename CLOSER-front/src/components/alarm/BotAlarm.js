@@ -6,12 +6,12 @@ import { RippleButton } from '../../styles/index';
 import '../../styles/theme.css'
 
 
-function BotAlarm() {
+function BotAlarm({ history }) {
     const { userInfo } = useSelector((state) => state.user);
     const [text, setText] = useState('');
     const [alarmDay, setAlarmDay] = useState('')
     const [alarmDate, setAlarmDate] = useState('')
-    const [nowRadio, setNowRadio] =  useState('day');
+    const [nowRadio, setNowRadio] =  useState('date');
     let dummyDate = "2021-08-";
 
     const selectInputs = useRef();
@@ -41,7 +41,6 @@ function BotAlarm() {
 
     //데이터 빈 값 검사
     const checkExistData = (value, name) => {
-        // console.log(value)
         if (value === '') {
             alert(name + ' 입력해주세요!')
             return false;
@@ -50,15 +49,15 @@ function BotAlarm() {
     }
 
     function checkAll() {
-        if (checkExistData(text, '알림 받을 내용을')) {
+        if (!checkExistData(text, '알림 받을 내용을')) {
             return false
         } 
-        else if (nowRadio === 'day') {
-            if (checkExistData(alarmDay, '알림 받을 요일을')) {
+        if (nowRadio === 'day') {
+            if (!checkExistData(alarmDay, '알림 받을 요일을')) {
                 return false
             }
         } else if (nowRadio === 'date') {
-            if (checkExistData(alarmDate, '알림 받을 날짜를')) {
+            if (!checkExistData(alarmDate, '알림 받을 날짜를')) {
                 return false
             }
         }
@@ -69,16 +68,19 @@ function BotAlarm() {
     // 클로저봇 알림 제출할때 작동하는 함수
     const onSubmit = (e) => {
         e.preventDefault();
-        if (checkAll() === true) {
-            go();
-        }
+        setTimeout(() => {
+            if (checkAll() === true) {
+                go();
+            }
+        }, 350);
+
     };
 
   // 백에 저장하는 메소드
     const go= () => {
-        console.log("alarmDay: " + alarmDay);
-        console.log("alarmDate: " + alarmDate);
-        console.log("nowRadio = " + nowRadio )
+        // console.log("alarmDay: " + alarmDay);
+        // console.log("alarmDate: " + alarmDate);
+        // console.log("nowRadio = " + nowRadio )
             if(nowRadio === "date"){
                 axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {
                 userId: userInfo.userId,
@@ -86,7 +88,8 @@ function BotAlarm() {
                 alarm_day: alarmDay
             })
             .then((res) => {
-                console.log(res);
+                window.alert('알림이 설정되었습니다')
+                history.go(-1)
             })
             .catch((err) => {
                 console.log(err)
@@ -99,9 +102,9 @@ function BotAlarm() {
                     alarm_date : dummyDate+alarmDate
                 })
                 .then((res) => {
-                    console.log(res);
-                    // window.alert('알림이 설정되었습니다')
-                    // history.goback()
+                    // console.log(res);
+                    window.alert('알림이 설정되었습니다')
+                    history.go(-1)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -134,30 +137,30 @@ function BotAlarm() {
                     <input
                     className="form-check-label col-1 my-auto mx-0"
                     type='radio' 
-                    name='dayInput' 
+                    name='dateInput' 
                     border= '1px solid #5b0a76'
                     defaultValue="null" 
-                    checked = {nowRadio==="day"}
-                    onChange={onChangeDayRadio}
-                    ref={dayRadioBtn}
+                    checked = {nowRadio==="date"}
+                    onChange={onChangeDateRadio}
+                    ref={dateRadioBtn}
                     /> 
-                    <label className="col-3" htmlFor="dayRadio">매월</label>
+                    <label className="col-3" htmlFor="dateRadio">매월</label>
                 </div>
                 <div className="d-flex row form-check col-5">
                     <input
                     className="form-check-label col-1 my-auto mx-0"
                     type='radio' 
-                    name='dateInput' 
+                    name='dayInput' 
                     defaultValue="null" 
-                    checked = {nowRadio==="date"}
-                    onChange={onChangeDateRadio}
-                    ref={dateRadioBtn}
+                    checked = {nowRadio==="day"}
+                    onChange={onChangeDayRadio}
+                    ref={dayRadioBtn}
                     />
-                    <label className="col-3" htmlFor="dateRadio">매주</label>
+                    <label className="col-3" htmlFor="dayRadio">매주</label>
                 </div>
             </div>
 
-            {nowRadio === 'day'
+            {nowRadio === 'date'
             ?                 
             <div className="d-flex justify-content-center align-items-end mx-0 my-4">
                 <select id="alarmDate" name="alarmDate" value={alarmDate} onChange = {onChangeDate} ref={selectInputs}>

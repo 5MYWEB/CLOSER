@@ -15,7 +15,6 @@ const BackButton = ({ history, cclass, wrapclass}) => {
       // 게시글 작성과 같은 일을 했다면 
       // 제출 시 created state를 달아 보냈으므로 이를 확인해서 다시 form으로 가지 않도록 두개 뒤로 이동
       if (history.location.state === 'created') {
-        console.log('?')
         history.go(-2)
       } else if (history.location.state === 'profile') {
         history.go(-3)

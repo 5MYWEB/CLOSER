@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategory, getSearchedList, naverCheck, getSearchedNaverList } from '../../modules/search';
 import { Collapse, FormSelect } from 'react-bootstrap';
+import { RippleButton } from '../../styles/index';
 import './SearchBar.css';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -47,46 +48,54 @@ const SearchBar = () => {
 
   // 검색 버튼 클릭 시
   const onClickSearch = () => {
+
+    setTimeout( function () {
     // 빈값인지 검사
-    if(text === '') {
-      alert('내용을 입력하세요')
-      return false
-    }
-
-    // 두글자 이상인지 검사
-    if(text.length < 2){
-      alert('2글자 이상 입력하세요')
-      return false
-    }
-
-    // 검색 실행
-    axios.get(`http://localhost:8080/search${categorySearchUrl}`, {
-      params: {
-        choice: choice,
-        keyword: text,
+      if(text === '') {
+        alert('내용을 입력하세요')
+        return false
       }
-    })
-    .then((res) => {
-      dispatch(getSearchedList(res.data))
-      setText('')
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-    
-    if (naverChecked === true) {
-      axios.get(`http://localhost:8080/search`, {
+
+      // 두글자 이상인지 검사
+      if(text.length < 2){
+        alert('2글자 이상 입력하세요')
+        return false
+      }
+
+      // 검색 실행
+      axios.get(`http://localhost:8080/search${categorySearchUrl}`, {
         params: {
+          choice: choice,
           keyword: text,
         }
       })
       .then((res) => {
-        dispatch(getSearchedNaverList(res.data.items))
+        dispatch(getSearchedList(res.data))
+        setText('')
       })
       .catch((err) => {
         console.log(err)
       })
-    }
+      
+      if (naverChecked === true) {
+        axios.get(`http://localhost:8080/search`, {
+          params: {
+            keyword: text,
+          }
+        })
+        .then((res) => {
+          dispatch(getSearchedNaverList(res.data.items))
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }
+
+
+    }, 350);
+
+    
+
   }
 
   return (
@@ -98,14 +107,16 @@ const SearchBar = () => {
           {categoryName}에서 검색하기
         </div>
         <div className="col-4 px-0">
-          <button
+          <RippleButton onClick={() => setOpen(!open)} aria-controls="example-collapse-text"
+            aria-expanded={open} cclass="cbtn cbtn-sm cbtn-primary search-category-collapse" children="카테고리 선택"/>
+          {/* <button
             onClick={() => setOpen(!open)}
             aria-controls="example-collapse-text"
             aria-expanded={open}
             className="search-category-collapse"
           >
             카테고리 선택
-          </button>
+          </button> */}
         </div>
 
         {/* 카테고리들 */}
@@ -238,9 +249,9 @@ const SearchBar = () => {
             onChange={onChangeInput}/>
         </div>
         <div className="col-1 px-0">
-          <button onClick={onClickSearch} className="searchbar-button">
+          <RippleButton onClick={onClickSearch} cclass="searchbar-button ms-1">
             <FontAwesomeIcon icon={faSearch} className="search-icon"/>
-          </button>
+          </RippleButton>
         </div>
       </div>
       <hr />

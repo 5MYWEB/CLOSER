@@ -37,9 +37,9 @@ function BoardSubNavbar2({match, history}) {
           <div className="nav-underline"></div> 
         </nav>
 
-        {/* 정확히 /alarm으로 들어오면, /alarm/unread로 리다이렉트해줌 */}
+        {/* 기본 설정 */}
         {match.isExact && 
-          <Redirect to="/board/subnav2/getter" />
+          <Redirect to={`${boardNavbar2}`} />
         }
       </div>
   );

@@ -37,7 +37,7 @@ function BoardSubNavbar1({match, history}) {
 
       {/* 기본 설정 */}
       {match.isExact && 
-        <Redirect to="/board/subnav1/tip" />
+        <Redirect to={`${boardNavbar1}`} />
       }
     </div>
   );

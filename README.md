@@ -307,53 +307,55 @@
 
 + 피드 목록 
 > Near : 나와 같은 동네 유저가 쓴 글 
-<img src="assets/피드_최신.png" width="300" hegiht="300"/>    
+<img src="assets/feed_near.png" width="300" hegiht="300"/>    
 
 > Favorite : 내가 좋아요 한 유저가 쓴 글 
-<img src="assets/피드_팔로우.png" width="300" hegiht="300"/>    
+<img src="assets/feed_favorite.png" width="300" hegiht="300"/>    
 
 > All : 동네 구분 없이 모든 유저가 쓴 글 
-<img src="assets/피드_전체.png" width="300" hegiht="300"/>       
+<img src="assets/feed_all.png" width="300" hegiht="300"/>       
 
 + 피드 작성 
-<img src="assets/피드_글작성.png" width="300" hegiht="300"/>
+<img src="assets/feed_write.png" width="300" hegiht="300"/>
 
 > 피드 글작성    
-<img src="assets/피드_글완성.png" width="300" hegiht="300"/>
+<img src="assets/feed_write_after.png" width="300" hegiht="300"/>
 
 > 피드 글 작성 완료  
 ---  
 ### B. 게시판 기능  
 + 자취 게시판 : 자취 꿀팁을 서로 공유할 수 있는 게시판    
 + 지역 게시판 : 우리 지역 내에서 모임을 모집할 수 있는 게시판 
-![지역게시판_공동구매.png](assets/지역게시판_공동구매.png)
+<img src="assets/lBoard_purchase.png" width="300" hegiht="300"/>
 
 > 1인 가구가 사용하기엔 많은 물건을 같은 동네 자취생들과 나눌 수 있는 공동구매 게시판    
-<img src="assets/alarm.png" width="300" hegiht="300"/>
 
-> 같은 동네 자취생들끼리 원하는 모임을 개설하고 인원을 모집할 수 있는 클로저모임 게시판    
-<img src="assets/지역게시판_도와주세요.png" width="300" hegiht="300"/>
+<img src="assets/lBoard_group.png" width="300" hegiht="300"/>
+
+> 같은 동네 자취생들끼리 원하는 모임을 개설하고 인원을 모집할 수 있는 클로저모임 게시판  
+
+<img src="assets/lBoard_sos.png" width="300" hegiht="300"/>
 
 > 급하게 필요한 게 있거나 위험한 상황일 때 주변의 자취생들에게 부탁을 요청할 수 있는 도와주세요 게시판  
 ---  
 ### C. 프로필 기능
-<img src="/uploads/0f3c91d0660a2b5d4cada4e013e19286/스크린샷_2021-08-18_오후_4.32.36.png" width="300" hegiht="300"/>
+<!-- <img src="/uploads/0f3c91d0660a2b5d4cada4e013e19286/스크린샷_2021-08-18_오후_4.32.36.png" width="300" hegiht="300"/> -->
 
 > 내 프로필에서 나의 정보와 내가 쓴 글, 북마크 한 글 확인 가능  
 ---
 ### D. 팔로우/언팔로우 기능  
 ---
 ### E. 알림 기능 
-<img src="/uploads/6f7e318eace5de84949cb3446504d861/스크린샷_2021-08-18_오후_3.10.39.png" width="300" hegiht="300"/>
+<!-- <img src="/uploads/6f7e318eace5de84949cb3446504d861/스크린샷_2021-08-18_오후_3.10.39.png" width="300" hegiht="300"/> -->
 
 > 다른 유저가 나의 글을 좋아요, 북마크를 하거나 댓글을 달면 알림 수신  
 ---  
 ### F. 클로저봇 알림 기능 
-<img src="assets/클로저봇알림_매주.png" width="300" hegiht="300"/>
-<img src="assets/클로저봇알림_매월.png" width="300" hegiht="300"/>
+<img src="assets/botAlarm_day.png" width="300" hegiht="300"/>
+<img src="assets/botAlarm_date.png" width="300" hegiht="300"/>
 
 > 클로저봇 알림을 통해 매주, 매월 해야 하는 일정을 적어  
-<img src="assets/클로저봇알림.png" width="300" hegiht="300"/>
+<img src="assets/botAlarm.png" width="300" hegiht="300"/>
 
 > 알림 수신 가능  
 ---  

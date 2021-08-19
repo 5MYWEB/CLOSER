@@ -7,7 +7,7 @@ const initialState = {
   boardUpdated: false,
   boardDeleted: false,
   boardLiked: false,
-  newsfeedNavbar: '/newsfeed/near',
+  newsfeedNavbar: '/newsfeed/total',
   boardNavbar0: '/board/subnav1/',
   boardNavbar1: '/board/subnav1/tip',
   boardNavbar2: '/board/subnav2/getter',
@@ -26,6 +26,8 @@ const CHANGE_NEWSFEED_NAVBAR = 'CHANGE_NEWSFEED_NAVBAR';
 const CHANGE_NAVBAR0 = 'CHANGE_NAVBAR0';
 const CHANGE_NAVBAR1 = 'CHANGE_NAVBAR1';
 const CHANGE_NAVBAR2 = 'CHANGE_NAVBAR2';
+const FOR_LOGIN_USER = 'FOR_LOGIN_USER';
+const FOR_LOGOUT_USER = 'FOR_LOGOUT_USER';
 
 /* 액션 생성함수 만들기 */
 export const createBoard = () => {
@@ -108,6 +110,18 @@ export const changeNavbar2 = (data) => {
   }
 };
 
+export const forLoginUser = () => {
+  return {
+    type: FOR_LOGIN_USER,
+  }
+};
+
+export const forLogoutUser = () => {
+  return {
+    type: FOR_LOGOUT_USER,
+  }
+};
+
 
 /* 리듀서 선언 */
 const reducer = (state = initialState, action) => {
@@ -171,6 +185,20 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         boardNavbar2: action.data,
+      };
+    case FOR_LOGIN_USER:
+      return {
+        ...state,
+        newsfeedNavbar: '/newsfeed/near',
+        boardNavbar0: '/board/subnav1/',
+        boardNavbar1: '/board/subnav1/tip',
+      };
+    case FOR_LOGOUT_USER:
+      return {
+        ...state,
+        newsfeedNavbar: '/newsfeed/total',
+        boardNavbar0: '/board/subnav1/',
+        boardNavbar1: '/board/subnav1/tip',
       };
     default:
       return state;

@@ -309,6 +309,10 @@ input::placeholder {
   pointer-events: none;
 }
 
+.nav-icon {
+  height: 10vh;;
+  background-color: #ECECFF;
+}
 
 
 

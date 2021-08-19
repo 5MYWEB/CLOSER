@@ -1,10 +1,11 @@
 // About.js
-import React, { useRef } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import '../styles/theme.css'
 import './About.css'
 import { RippleButton } from '../styles/index';
 // import ChannelTalk  from '../pages/ChannelTalk';
+import { forLogoutUser } from '../modules/board'; 
 
 import closerbot from '../assets/closerbot.png'
 import newsfeedOn from '../assets/newsfeed-on.svg'
@@ -17,16 +18,25 @@ import messagesOn from '../assets/messages-on.svg'
  */
 function About({ history }){
 
+  const dispatch = useDispatch();
+
    //채널 톡 고유키, 로그인 하지 않아도 이용할 수 있도록 설정
     // ChannelTalk.boot({
     // "pluginKey": "dc94467c-67fb-4db2-8837-0d7f05ee1e96" 
     // });
 
-    // const goToNewsfeed = () => {
-    //   setTimeout(function(){
-    //     history.push('/newsfeed')
-    //   },350)
-    // }
+    useEffect(() => {
+      dispatch(forLogoutUser())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+
+    const goToNewsfeed = () => {
+      setTimeout(function(){
+        history.push('/newsfeed')
+      },350)
+    }
+
     const anchor = useRef();
 
     const {isLoggedIn, userInfo} = useSelector((state) => state.user);
@@ -58,16 +68,13 @@ function About({ history }){
     return (
       <div className="page-wrapper">
         <section>
-          <h2>"<span className="text-main">클로저</span>에 오신 것을 환영합니다"</h2>
+          <h2 className="welcome-text">"<span className="text-main">클로저</span>에 오신 것을 환영합니다"</h2>
           <div className="center">
             <div className="circle pulse secondary d-flex justify-content-center align-items-center">
               <img src={closerbot} alt="closerbot" className="moving avatar closerbot-about" />
             </div>
           </div>
 
-          {/* <div className="d-flex flex-column justify-content-center align-items-center">
-            <RippleButton cclass="cbtn cbtn-lg cbtn-primary" children="둘러보기" onClick={goToNewsfeed}/>
-          </div> */}
           { isLoggedIn
             ?
               <div className="d-flex flex-column justify-content-center align-items-center">
@@ -76,6 +83,7 @@ function About({ history }){
               </div>
             :
               <div className="d-flex flex-column justify-content-center align-items-center">
+                <RippleButton cclass="cbtn cbtn-lg cbtn-light" children="둘러보기" onClick={goToNewsfeed}/>
                 <RippleButton cclass="cbtn cbtn-lg cbtn-primary" children="회원가입" onClick={goToSignup}/>
                 <RippleButton cclass="cbtn cbtn-lg cbtn-secondary" children="로그인" onClick={goToLogin}/>
               </div>

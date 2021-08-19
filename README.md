@@ -271,19 +271,6 @@
 ## 5. 세부사항
 > 시연시나리오는 exec 폴더 밑에서 진행할거에요!! 어차피 같은 깃안에 있으니까 굳이 여기 다시 안넣어도 될거 같긴합니다. 그러나 뭔가 지금 세부사항할때 사진있으면 좋을거 같다 하면 여기에 기능에 관련된 사진은 넣으면 좋을거 같아요!!!!!
 
->기능들 여기서 대충 나눌게요 일단!! 추가할거 추가하고 바꿀꺼 바꿔주세요
->
->- 프로필 기능
->    - 뱃지 (한달에 한번 업데이트)
->    - 프로필 url 공유
-
->- 게시판
->  - 덤프 데이터
-
->
->- 검색 기능
-
-
 ### A. 뉴스피드 기능 
 
 + 피드 목록 
@@ -345,9 +332,18 @@
 
 ---  
 ### D. 프로필 기능
-<!-- <img src="/uploads/0f3c91d0660a2b5d4cada4e013e19286/스크린샷_2021-08-18_오후_4.32.36.png" width="300" hegiht="300"/> -->
+
 
 > 내 프로필에서 나의 정보와 내가 쓴 글, 북마크 한 글 확인 가능  
+
+<img src="assets/badge_no.png" width="300" hegiht="300"/>
+
+> 글 개수가 일정 수준 도달 하지 못하면, 뱃지 부여 X
+
+<img src="assets/badge_yes.png" width="300" hegiht="300"/>
+
+> 글 개수 일정 수준 도달하면, 뱃지 부여 O 
+
 ---
 ### E. 네이버 지도 API를 활용한 위치 변경
 <img src="assets/location_change.png" width="300" hegiht="300"/>
@@ -356,9 +352,21 @@
 
 ---
 ### F. 팔로우/언팔로우 기능  
+<img src="assets/follow_before.png" width="300" hegiht="300"/>
+
+> 다른 유저 팔로우 하기 전 모습 
+
+<img src="assets/follow_after.png" width="300" hegiht="300"/>
+
+> 팔로우 시작 
+
+<img src="assets/follower_list.png" width="300" hegiht="300"/>
+
+> 팔로워 리스트 변경 
+
 ---
 ### G. 알림 기능 
-<!-- <img src="/uploads/6f7e318eace5de84949cb3446504d861/스크린샷_2021-08-18_오후_3.10.39.png" width="300" hegiht="300"/> -->
+<img src="assets/alarm_my.png" width="300" hegiht="300"/>
 
 > 다른 유저가 나의 글을 좋아요, 북마크를 하거나 댓글을 달면 알림 수신  
 ---  

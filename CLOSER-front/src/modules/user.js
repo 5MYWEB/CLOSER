@@ -203,13 +203,11 @@ export const changeOtherNavbar = (data) => ({
         decodedToken: refreshedDecodedToken,
       }
       case CHANGE_USER_NAVBAR:
-        console.log(action.data)
         return {
           ...state,
           myNavbar: action.data,
         };
       case CHANGE_OTHER_NAVBAR:
-        console.log(action.data)
         return {
           ...state,
           yourNavbar: action.data,

@@ -394,15 +394,18 @@ const BoardDetail = ({match}) => {
                         </div>
                     :
                         <div>
-                    <div className="button-group mt-0">
-                      <RippleButton cclass="cbtn cbtn-lg cbtn-secondary" onClick={onClickJoin} children="빠지기"/>
-                      {/* <button className="ripple-button cbtn cbtn-lg cbtn-secondary" onClick={onClickJoin} >빠지기</button> */}
-                    </div>
+                          <div className="button-group mt-0">
+                            <RippleButton cclass="cbtn cbtn-lg cbtn-secondary" onClick={onClickJoin} children="빠지기"/>
+                            {/* <button className="ripple-button cbtn cbtn-lg cbtn-secondary" onClick={onClickJoin} >빠지기</button> */}
+                          </div>
                           <div className="button-group mt-0">
                             <RippleButton cclass="cbtn cbtn-lg cbtn-primary" onClick={GroupChat} children="그룹채팅 참여하기"/>
                           </div>
                         </div>
-                  : ''
+                  : 
+                    <div className="button-group mt-0">
+                      <RippleButton cclass="cbtn cbtn-lg cbtn-primary" onClick={GroupChat} children="그룹채팅 참여하기"/>
+                    </div>
                 }
               </Row>
             </Card>

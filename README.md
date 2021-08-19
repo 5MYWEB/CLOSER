@@ -332,7 +332,7 @@
 
 ---  
 ### D. 프로필 기능
-
+<img src="assets/myprofile.png" width="300" hegiht="300"/>
 
 > 내 프로필에서 나의 정보와 내가 쓴 글, 북마크 한 글 확인 가능  
 
@@ -381,9 +381,13 @@
 > 알림 수신 가능  
 ---  
 ### I. DM 기능  
+<img src="assets/dm_otherprofile.png" width="300" hegiht="300"/>
+
+> 상대방 프로필에서 DM 버튼 눌렀을 때
+
 <img src="assets/dm_one.png" width="300" hegiht="300"/>
 
-> 다른 유저와 1:1 대화 기능 (상대방 프로필에서 dm 버튼 눌렀을 시)
+> 다른 유저와 1:1 대화 기능 
 
 <img src="assets/lBoard_groupboard.png" width="300" hegiht="300"/>
 

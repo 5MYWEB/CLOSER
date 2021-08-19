@@ -57,15 +57,15 @@
 > 여기서는 폴더 구조 보여주면 돼요! (폴더 구조 캡쳐 등으로 하면 될듯)
 
 #### 1. Back-End
-<img src="/uploads/1e09506c9adf5a3aa40a37539ebba594/스크린샷_2021-08-18_오후_10.21.30.png" width="700" hegiht="700"/>
+<img src="/assets/closer_back" width="700" hegiht="700"/>
 
 #### 2. Front-End
-<img src="/uploads/6a01128cf88d6da8140d41d073f7e6c9/스크린샷_2021-08-18_오후_10.21.57.png" width="700" hegiht="700"/>
+<img src="/assets/closer_front" width="700" hegiht="700"/>
 
 ### B. Model
 
 > 데이터베이스에서 모델의 ERD는 아래와 같습니다.
-<img src="/uploads/b2f4e04638ccc71bbcb4b4e05f471ab9/스크린샷_2021-08-18_오후_11.09.20.png" width="700" hegiht="700"/>
+<img src="/assets/closer_erd" width="700" hegiht="700"/>
 
 
 

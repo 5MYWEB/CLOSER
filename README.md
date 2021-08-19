@@ -80,14 +80,6 @@
 
 #### 1. Back-End
 
-> 스웨거에 있는 친구들!!! 
->
-> 웬만하면 관련있는 애들끼리 같이 묶어서 해주세요!!
->
-> 회원가입 다 쓰고, 그 다음 로그인 관련된 애들 쓰고. 그 다음 로그아웃 관련된 애들 쓰고 이런식으로??
->
-> board 같은 경우는 리스트 조회 쓰고, 상세 조회 쓰고, U D 이런 순으로
-
 ##### a. User
 
 >- User 컨트롤러의 모든 URL 패턴은 /user 로 시작합니다.
@@ -112,7 +104,7 @@
 ##### b. Follow
 
 > - Follow 컨트롤러의 모든 URL 패턴은 /follow 로 시작합니다.
-> - 0000000000000 등 계정 팔로우와 관련된 url입니다.
+> - 팔로잉, 팔로워와 관련된 url입니다.
 
 | HTTP verb | URL 패턴 |            설명            |
 | :-------: | :------: | :------------------------: |
@@ -123,7 +115,7 @@
 ##### c. Alarm
 
 > - Alarm컨트롤러의 모든 URL 패턴은 /alarm로 시작합니다.
-> - 0000000000000 등 알람 기능과 관련된 url입니다.
+> - 클로저 봇, 팔로우/댓글/좋아요 알림 등 알람 기능과 관련된 url입니다.
 
 | HTTP verb | URL 패턴 |            설명            |
 | :-------: | :------: | :------------------------: |
@@ -135,7 +127,7 @@
 ##### d. Board
 
 > - Board컨트롤러의 모든 URL 패턴은 /board로 시작합니다.
-> - 0000000000000 등 게시판 기능과 관련된 url입니다.
+> - 게시글 CRUD, 댓글 CRD 등 게시판 기능과 관련된 url입니다.
 
 | HTTP verb | URL 패턴 |            설명            |
 | :-------: | :------: | :------------------------: |
@@ -168,22 +160,21 @@
 ##### e. Search
 
 > - Search컨트롤러의 모든 URL 패턴은 /search로 시작합니다.
-> - 0000000000000 등 게시판 검색 기능과 관련된 url입니다.
+> - 네이버 검색,  게시판 검색  등 검색 기능과 관련된 url입니다.
 
 | HTTP verb | URL 패턴 |            설명            |
 | :-------: | :------: | :------------------------: |
 |   GET    | /search  | 신규 사용자 생성(회원가입) |
 |GET| /search/{kind_pk}/popular         | [인기순] 게시판(GBoard, LBoard) 중 한개 선택 시|
 |GET|/search/{kind_pk}/recent          | [최신순] 게시판(GBoard, LBoard) 중 한개 선택 시                           |
-|GET|  /search/feed/popular                         |[인기순] 뉴스피드 선택 시 
-|GET|    /search/feed/recent                  |[최신순] 뉴스피드 선택 시
-|GET|/search/gboard/popular|[인기순] 자취게시판(GBoard) 선택 시
-|GET|/search/gboard/recent          | [최신순] 자취게시판(GBoard) 선택 시
-|GET|/search/lboard/popular          |[인기순] 지역게시판(LBoard) 선택 시
-|GET|/search/lBoard/recent          | [최신순] 지역게시판(LBoard) 선택 시
-|GET|/search/popular          | [인기순] 전체게시판 선택 시
-|GET|/search/recent          | [최신순] 전체게시판 선택 시
-
+|GET|/search/feed/popular | [인기순] 뉴스피드 선택 시 |
+|GET|/search/feed/recent | [최신순] 뉴스피드 선택 시 |
+|GET|/search/gboard/popular | [인기순] 자취게시판(GBoard) 선택 시 |
+|GET|/search/gboard/recent | [최신순] 자취게시판(GBoard) 선택 시 |
+|GET|/search/lboard/popular | [인기순] 지역게시판(LBoard) 선택 시 |
+|GET|/search/lBoard/recent | [최신순] 지역게시판(LBoard) 선택 시 |
+|GET|/search/popular | [인기순] 전체게시판 선택 시 |
+|GET|/search/recent | [최신순] 전체게시판 선택 시 |
 
 
 #### 2. Front-End
@@ -278,150 +269,133 @@
 
 ### A. 뉴스피드 기능 📘
 
-### 피드 목록 
-<img src="assets/feed_near.png" width="300" hegiht="300"/>
+#### 1. 피드 목록 
 
-​    
+|   종류   |               설명               |                             예시                             |
+| :------: | :------------------------------: | :----------------------------------------------------------: |
+|   NEAR   |   나와 같은 동네 유저가 쓴 글    |  <img src="assets/feed_near.png" width="300" hegiht="300"/>  |
+| FAVORITE |   내가 좋아요 한 유저가 쓴 글    | <img src="assets/feed_favorite.png" width="300" hegiht="300"/> |
+|   ALL    | 동네 구분 없이 모든 유저가 쓴 글 |  <img src="assets/feed_all.png" width="300" hegiht="300"/>   |
 
-> Near : 나와 같은 동네 유저가 쓴 글 
+#### 2. 피드 작성 
 
-<img src="assets/feed_favorite.png" width="300" hegiht="300"/>
-
-​    
-
-> Favorite : 내가 좋아요 한 유저가 쓴 글 
-
-<img src="assets/feed_all.png" width="300" hegiht="300"/>
-
-​       
-
-> All : 동네 구분 없이 모든 유저가 쓴 글 
-
-### 피드 작성 
-
-<img src="assets/feed_write.png" width="300" hegiht="300"/>
-
-> 피드 글작성    
-
-<img src="assets/feed_write_after.png" width="300" hegiht="300"/>
-
-> 피드글 작성 완료 
-
-> ### B. 게시판 기능  
-### 자취 게시판 : 자취 꿀팁을 서로 공유할 수 있는 게시판 🗒
-
-<img src="assets/lBoard_bestboard.png" width="300" hegiht="300"/>
-
-> 좋아요 + 댓글이 많은 순서대로 인기 게시물 
-
-### 지역 게시판 : 우리 지역 내에서 모임을 모집할 수 있는 게시판 🗒
-<img src="assets/lBoard_purchase.png" width="300" hegiht="300"/>
-
-> 1인 가구가 사용하기엔 많은 물건을 같은 동네 자취생들과 나눌 수 있는 공동구매 게시판    
-
-<img src="assets/lBoard_group.png" width="300" hegiht="300"/>
-
-> 같은 동네 자취생들끼리 원하는 모임을 개설하고 인원을 모집할 수 있는 클로저모임 게시판  
-
-<img src="assets/lBoard_sos.png" width="300" hegiht="300"/>
-
-> 급하게 필요한 게 있거나 위험한 상황일 때 주변의 자취생들에게 부탁을 요청할 수 있는 도와주세요 게시판  
+|         순서         |                             예시                             |
+| :------------------: | :----------------------------------------------------------: |
+|   1. 피드 글 작성    | <img src="assets/feed_write.png" width="300" hegiht="300"/>  |
+| 2. 피드 글 작성 완료 | <img src="assets/feed_write_after.png" width="300" hegiht="300"/> |
 
 ---
+
+### B. 게시판 기능  
+
+#### 1. 자취 게시판 : 자취 꿀팁을 서로 공유할 수 있는 게시판 🗒
+
+|    종류    |                             설명                             |                             예시                             |
+| :--------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| 한끼레시피 | 1. 좋아요 + 댓글이 많은 순서대로 인기 게시물 <br />2. 최신순 / 인기순으로 레시피 정보 교환 | <img src="assets/lBoard_bestboard.png" width="300" hegiht="300"/> |
+
+
+
+#### 2. 지역 게시판 : 우리 지역 내에서 모임을 모집할 수 있는 게시판 🗒
+
+|    종류    |                             설명                             |                             예시                             |
+| :--------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+|  공동구매  | 1인 가구가 사용하기엔 많은 물건을 같은 동네 자취생들과 나눌 수 있는 공동구매 게시판 | <img src="assets/lBoard_purchase.png" width="300" hegiht="300"/> |
+| 클로저모임 | 같은 동네 자취생들끼리 원하는 모임을 개설하고 인원을 모집할 수 있는 클로저모임 게시판 | <img src="assets/lBoard_group.png" width="300" hegiht="300"/> |
+| 도와주세요 | 급하게 필요한 게 있거나 위험한 상황일 때 주변의 자취생들에게 부탁을 요청할 수 있는 도와주세요 게시판 | <img src="assets/lBoard_sos.png" width="300" hegiht="300"/>  |
+
+---
+
 ### C. 게시물 검색 기능 + 네이버 검색 활용 🔍
-<img src="assets/search_naver.png" width="300" hegiht="300"/>
 
-> 네이버 검색 기능을 활용한 검색 기능 
+|       기능       |                        설명                        |                             예시                             |
+| :--------------: | :------------------------------------------------: | :----------------------------------------------------------: |
+|   네이버 검색    | 네이버 블로그 검색 기능으로, 포함/미포함 선택 가능 | <img src="assets/search_naver.png" width="300" hegiht="300"/> |
+| 제목 + 내용 검색 | (네이버 검색 기능 미포함) 클로저 게시물 검색 기능  | <img src="assets/search_nonaver.png" width="300" hegiht="300"/> |
+|   닉네임 검색    |      유저 닉네임 검색을 통한 게시물 검색 기능      | <img src="assets/search_nickname.png" width="300" hegiht="300"/> |
 
-<img src="assets/search_nonaver.png" width="300" hegiht="300"/>
 
-> 네이버 검색 기능 미포함 클로저 게시물 검색 기능 
-
-<img src="assets/search_nickname.png" width="300" hegiht="300"/>
-
-> 유저 닉네임 검색을 통한 게시물 검색 기능 
 
 ---
 ### D. 프로필 기능 👤
-<img src="assets/myprofile.png" width="300" hegiht="300"/>
 
-> 내 프로필에서 나의 정보와 내가 쓴 글, 북마크 한 글 확인 가능  
+|             기능             |                             설명                             |                             예시                             |
+| :--------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| 내 피드 / 내 포스트 / 북마크 | 내 프로필에서 나의 정보와 내가 쓴 글, 북마크 한 글 확인 가능 |  <img src="assets/myprofile.png" width="300" hegiht="300"/>  |
+|          뱃지 기능           | **매달 각 자취게시판별로 좋아요 + 댓글을 많이 받은 사람 n명에게 뱃지 제공** <br />- 글 개수가 일정 수준 도달 하지 못하면, 뱃지 부여 X<br />- 글 개수 일정 수준 도달하면, 뱃지 부여 O | <img src="README.assets/badge_no.png" width="300" hegiht="300"/><img src="README.assets/badge_yes.png" width="300" hegiht="300"/> |
 
-<img src="assets/badge_no.png" width="300" hegiht="300"/>
 
-> 글 개수가 일정 수준 도달 하지 못하면, 뱃지 부여 X
-
-<img src="assets/badge_yes.png" width="300" hegiht="300"/>
-
-> 글 개수 일정 수준 도달하면, 뱃지 부여 O 
 
 ---
 ### E. 네이버 지도 API를 활용한 위치 변경 🌏
+
+>동네가 변경되었을 때, 현재 위치를 기반으로 위치 변경 가능 
+
 <img src="assets/location_change.png" width="300" hegiht="300"/>
 
-> 동네가 변경되었을 때, 현재 위치를 기반으로 위치 변경 가능 
+
 
 ---
 ### F. 팔로우/언팔로우 기능 👫 
-<img src="assets/follow_before.png" width="300" hegiht="300"/>
 
-> 다른 유저 팔로우 하기 전 모습 
+|               순서               |                             예시                             |
+| :------------------------------: | :----------------------------------------------------------: |
+| 1. 다른 유저 팔로우 하기 전 모습 | <img src="assets/follow_before.png" width="300" hegiht="300"/> |
+|          2. 팔로우 시작          | <img src="assets/follow_after.png" width="300" hegiht="300"/> |
+|   3. 팔로워 리스트에도 추가됨    | <img src="assets/follower_list.png" width="300" hegiht="300"/> |
 
-<img src="assets/follow_after.png" width="300" hegiht="300"/>
 
-> 팔로우 시작 
-
-<img src="assets/follower_list.png" width="300" hegiht="300"/>
-
-> 팔로워 리스트 변경 
 
 ---
 ### G. 알림 기능  🔔
+
+>다른 유저가 나의 글을 좋아요, 북마크를 하거나 댓글을 달면 알림 수신  
+
 <img src="assets/alarm_my.png" width="300" hegiht="300"/>
 
-> 다른 유저가 나의 글을 좋아요, 북마크를 하거나 댓글을 달면 알림 수신  
+
 ---  
+
 ### H. 클로저봇 알림 기능 🔔
-<img src="assets/botAlarm_day.png" width="300" hegiht="300"/>
-<img src="assets/botAlarm_date.png" width="300" hegiht="300"/>
 
-> 클로저봇 알림을 통해 매주, 매월 해야 하는 일정을 적어  
+> 공과금 내는 날, 분리수거 하는 날 등 혼자 살면 까먹을 수 있는 내용을 클로저봇에 입력해 해당 날마다 알림이 온다
 
-<img src="assets/botAlarm.png" width="300" hegiht="300"/>
+|                            순서                            |                             예시                             |
+| :--------------------------------------------------------: | :----------------------------------------------------------: |
+| 1. 클로저봇 알림을 통해 매주, 매월 해야 하는 일정을 적는다 | <img src="assets/botAlarm_day.png" width="300" hegiht="300"/><img src="README.assets/botAlarm_date.png" width="300" hegiht="300"/> |
+|               2. 해당 날이 되면 알림이 온다                |  <img src="assets/botAlarm.png" width="300" hegiht="300"/>   |
 
-> 알림 수신 가능  
----  
+---
+
 ### I. DM 기능 💬 
-<img src="assets/dm_otherprofile.png" width="300" hegiht="300"/>
 
-> 상대방 프로필에서 DM 버튼 눌렀을 때
+|    기능    |                             설명                             |                             예시                             |
+| :--------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| 1 : 1 대화 | 상대방 프로필에서 DM 버튼 눌렀을 때,<br /> 해당 유저와 1:1 대화 기능 | <img src="README.assets/dm_otherprofile.png" width="300" hegiht="300"/><img src="assets/dm_one.png" width="300" hegiht="300"/> |
+| 단체 대화  | 지역게시판 클로저모임 참여시, <br />대화 입장하여 모집 인원들과 대화 가능 | <img src="README.assets/lBoard_groupboard-1629380960966.png" width="300" hegiht="300"/><img src="README.assets/dm_group.png" width="300" hegiht="300"/> |
 
-<img src="assets/dm_one.png" width="300" hegiht="300"/>
 
-> 다른 유저와 1:1 대화 기능 
-
-<img src="assets/lBoard_groupboard.png" width="300" hegiht="300"/>
-
-> 지역게시판 클로저모임에서, 대화 참여가능 
-
-<img src="assets/dm_group.png" width="300" hegiht="300"/>
-
-> 대화 입장하여 모집 인원들과 대화 가능 
 
 ## 6. 발전방향 🔥🔥
-## A. 공개 / 비공개 설정 
+#### A. 공개 / 비공개 설정 
 
 > 유저 계정의 공개 / 비공개 설정을 통해 더욱 private 한 소통 가능 
 
-## B. 지역 전체 채팅 기능
+
+
+#### B. 지역 전체 채팅 기능
 
 > 1:1, 1:多 DM 기능과 더불어 지역 전체 유저들이 한 번에 채팅할 수 있도록 기능 추가 
 
-## C. 키워드 알림 설정 
+
+
+#### C. 키워드 알림 설정 
 
 > 유저가 원하는 키워드의 글만 신속하게 받아볼 수 있도록 키워드 알림 설정 기능 추가 
 
-## D. 더 다양한 뱃지 기능
+
+
+#### D. 더 다양한 뱃지 기능
 
 > 정보 제공의 신뢰성을 위해 사용자의 서비스 활동에 대해 더 많은 뱃지 기준 부여.
 

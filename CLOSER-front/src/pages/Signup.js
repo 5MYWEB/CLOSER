@@ -532,7 +532,7 @@ function SignUp( {history} ) {
         </div>
 
         {/* 회원가입 버튼 */}
-        <div className=" button-group">
+        <div className="button-group mb-5">
             { userId === '' || nickname === '' || password === '' || passwordCheck === '' 
               || email === '' || addr === '' || phone === '' || homeAlone === ''
               ? <ShakeButton cclass="cbtn cbtn-lg cbtn-secondary" children="회원가입"/>

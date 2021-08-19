@@ -260,9 +260,9 @@ function App( { location, history }) {
       {/* Navbar를 보여주거나 변형하거나 / 숨김 */}
       { !isNavBar
       ? noNavBarPages[now]
-      // : <Navbar />
+      : <Navbar />
       // 테스트용
-      : <><Navbar /><p>{now}</p></>
+      // : <><Navbar /><p>{now}</p></>
       }
     </div>
   );

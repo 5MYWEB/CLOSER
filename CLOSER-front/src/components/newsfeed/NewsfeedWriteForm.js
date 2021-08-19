@@ -43,7 +43,7 @@ const NewsfeedWriteForm = () => {
   // 텍스트가 빈 값인지 검사하는 함수
   const nullCheck = () => {
     if (text === '') {
-      alert('댓글을 입력해주세요!')
+      alert('내용을 입력해주세요!')
       return false
     }
     return true

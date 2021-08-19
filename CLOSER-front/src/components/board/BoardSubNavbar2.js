@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeNavbar2 } from '../../modules/board';
 import { RippleTabItem } from '../../styles/index';
 import './BoardSubNavbar2.css';
 
 function BoardSubNavbar2({match, history}) {
 
-  const [nowTab, setNowTab] = useState(`/newsfeed/tip`)
+  const dispatch = useDispatch();
+
+  const { boardNavbar2 } = useSelector((state) => state.board)
 
   // 리플 탭 이동하는 주소
   const children = [
@@ -18,23 +22,24 @@ function BoardSubNavbar2({match, history}) {
   ]
 
   const onClickTap = ( e ) => {
-    setNowTab(e.target.getAttribute('addr'))
+    dispatch(changeNavbar2(e.target.getAttribute('addr')))
     history.replace(e.target.getAttribute('addr'))
   }
+
 
   return (
 
       <div className="tabs-wrapper2">
         <nav className="tabs">
-          <RippleTabItem cclass="tab" children={children[0][0]} onClick={onClickTap} addr={children[1][0]} />
-          <RippleTabItem cclass={ nowTab === children[1][1]? "tab is-current" : "tab"} children={children[0][1]} onClick={onClickTap} addr={children[1][1]} />
-          <RippleTabItem cclass={ nowTab === children[1][2]? "tab is-current" : "tab"} children={children[0][2]} onClick={onClickTap} addr={children[1][2]} />
+          <RippleTabItem cclass={ boardNavbar2 === children[1][0]? "tab is-current" : "tab"} children={children[0][0]} onClick={onClickTap} addr={children[1][0]} />
+          <RippleTabItem cclass={ boardNavbar2 === children[1][1]? "tab is-current" : "tab"} children={children[0][1]} onClick={onClickTap} addr={children[1][1]} />
+          <RippleTabItem cclass={ boardNavbar2 === children[1][2]? "tab is-current" : "tab"} children={children[0][2]} onClick={onClickTap} addr={children[1][2]} />
           <div className="nav-underline"></div> 
         </nav>
 
-        {/* 정확히 /alarm으로 들어오면, /alarm/unread로 리다이렉트해줌 */}
+        {/* 기본 설정 */}
         {match.isExact && 
-          <Redirect to="/board/subnav2/getter" />
+          <Redirect to={`${boardNavbar2}`} />
         }
       </div>
   );

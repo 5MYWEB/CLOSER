@@ -7,6 +7,10 @@ const initialState = {
   boardUpdated: false,
   boardDeleted: false,
   boardLiked: false,
+  newsfeedNavbar: '/newsfeed/near',
+  boardNavbar0: '/board/subnav1/',
+  boardNavbar1: '/board/subnav1/tip',
+  boardNavbar2: '/board/subnav2/getter',
 };
 
 /* 액션 타입 만들기 */
@@ -18,6 +22,10 @@ const GET_BEST_LIST = 'GET_BEST_LIST';
 const UPDATE_BOARD = 'UPDATE_BOARD';
 const DELETE_BOARD = 'DELETE_BOARD';
 const LIKE_BOARD = 'LIKE_BOARD';
+const CHANGE_NEWSFEED_NAVBAR = 'CHANGE_NEWSFEED_NAVBAR';
+const CHANGE_NAVBAR0 = 'CHANGE_NAVBAR0';
+const CHANGE_NAVBAR1 = 'CHANGE_NAVBAR1';
+const CHANGE_NAVBAR2 = 'CHANGE_NAVBAR2';
 
 /* 액션 생성함수 만들기 */
 export const createBoard = () => {
@@ -72,6 +80,34 @@ export const likeBoard = () => {
   }
 };
 
+export const changeNewsfeedNavbar = (data) => {
+  return {
+    type: CHANGE_NEWSFEED_NAVBAR,
+    data
+  }
+};
+
+export const changeNavbar0 = (data) => {
+  return {
+    type: CHANGE_NAVBAR0,
+    data
+  }
+};
+
+export const changeNavbar1 = (data) => {
+  return {
+    type: CHANGE_NAVBAR1,
+    data
+  }
+};
+
+export const changeNavbar2 = (data) => {
+  return {
+    type: CHANGE_NAVBAR2,
+    data
+  }
+};
+
 
 /* 리듀서 선언 */
 const reducer = (state = initialState, action) => {
@@ -115,6 +151,26 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         boardLiked: !state.boardLiked,
+      };
+    case CHANGE_NEWSFEED_NAVBAR:
+      return {
+        ...state,
+        newsfeedNavbar: action.data,
+      };
+    case CHANGE_NAVBAR0:
+      return {
+        ...state,
+        boardNavbar0: action.data,
+      };
+    case CHANGE_NAVBAR1:
+      return {
+        ...state,
+        boardNavbar1: action.data,
+      };
+    case CHANGE_NAVBAR2:
+      return {
+        ...state,
+        boardNavbar2: action.data,
       };
     default:
       return state;

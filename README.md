@@ -1,4 +1,4 @@
-<img src="CLOSER-front/src/assets/logo-upper.png" width="400" hegiht="400" align="center"/>
+<p align="center"><img src="CLOSER-front/src/assets/logo-upper.png" width="400" hegiht="400" /></p>
 
 > 프론트 담당: 김지윤, 서민수
 >

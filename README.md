@@ -287,26 +287,33 @@
 ### A. 뉴스피드 기능 
 
 + 피드 목록 
-> Near : 나와 같은 동네 유저가 쓴 글 
 <img src="assets/feed_near.png" width="300" hegiht="300"/>    
 
-> Favorite : 내가 좋아요 한 유저가 쓴 글 
+> Near : 나와 같은 동네 유저가 쓴 글 
+
 <img src="assets/feed_favorite.png" width="300" hegiht="300"/>    
 
-> All : 동네 구분 없이 모든 유저가 쓴 글 
+> Favorite : 내가 좋아요 한 유저가 쓴 글 
+
 <img src="assets/feed_all.png" width="300" hegiht="300"/>       
 
+> All : 동네 구분 없이 모든 유저가 쓴 글 
+
 + 피드 작성 
+
 <img src="assets/feed_write.png" width="300" hegiht="300"/>
 
 > 피드 글작성    
+
 <img src="assets/feed_write_after.png" width="300" hegiht="300"/>
 
 > 피드 글 작성 완료  
 ---  
 ### B. 게시판 기능  
 + 자취 게시판 : 자취 꿀팁을 서로 공유할 수 있는 게시판    
+
 <img src="assets/lBoard_bestboard.png" width="300" hegiht="300"/>
+
 > 좋아요 + 댓글이 많은 순서대로 인기 게시물 
 
 + 지역 게시판 : 우리 지역 내에서 모임을 모집할 수 있는 게시판 
@@ -325,12 +332,15 @@
 ---  
 ### C. 게시물 검색 기능 + 네이버 검색 활용 
 <img src="assets/search_naver.png" width="300" hegiht="300"/>
+
 > 네이버 검색 기능을 활용한 검색 기능 
 
 <img src="assets/search_nonaver.png" width="300" hegiht="300"/>
+
 > 네이버 검색 기능 미포함 클로저 게시물 검색 기능 
 
 <img src="assets/search_nickname.png" width="300" hegiht="300"/>
+
 > 유저 닉네임 검색을 통한 게시물 검색 기능 
 
 ---  
@@ -341,6 +351,7 @@
 ---
 ### E. 네이버 지도 API를 활용한 위치 변경
 <img src="assets/location_change.png" width="300" hegiht="300"/>
+
 > 동네가 변경되었을 때, 현재 위치를 기반으로 위치 변경 가능 
 
 ---
@@ -356,18 +367,22 @@
 <img src="assets/botAlarm_date.png" width="300" hegiht="300"/>
 
 > 클로저봇 알림을 통해 매주, 매월 해야 하는 일정을 적어  
+
 <img src="assets/botAlarm.png" width="300" hegiht="300"/>
 
 > 알림 수신 가능  
 ---  
 ### I. DM 기능  
 <img src="assets/dm_one.png" width="300" hegiht="300"/>
+
 > 다른 유저와 1:1 대화 기능 (상대방 프로필에서 dm 버튼 눌렀을 시)
 
 <img src="assets/lBoard_groupdboard.png" width="300" hegiht="300"/>
+
 > 지역게시판 클로저모임에서, 대화 참여가능 
 
 <img src="assets/dm_group.png" width="300" hegiht="300"/>
+
 > 대화 입장하여 모집 인원들과 대화 가능 
 
 ## 6. 발전방향

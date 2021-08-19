@@ -29,6 +29,8 @@ function App( { location, history }) {
 
   const pathElements = location.pathname.split('/')
 
+  const pathName = location.pathname
+
   // 1. 현재 라우터가 어딜 보여주고 있는지 (ex. '/login')
   let now = ''
 
@@ -119,7 +121,7 @@ function App( { location, history }) {
   }
 
   // 로그인이 필요한 페이지들
-  const loginRequiredPages = [
+  const loginRequiredPages1 = [
     '/alarm',
     '/alarm/my/',
     '/alarm/other/',
@@ -135,6 +137,16 @@ function App( { location, history }) {
     '/Omessages/other',
     '/messages/my',
     '/messages/other',
+    '/search',
+  ]
+
+  const loginRequiredPages2 = [
+    '/board/subnav2',
+    '/board/subnav2/purchase',
+    '/board/subnav2/getter',
+    '/board/subnav2/sos',
+    '/newsfeed/near',
+    '/newsfeed/follow'
   ]
 
 
@@ -162,7 +174,14 @@ function App( { location, history }) {
   }
 
   // 로그인이 필요한 페이지에 로그인하지 않고 들어가면 로그인 하라는 페이지 나옴
-  if (loginRequiredPages.includes(now) && !isLoggedIn) {
+  if (loginRequiredPages1.includes(now) && !isLoggedIn) {
+    setTimeout( function (){
+      history.push('/about')
+    }, 350)
+  }
+
+  // 비로그인 시 near,favorite 뉴스피드와 지역게시판은 볼 수 없음
+  if (loginRequiredPages2.includes(pathName) && !isLoggedIn) {
     setTimeout( function (){
       history.push('/about')
     }, 350)

@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux'
 import { loginAction } from '../modules/user'
+import { forLoginUser } from '../modules/board'
 // import { getMyInfoAction, loginAction, getPostCount } from '../modules/user'
 import { RippleButton, ShakeButton } from '../styles/index';
 import '../styles/theme.css'
@@ -96,6 +97,7 @@ function Login({ history }) {
             const jwtAuthToken = res.headers["jwt-auth-token"]
             if(res.status === 200){
               dispatch(loginAction({ jwtAuthToken }));
+              dispatch(forLoginUser())
               history.push('/')
             } else{
               // alert('존재하지 않는 회원정보입니다!')

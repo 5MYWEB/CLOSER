@@ -4,9 +4,11 @@ import { bubble as Menu } from 'react-burger-menu'
 import { connect } from 'react-redux';
 import './Sidebar.css';
 import '../../styles/bootstrap.min.css';
-import * as actions from '../../modules/user';
+import { logoutAction } from '../../modules/user';
+import { forLogoutUser } from '../../modules/board';
 import UserBadge from '../profile/UserBadge';
 import userBold from '../../assets/user-bold.svg';
+
 
 import homeSolid from '../../assets/sidebar/home-solid.svg';
 import defaultProfile from '../../assets/user-on.svg';
@@ -160,7 +162,7 @@ class ConnectedSidebar extends React.Component {
               <div className="bm-menu-third">
                 <div className="side_logout">
                   <img src={signOutSolid} alt="home" className="bm-icon"/>
-                  <Link to="/" onClick={() => {this.closeMenu(); logoutAction();}} className="link-dark">LOGOUT</Link>
+                  <Link to="/" onClick={() => {this.closeMenu(); logoutAction(); forLogoutUser();}} className="link-dark">LOGOUT</Link>
                 </div>
               </div>
             </Menu>
@@ -204,7 +206,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  logoutAction: () => dispatch(actions.logoutAction()),
+  logoutAction: () => dispatch(logoutAction()),
+  forLogoutUser: () => dispatch(forLogoutUser())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedSidebar);

@@ -16,7 +16,9 @@ const TopAppBar = () => {
     <>
       <div className="topappbar">
         <div className="logo-wrapper">
-          <img src={lowerlogo} alt="lowerlogo" className="logo" />
+          <Link to='/'>
+            <img src={lowerlogo} alt="lowerlogo" className="logo" />
+          </Link>
         </div>
         <div className="topapplist">
           <Link to="/bot">

@@ -37,7 +37,7 @@ const UserBoard = ({ match }) => {
             );
           })}
         </div>
-      : <div className="d-flex justify-content-center mt-1">내가 쓴 게시글이 없어요!</div>
+      : <div className="d-flex justify-content-center mt-1">작성한 게시글이 없어요!</div>
       }
     </>
   )

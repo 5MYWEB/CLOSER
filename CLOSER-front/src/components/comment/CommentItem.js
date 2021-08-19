@@ -77,8 +77,7 @@ const CommentItem = ({ comment }) => {
           userId: userId
         }
       })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         dispatch(deleteComment())
       })
       .catch((err) => {

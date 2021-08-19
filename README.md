@@ -1,4 +1,5 @@
 # CLOSER
+<img src="CLOSER-front/src/assets/logo-upper.png"/>
 > 프론트 담당: 김지윤, 서민수
 >
 > 백엔드 담당: 김호영, 이민지, 조혜인

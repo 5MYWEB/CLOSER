@@ -3,6 +3,13 @@
 >
 > 백엔드 담당: 김호영, 이민지, 조혜인
 
+## 배포 사이트
+[CLOSER 사용해보기](http://i5a303.p.ssafy.io:3000/)
+
+> 웹 모바일 버전이므로, 웹사이트 크기 말고 모바일 크기로 테스트 해주세요. 
+
+> F12 눌러, 개발자 모드에서 화면 크기를 변경 / 디바이스 크기 변경하시면 됩니다. 
+
 ## 1. 목표
 
 - 웹 큐레이션 SNS 서비스 개발
@@ -54,18 +61,16 @@
 
 ### A. 프로젝트 구조
 
-> 여기서는 폴더 구조 보여주면 돼요! (폴더 구조 캡쳐 등으로 하면 될듯)
-
 #### 1. Back-End
-<img src="/uploads/1e09506c9adf5a3aa40a37539ebba594/스크린샷_2021-08-18_오후_10.21.30.png" width="700" hegiht="700"/>
+<img src="assets/closer_back.png" width="700" hegiht="700"/>
 
 #### 2. Front-End
-<img src="/uploads/6a01128cf88d6da8140d41d073f7e6c9/스크린샷_2021-08-18_오후_10.21.57.png" width="700" hegiht="700"/>
+<img src="assets/closer_front.png" width="700" hegiht="700"/>
 
 ### B. Model
 
 > 데이터베이스에서 모델의 ERD는 아래와 같습니다.
-<img src="/uploads/b2f4e04638ccc71bbcb4b4e05f471ab9/스크린샷_2021-08-18_오후_11.09.20.png" width="700" hegiht="700"/>
+<img src="assets/closer_erd.png" width="700" hegiht="700"/>
 
 
 
@@ -270,94 +275,132 @@
 
 ## 5. 세부사항
 
-> 구현한 기능들 특징을 설명하면 좋은데 어케 할지 지금 살짝 고민중입니다.
->
-> 예를 들어 검색 기능은 네이버 검색이랑 제목+내용 검색 / 유저 아이디 검색, 게시판 별, 게시판 전체 검색 이런식으로 되어있잖아여?
->
-> 그런 거에 대해 우린 이것저것 했다!!!
->
-> 이런걸 하고 싶거든여??
->
-> 근데 이걸 어떻게 나눠야할지가 너무 애매하네요....
->
-> 어 그리고!!!! 시연시나리오는 exec 폴더 밑에서 진행할거에요!! 어차피 같은 깃안에 있으니까 굳이 여기 다시 안넣어도 될거 같긴합니다. 그러나 뭔가 지금 세부사항할때 사진있으면 좋을거 같다 하면 여기에 기능에 관련된 사진은 넣으면 좋을거 같아요!!!!!
-
->기능들 여기서 대충 나눌게요 일단!! 추가할거 추가하고 바꿀꺼 바꿔주세요
->
->- 프로필 기능
->    - 뱃지 (한달에 한번 업데이트)
->    - 프로필 url 공유
->    - 네이버 지도 api를 통한 현재 위치 정보 가져오기
->- 게시판
->  - 덤프 데이터
->  - 자취 게시판
->    - 베스트 게시판 (좋아요 + 댓글 기반)
->
->- 검색 기능
->  - 네이버 검색
->  - 제목+내용 / 유저 검색
->  - 전체 게시판 검색 / 세부 게시판 검색
->- DM 기능
->  - 1대1 대화
->  - 다대다 대화는 지금 될지 안될지 모름
->- 
-
-
 ### A. 뉴스피드 기능 
 
-+ 피드 목록 
+### 피드 목록 
+<img src="assets/feed_near.png" width="300" hegiht="300"/>    
+
 > Near : 나와 같은 동네 유저가 쓴 글 
-<img src="/uploads/ca690dffee4bac954de86dcd59a8a654/피드_최신.png" width="300" hegiht="300"/>    
+
+<img src="assets/feed_favorite.png" width="300" hegiht="300"/>    
 
 > Favorite : 내가 좋아요 한 유저가 쓴 글 
-<img src="/uploads/4eaef1fa9864277e557c77122ae66776/피드_팔로우.png" width="300" hegiht="300"/>    
+
+<img src="assets/feed_all.png" width="300" hegiht="300"/>       
 
 > All : 동네 구분 없이 모든 유저가 쓴 글 
-<img src="/uploads/ebcb6a6397e857225e3b8e8a7fd689c5/피드_전체.png" width="300" hegiht="300"/>       
 
-+ 피드 작성 
-<img src="/uploads/d45bf20efe3a697deb1f96e8845235c8/피드_글작성.png" width="300" hegiht="300"/>
+### 피드 작성 
+
+<img src="assets/feed_write.png" width="300" hegiht="300"/>
 
 > 피드 글작성    
-<img src="/uploads/3f52f9416d0c3fa5e746bf95849a95ab/피드_글완성.png" width="300" hegiht="300"/>
+
+<img src="assets/feed_write_after.png" width="300" hegiht="300"/>
 
 > 피드 글 작성 완료  
 ---  
 ### B. 게시판 기능  
-+ 자취 게시판 : 자취 꿀팁을 서로 공유할 수 있는 게시판    
-+ 지역 게시판 : 우리 지역 내에서 모임을 모집할 수 있는 게시판 
-<img src="/uploads/fe4b5491abab6bc305bfb046fba5ba3b/지역게시판_공동구매.png" width="300" hegiht="300"/>
+### 자취 게시판 : 자취 꿀팁을 서로 공유할 수 있는 게시판    
+
+<img src="assets/lBoard_bestboard.png" width="300" hegiht="300"/>
+
+> 좋아요 + 댓글이 많은 순서대로 인기 게시물 
+
+### 지역 게시판 : 우리 지역 내에서 모임을 모집할 수 있는 게시판 
+<img src="assets/lBoard_purchase.png" width="300" hegiht="300"/>
 
 > 1인 가구가 사용하기엔 많은 물건을 같은 동네 자취생들과 나눌 수 있는 공동구매 게시판    
-<img src="/uploads/50d4760673872cecf0f31c1d7cd86941/지역게시판_클로저모임.png" width="300" hegiht="300"/>
 
-> 같은 동네 자취생들끼리 원하는 모임을 개설하고 인원을 모집할 수 있는 클로저모임 게시판    
-<img src="/uploads/e258d2797e8b2b2d3ce6a392882ba960/지역게시판_도와주세요.png" width="300" hegiht="300"/>
+<img src="assets/lBoard_group.png" width="300" hegiht="300"/>
+
+> 같은 동네 자취생들끼리 원하는 모임을 개설하고 인원을 모집할 수 있는 클로저모임 게시판  
+
+<img src="assets/lBoard_sos.png" width="300" hegiht="300"/>
 
 > 급하게 필요한 게 있거나 위험한 상황일 때 주변의 자취생들에게 부탁을 요청할 수 있는 도와주세요 게시판  
+
 ---  
-### C. 프로필 기능
-<img src="/uploads/0f3c91d0660a2b5d4cada4e013e19286/스크린샷_2021-08-18_오후_4.32.36.png" width="300" hegiht="300"/>
+### C. 게시물 검색 기능 + 네이버 검색 활용 
+<img src="assets/search_naver.png" width="300" hegiht="300"/>
+
+> 네이버 검색 기능을 활용한 검색 기능 
+
+<img src="assets/search_nonaver.png" width="300" hegiht="300"/>
+
+> 네이버 검색 기능 미포함 클로저 게시물 검색 기능 
+
+<img src="assets/search_nickname.png" width="300" hegiht="300"/>
+
+> 유저 닉네임 검색을 통한 게시물 검색 기능 
+
+---  
+### D. 프로필 기능
+<img src="assets/myprofile.png" width="300" hegiht="300"/>
 
 > 내 프로필에서 나의 정보와 내가 쓴 글, 북마크 한 글 확인 가능  
+
+<img src="assets/badge_no.png" width="300" hegiht="300"/>
+
+> 글 개수가 일정 수준 도달 하지 못하면, 뱃지 부여 X
+
+<img src="assets/badge_yes.png" width="300" hegiht="300"/>
+
+> 글 개수 일정 수준 도달하면, 뱃지 부여 O 
+
 ---
-### D. 팔로우/언팔로우 기능  
+### E. 네이버 지도 API를 활용한 위치 변경
+<img src="assets/location_change.png" width="300" hegiht="300"/>
+
+> 동네가 변경되었을 때, 현재 위치를 기반으로 위치 변경 가능 
+
 ---
-### E. 알림 기능 
-<img src="/uploads/6f7e318eace5de84949cb3446504d861/스크린샷_2021-08-18_오후_3.10.39.png" width="300" hegiht="300"/>
+### F. 팔로우/언팔로우 기능  
+<img src="assets/follow_before.png" width="300" hegiht="300"/>
+
+> 다른 유저 팔로우 하기 전 모습 
+
+<img src="assets/follow_after.png" width="300" hegiht="300"/>
+
+> 팔로우 시작 
+
+<img src="assets/follower_list.png" width="300" hegiht="300"/>
+
+> 팔로워 리스트 변경 
+
+---
+### G. 알림 기능 
+<img src="assets/alarm_my.png" width="300" hegiht="300"/>
 
 > 다른 유저가 나의 글을 좋아요, 북마크를 하거나 댓글을 달면 알림 수신  
 ---  
-### F. 클로저봇 알림 기능 
-<img src="/uploads/1aa71ce8bdbcd8a8ca16f4a9f4322507/클로저봇알림_매주.png" width="300" hegiht="300"/>
-<img src="/uploads/5f61cfe3a2e61f05dc2884eebf707c53/클로저봇알림_매월.png" width="300" hegiht="300"/>
+### H. 클로저봇 알림 기능 
+<img src="assets/botAlarm_day.png" width="300" hegiht="300"/>
+<img src="assets/botAlarm_date.png" width="300" hegiht="300"/>
 
 > 클로저봇 알림을 통해 매주, 매월 해야 하는 일정을 적어  
-<img src="/uploads/360d6591dd9557abd4d74369861f4681/클로저봇알림.png" width="300" hegiht="300"/>
+
+<img src="assets/botAlarm.png" width="300" hegiht="300"/>
 
 > 알림 수신 가능  
 ---  
-### G. DM 기능  
+### I. DM 기능  
+<img src="assets/dm_otherprofile.png" width="300" hegiht="300"/>
+
+> 상대방 프로필에서 DM 버튼 눌렀을 때
+
+<img src="assets/dm_one.png" width="300" hegiht="300"/>
+
+> 다른 유저와 1:1 대화 기능 
+
+<img src="assets/lBoard_groupboard.png" width="300" hegiht="300"/>
+
+> 지역게시판 클로저모임에서, 대화 참여가능 
+
+<img src="assets/dm_group.png" width="300" hegiht="300"/>
+
+> 대화 입장하여 모집 인원들과 대화 가능 
+
 ## 6. 발전방향
 
 > 여기에는 저희가 하지 못했거나, 이런 걸 더 추가하면 좋겠다! 하는 기능들을 넣으면 좋을거 같아요

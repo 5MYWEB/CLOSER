@@ -6,6 +6,7 @@ import { changeAddr } from '../../modules/user';
 import { Container, Row, Col } from 'react-bootstrap';
 import { getMyInfoAction } from '../../modules/user';
 import { RippleButton } from '../../styles/index';
+import swal from 'sweetalert';
 
 
 function NaverMapAPI() {
@@ -29,7 +30,8 @@ function NaverMapAPI() {
         });
       });
     } else {
-      window.alert("현재위치를 알수 없습니다.");
+      // window.alert("현재위치를 알수 없습니다.");
+      swal('현재위치를 알수 없습니다.', "", "info");
     }
   }, [])
 

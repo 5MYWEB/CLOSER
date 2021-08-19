@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { RippleButton } from '../../styles/index';
 import '../../styles/theme.css'
+import swal from 'sweetalert';
 
 
 function BotAlarm({ history }) {
@@ -42,7 +43,8 @@ function BotAlarm({ history }) {
     //데이터 빈 값 검사
     const checkExistData = (value, name) => {
         if (value === '') {
-            alert(name + ' 입력해주세요!')
+            // alert(name + ' 입력해주세요!')
+            swal(name + ' 입력해주세요!', "", "info");
             return false;
         }
         return true;
@@ -81,30 +83,38 @@ function BotAlarm({ history }) {
         // console.log("alarmDay: " + alarmDay);
         // console.log("alarmDate: " + alarmDate);
         // console.log("nowRadio = " + nowRadio )
-            if(nowRadio === "date"){
+            if(nowRadio === "day"){
                 axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {
                 userId: userInfo.userId,
                 content: text,
                 alarm_day: alarmDay
             })
             .then((res) => {
-                window.alert('알림이 설정되었습니다')
-                history.go(-1)
+                // console.log(res);
+                // window.alert('알림이 설정되었습니다')
+                swal("알림이 설정되었습니다", "", "success");
+                // history.go(-1)
+                setTimeout(()=>{
+                    history.go(-1)
+                }, 2000)
             })
             .catch((err) => {
                 console.log(err)
             })
             }
-            else if(nowRadio === "day") {
+            else if(nowRadio === "date") {
                 axios.post(`http://localhost:8080/alarm/user_bot/${userInfo.userId}/create`, {
                     userId: userInfo.userId,
                     content: text,
                     alarm_date : dummyDate+alarmDate
                 })
                 .then((res) => {
-                    // console.log(res);
-                    window.alert('알림이 설정되었습니다')
-                    history.go(-1)
+                    swal("알림이 설정되었습니다", "", "success");
+                    // history.go(-1)
+                    // swal('알림이 설정되었습니다', "", "success");
+                    setTimeout(()=>{
+                        history.go(-1)
+                    }, 2000)
                 })
                 .catch((err) => {
                     console.log(err)

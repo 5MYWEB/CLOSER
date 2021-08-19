@@ -5,9 +5,9 @@ import { setCategory, getSearchedList, naverCheck, getSearchedNaverList } from '
 import { Collapse, FormSelect } from 'react-bootstrap';
 import { RippleButton } from '../../styles/index';
 import './SearchBar.css';
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import swal from 'sweetalert';
 
 // 검색창 컴포넌트
 const SearchBar = () => {
@@ -52,13 +52,15 @@ const SearchBar = () => {
     setTimeout( function () {
     // 빈값인지 검사
       if(text === '') {
-        alert('내용을 입력하세요')
+        // alert('내용을 입력하세요')
+        swal('내용을 입력하세요', "", "info");
         return false
       }
 
       // 두글자 이상인지 검사
       if(text.length < 2){
-        alert('2글자 이상 입력하세요')
+        // alert('2글자 이상 입력하세요')
+        swal('2글자 이상 입력하세요', "", "info");
         return false
       }
 

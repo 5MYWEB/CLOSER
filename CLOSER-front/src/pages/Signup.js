@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { FormSelect, InputGroup } from 'react-bootstrap';
 import '../styles/theme.css'
 import './Signup.css';
+import swal from 'sweetalert';
 
 function SignUp( {history} ) {
 
@@ -72,7 +73,8 @@ function SignUp( {history} ) {
   const checkExistData = (value, name) => {
     // console.log(value)
     if (value === '') {
-      alert(name + ' 입력해주세요!')
+      // alert(name + ' 입력해주세요!')
+      swal(name + ' 입력해주세요!', "", "info");
       return false;
     }
     return true;
@@ -97,18 +99,20 @@ function SignUp( {history} ) {
   const userIdCheck = () => {
     axios.post(`http://localhost:8080/user/userIdCheck?userId=${userId}`)
       .then((res) => {
-        if(res.status === 200){
-          alert(res.data)
+        if(res.data){
+          // alert("사용 가능한 아이디입니다.")
+          swal("사용 가능한 아이디입니다.", "", "success");
           setUserIdChecked(true)
           return true
         } else {
-          alert(res.data)
+          // alert("이미 사용중인 아이디입니다.")
+          swal("이미 사용중인 아이디입니다.", "", "info");
           setUserIdChecked(false)
           return false
         }
       })
       .catch((err) => {
-        alert(err.response.data)
+        console.log(err.response.data)
         setUserIdChecked(false)
         return false
       })
@@ -123,18 +127,20 @@ function SignUp( {history} ) {
   const nicknameCheck = () => {
     axios.post(`http://localhost:8080/user/userNicknameCheck?nickname=${nickname}`)
       .then((res) => {
-        if(res.status === 200){
-          alert(res.data)
+        if(res.data){
+          // alert("사용 가능한 닉네임입니다.")
+          swal("사용 가능한 닉네임입니다.", "", "success");
           setNicknameChecked(true)
           return true
         } else {
-          alert(res.data)
+          // alert("이미 사용중인 닉네임입니다.")
+          swal("이미 사용중인 닉네임입니다.", "", "info");
           setNicknameChecked(false)
           return false
         }
       })
       .catch((err) => {
-        alert(err.response.data)
+        console.log(err.response.data)
         setNicknameChecked(false)
         return false
       })
@@ -159,7 +165,8 @@ function SignUp( {history} ) {
       return false
     }
     if (password !== passwordCheck){
-      alert('비밀번호 확인이 일치하지 않습니다')
+      // alert('비밀번호 확인이 일치하지 않습니다')
+      swal('비밀번호 확인이 일치하지 않습니다', "", "info");
       return false
     }
     return true
@@ -220,10 +227,12 @@ function SignUp( {history} ) {
     } else if (!checkHomeAlone(homeAlone)) {
       return false;
     } else if (!userIdChecked){
-      alert('아이디 중복확인을 해주세요')
+      // alert('아이디 중복확인을 해주세요')
+      swal('아이디 중복확인을 해주세요', "", "info");
       return false;
     } else if (!nicknameChecked){
-      alert('닉네임 중복확인을 해주세요')
+      // alert('닉네임 중복확인을 해주세요')
+      swal('닉네임 중복확인을 해주세요', "", "info");
       return false;
     }
     return true;
@@ -433,7 +442,7 @@ function SignUp( {history} ) {
               onBlur={(e) => {
                 e.target.placeholder='이메일을 입력하세요';
               }}
-              type="text"
+              type="email"
               name="email"
               defaultValue={email}
               onChange={onChange}
@@ -467,7 +476,7 @@ function SignUp( {history} ) {
               onBlur={(e) => {
                 e.target.placeholder='핸드폰 번호를 입력하세요( - 없이)';
               }}
-              type="text"
+              type="number"
               name="phone"
               defaultValue={phone}
               onChange={onChange}

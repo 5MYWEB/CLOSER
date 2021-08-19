@@ -109,30 +109,34 @@ public class UserController {
 
     @ApiOperation(value = "아이디 중복 확인", notes = "사용자의 아이디 중복 확인")
     @PostMapping("/userIdCheck")
-    public ResponseEntity<String> userIdCheck(@RequestParam String userId) {
+    public ResponseEntity<Boolean> userIdCheck(@RequestParam String userId) {
         logger.debug("중복 확인 요청된 아이디 : " + userId);
 
         int result = userService.userIdCheck(userId);
 
         if(result == 0){
-            return ResponseEntity.ok("사용 가능한 아이디입니다.");
+//            return ResponseEntity.ok("사용 가능한 아이디입니다.");
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 사용중인 아이디입니다.");
+        return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+//        return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 사용중인 아이디입니다.");
     }
 
     @ApiOperation(value = "닉네임 중복확인", notes = "사용자의 닉네임 중복확인")
     @PostMapping("/userNicknameCheck")
-    public ResponseEntity<String> userNicknameCheck(@RequestParam String nickname) {
+    public ResponseEntity<Boolean> userNicknameCheck(@RequestParam String nickname) {
         logger.debug("중복 확인 요청된 닉네임 : " + nickname);
 
         int result = userService.userNicknameCheck(nickname);
 
         if(result == 0){
-            return ResponseEntity.ok("사용 가능한 닉네임입니다.");
+//            return ResponseEntity.ok("사용 가능한 닉네임입니다.");
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 사용중인 닉네임입니다.");
+        return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+//        return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 사용중인 닉네임입니다.");
     }
 
     @ApiOperation(value = "로그아웃")

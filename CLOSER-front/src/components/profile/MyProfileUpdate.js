@@ -6,6 +6,7 @@ import { getMyInfoAction } from '../../modules/user';
 import defaultProfile from '../../assets/user-on.svg';
 import { RippleButton, ShakeButton } from '../../styles/index';
 import '../../styles/theme.css'
+import swal from 'sweetalert';
 
 const MyProfileUpdate = ({history}) => {
   // S3 기본 정보
@@ -79,10 +80,15 @@ const MyProfileUpdate = ({history}) => {
     axios.post(`http://localhost:8080/user/userNicknameCheck?nickname=${changedUserInfo.nickname}`)
       .then((res) => {
         // console.log(res.data)
-        setDoubleChecked(true)
+        if(res.data) {
+          setDoubleChecked(true)
+        }else{
+          // alert("이미 사용중인 닉네임입니다.")
+          swal("이미 사용중인 닉네임입니다.", "", "error");
+        }
       })
       .catch((err) => {
-        alert(err.response.data)
+        console.log(err.response.data)
       })
   }
 
@@ -195,7 +201,8 @@ const MyProfileUpdate = ({history}) => {
           console.log(err)
         })
     } else{
-      alert('닉네임 중복체크를 해주세요!')
+      // alert('닉네임 중복체크를 해주세요!')
+      swal('닉네임 중복체크를 해주세요!', "", "info");
     }
   }
 

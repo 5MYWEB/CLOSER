@@ -1,5 +1,6 @@
 // About.js
 import React, { useRef } from 'react';
+import { useSelector } from 'react-redux';
 import '../styles/theme.css'
 import './About.css'
 import { RippleButton } from '../styles/index';
@@ -28,6 +29,8 @@ function About({ history }){
     // }
     const anchor = useRef();
 
+    const {isLoggedIn, userInfo} = useSelector((state) => state.user);
+
     const goToSignup = () => {
       setTimeout(function(){
         history.push('/signup')
@@ -40,6 +43,17 @@ function About({ history }){
       },350)
     }
 
+    const goToHome = () => {
+      setTimeout(function(){
+        history.push('/newsfeed/near')
+      },350)
+    }
+
+    const goToProfile = () => {
+      setTimeout(function(){
+        history.push(`/profile/${userInfo.userId}`)
+      },350)
+    }
 
     return (
       <div className="page-wrapper">
@@ -54,11 +68,18 @@ function About({ history }){
           {/* <div className="d-flex flex-column justify-content-center align-items-center">
             <RippleButton cclass="cbtn cbtn-lg cbtn-primary" children="둘러보기" onClick={goToNewsfeed}/>
           </div> */}
-          <div className="d-flex flex-column justify-content-center align-items-center">
-            <RippleButton cclass="cbtn cbtn-lg cbtn-primary" children="회원가입" onClick={goToSignup}/>
-            <RippleButton cclass="cbtn cbtn-lg cbtn-secondary" children="로그인" onClick={goToLogin}/>
-          </div>
-
+          { isLoggedIn
+            ?
+              <div className="d-flex flex-column justify-content-center align-items-center">
+                <RippleButton cclass="cbtn cbtn-lg cbtn-primary" children="메인으로" onClick={goToHome}/>
+                <RippleButton cclass="cbtn cbtn-lg cbtn-light" children="내 프로필" onClick={goToProfile}/>
+              </div>
+            :
+              <div className="d-flex flex-column justify-content-center align-items-center">
+                <RippleButton cclass="cbtn cbtn-lg cbtn-primary" children="회원가입" onClick={goToSignup}/>
+                <RippleButton cclass="cbtn cbtn-lg cbtn-secondary" children="로그인" onClick={goToLogin}/>
+              </div>
+          }
 
           <a href="#bottom" id="top" ref={anchor} data-target="anchor">
           <div className="chevron-container d-flex flex-column justify-content-center align-items-center mx-auto my-5">
@@ -94,7 +115,7 @@ function About({ history }){
           </div>
           <div className="mx-1 input-bolder p-3">
             <p className="py-0 my-0"><span className="text-main">NEAR</span> : 근처 이웃들의 뉴스피드</p>
-            <p className="py-0 my-0"><span className="text-main">HOT</span> : 핫한 뉴스피드 게시글</p>
+            <p className="py-0 my-0"><span className="text-main">ALL</span> : 모든 뉴스피드 게시글</p>
             <p className="py-0 my-0"><span className="text-main">FAVORITE</span> : 내가 팔로우한 사람들의 뉴스피드</p>
           </div>
         </section>
@@ -137,8 +158,8 @@ function About({ history }){
             <div className="d-flex justify-content-center align-items-center pb-2 pt-5">
               <img src={messagesOn} alt="messagesOn" className="pe-3 moving avatar icon-about" />
               <div className="py-3 ">
-                <h2>뉴스피드에서<br/> 친해진 이웃은<span className="text-main">1:1 채팅,</span></h2>
-                <h2>클로저 모임으로 <br/>만난 이웃은<span className="text-main">단체 채팅!</span></h2>
+                <h2>뉴스피드에서<br/> 친해진 이웃은<span className="text-main"> 1:1 채팅,</span></h2>
+                <h2>클로저 모임으로 <br/>만난 이웃은<span className="text-main"> 단체 채팅!</span></h2>
               </div>
             </div>   
 
@@ -154,10 +175,18 @@ function About({ history }){
           {/* <div className="d-flex flex-column justify-content-center align-items-center">
             <RippleButton cclass="cbtn cbtn-lg cbtn-primary" children="둘러보기" onClick={goToNewsfeed}/>
           </div> */}
-          <div className="d-flex flex-column justify-content-center align-items-center pt-3">
-            <RippleButton cclass="cbtn cbtn-lg cbtn-primary" children="회원가입" onClick={goToSignup}/>
-            <RippleButton cclass="cbtn cbtn-lg cbtn-secondary" children="로그인" onClick={goToLogin}/>
-          </div>
+          { isLoggedIn
+            ?
+              <div className="d-flex flex-column justify-content-center align-items-center">
+                <RippleButton cclass="cbtn cbtn-lg cbtn-primary" children="메인으로" onClick={goToHome}/>
+                <RippleButton cclass="cbtn cbtn-lg cbtn-light" children="내 프로필" onClick={goToProfile}/>
+              </div>
+            :
+              <div className="d-flex flex-column justify-content-center align-items-center">
+                <RippleButton cclass="cbtn cbtn-lg cbtn-primary" children="회원가입" onClick={goToSignup}/>
+                <RippleButton cclass="cbtn cbtn-lg cbtn-secondary" children="로그인" onClick={goToLogin}/>
+              </div>
+          }
         </section>
       </div>
     );

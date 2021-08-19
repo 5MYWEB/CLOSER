@@ -93,7 +93,7 @@ const NewsfeedItem = React.forwardRef(({ board, name, key }, ref) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardLiked])
 
-  // 댓글 작성자 정보 가져오기
+  // 피드 작성자 정보 가져오기
   useEffect(() => {
     axios.post(`http://localhost:8080/user/profileinfo?userId=${board.userId}`)
     .then((res) => {
@@ -203,7 +203,7 @@ const NewsfeedItem = React.forwardRef(({ board, name, key }, ref) => {
                     // ㅇㅇ구 ㅇㅇ동
                     // <span className="me-1" style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(" ").slice(1, 3).join(" ")}</span>
                   }
-                  {board.nickname}
+                  {writerInfo.nickname}
                   
                 </Col>
                 {/* 작성시간 */}

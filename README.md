@@ -57,15 +57,15 @@
 > 여기서는 폴더 구조 보여주면 돼요! (폴더 구조 캡쳐 등으로 하면 될듯)
 
 #### 1. Back-End
-<img src="/assets/closer_back" width="700" hegiht="700"/>
+<img src="assets/closer_back" width="700" hegiht="700"/>
 
 #### 2. Front-End
-<img src="/assets/closer_front" width="700" hegiht="700"/>
+<img src="assets/closer_front" width="700" hegiht="700"/>
 
 ### B. Model
 
 > 데이터베이스에서 모델의 ERD는 아래와 같습니다.
-<img src="/assets/closer_erd" width="700" hegiht="700"/>
+<img src="assets/closer_erd" width="700" hegiht="700"/>
 
 
 

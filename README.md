@@ -279,15 +279,21 @@
 ### A. 뉴스피드 기능 📘
 
 ### 피드 목록 
-<img src="assets/feed_near.png" width="300" hegiht="300"/>    
+<img src="assets/feed_near.png" width="300" hegiht="300"/>
+
+​    
 
 > Near : 나와 같은 동네 유저가 쓴 글 
 
-<img src="assets/feed_favorite.png" width="300" hegiht="300"/>    
+<img src="assets/feed_favorite.png" width="300" hegiht="300"/>
+
+​    
 
 > Favorite : 내가 좋아요 한 유저가 쓴 글 
 
-<img src="assets/feed_all.png" width="300" hegiht="300"/>       
+<img src="assets/feed_all.png" width="300" hegiht="300"/>
+
+​       
 
 > All : 동네 구분 없이 모든 유저가 쓴 글 
 
@@ -299,9 +305,9 @@
 
 <img src="assets/feed_write_after.png" width="300" hegiht="300"/>
 
-> 피드 글 작성 완료  
----  
-### B. 게시판 기능  
+> 피드글 작성 완료 
+
+> ### B. 게시판 기능  
 ### 자취 게시판 : 자취 꿀팁을 서로 공유할 수 있는 게시판 🗒
 
 <img src="assets/lBoard_bestboard.png" width="300" hegiht="300"/>
@@ -321,7 +327,7 @@
 
 > 급하게 필요한 게 있거나 위험한 상황일 때 주변의 자취생들에게 부탁을 요청할 수 있는 도와주세요 게시판  
 
----  
+---
 ### C. 게시물 검색 기능 + 네이버 검색 활용 🔍
 <img src="assets/search_naver.png" width="300" hegiht="300"/>
 
@@ -335,7 +341,7 @@
 
 > 유저 닉네임 검색을 통한 게시물 검색 기능 
 
----  
+---
 ### D. 프로필 기능 👤
 <img src="assets/myprofile.png" width="300" hegiht="300"/>
 

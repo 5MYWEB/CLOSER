@@ -37,7 +37,7 @@ const UserFeed = ({ match }) => {
           })}
         </div>
       :
-        <div className="d-flex justify-content-center mt-1">내가 쓴 피드가 없어요!</div>
+        <div className="d-flex justify-content-center mt-1">작성한 피드가 없어요!</div>
     }
     </>
   )

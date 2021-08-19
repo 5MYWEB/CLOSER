@@ -175,17 +175,21 @@ function App( { location, history }) {
   }
 
   // 로그인이 필요한 페이지에 로그인하지 않고 들어가면 로그인 하라는 페이지 나옴
-  if (loginRequiredPages1.includes(now) && !isLoggedIn) {
-    setTimeout( function (){
-      history.push('/about')
-    }, 350)
+  if (loginRequiredPages1.includes(now)) {
+    if(!window.localStorage.isLoggedIn){
+      setTimeout( function (){
+        history.push('/about')
+      }, 350)
+    }
   }
 
   // 비로그인 시 near,favorite 뉴스피드와 지역게시판은 볼 수 없음
-  if (loginRequiredPages2.includes(pathName) && !isLoggedIn) {
-    setTimeout( function (){
-      history.push('/about')
-    }, 350)
+  if (loginRequiredPages2.includes(pathName)) {
+    if(!window.localStorage.isLoggedIn){
+      setTimeout( function (){
+        history.push('/about')
+      }, 350)
+    }
   }
 
   // 로그인 상태 유지

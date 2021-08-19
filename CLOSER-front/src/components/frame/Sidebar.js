@@ -106,7 +106,7 @@ class ConnectedSidebar extends React.Component {
                         <img src={userInfo.profileImg}  onError={(e) => this.handleImgError(e)} alt="프로필사진" className="profile-img" />
                       </div>
                       {/* 닉네임 */}
-                      <div className="row justify-content-start p-3 pt-0 pb-1 h2">
+                      <div className="row justify-content-start p-3 pt-0 pb-1 h3">
                         <span className="col-5 px-0 text-start">{userInfo.nickname}</span>
                         <span className="input-placeholder-style col-7 px-0 justify-content-start">
                           <UserBadge userId={userInfo.userId} />

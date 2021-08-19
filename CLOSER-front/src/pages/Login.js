@@ -5,6 +5,7 @@ import { loginAction } from '../modules/user'
 // import { getMyInfoAction, loginAction, getPostCount } from '../modules/user'
 import { RippleButton, ShakeButton } from '../styles/index';
 import '../styles/theme.css'
+import swal from 'sweetalert';
 
 function Login({ history }) {
   // Redux store 접근 시 사용
@@ -35,7 +36,8 @@ function Login({ history }) {
   const checkExistData = (value, name) => {
     if (value === '') {
       setTimeout( function () {
-        alert(name + " 입력해주세요!")
+        // alert(name + " 입력해주세요!")
+        swal(name + " 입력해주세요!", "", "info");
       }, 350);
       return false;
     }
@@ -96,7 +98,8 @@ function Login({ history }) {
               dispatch(loginAction({ jwtAuthToken }));
               history.push('/')
             } else{
-              alert('존재하지 않는 회원정보입니다!')
+              // alert('존재하지 않는 회원정보입니다!')
+              swal('존재하지 않는 회원정보입니다!', "", "info");
             }
           })
           .catch((err) => {

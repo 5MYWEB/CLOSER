@@ -7,7 +7,7 @@ import './Messages.css';
 import '../../styles/theme.css'
 import axios from "axios";
 
-const OtherMessages = ({match}) => {
+const GroupMessages = ({match}) => {
     const channelID = match.params.board_pk
     const { userInfo } = useSelector((state) => (state.user))
     const user_id = userInfo.userId;
@@ -37,6 +37,7 @@ const OtherMessages = ({match}) => {
         name: title,
     });
 
+
     return (
         <>
             <div className="white-square" ></div>
@@ -54,4 +55,4 @@ const OtherMessages = ({match}) => {
         </>
     );
 };
-export default OtherMessages;
+export default GroupMessages;

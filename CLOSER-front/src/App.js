@@ -21,6 +21,7 @@ import OtherMessages from "./components/message/OtherMessages";
 import GroupMessages from "./components/message/GroupMessages";
 
 import './App.css';
+import {StreamChat} from "stream-chat";
 
 function App( { location, history }) {
   const dispatch = useDispatch();
@@ -192,11 +193,26 @@ function App( { location, history }) {
   if(localStorage.getItem("isLoggedIn") === 'true' && isLoggedIn === false){
     dispatch(refreshInfo());
   }
-
+  async function connect (id,nickname,token){
+    const client = StreamChat.getInstance('5gan2md896h2');
+    client.connectUser(
+        {
+          id: id,
+          name: nickname,
+        },
+        token,
+    );
+    const channel = client.channel('messaging',{
+      name: "관리자와의 대화",
+      members:[id,"admin"]
+    });
+    await channel.create();
+  }
   useEffect(() => {
     if (isLoggedIn === true && decodedToken.user_id !== undefined && decodedToken.user_id !== null){
       axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.user_id}`)
       .then((res) => {
+        connect(res.data.userId,res.data.nickname,res.data.chattoken)
         dispatch(getMyInfoAction(res.data))
         axios.get(`http://localhost:8080/user/totalBoard/${decodedToken.user_id}`)
           .then((res) => {

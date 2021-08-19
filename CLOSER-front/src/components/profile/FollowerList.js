@@ -39,9 +39,10 @@ const FollowerList = ({match}) => {
             );
           })}
         </div> :
-        <div>
-          아직 팔로워가 없습니다:(
-        </div> }
+        <div className="g-0 align-items-center text-center pt-5 mx-5 my-2 fs-4">
+          아직 팔로워가 없습니다:)
+        </div> 
+      }
     </>
   )
 };

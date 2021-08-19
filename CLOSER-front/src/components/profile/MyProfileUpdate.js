@@ -222,7 +222,8 @@ const MyProfileUpdate = ({history}) => {
             e.target.placeholder='닉네임을 입력하세요';
           }}
           type="text"
-          value={changedUserInfo.nickname}
+          // value가 null이 되지 않게 처리
+          value={changedUserInfo.nickname? changedUserInfo.nickname:''}
           name="nickname"
           onChange={onChangeNickname}
           className="col-7 px-0 me-0"

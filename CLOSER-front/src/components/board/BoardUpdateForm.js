@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Container, FormSelect, InputGroup} from 'react-bootstrap';
@@ -141,7 +140,10 @@ const BoardUpdateForm = ({match}) => {
     })
         .then(() => {
           dispatch(updateBoard())
-          history.push(`/board-detail/${pk}/`, 'created')
+          setTimeout( function () {
+            history.replace(`/board-detail/${pk}/`)
+          }, 350);
+
         })
         .catch((err) => {
           console.log(err)
@@ -241,6 +243,15 @@ const BoardUpdateForm = ({match}) => {
       setSelectedFiles(imgUrl)
     }
   }, [imgUrl])
+
+  // 취소 버튼
+  const onClickCancel = () => {
+    setTimeout( function () {
+      history.push(`/board-detail/${pk}/`)
+    }, 350);
+  }
+
+
 
   return (
       <>
@@ -345,12 +356,8 @@ const BoardUpdateForm = ({match}) => {
 
             <div className="button-group mt-0">
               <RippleButton type="submit" cclass="cbtn cbtn-lg cbtn-primary" children="수정"/>
+              <RippleButton type="button" cclass="cbtn cbtn-secondary cbtn-lg " onClick={onClickCancel} children="취소"/>
             </div>
-
-            <Link to={`/board-detail/${pk}/`} className="d-flex justify-content-center">
-              <RippleButton type="button" cclass="cbtn cbtn-secondary cbtn-lg" children="취소"/>
-            </Link>
-
           </form>
 
         </Container>

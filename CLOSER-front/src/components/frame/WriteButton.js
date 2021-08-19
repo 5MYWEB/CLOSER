@@ -13,7 +13,7 @@ const WriteButton = ( {history, addr} ) => {
 
   const onClickWriteBoard = () => {
     setTimeout( function() {
-      history.replace('/board-create-form')
+      history.push('/board-create-form')
     }, 350);
   }
 

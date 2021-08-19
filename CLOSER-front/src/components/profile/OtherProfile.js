@@ -6,6 +6,7 @@ import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { followAction, getFollowInfoAction } from '../../modules/user';
 import UserBadge from './UserBadge';
+import { changeOtherNavbar } from '../../modules/user';
 import { RippleButton, RippleTabItem, RippleIcon } from '../../styles/index';
 import defaultProfile from '../../assets/user-on.svg';
 import compassRegular from '../../assets/profile/compass-regular.svg';
@@ -28,7 +29,8 @@ function OtherProfile({ id, history }) {
   const [isFollowed, setIsFollowed] = useState(false)
 
   const { userId } = useSelector((state) => state.user.userInfo)
-  const { following } = useSelector((state) => state.user)
+  const { following, yourNavbar } = useSelector((state) => state.user)
+
 
   useEffect(() => {
     // 타인의 정보 가져오기
@@ -90,11 +92,24 @@ function OtherProfile({ id, history }) {
       `/profile/${userInfo.userId}/user-feed`,
       `/profile/${userInfo.userId}/user-board`,
       `/profile/${userInfo.userId}/user-bookmark`
+    ],
+    [
+      '/user-feed',
+      '/user-board',
+      '/user-bookmark',
     ]
   ]
 
   const onClickTap = ( e ) => {
     history.replace(e.target.getAttribute('addr'))
+
+    if(e.target.getAttribute('addr') === children[1][0]) {
+      dispatch(changeOtherNavbar(children[2][0]))
+    } else if(e.target.getAttribute('addr') === children[1][1]) {
+      dispatch(changeOtherNavbar(children[2][1]))
+    } else if(e.target.getAttribute('addr') === children[1][2]) {
+      dispatch(changeOtherNavbar(children[2][2]))
+    }
   }
 
   // 1:1 채팅창으로 이동
@@ -107,7 +122,7 @@ function OtherProfile({ id, history }) {
   return (
     <> 
       <div className="page-semi-wrapper">
-        <Redirect to={`/profile/${id}/user-feed`} />
+      <Redirect to={`/profile/${id}${yourNavbar}`} />
       {/* 1. 프로필 사진, 뱃지와 수정 버튼 */}
         <div className="d-flex row justify-content-start align-items-end mx-0">
           <div className="row align-items-end">
@@ -184,9 +199,9 @@ function OtherProfile({ id, history }) {
       </div>
       <div className="tabs-wrapper">
         <nav className="tabs">
-          <RippleTabItem cclass="tab is-current" children={children[0][0]} onClick={onClickTap} addr={children[1][0]} />
-          <RippleTabItem cclass="tab" children={children[0][1]} onClick={onClickTap} addr={children[1][1]} />
-          <RippleTabItem cclass="tab" children={children[0][2]} onClick={onClickTap} addr={children[1][2]} />
+          <RippleTabItem cclass={ yourNavbar === children[2][0]? "tab is-current" : "tab"} children={children[0][0]} onClick={onClickTap} addr={children[1][0]} />
+          <RippleTabItem cclass={ yourNavbar === children[2][1]? "tab is-current" : "tab"} children={children[0][1]} onClick={onClickTap} addr={children[1][1]} />
+          <RippleTabItem cclass={ yourNavbar === children[2][2]? "tab is-current" : "tab"} children={children[0][2]} onClick={onClickTap} addr={children[1][2]} />
           <div className="nav-underline"></div> 
         </nav>
       </div>

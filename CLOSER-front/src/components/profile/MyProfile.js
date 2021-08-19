@@ -1,9 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import defaultProfile from '../../assets/user-on.svg';
 import UserBadge from './UserBadge';
+import { changeUserNavbar } from '../../modules/user';
 import { RippleButton, RippleTabItem } from '../../styles/index';
 import compassRegular from '../../assets/profile/compass-regular.svg';
 import calendarRegular from '../../assets/profile/calendar-alt-regular.svg';
@@ -12,8 +13,10 @@ import '../../styles/theme.css';
 
 
 function MyProfile({ history }) {
+  const dispatch = useDispatch();
+
   // const imgRef = useRef(null);
-  const { userInfo, imgUploaded } = useSelector((state) => state.user);
+  const { userInfo, imgUploaded, myNavbar } = useSelector((state) => state.user);
 
   const [profileImg, setProfileImg] = useState('')
 
@@ -44,11 +47,24 @@ function MyProfile({ history }) {
       `/profile/${userInfo.userId}/user-feed`,
       `/profile/${userInfo.userId}/user-board`,
       `/profile/${userInfo.userId}/user-bookmark`
+    ],
+    [
+      '/user-feed',
+      '/user-board',
+      '/user-bookmark',
     ]
   ]
 
   const onClickTap = ( e ) => {
     history.replace(e.target.getAttribute('addr'))
+
+    if(e.target.getAttribute('addr') === children[1][0]) {
+      dispatch(changeUserNavbar(children[2][0]))
+    } else if(e.target.getAttribute('addr') === children[1][1]) {
+      dispatch(changeUserNavbar(children[2][1]))
+    } else if(e.target.getAttribute('addr') === children[1][2]) {
+      dispatch(changeUserNavbar(children[2][2]))
+    }
   }
 
   // onClickTap
@@ -65,7 +81,7 @@ function MyProfile({ history }) {
 
   return (
       <div>
-        <Redirect to={`/profile/${userInfo.userId}/user-feed`} />
+        <Redirect to={`/profile/${userInfo.userId}${myNavbar}`} />
         <div className="page-semi-wrapper">
           {/* 1. 프로필 사진, 뱃지와 수정 버튼 */}
           <div className="d-flex row justify-content-between align-items-end mx-0">
@@ -128,9 +144,9 @@ function MyProfile({ history }) {
       
         <div className="tabs-wrapper">
           <nav className="tabs">
-            <RippleTabItem cclass="tab is-current" children={children[0][0]} onClick={onClickTap} addr={children[1][0]} />
-            <RippleTabItem cclass="tab" children={children[0][1]} onClick={onClickTap} addr={children[1][1]} />
-            <RippleTabItem cclass="tab" children={children[0][2]} onClick={onClickTap} addr={children[1][2]} />
+            <RippleTabItem cclass={ myNavbar === children[2][0]? "tab is-current" : "tab"} children={children[0][0]} onClick={onClickTap} addr={children[1][0]} />
+            <RippleTabItem cclass={ myNavbar === children[2][1]? "tab is-current" : "tab"} children={children[0][1]} onClick={onClickTap} addr={children[1][1]} />
+            <RippleTabItem cclass={ myNavbar === children[2][2]? "tab is-current" : "tab"} children={children[0][2]} onClick={onClickTap} addr={children[1][2]} />
             <div className="nav-underline"></div> 
           </nav>
         </div>

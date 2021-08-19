@@ -29,6 +29,8 @@ const initialState = {
   changedAddr: '',
   alarmList: null,
   unreadAlarmCount: 0,
+  myNavbar: '/user-feed',
+  yourNavbar: '/user-feed',
 };
 
 /* 액션 타입 만들기 */
@@ -44,6 +46,8 @@ const CHANGE_ADDR = 'CHANGE_ADDR';
 const GET_ALARM_LIST = 'GET_ALARM_LIST';
 const GET_UNREAD_ALARM = 'GET_UNREAD_ALARM';
 const REFRESH_INFO = 'REFRESH_INFO';
+const CHANGE_USER_NAVBAR = 'CHANGE_USER_NAVBAR';
+const CHANGE_OTHER_NAVBAR = 'CHANGE_OTHER_NAVBAR';
 
 /* 액션 생성함수 만들기 */
 // 액션 생성함수를 만들고 export 키워드를 사용해서 내보내주세요.
@@ -93,6 +97,16 @@ export const refreshInfo = () => ({
   type: REFRESH_INFO,
 })
 
+export const changeUserNavbar = (data) => ({
+  type: CHANGE_USER_NAVBAR,
+  data,
+})
+
+export const changeOtherNavbar = (data) => ({
+  type: CHANGE_OTHER_NAVBAR,
+  data,
+})
+
 
 
 /* 리듀서 선언 */
@@ -105,7 +119,6 @@ export const refreshInfo = () => ({
       localStorage.setItem("userToken", action.data.jwtAuthToken);
       localStorage.setItem("decodedToken", decodedToken);
       localStorage.setItem("isLoggedIn", true);
-
       return {
         ...state,
         isLoggedIn: true,
@@ -189,6 +202,18 @@ export const refreshInfo = () => ({
         userToken: localStorage.getItem("userToken"),
         decodedToken: refreshedDecodedToken,
       }
+      case CHANGE_USER_NAVBAR:
+        console.log(action.data)
+        return {
+          ...state,
+          myNavbar: action.data,
+        };
+      case CHANGE_OTHER_NAVBAR:
+        console.log(action.data)
+        return {
+          ...state,
+          yourNavbar: action.data,
+        };
     default:
       return state;
   }

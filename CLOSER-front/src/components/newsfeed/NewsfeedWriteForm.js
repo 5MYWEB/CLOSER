@@ -6,6 +6,7 @@ import AWS from 'aws-sdk';
 import { RippleButton } from '../../styles/index';
 import { createBoard } from '../../modules/board';
 import { InputGroup, Container } from 'react-bootstrap';
+import swal from 'sweetalert';
 
 const NewsfeedWriteForm = () => {
   var albumBucketName = "photo-album-hy";
@@ -43,7 +44,8 @@ const NewsfeedWriteForm = () => {
   // 텍스트가 빈 값인지 검사하는 함수
   const nullCheck = () => {
     if (text === '') {
-      alert('내용을 입력해주세요!')
+      // alert('내용을 입력해주세요!')
+      swal('내용을 입력해주세요!', "", "info");
       return false
     }
     return true

@@ -15,6 +15,7 @@ import { faHeart, faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as fasHeart, faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
 import '../../styles/theme.css'
 import { RippleButton } from '../../styles';
+import swal from 'sweetalert';
 
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -197,7 +198,8 @@ const BoardDetail = ({match}) => {
       })
           .then(() => {
             dispatch(deleteBoard())
-            alert('게시물이 삭제되었습니다.')
+            // alert('게시물이 삭제되었습니다.')
+            swal("게시물이 삭제되었습니다.", "", "success");
             // 삭제 후 페이지 뒤로가기
             // eslint-disable-next-line no-script-url
             return window.location.href = 'javascript:history.back();'

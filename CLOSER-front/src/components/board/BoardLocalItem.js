@@ -17,6 +17,9 @@ const BoardLocalItem = React.forwardRef(({ board }, ref) => {
   // 현재 로그인한 사용자의 아이디 가져오기
   const { userId } = useSelector((state) => state.user.userInfo);
 
+  // 해당 글 쓴 사람 정보
+  const [writerInfo, setWriterInfo] = useState('')
+
   // 좋아요, 북마크를 눌렀을때 상태 반영 
   const { boardLiked } = useSelector((state) => state.board);
 
@@ -82,9 +85,22 @@ const BoardLocalItem = React.forwardRef(({ board }, ref) => {
     .catch((err) => {
       console.log(err)
     })
-
+    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardLiked])
+
+  
+  // 댓글 작성자 정보 가져오기
+  useEffect(() => {
+    axios.post(`http://localhost:8080/user/profileinfo?userId=${board.userId}`)
+    .then((res) => {
+      setWriterInfo(res.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [board.userId])
 
   // 몇시간 전
   useEffect(() => {
@@ -138,7 +154,7 @@ const BoardLocalItem = React.forwardRef(({ board }, ref) => {
           </Row>
           <Row className="mx-2 mt-3">
             <Col xs={8} className="px-0">
-              By. <span style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(" ").slice(1, 3).join(" ")}</span> {board.nickname}
+              By. <span style={{color: "#5552FF", fontSize: "14px"}}>{board.location.split(" ").slice(1, 3).join(" ")}</span> {writerInfo.nickname}
             </Col>
             <Col xs={4} className="px-0 text-end my-1">
               <div className = "likeAndBookmark">

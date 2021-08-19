@@ -23,6 +23,9 @@ const BoardDetail = ({match}) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  // 해당 글 쓴 사람 정보
+  const [writerInfo, setWriterInfo] = useState('')
+
   // 현재 게시글의 정보
   const [board, setBoard] = useState({
     board_pk: null,
@@ -37,6 +40,18 @@ const BoardDetail = ({match}) => {
     badge: null,
     imgUrls: [],
   })
+
+  // 피드 작성자 정보 가져오기
+  useEffect(() => {
+    axios.post(`http://localhost:8080/user/profileinfo?userId=${board.userId}`)
+    .then((res) => {
+      setWriterInfo(res.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [board.userId])
 
   // 현재 게시글의 pk
   const pk = match.params.id;
@@ -318,7 +333,7 @@ const BoardDetail = ({match}) => {
                     fontSize: "14px"
                   }}>{board.location.split(' ').slice(1, 3).join(' ')}</span>
                   }
-                  <span className="text-dark fw-bold"> {board.nickname}</span>
+                  <span className="text-dark fw-bold"> {writerInfo.nickname}</span>
                 </Link>
               </Row>
               <Row className="g-0 ps-1">

@@ -20,6 +20,9 @@ const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
   // 현재 로그인한 사용자의 아이디 가져오기
   const { userId } = useSelector((state) => state.user.userInfo);
 
+  // 해당 글 쓴 사람 정보
+  const [writerInfo, setWriterInfo] = useState('')
+
   // 좋아요, 북마크를 눌렀을때 상태 반영 
   const { boardLiked } = useSelector((state) => state.board);
 
@@ -89,6 +92,18 @@ const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardLiked])
 
+  // 댓글 작성자 정보 가져오기
+  useEffect(() => {
+    axios.post(`http://localhost:8080/user/profileinfo?userId=${board.userId}`)
+    .then((res) => {
+      setWriterInfo(res.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [board.userId])
+
   // 몇시간 전
   useEffect(() => {
     const today = new Date();
@@ -150,7 +165,7 @@ const BoardGlobalItem = React.forwardRef(({ board }, ref) => {
                   {board.badge !== 0 && 
                     <span><UserBadgeItem badge={board.badge} cclass="board-badge"/> </span>
                   }
-                  {board.nickname}
+                  {writerInfo.nickname}
                 </Col>
                 <Col className="px-0 text-end my-1">
                   <div className = "likeAndBookmark">

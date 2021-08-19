@@ -84,7 +84,7 @@ const MyProfileUpdate = ({history}) => {
           setDoubleChecked(true)
         }else{
           // alert("이미 사용중인 닉네임입니다.")
-          swal("이미 사용중인 닉네임입니다.", "", "error");
+          swal("이미 사용중인 닉네임입니다.", "", "info");
         }
       })
       .catch((err) => {

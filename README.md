@@ -377,7 +377,7 @@
 
 > 다른 유저와 1:1 대화 기능 (상대방 프로필에서 dm 버튼 눌렀을 시)
 
-<img src="assets/lBoard_groupdboard.png" width="300" hegiht="300"/>
+<img src="assets/lBoard_groupboard.png" width="300" hegiht="300"/>
 
 > 지역게시판 클로저모임에서, 대화 참여가능 
 

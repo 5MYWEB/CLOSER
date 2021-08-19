@@ -290,9 +290,14 @@
 
 #### 1. 자취 게시판 : 자취 꿀팁을 서로 공유할 수 있는 게시판 🗒
 
+> - 좋아요 + 댓글이 많은 순서대로 인기 게시물
+> - 최신순 / 인기순 게시물 보기
+
 |    종류    |                             설명                             |                             예시                             |
 | :--------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| 한끼레시피 | 1. 좋아요 + 댓글이 많은 순서대로 인기 게시물 <br />2. 최신순 / 인기순으로 레시피 정보 교환 | <img src="assets/lBoard_bestboard.png" width="300" hegiht="300"/> |
+| 한끼레시피 |       혼밥, 혼술 등 레시피를 공유하는 정보 공유게시판        | <img src="README.assets/gBoard_recipe.png" alt="gBoard_recipe"  width="300" hegiht="300" /> |
+|   자취팁   |           자취하면서 유용한 정보를 공유하는 게시판           | <img src="README.assets/gBoard_tip.png" alt="gBoard_tip"  width="300" hegiht="300" /> |
+|   홈데코   | 자취방 인테리어, 이쁜 가구 등에 대해 정보를 주고 받는 게시판 | <img src="README.assets/gBoard_deco.png" alt="gBoard_deco"  width="300" hegiht="300" /> |
 
 
 
@@ -354,7 +359,7 @@
 <img src="assets/alarm_my.png" width="300" hegiht="300"/>
 
 
----  
+---
 
 ### H. 클로저봇 알림 기능 🔔
 

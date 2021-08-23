@@ -16,7 +16,7 @@
 - 웹 큐레이션 SNS 서비스 개발
 
 - 커뮤니티 서비스 구성
-- HTML, CSS, JavaScript, React.js, Sprint boot, REST API, MySQL 등을 활용한 실제 서비스 설계
+- HTML, CSS, JavaScript, React.js, Spring boot, REST API, MySQL 등을 활용한 실제 서비스 설계
 - 서비스 관리 및 유지보수
 
 

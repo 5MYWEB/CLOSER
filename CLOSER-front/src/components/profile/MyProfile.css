@@ -1,0 +1,135 @@
+.container{
+	width: 100%;
+	padding-right: 0;
+	padding-left: 0;
+	margin-right: 0;
+	margin-left: 0;
+	display: grid;
+	overflow: visible;
+}
+
+/* .profilepart{
+	margin-top: 8vh;
+  display: grid;
+	grid-template-columns: repeat(4, 25%);
+	grid-template-rows: repeat(7, 17%);
+} */
+
+/* .item1 {
+	grid-column: 1 / 5;
+	grid-row : 1 / 3;
+}
+
+.item2 {
+	grid-row: 3 / 5;
+}
+
+.item3 {
+	grid-template-columns: 2 / span 1;
+}
+
+.item4 {
+	display: flex;
+	text-align:center;
+	vertical-align:middle;
+	margin-top: 0.3vh
+}
+
+.item5{
+	
+} */
+
+.userName{
+    font-weight: 900;
+}
+
+.userYear{
+    font-weight: 500;
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+    position: relative;
+}
+
+
+.userLocation{
+    font-size: 1.8vh;
+}
+
+/* .item6 {
+    grid-column : 2 / span 3;
+}
+
+.item7{
+	margin-top: 0.8vh;
+	grid-column : 2 / 3 ;
+}
+
+.item8{
+	margin-top: 0.8vh;
+	grid-column : 3 / 4 ;
+}
+
+.item9 {
+    grid-column : 5 / 1 ;
+	margin-top: 0.5vh;
+}
+
+.item10{
+	text-align:center;
+	vertical-align:middle;
+	margin-top: 0.3vh
+}
+
+.item11{
+	text-align:center;
+	vertical-align:middle;
+	margin-top: 0.3vh
+}
+
+.item12 {
+    grid-column : 4 / 5 ;
+	margin-top: 0.3vh;
+} */
+
+
+.myprofilepost{
+    background-color: #c8c6fc;
+    display: grid;
+	margin-top: 5vh;
+    grid-template-columns: repeat(3, 33%);
+    grid-template-rows: 5vw ;
+}
+
+
+
+.myfeed{
+	text-align:center;
+	vertical-align:middle;
+	margin-top: 0.3vh;
+}
+
+.mypost{
+	text-align:center;
+	vertical-align:middle;
+	margin-top: 0.3vh;
+}
+
+.mybookmark{
+	text-align:center;
+	vertical-align:middle;
+	margin-top: 0.3vh;
+}
+
+.profile-share {
+	overflow: hidden;
+	position: relative;
+}
+
+.profile-share-link {
+	position: absolute;
+	opacity: 0;
+	right: 10px;
+	bottom: 10px;
+}

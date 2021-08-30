@@ -3,14 +3,25 @@ package com.ssafy.closer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.annotation.PostConstruct;
 import java.util.Arrays;
+import java.util.TimeZone;
 
+@EnableJpaAuditing
 @SpringBootApplication
+@EnableScheduling
 public class CloserApplication implements WebMvcConfigurer {
+
+    @PostConstruct
+    void started() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(CloserApplication.class, args);
@@ -18,14 +29,14 @@ public class CloserApplication implements WebMvcConfigurer {
 
     @Autowired
     private JwtInterceptor jwtInterceptor;
-
     /**
      * JWTInterceptor를 설치한다.
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/**") // 기본 적용 경로
-                .excludePathPatterns(Arrays.asList("/api/user/**"));// 적용 제외 경로
+        System.out.println(">>> 인터셉터 등록");
+//        registry.addInterceptor(jwtInterceptor).addPathPatterns("/user/**") // 기본 적용 경로
+//                .excludePathPatterns(Arrays.asList("/user/login"));// 적용 제외 경로
     }
 
     /**

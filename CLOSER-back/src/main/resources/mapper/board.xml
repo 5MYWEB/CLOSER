@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.closer.model.mapper.BoardMapper">
+
+    <!--                             자취 게시판                         -->
+
+    <!-- 전체 인기글 -->
+    <!-- 라이크, 공유 수 합산이 높은 것으로 -->
+    <select id="gBoardList" resultType="BoardDto">
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        from board As bd
+                 left join user_badge AS ub
+                           on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
+        where bd.kind_pk = 1 or bd.kind_pk = 2 or bd.kind_pk = 3
+        order by cnt desc;
+    </select>
+
+    <!-- 자취 게시판 - 한끼레시피(이번 주(달)) best -->
+    <!-- 일요일이 일주일 시작이라고 가정하고 일요일 ~ 현재 요일까지 등록된 게시글 중 좋아요, 북마크 높은 순 -->
+    <select id="gBoardWeekBestList1" resultType="BoardDto">
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        from board As bd
+                 left join user_badge AS ub
+                           on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
+        where bd.kind_pk = 1 and created_at >= (SELECT DATE_SUB(DATE_FORMAT(NOW(), '%Y-%m-%d'), INTERVAL(DAYOFWEEK(DATE_FORMAT(NOW(), '%Y-%m-%d')) - 1) DAY))
+        order by cnt desc
+        limit 6;
+    </select>
+
+    <!-- 자취 게시판 - 한끼레시피 (최신순) -->
+    <select id="gBoardNewList1" resultType="BoardDto">
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        from board As bd
+                 left join user_badge AS ub
+                           on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
+        where bd.kind_pk = 1
+        order by created_at desc;
+    </select>
+
+    <!-- 자취 게시판 - 한끼레시피 (인기순) -->
+<!--    todo. (board.xml) 현재 전체 기간 중 인기글로 되어있는데 today 기준으로 정렬 해야 함 (2021.08.03 수정 예정) -->
+    <select id="gBoardBestList1" resultType="BoardDto">
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        from board As bd
+                 left join user_badge AS ub
+                           on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
+        where bd.kind_pk = 1
+        order by cnt desc;
+    </select>
+
+    <!-- 자취 게시판 - 자취팁(이번 주(달)) best -->
+    <!-- 일요일이 일주일 시작이라고 가정하고 일요일 ~ 현재 요일까지 등록된 게시글 중 좋아요, 북마크 높은 순 -->
+    <select id="gBoardWeekBestList2" resultType="BoardDto">
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        from board As bd
+                 left join user_badge AS ub
+                           on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
+        where bd.kind_pk = 2 and created_at >= (SELECT DATE_SUB(DATE_FORMAT(NOW(), '%Y-%m-%d'), INTERVAL(DAYOFWEEK(DATE_FORMAT(NOW(), '%Y-%m-%d')) - 1) DAY))
+        order by cnt desc
+        limit 6;
+    </select>
+
+    <!-- 자취 게시판 - 자취팁 (최신순) -->
+    <select id="gBoardNewList2" resultType="BoardDto">
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        from board As bd
+                 left join user_badge AS ub
+                           on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
+        where bd.kind_pk = 2
+        order by created_at desc;
+    </select>
+
+    <!-- 자취 게시판 - 자취팁 (인기순) -->
+    <!--    todo. (board.xml) 현재 전체 기간 중 인기글로 되어있는데 today 기준으로 정렬 해야 함 (2021.08.03 수정 예정) -->
+    <select id="gBoardBestList2" resultType="BoardDto">
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        from board As bd
+                 left join user_badge AS ub
+                           on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
+        where bd.kind_pk = 2
+        order by cnt desc;
+    </select>
+
+    <!-- 자취 게시판 - 홈데코(이번 주(달)) best -->
+    <!-- 일요일이 일주일 시작이라고 가정하고 일요일 ~ 현재 요일까지 등록된 게시글 중 좋아요, 북마크 높은 순 -->
+    <select id="gBoardWeekBestList3" resultType="BoardDto">
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        from board As bd
+                 left join user_badge AS ub
+                           on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
+        where bd.kind_pk = 3 and created_at >= (SELECT DATE_SUB(DATE_FORMAT(NOW(), '%Y-%m-%d'), INTERVAL(DAYOFWEEK(DATE_FORMAT(NOW(), '%Y-%m-%d')) - 1) DAY))
+        order by cnt desc
+        limit 6;
+    </select>
+
+    <!-- 자취 게시판 - 홈데코 (최신순) -->
+    <select id="gBoardNewList3" resultType="BoardDto">
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        from board As bd
+                 left join user_badge AS ub
+                           on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
+        where bd.kind_pk = 3
+        order by created_at desc;
+    </select>
+
+    <!-- 자취 게시판 - 홈데코 (인기순) -->
+    <!--    todo. (board.xml) 현재 전체 기간 중 인기글로 되어있는데 today 기준으로 정렬 해야 함 (2021.08.03 수정 예정) -->
+    <select id="gBoardBestList3" resultType="BoardDto">
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge
+        from board As bd
+                 left join user_badge AS ub
+                           on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
+        where bd.kind_pk = 3
+        order by cnt desc;
+    </select>
+
+
+
+    <!--                             지역 게시판                         -->
+    <!-- 지역 게시판 : 나와 위치가 같은 사람들이 올린 모임 게시글-->
+
+
+
+    <!-- 지역게시판 - 공동 구매 -->
+    <!-- 처음 눌렀을 때 - 공동구매 tab이 default -->
+    <select id="lBoardList1" parameterType="String" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, totalNum, gatherNum, location, nickname
+        from board
+        where location like concat(substring_index(#{location}, ' ', 2), '%') and kind_pk = 4
+        order by created_at desc;
+    </select>
+
+    <!-- 지역게시판 - 클로저모임(모임) -->
+    <select id="lBoardList2" parameterType="String" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, totalNum, gatherNum, location, nickname
+        from board
+        where location like concat(substring_index(#{location}, ' ', 2), '%') and kind_pk = 5
+        order by created_at desc;
+    </select>
+
+    <!-- 지역게시판 - 도와주세요(응급상황) -->
+    <select id="lBoardList3" parameterType="String" resultType="BoardDto">
+        select board_pk, userId, title, content, created_at, totalNum, gatherNum, location, nickname
+        from board
+        where location like concat(substring_index(#{location}, ' ', 2), '%') and kind_pk = 6
+        order by created_at desc;
+    </select>
+
+    <!--                             뉴스피드                         -->
+
+    <!-- CLOSER 전체 유저의 피드 목록 -->
+    <select id="feedListAll" parameterType="int" resultType="BoardDto">
+        select B.board_pk as board_pk, B.kind_pk as kind_pk, B.userId as userId, B.content as content, B.created_at as created_at, B.updated_at as updated_at, B.location as location, B.nickname as nickname
+        from board B join board_category BC on B.kind_pk = BC.kind_pk
+        where BC.kind_pk = 7
+        order by B.created_at desc
+        limit #{page}, 10;
+    </select>
+
+    <!-- 나와 동일한 위치인 사람들의 피드 목록 -->
+    <select id="feedListNear" parameterType="Map" resultType="BoardDto">
+        select B.board_pk as board_pk, B.kind_pk as kind_pk, B.userId as userId, B.content as content, B.created_at as created_at, B.updated_at as updated_at, B.location as location, B.nickname as nickname
+        from board B join board_category BC on B.kind_pk = BC.kind_pk
+        where BC.kind_pk = 7 and B.location like concat(substring_index(#{location}, ' ', 2), '%')
+        order by B.created_at desc
+        limit #{page}, 10;
+    </select>
+
+    <!-- 내가 팔로우 한 사람들의 피드 목록 -->
+    <select id="feedListFollow" parameterType="Map" resultType="BoardDto">
+        select B.board_pk as board_pk, B.kind_pk as kind_pk, B.userId as userId, B.content as content, B.created_at as created_at, B.updated_at as updated_at, B.location as location, B.nickname as nickname
+        from user_follow U left join board B on (U.passiveUser = B.userId)
+        where U.activeUser=#{userId} and B.kind_pk = 7
+        order by B.created_at desc
+        limit #{page}, 10;
+    </select>
+
+
+    <!-- 게시글 CRUD -->
+
+    <!-- Create -->
+    <!-- gboard 생성 -->
+    <insert id="gBoardCreate" parameterType="BoardDto" useGeneratedKeys="true" keyProperty="board_pk" keyColumn="board_pk">
+        insert into board(kind_pk, userId, title, content, created_at, updated_at, nickname)
+        values (#{kind_pk}, #{userId}, #{title}, #{content}, #{created_at}, #{updated_at}, #{nickname})
+    </insert>
+
+    <!-- lboard 생성 -->
+    <insert id="lBoardCreate" parameterType="BoardDto" useGeneratedKeys="true" keyProperty="board_pk" keyColumn="board_pk">
+        insert into board(kind_pk, userId, title, content, created_at, updated_at, totalNum, GatherNum, location, nickname)
+        values (#{kind_pk}, #{userId}, #{title}, #{content}, #{created_at}, #{updated_at}, #{totalNum}, 1, #{location}, #{nickname})
+    </insert>
+
+    <!-- 피드 생성 -->
+    <insert id="feedCreate" parameterType="BoardDto" useGeneratedKeys="true" keyProperty="board_pk" keyColumn="board_pk">
+        insert into board(kind_pk, userId, content, location, created_at, updated_at, nickname)
+        values (#{kind_pk}, #{userId}, #{content}, #{location}, #{created_at}, #{updated_at}, #{nickname})
+    </insert>
+
+    <!-- Read -->
+    <!-- Gboard, Lboard, Feed 상세 조회 -->
+    <select id="read" parameterType="int" resultType="BoardDto">
+        select bd.board_pk, bd.kind_pk as kind_pk, bd.userId, bd.title, bd.content, bd.created_at, bd.location, bd.nickname, ub.kind_pk As badge, bd.totalNum as totalNum, bd.gatherNum as gatherNum
+        from board As bd
+                 left join user_badge AS ub
+                           on bd.userId = ub.userId and bd.kind_pk=ub.kind_pk
+        where bd.board_pk = #{board_pk}
+    </select>
+
+
+
+    <!-- update -->
+    <!-- gboard 수정 -->
+    <update id="gBoardUpdate" parameterType="BoardDto">
+        update board
+        set kind_pk=#{kind_pk}, title=#{title}, content=#{content}, updated_at=#{updated_at}
+        where board_pk = #{board_pk}
+    </update>
+
+    <!-- lboard 수정 -->
+    <update id="lBoardUpdate" parameterType="BoardDto">
+        update board
+        set kind_pk=#{kind_pk}, title=#{title}, content=#{content}, updated_at=#{updated_at}, totalNum=if(#{totalNum} >= gatherNum, #{totalNum}, totalNum)
+        where board_pk = #{board_pk}
+    </update>
+
+    <!-- delete -->
+    <!-- Gboard, Lboard, Feed 삭제 -->
+    <delete id="delete" parameterType="int">
+        delete
+        from board
+        where board_pk = #{board_pk}
+    </delete>
+
+    <!-- 유저 find   -->
+    <!-- 해당 gboard, lboard, feed 쓴 유저 찾기 -->
+    <select id="findUser" parameterType="int" resultType="String">
+        select userId
+        from board
+        where board_pk = #{board_pk}
+    </select>
+
+    <!-- 좋아요 or 북마크 클릭시 갯수 증가 -->
+    <update id="increaseCount" parameterType="int">
+        update board
+        set cnt = cnt+1
+        where board_pk=#{board_pk}
+    </update>
+
+    <!-- 좋아요 or 북마크 취소시 갯수 감소 -->
+    <update id="decreaseCount" parameterType="int">
+        update board
+        set cnt = cnt-1
+        where board_pk=#{board_pk}
+    </update>
+
+    <!-- 지역게시판 참여 -->
+    <insert id="addJoin" parameterType="JoinDto">
+        insert into board_join(board_pk, userId)
+        select * from (select #{board_pk}, #{userId}) as tmp
+        where exists (select * from board where board_pk=#{board_pk} and totalNum > gatherNum);
+    </insert>
+
+    <!-- 지역게시판 참여 취소 -->
+    <delete id="cancelJoin" parameterType="JoinDto">
+        delete from board_join
+        where board_pk=#{board_pk} and userId=#{userId}
+    </delete>
+
+    <!-- 지역 게시판 참가 유무 -->
+    <select id="isJoin" parameterType="JoinDto" resultType="int">
+        select count(*)
+        from board_join
+        where board_pk = #{board_pk} and userId=#{userId}
+    </select>
+
+    <!-- 지역게시판 참여 / 취소시 갯수 변경 -->
+    <update id="changeJoinCnt" parameterType="int">
+        update board
+        set gatherNum = (select count(*) from board_join where board_pk=#{board_pk})
+        where board_pk=#{board_pk}
+    </update>
+
+    <!-- 지역게시판 참여 참가자 수 -->
+    <select id="countJoin" parameterType="int" resultType="int">
+        select gatherNum
+        from board
+        where board_pk=#{board_pk}
+    </select>
+
+    <!-- 뉴스피드 게시글 총 갯수 -->
+    <select id="countFeedAll" resultType="int">
+        select count(*)
+        from board
+        where kind_pk=7
+    </select>
+
+    <!-- 나와 동일한 위치인 사람들의 피드 갯수 -->
+    <select id="countFeedNear" parameterType="String" resultType="int">
+        select count(*)
+        from board
+        where kind_pk=7 and location like concat(substring_index(#{location}, ' ', 2), '%')
+    </select>
+
+    <!--  내가 팔로우 한 사람들의 피드 갯수 -->
+    <select id="countFeedFollow" parameterType="String" resultType="int">
+        select count(*)
+        from user_follow U left join board B on (U.passiveUser = B.userId)
+        where U.activeUser=#{userId} and B.kind_pk = 7
+    </select>
+
+    <select id="commentKind" parameterType="int" resultType="int">
+        select kind_pk
+        from board
+        where board_pk = #{board_pk}
+    </select>
+
+</mapper>

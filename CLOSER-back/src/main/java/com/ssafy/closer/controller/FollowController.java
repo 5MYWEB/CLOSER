@@ -1,12 +1,15 @@
 package com.ssafy.closer.controller;
 
+import com.ssafy.closer.model.dto.AlarmDto;
+import com.ssafy.closer.model.dto.BoardDto;
 import com.ssafy.closer.model.dto.FollowDto;
-import com.ssafy.closer.model.dto.FollowOutputDto;
 import com.ssafy.closer.model.dto.MemberDto;
+import com.ssafy.closer.model.service.AlarmService;
 import com.ssafy.closer.model.service.FollowService;
 import com.ssafy.closer.model.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +17,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/follow")
 @Api("User Controller API V1")
 @CrossOrigin("*")
 public class FollowController {
-
     private static final Logger logger = LoggerFactory.getLogger(FollowController.class);
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
@@ -32,75 +33,103 @@ public class FollowController {
     private FollowService followService;
 
     @Autowired
+    private AlarmService alarmService;
+
+    @Autowired
     private UserService userService;
 
     // post 확인해봐야함
-    @ApiOperation(value = "팔로우 or 언팔로우", response = FollowOutputDto.class)
-//    @RequestMapping("/{id}/follow")
+    // 팔로우 or 언팔로우 , 팔로잉 갯수, 팔로워 갯수
+    @ApiOperation(value = "팔로우 or 언팔로우")
     @PostMapping("/{id}/follow")
-    public FollowOutputDto follow(@PathVariable String id, HttpServletRequest request) {
-        logger.debug(id +"/follow" + ": 팔로우 or 언팔로우 요청");
-        logger.debug(request.getParameter("flag"));
+    public ResponseEntity follow(@PathVariable String id, @RequestBody Map<String, String> info) {
+        try {
+            // 로그인 유저 정보 갖고 온다 => activeUser
+            String activeUser = info.get("userId");
 
-        // 로그인 유저 정보 갖고 온다 => activeUser
-        String activeUser = request.getParameter("login_user");
+            // 로그인 유저가 팔로우 누른 유저 (passiveUser)
+            String passiveUser = id;
 
-        // 로그인 유저가 팔로우 누른 유저 (passiveUser)
-        String passiveUser = id;
+            // 현재 로드 상태인지 클릭 상태인지 갖고 온다
+            String flag = info.get("flag");
 
-        // activeUser, passiveUser 정보가 담긴 followDto 생성
-        FollowDto followDto = new FollowDto(activeUser, passiveUser);
+            // activeUser, passiveUser 정보가 담긴 followDto 생성
+            FollowDto followDto = new FollowDto(activeUser, passiveUser);
 
-        // 리턴할 값 선언 (팔로우 유무, 팔로워 수, 팔로잉 수)
-        FollowOutputDto followOutputDto = new FollowOutputDto();
+            // 리턴할 값 선언 (팔로우 유무, 팔로워 수, 팔로잉 수)
+            JSONObject output = new JSONObject();
 
-        if(request.getParameter("flag").equals("false")){ // 로드시
-            if (followService.isFollow(followDto) > 0){ // 팔로우인 경우
-                followOutputDto.setFollowed(true);
-            }else{ // 언팔로우인 경우
-                followOutputDto.setFollowed(false);
-            }
-        }else{ // 클릭시
-            // 본인과 유저가 다른 경우에만 팔로우, 언팔로우를 할 수 있음
-            if(!activeUser.equals(passiveUser)) {
-                if (followService.isFollow(followDto) > 0){ // 팔로우인 경우 => 언팔로우
-                    followService.unfollow(followDto);
-                    followOutputDto.setFollowed(false);
-                }else{ // 언팔로우인 경우 => 팔로우
-                    followService.follow(followDto);
-                    followOutputDto.setFollowed(true);
+            if(flag.equals("false")){ // 로드시
+                if (followService.isFollow(followDto) > 0){ // 팔로우인 경우
+                    output.put("followed", true);
+                }else{ // 언팔로우인 경우
+                    output.put("followed", false);
+                }
+            }else{ // 클릭시
+                // 본인과 유저가 다른 경우에만 팔로우, 언팔로우를 할 수 있음
+                if(!activeUser.equals(passiveUser)) {
+                    if (followService.isFollow(followDto) > 0){ // 팔로우인 경우 => 언팔로우
+                        followService.unfollow(followDto);
+                        output.put("followed", false);
+                    }else{ // 언팔로우인 경우 => 팔로우
+                        followService.follow(followDto);
+                        output.put("followed", true);
+
+                        // 알림창
+                        // 로그인한 유저가 좋아요(북마크) 하면 -> 상대방 기준으로 alarm이 생성
+                        AlarmDto alarmDto = new AlarmDto();
+                        alarmDto.setUserId(passiveUser); // 상대
+                        alarmDto.setCategory_pk(4); // 4: 팔로우
+                        alarmDto.setOtherUserId(activeUser); // 로그인유저가 팔로우를 클릭했다
+                        alarmDto.setCreated_at(LocalDate.now());
+
+                        // 알림내용
+                        // nickname 구하기
+                        MemberDto memberDto = userService.userInfo(activeUser);
+                        String content = memberDto.getNickname() + "님이 팔로우를 시작했습니다.";
+                        alarmDto.setContent(content);
+
+                        alarmService.alarmFollowCreate(alarmDto);
+                    }
                 }
             }
+
+            // 팔로잉, 팔로워 수
+            output.put("following", followService.countActiveUser(followDto)); // 팔로잉 수
+            output.put("follower", followService.countPassiveUser(followDto)); // 팔로워 수
+
+            return new ResponseEntity(output, HttpStatus.OK);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
         }
 
-        followOutputDto.setFollowing(followService.countActiveUser(followDto)); // 팔로잉 수
-        followOutputDto.setFollower(followService.countPassiveUser(followDto)); // 팔로워 수
-
-        return followOutputDto;
     }
 
-    @ApiOperation(value = "팔로잉 리스트", response = FollowDto.class)
+    @ApiOperation(value = "팔로잉 리스트")
     @PostMapping("/{id}/following")
-    public List<FollowDto> followingList(@PathVariable String id){
-        logger.debug(id +"/following" + ": 팔로잉 리스트");
-
-        // 로그인 유저가 팔로우 누른 유저 (passiveUser)
-        String passiveUser = id;
-
-        return followService.activeUserList(passiveUser);
-
+    public ResponseEntity followingList(@PathVariable String id){
+        try {
+            // 로그인 유저가 팔로우 누른 유저 (passiveUser)
+            String passiveUser = id;
+            return new ResponseEntity(followService.activeUserList(passiveUser), HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
+        }
     }
 
-    @ApiOperation(value = "팔로워 리스트", response = FollowDto.class)
+    @ApiOperation(value = "팔로워 리스트")
     @PostMapping("/{id}/follower")
-    public List<FollowDto> followerList(@PathVariable String id){
-        logger.debug(id +"/follower" + ": 팔로워 리스트");
-
-        // 로그인 유저가 팔로우 누른 유저 (passiveUser)
-        String passiveUser = id;
-
-        return followService.passiveUserList(passiveUser);
-
+    public ResponseEntity followerList(@PathVariable String id){
+        try {
+            // 로그인 유저가 팔로우 누른 유저 (passiveUser)
+            String passiveUser = id;
+            return new ResponseEntity(followService.passiveUserList(passiveUser), HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
+        }
     }
 
 }

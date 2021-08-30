@@ -1,0 +1,385 @@
+:root {
+  --img-length: 3;
+  --img-width: calc(100% / var(--img-length));
+}
+
+/* :root {
+  --nav-length: 3;
+  --nav-width: calc(100% / var(--nav-length));
+} */
+
+.closerbot-about {
+  width: 25vh;
+  height: 14vh;
+}
+
+.icon-about {
+  width: 10vh;
+}
+.icon-purse{
+  width: 5vh;
+  padding-bottom: 1rem;
+}
+
+/* 펄스 효과 */
+
+.green{
+  background: #66FF99;
+}
+
+.orange{
+    background: #f17c57fa;
+}
+
+.blue{
+  background: #3652D9;
+}
+
+.primary{
+  background: #5552FF;
+}
+
+.secondary{
+  background: #9392FF;
+}
+
+.light{
+  background: #c5c4fb;
+}
+
+.rose{
+  background:#FF66CC;
+}
+
+.center {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 50vh;
+}
+
+.circle {
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  box-shadow: 0px 0px 1px 1px #0000001a;
+}
+
+.pulse {
+  animation: pulse-animation 1.2s infinite;
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0px rgba(147, 146, 255, 0.7);
+  }
+  100% {  
+    box-shadow: 0 0 0 150px rgba(147, 146, 255, 0);
+  }
+}
+
+
+.circle2 {
+  padding-top: 0.3rem;
+  width: 0.1vw;
+  height: 0.1vw;
+  border-radius: 50%;
+  box-shadow: 0px 0px 1px 1px #0000001a;
+}
+
+.pulse2 {
+  animation: pulse-animation2 0.8s infinite;
+}
+
+@keyframes pulse-animation2 {
+  0% {
+    box-shadow: 0 0 0 0px rgba(197, 196, 253, 0.7);
+  }
+  100% {  
+    box-shadow: 0 0 0 20px rgba(147, 146, 255, 0);
+  }
+}
+
+
+
+@media (max-width:900px){
+  .master{
+    display:none
+  }
+}
+
+
+
+/* float animation */
+
+@keyframes float {
+	0% {
+		/* box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6); */
+		transform: translatey(0px);
+	}
+	50% {
+		/* box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2); */
+		transform: translatey(-20px);
+	}
+	100% {
+		/* box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6); */
+		transform: translatey(0px);
+	}
+}
+
+.avatar {
+	transform: translatey(0px);
+	animation: float 2s ease-in-out infinite;
+}
+
+/* .shadow {
+  height: 3px;
+  background: #5552FF;
+  width: calc(var(--img-width)*0.6);
+} */
+
+/* move animation */
+
+/* @keyframes move {
+  0%   {left:0px; bottom:300px;}
+  100%  {left:0px; bottom:0px;}
+}
+
+.moving {
+  position: relative;
+  animation: move 1s linear 2s alternate;
+} */
+
+
+/* 스크롤 아이콘 애니메이션 */
+.chevron-container {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.chevron {
+  position: absolute;
+  width: 35px;
+  height: 10px;
+  opacity: 0;
+  transform: scale3d(0.5, 0.5, 0.5);
+  animation: move 3s ease-out infinite;
+}
+
+.chevron:first-child {
+  animation: move 3s ease-out 1s infinite;
+}
+
+.chevron:nth-child(2) {
+  animation: move 3s ease-out 2s infinite;
+}
+
+.chevron:before,
+.chevron:after {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 51%;
+  background: #9392FF;
+}
+
+.chevron:before {
+  left: 0;
+  transform: skew(0deg, 30deg);
+}
+
+.chevron:after {
+  right: 0;
+  width: 50%;
+  transform: skew(0deg, -30deg);
+}
+
+@keyframes move {
+  25% {
+    opacity: 1;
+
+  }
+  33% {
+    opacity: 1;
+    transform: translateY(30px);
+  }
+  67% {
+    opacity: 1;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(55px) scale3d(0.5, 0.5, 0.5);
+  }
+}
+
+.text {
+  display: block;
+  margin-top: 75px;
+  margin-left: -30px;
+  font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+  font-size: 12px;
+  color: #fff;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: .25;
+  animation: pulse 2s linear alternate infinite;
+}
+
+@keyframes pulse {
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* twitter heart 적용해봤으나 사이즈가 작아서 보류 */
+/* .heart {
+  cursor: pointer;
+  width: 9vw;
+  height: 5vh;
+  background-image:url( 'https://abs.twimg.com/a/1446542199/img/t1/web_heart_animation.png');
+  background-position: left;
+  background-repeat:no-repeat;
+  background-size:3900%;
+}
+
+@keyframes heart-burst {
+from {background-position:left;}
+to { background-position:right;}
+}
+
+.is-animating {
+  animation: heart-burst .8s steps(28) 1;
+} */
+
+/* .heart {
+animation: heart-burst 1s infinite;
+} */
+
+/* sqaure animation */
+/* .body {
+  padding: 0;
+  margin: 0;
+  min-height: 500vh;
+  animation-delay: calc(var(--scroll) * -1s);
+  animation: body 1s linear;
+}
+@keyframes body {
+  to {
+    background-color: rgb(19, 48, 97);
+  }
+}
+
+.progress {
+  height: 3px;
+  width: 0%;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  animation: progress 1s linear;
+}
+@keyframes progress {
+  to {
+    background-color: #9392FF;
+    width: 100%;
+  }
+}
+
+.cube-wrap {
+  --size: 30vmin;
+  position: relative;
+  margin-top: 16rem;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  perspective: 100vmin;
+}
+.cube {
+  transform-style: preserve-3d;
+  transform: rotateX(0deg) rotateZ(45deg) rotateY(-45deg);
+  animation: cube 1s linear;
+}
+@keyframes cube {
+  to {
+    transform: rotateX(360deg) rotateZ(45deg) rotateY(-45deg);
+  }
+}
+
+.side {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  background-color: #eee;
+  backface-visibility: visible;
+  top: calc(var(--size) * -.5);
+  left: calc(var(--size) * -.5);
+}
+.top {
+  background-color: #d8d7f8;
+  background-image: url('../assets/newsfeed-on.svg');
+  background-size: 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: rotateX(90deg) translateZ(calc(var(--size) * .5));
+}
+.bottom {
+  background-color: #9392FF;
+  background-image: url('../assets/board-on.svg');
+  background-size: 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: rotateX(90deg) translateZ(calc(var(--size) * -.5));
+}
+.left {
+  background-color: #c1c0fb;
+  background-image: url('../assets/alerts-on.svg');
+  background-size: 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: rotateY(90deg) translateZ(calc(var(--size) * .5));
+}
+.right {
+  background-color: #cecdfb;
+  background-image: url('../assets/messages-on.svg');
+  background-size: 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: rotateY(90deg) translateZ(calc(var(--size) * -.5));
+}
+.front {
+  background-color: #b4b2fa;
+  background-image: url('../assets/house-user-solid.svg');
+  background-size: 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: translateZ(calc(var(--size) * .5));
+}
+.back {
+  background-color: #c0befa;
+  background-image: url('../assets/users-regular.svg');
+  background-size: 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: translateZ(calc(var(--size) * -.5));
+} */
+
+/* :root * { */
+  /* Pause the animation */
+  /* animation-play-state: paused; */
+  /* Bind the animation to scroll */
+  /* animation-delay: calc(var(--scroll) * -1s); */
+  /* These last 2 properites clean up overshoot weirdness */
+  /* animation-iteration-count: 1;
+  animation-fill-mode: both;
+} */
+
+section {
+  width: 100%;
+  height: 90vh;
+  border-bottom: 1px solid rgba(160, 145, 245, .5);
+}

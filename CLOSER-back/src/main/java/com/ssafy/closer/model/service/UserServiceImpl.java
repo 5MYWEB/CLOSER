@@ -1,5 +1,7 @@
 package com.ssafy.closer.model.service;
 
+import com.ssafy.closer.model.dto.BoardDto;
+import com.ssafy.closer.model.dto.InfoDto;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +17,6 @@ import com.ssafy.closer.model.mapper.UserMapper;
 
 @Service
 public class UserServiceImpl implements UserService {
-
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Map<String, String> login(Map<String, String> user) throws SQLException {
-        if(user.get("userId") == null || user.get("password") == null)
+        if (user.get("userId") == null || user.get("password") == null)
             return null;
         return sqlSession.getMapper(UserMapper.class).login(user);
     }
@@ -34,8 +35,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public MemberDto userInfo(String userid) {
-        return sqlSession.getMapper(UserMapper.class).userInfo(userid);
+    public MemberDto userInfo(String userId) {
+        return sqlSession.getMapper(UserMapper.class).userInfo(userId);
     }
 
     @Override
@@ -61,5 +62,40 @@ public class UserServiceImpl implements UserService {
     @Override
     public int userNicknameCheck(String nickname) {
         return sqlSession.getMapper(UserMapper.class).userNicknameCheck(nickname);
+    }
+
+    @Override
+    public List<Integer> userbadge(String userId) {
+        return sqlSession.getMapper(UserMapper.class).userbadge(userId);
+    }
+
+    @Override
+    public List<BoardDto> userPost(String userId) {
+        return sqlSession.getMapper(UserMapper.class).userPost(userId);
+    }
+
+    @Override
+    public List<BoardDto> userFeed(String userId) {
+        return sqlSession.getMapper(UserMapper.class).userFeed(userId);
+    }
+
+    @Override
+    public List<BoardDto> userBookmark(String userId) {
+        return sqlSession.getMapper(UserMapper.class).userBookmark(userId);
+    }
+
+    @Override
+    public boolean changeLocation(MemberDto memberDto) {
+        return sqlSession.getMapper(UserMapper.class).changeLocation(memberDto)==1;
+    }
+
+    @Override
+    public int countBoardByUser(String userId) {
+        return sqlSession.getMapper(UserMapper.class).countBoardByUser(userId);
+    }
+
+    @Override
+    public boolean usertoken(String userId, String chattoken) {
+        return sqlSession.getMapper(UserMapper.class).usertoken(userId,chattoken);
     }
 }

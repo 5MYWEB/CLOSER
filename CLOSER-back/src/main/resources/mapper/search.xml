@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.closer.model.mapper.SearchMapper">
+
+    <!-- [최신순] 전체게시판 선택 시-->
+    <select id="recentSearchAll" parameterType="SearchDto" resultType="BoardDto">
+        select *
+        from board
+        where if(#{choice_pk},
+               (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%')),
+               nickname like concat('%', #{keyword}, '%')) and kind_pk &lt; 7
+        order by created_at desc
+    </select>
+
+    <!-- [인기순] 전체게시판 선택 시-->
+    <select id="popularSearchAll" parameterType="SearchDto" resultType="BoardDto">
+        select *
+        from board
+        where if(#{choice_pk},
+               (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%')),
+               nickname like concat('%', #{keyword}, '%')) and kind_pk &lt; 7
+        order by cnt desc, created_at desc
+    </select>
+
+    <!-- [최신순] 자취게시판(GBoard) 선택 시 - 한끼레시피 / 자취 팁 / 홈데코 -->
+    <select id="recentSearchGboard" parameterType="SearchDto" resultType="BoardDto">
+        select *
+        from board
+        where (kind_pk=1 or kind_pk=2 or kind_pk=3) and
+            if(#{choice_pk},
+               (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%')),
+               nickname like concat('%', #{keyword}, '%'))
+        order by created_at desc
+    </select>
+
+    <!-- [인기순] 자취게시판(GBoard) 선택 시 - 한끼레시피 / 자취 팁 / 홈데코 -->
+    <select id="popularSearchGboard" parameterType="SearchDto" resultType="BoardDto">
+        select *
+        from board
+        where (kind_pk=1 or kind_pk=2 or kind_pk=3) and
+            if(#{choice_pk},
+               (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%')),
+               nickname like concat('%', #{keyword}, '%'))
+        order by cnt desc, created_at desc
+    </select>
+
+    <!-- [최신순] 지역게시판(LBoard) 선택 시 - 공동구매 / 클로저 모임 / 도와주세요 -->
+    <select id="recentSearchLboard" parameterType="SearchDto" resultType="BoardDto">
+        select *
+        from board
+        where (kind_pk=4 or kind_pk=5 or kind_pk=6) and
+            if(#{choice_pk},
+               (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%')),
+               nickname like concat('%', #{keyword}, '%'))
+        order by created_at desc
+    </select>
+
+    <!-- [인기순] 지역게시판(LBoard) 선택 시 - 공동구매 / 클로저 모임 / 도와주세요 -->
+    <select id="popularSearchLboard" parameterType="SearchDto" resultType="BoardDto">
+        select *
+        from board
+        where (kind_pk=4 or kind_pk=5 or kind_pk=6) and
+            if(#{choice_pk},
+               (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%')),
+               nickname like concat('%', #{keyword}, '%'))
+        order by cnt desc, created_at desc
+    </select>
+
+    <!-- [최신순] 뉴스피드(Newfeed) 선택 시 -->
+    <select id="recentSearchFeed" parameterType="SearchDto" resultType="BoardDto">
+        select *
+        from board
+        where kind_pk=7 and
+            if(#{choice_pk},
+               content like concat('%', #{keyword}, '%'),
+               nickname like concat('%', #{keyword}, '%'))
+        order by created_at desc
+    </select>
+
+    <!-- [인기순] 뉴스피드(Newfeed) 선택 시 -->
+    <select id="popularSearchFeed" parameterType="SearchDto" resultType="BoardDto">
+        select *
+        from board
+        where kind_pk=7 and
+            if(#{choice_pk},
+               content like concat('%', #{keyword}, '%'),
+               nickname like concat('%', #{keyword}, '%'))
+        order by cnt desc, created_at desc
+    </select>
+
+    <!-- [최신순] 게시판(GBoard, LBoard) 중 한개 선택 시 -->
+    <select id="recentSearchOne" parameterType="SearchDto" resultType="BoardDto">
+        select *
+        from board
+        where kind_pk=#{kind_pk} and
+            if(#{choice_pk},
+               (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%')),
+               nickname like concat('%', #{keyword}, '%'))
+        order by created_at desc
+    </select>
+
+    <!-- [인기순] 게시판(GBoard, LBoard) 중 한개 선택 시 -->
+    <select id="popularSearchOne" parameterType="SearchDto" resultType="BoardDto">
+        select *
+        from board
+        where kind_pk=#{kind_pk} and
+              if(#{choice_pk},
+                  (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%')),
+                  nickname like concat('%', #{keyword}, '%'))
+        order by cnt desc, created_at desc
+    </select>
+
+</mapper>

@@ -1,0 +1,144 @@
+.row {
+  justify-content: center;
+}
+
+.bm-icon {
+  padding: 0 1rem 0 1rem;
+  height: 1.75rem;
+  width: 1.75rem;
+}
+
+.bm-not-login-text {
+  letter-spacing: 0px;
+  width: 8rem;
+  margin: 0;
+}
+
+.bm-profile,
+.bm-profile:hover {
+  align-items: center;
+  color: black;
+}
+
+.bm-menu-first {
+  background-color: rgba(255, 255, 255, 0.75);
+  border-bottom: 0.1px solid rgba(160, 145, 245, .5);
+}
+
+.bm-profile > div {
+  padding: 0;
+  letter-spacing: 0px;
+  text-align: left;
+  align-items: center;
+}
+
+.bm-profile .bm-profile-img {
+  align-items: center;
+  text-align: center;
+}
+
+/* .bm-profile .bm-profile-addr {
+  width: 5rem;
+  font-size: 0.8rem;
+  word-break: keep-all;
+  color:#8B93A6;
+} */
+
+.bm-profile .bm-profile-info {
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.bm-profile .bm-profile-intro {
+  font-size: 1rem;
+}
+
+.bm-profile-intro > p {
+  padding-left: 1rem;
+}
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: fixed;
+  width: 6vw;
+  height: 6vw;
+  left: 1.1rem;
+  top: 1.1rem;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: #5552FF;
+}
+
+/* Color/shape of burger icon bars on hover*/
+.bm-burger-bars-hover {
+  background: #4E5E78;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 36px;
+  width: 36px;
+  /* right: 30px;
+  top: 30px; */
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: #5552FF;
+}
+
+/*
+Sidebar wrapper styles
+Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+*/
+.bm-menu-wrap {
+  position: fixed;
+  height: 100%;
+  width: 70vw;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  width: 100%;
+  background: #ECECFF;
+  font-size: 1.15rem;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: #ECECFF;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  display: grid;
+  grid-template-rows: 2fr 2fr 2fr;
+  margin: 0;
+}
+
+/* Individual item */
+.bm-item {
+  letter-spacing: 5px;
+  align-items: center;
+}
+
+.bm-menu-second {
+  text-align: left;
+}
+
+.bm-menu-third {
+  align-self: center;
+  text-align: left;
+}
+
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.side_home, .side_about, .side_logout, .side_profile, .side_location, .side_login, .side_join{
+  margin-top: 3vh;
+}

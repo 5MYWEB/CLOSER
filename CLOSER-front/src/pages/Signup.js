@@ -1,180 +1,295 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import axios from 'axios'
+import AWS from "aws-sdk";
+import { RippleButton, ShakeButton } from '../styles/index';
+import UserLocation from '../components/profile/UserLocation';
+import { useSelector } from 'react-redux';
+import { FormSelect, InputGroup } from 'react-bootstrap';
+import '../styles/theme.css'
+import './Signup.css';
+import swal from 'sweetalert';
 
-function SignUp(props) {
+function SignUp( {history} ) {
+
   const [userInfo, setUserInfo] = useState({
     userId: '',
     nickname: '',
     password: '',
     email: '',
-    addr: {
-      city: '',
-      gu: '',
-      dong: ''
-    },
-    // addr: '',
-    // 번호만 입력받기
+    addr: '',
     phone: '',
-    //HowLongLiveAlone
-    homeAlone: ''
+    homeAlone: '',
   });
+
+  const [ passwordCheck , setPasswordCheck ] = useState('')
+
+  // 중복확인이 성공했으면 true
+  const [userIdChecked, setUserIdChecked] = useState(false)
+  const [nicknameChecked, setNicknameChecked] = useState(false)
+  
+  const { changedAddr } = useSelector((state) => state.user)
 
   // 구조분해 할당
   let { userId, nickname, password, email, addr, phone, homeAlone } = userInfo;
 
-  // 몇년차인지 표시하기 
-  const date = new Date();
-
   // 주소 전체응
+  useEffect(() => {
+    setUserInfo({
+      ...userInfo,
+      addr: changedAddr
+    })
+    // console.log(addr)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[changedAddr])
 
   // DOM 선택
   const radioBtn = useRef();
   const selectInputs = useRef();
 
+  // 정보 입력 시
   const onChange=useCallback(
     e => {
-
       // select를 누르면 radio가 초기화
       if (e.target.type === 'select-one') {
         radioBtn.current.checked = false;
       };
 
       const { name, value } = e.target;
-      // console.log(name, value);
 
-      // 주소만 구조가 다르므로 name이 주소 속성이면
-      if (Object.keys(addr).includes(name)) {
-        setUserInfo({
-          ...userInfo,
-          addr: {
-            ...userInfo.addr,
-            [name]: value
-          }
-        });
-      } else {
         setUserInfo({
           ...userInfo,
           [name]: value
         });
-      }
-    },
-    [userInfo, addr]
-  );
-  
-    // 데이터 빈 값 검사
-    const checkExistData = (value, name) => {
-      console.log(value)
-      if (value === '') {
-        alert(name + ' 입력해주세요!')
-        return false;
-      }
-      return true;
-    }
-  
-    // 아이디 검사
-    const checkUserId = (id) => {
-      if (!checkExistData(id, '아이디를')) {
-        return false
-      }
-      // var idRegExp = /^[a-zA-z0-9]{4,12}$/; //아이디 유효성 검사
-      // if (!idRegExp.test(id)) {
-      //     alert("아이디는 영문 대소문자와 숫자 4~12자리로 입력해야합니다!");
-      //     form.userId.value = "";
-      //     form.userId.focus();
-      //     return false;
       // }
-      return true
-    }
+    },
+    [userInfo]
+  );
+
+  const onChangePasswordCheck = (e) => {
+    setPasswordCheck(e.target.value)
+  }
   
-    // 닉네임 검사
-    const checkNickname = (nickname) => {
-      if (!checkExistData(nickname, '닉네임을')) {
-        return false
-      }
-      return true
+  // 데이터 빈 값 검사
+  const checkExistData = (value, name) => {
+    // console.log(value)
+    if (value === '') {
+      // alert(name + ' 입력해주세요!')
+      swal(name + ' 입력해주세요!', "", "info");
+      return false;
     }
+    return true;
+  }
+  
+  // 아이디 검사
+  const checkUserId = (id) => {
+    if (!checkExistData(id, '아이디를')) {
+      return false
+    }
+    // var idRegExp = /^[a-zA-z0-9]{4,12}$/; //아이디 유효성 검사
+    // if (!idRegExp.test(id)) {
+    //     alert("아이디는 영문 대소문자와 숫자 4~12자리로 입력해야합니다!");
+    //     form.userId.value = "";
+    //     form.userId.focus();
+    //     return false;
+    // }
+    return true
+  }
 
-    // 비밀번호 검사
-    const checkPassword = (password) => {
-      if (!checkExistData(password, '비밀번호를')) {
+  // 아이디 중복체크
+  const userIdCheck = () => {
+    axios.post(`http://localhost:8080/user/userIdCheck?userId=${userId}`)
+      .then((res) => {
+        if(res.data){
+          // alert("사용 가능한 아이디입니다.")
+          swal("사용 가능한 아이디입니다.", "", "success");
+          setUserIdChecked(true)
+          return true
+        } else {
+          // alert("이미 사용중인 아이디입니다.")
+          swal("이미 사용중인 아이디입니다.", "", "info");
+          setUserIdChecked(false)
+          return false
+        }
+      })
+      .catch((err) => {
+        console.log(err.response.data)
+        setUserIdChecked(false)
         return false
-      }
-      return true
-      // var password1RegExp = /^[a-zA-z0-9]{4,12}$/; //비밀번호 유효성 검사
-      // if (!password1RegExp.test(password1)) {
-      //     alert("비밀번호는 영문 대소문자와 숫자 4~12자리로 입력해야합니다!");
-      //     form.password1.value = "";
-      //     form.password1.focus();
-      //     return false;
-    }
+      })
+  }
 
-    // 이메일 검사
-    const checkEmail = (email) => {
-      if (!checkExistData(email, '이메일을')) {
-        return false
-      }
-      return true
-    }
+  // 아이디 바뀌면 중복체크 다시
+  const onChangeUserId = () => {
+    setUserIdChecked(false)
+  }
 
-    // 주소 검사
-    
-    const checkAddr = (addr) => {
-      let { city, gu, dong } = addr;
-      if (!checkExistData(city, '시를')) {
+  // 닉네임 중복체크
+  const nicknameCheck = () => {
+    axios.post(`http://localhost:8080/user/userNicknameCheck?nickname=${nickname}`)
+      .then((res) => {
+        if(res.data){
+          // alert("사용 가능한 닉네임입니다.")
+          swal("사용 가능한 닉네임입니다.", "", "success");
+          setNicknameChecked(true)
+          return true
+        } else {
+          // alert("이미 사용중인 닉네임입니다.")
+          swal("이미 사용중인 닉네임입니다.", "", "info");
+          setNicknameChecked(false)
+          return false
+        }
+      })
+      .catch((err) => {
+        console.log(err.response.data)
+        setNicknameChecked(false)
         return false
-      } else if (!checkExistData(gu, '구를')) {
-        return false
-      } else if (!checkExistData(dong, '동을')) {
-        return false
-      }
-      return true
-    }
+      })
+  }
 
-    // 폰번호 검사
-    const checkPhone = (phone) => {
-      if (!checkExistData(phone, "전화번호를")) {
-        return false
-      }
-      return true
-    }
+  // 닉네임 바뀌면 중복체크 다시
+  const onChangeNickname = () => {
+    setNicknameChecked(false)
+  }
 
-    // 자취시작연도 검사
-    const checkHomeAlone = (homeAlone) => {
-      if (!checkExistData(homeAlone, "자취시작년도를")) {
-        return false
-      }
-      return true
+  // 닉네임 검사
+  const checkNickname = (nickname) => {
+    if (!checkExistData(nickname, '닉네임을')) {
+      return false
     }
+    return true
+  }
 
-    // 모든 검사
-    function checkAll() {
-      if (!checkUserId(userId)) {
-        return false;
-      } else if (!checkNickname(nickname)) {
-        return false;
-      } else if (!checkPassword(password)) {
-        return false;
-      } else if (!checkEmail(email)) {
-        return false;
-      } else if (!checkAddr(addr)) {
-        return false;
-      } else if (!checkPhone(phone)) {
-        return false;
-      } else if (!checkHomeAlone(homeAlone)) {
-        return false;
-      }
-      return true;
+  // 비밀번호 검사
+  const checkPassword = (password) => {
+    if (!checkExistData(password, '비밀번호를')) {
+      return false
     }
+    if (password !== passwordCheck){
+      // alert('비밀번호 확인이 일치하지 않습니다')
+      swal('비밀번호 확인이 일치하지 않습니다', "", "info");
+      return false
+    }
+    return true
+    // var password1RegExp = /^[a-zA-z0-9]{4,12}$/; //비밀번호 유효성 검사
+    // if (!password1RegExp.test(password1)) {
+    //     alert("비밀번호는 영문 대소문자와 숫자 4~12자리로 입력해야합니다!");
+    //     form.password1.value = "";
+    //     form.password1.focus();
+    //     return false;
+  }
+
+  // 이메일 검사
+  const checkEmail = (email) => {
+    if (!checkExistData(email, '이메일을')) {
+      return false
+    }
+    return true
+  }
+
+  // 주소 검사
+  // const checkAddr = (addr) => {
+  //   if(!checkExistData(addr, '주소를')) {
+  //     return false
+  //   }
+  //   return true
+  // }
+
+  // 폰번호 검사
+  const checkPhone = (phone) => {
+    if (!checkExistData(phone, "전화번호를")) {
+      return false
+    }
+    return true
+  }
+
+  // 자취시작연도 검사
+  const checkHomeAlone = (homeAlone) => {
+    if (!checkExistData(homeAlone, "자취시작년도를")) {
+      return false
+    }
+    return true
+  }
+
+  // 모든 검사
+  function checkAll() {
+    if (!checkUserId(userId)) {
+      return false;
+    } else if (!checkNickname(nickname)) {
+      return false;
+    } else if (!checkPassword(password)) {
+      return false;
+    } else if (!checkEmail(email)) {
+      return false;
+    // } else if (!checkAddr(addr)) {
+    //   return false;
+    } else if (!checkPhone(phone)) {
+      return false;
+    } else if (!checkHomeAlone(homeAlone)) {
+      return false;
+    } else if (!userIdChecked){
+      // alert('아이디 중복확인을 해주세요')
+      swal('아이디 중복확인을 해주세요', "", "info");
+      return false;
+    } else if (!nicknameChecked){
+      // alert('닉네임 중복확인을 해주세요')
+      swal('닉네임 중복확인을 해주세요', "", "info");
+      return false;
+    }
+    return true;
+  }
 
   // 회원가입 함수
   const signup = (userInfo) => {
-    const request = axios.post('http://localhost:8080/user/regist', userInfo )
+    axios.post('http://localhost:8080/user/regist', userInfo )
       .then((response) =>{
-        console.log(response);
-        console.log(request);
+        // console.log(response);
+        history.push('/login', 'singed')
       })
     return null
   };
+
+  // AWS 앨범 생성
+  var albumBucketName = "photo-album-hy";
+  var bucketRegion = "ap-northeast-2";
+  var IdentityPoolId = "ap-northeast-2:00a0ab54-d07b-4fbc-9601-4362640e9362";
+
+  AWS.config.update({
+      region: bucketRegion,
+      credentials: new AWS.CognitoIdentityCredentials({
+          IdentityPoolId: IdentityPoolId,
+      }),
+  });
+
+  var s3 = new AWS.S3({
+      apiVersion: "2006-03-01",
+      params: { Bucket: albumBucketName },
+  });
+  const createAlbum = (albumName) => {
+      // 앨범 생성
+      albumName = albumName.trim();
+      if (!albumName) {
+          return alert("Album names must contain at least one non-space character.");
+      }
+      if (albumName.indexOf("/") !== -1) {
+          return alert("Album names cannot contain slashes.");
+      }
+      var albumKey = encodeURIComponent(albumName);
+      s3.headObject({ Key: albumKey }, function (err) {
+          if (!err) {
+              return console.log("Album already exists.");
+          }
+          if (err.code !== "NotFound") {
+              return console.log("There was an error creating your album: " + err.message);
+          }
+          s3.putObject({ Key: albumKey }, function (err, data) {
+              if (err) {
+                  return console.log("There was an error creating your album: " + err.message);
+              }
+              // alert("Successfully created album.");
+          });
+      });
+  };
+
 
   // 제출버튼 클릭 시 실행되는 함수
   const onSubmit=(
@@ -185,113 +300,247 @@ function SignUp(props) {
         // 자취 n년차 int 형변환
         userInfo.homeAlone *= 1
 
-        // 백으로 보내질 주소(공백으로 구분)
-        userInfo.addr = String(userInfo.addr.city + ' ' + userInfo.addr.gu + ' ' + userInfo.addr.dong);
+        // console.log(userInfo)
 
-        console.log(userInfo)
-
-        // 회원가입 함수의 파라미터 설정
+        // 앨범 생성
+        createAlbum(userInfo.userId);
 
         // 회원가입 함수 실행
         signup(userInfo);
 
-        // props.setIsSignedUp(true);
+
       }
     }
   )
 
   return (
-    <form onSubmit={onSubmit}>
-      <p>아이디를 입력하세요</p>
-      <input
-        type="text"
-        name="userId"
-        value={userId}
-        onChange={onChange}
-      />
-      <p>닉네임을 입력하세요</p>
-      <input
-        type="text"
-        name="nickname"
-        value={nickname}
-        onChange={onChange}
-      />
-      <p>비밀번호를 입력하세요</p>
-      <input
-        type="password"
-        name="password"
-        value={password}
-        onChange={onChange}
-      />
-      <p>이메일을 입력하세요</p>
-      <input
-        type="text"
-        name="email"
-        value={email}
-        onChange={onChange}
-      />
-      <p>주소를 입력하세요</p>
-      <label htmlFor="city">Choose a City:</label>
-      <select id="city" name="city" value={addr.city} onChange={onChange}>
-        <option defaultValue value="undefined"> -- 시를 선택해주세요 -- </option>
-        <option value="서울시">서울시</option>
-        <option value="용인시">용인시</option>
-        <option value="인천시">인천시</option>
-        <option value="부산시">부산시</option>
-      </select>
-      <label htmlFor="gu">Choose a gu:</label>
-      <select id="gu" name="gu" value={addr.gu} onChange={onChange}>
-      <option defaultValue value="undefined"> -- 구를 선택해주세요 -- </option>
-        <option value="동작구">동작구</option>
-        <option value="마포구">마포구</option>
-        <option value="서대문구">서대문구</option>
-        <option value="동구">동구</option>
-      </select>
-      <label htmlFor="dong">Choose a dong:</label>
-      <select id="dong" name="dong" value={addr.dong} onChange={onChange}>
-        <option defaultValue value="undefined"> -- 동을 선택해주세요 -- </option>
-        <option value="염리동">염리동</option>
-        <option value="동교동">동교동</option>
-        <option value="서교동">서교동</option>
-        <option value="둔산동">둔산동</option>
-      </select>
+    <div className="container">
+      <form onSubmit={onSubmit}>
+        {/* 아이디 */}
+        <div>
+          <div className="mt-2">
+            <span className="input-label">아이디</span>
+            <span className="necessary unfollow">*</span>
+          </div>
+          <div className="row mx-0">
+            <div className="col-8 px-0">
+              <input
+                placeholder="아이디를 입력하세요"
+                onFocus={(e) => {
+                  e.target.placeholder='';
+                }}
+                onBlur={(e) => {
+                  e.target.placeholder='아이디를 입력하세요';
+                }}
+                type="text"
+                name="userId"
+                defaultValue={userId}
+                onChange={(e) => {onChange(e); onChangeUserId(e);}}
+              />
+            </div>
+            <div className="col-4 px-0">
+              {userIdChecked ? 
+                <RippleButton disabled onClick={userIdCheck} type="button" cclass="cbtn cbtn-sm cbtn-green" children="확인완료"/>
+                :
+                <RippleButton onClick={userIdCheck} type="button" cclass="cbtn cbtn-sm cbtn-primary" children="중복확인"/>
+              }
+            </div>
+          </div>
+        </div>
 
-      <p>휴대전화 번호를 입력하세요</p>
-      <input
-        type="text"
-        name="phone"
-        value={phone}
-        onChange={onChange}
-      />
-      <p>자취 몇년차이신가요?</p>
-      <p>언제 자취를 시작하셨나요?</p>
-      <label htmlFor="homeAlone">When did you start living alone</label>
-      <input
-        type='radio' 
-        name='homeAlone' 
-        value="null" 
-        onChange={onChange}
-        ref={radioBtn}
-      /> 자취하지 않음 / 준비중
-      <select id="homeAlone" name="homeAlone" value={homeAlone} onChange={onChange} ref={selectInputs}>
-        <option defaultValue value="undefined"> -- 연도를 선택해주세요 -- </option>
-        <option value="2021">2021년</option>
-        <option value="2020">2020년</option>
-        <option value="2019">2019년</option>
-        <option value="2018">2018년</option>
-        <option value="2017">2017년</option>
-        <option value="2016">2016년</option>
-        <option value="2015">2015년</option>
-        <option value="2014">2014년</option>
-        <option value="2013">2013년</option>
-        <option value="2012">2012년 이전</option>
-      </select>
-      <p>자취{date.getFullYear()-homeAlone+1}년차!</p>
 
-      <button type="submit">
-        Signup
-      </button>
-    </form>
+        {/* 닉네임 */}
+        <div>
+          <div>
+            <span className="input-label">닉네임</span>
+            <span className="necessary unfollow">*</span>
+          </div>
+          <div className="row mx-0">
+            <div className="col-8 px-0">
+              <input
+                placeholder="닉네임을 입력하세요"
+                onFocus={(e) => {
+                  e.target.placeholder='';
+                }}
+                onBlur={(e) => {
+                  e.target.placeholder='닉네임을 입력하세요';
+                }}
+                type="text"
+                name="nickname"
+                defaultValue={nickname}
+                onChange={(e) => {onChange(e); onChangeNickname(e);}}
+              />
+            </div>
+            <div className="col-4 px-0">
+              {nicknameChecked ? 
+                <RippleButton disabled onClick={nicknameCheck} type="button" cclass="cbtn cbtn-sm cbtn-green" children="확인완료"/>
+                :
+                <RippleButton onClick={nicknameCheck} type="button" cclass="cbtn cbtn-sm cbtn-primary" children="중복확인"/>
+              }
+            </div>
+          </div>
+        </div>
+
+
+        {/* 비밀번호 */}
+        <div>
+          <div>
+            <span className="input-label">비밀번호</span>
+            <span className="necessary unfollow">*</span>
+          </div>
+          <div>
+            <input
+              placeholder="비밀번호를 입력하세요"
+              onFocus={(e) => {
+                e.target.placeholder='';
+              }}
+              onBlur={(e) => {
+                e.target.placeholder='비밀번호를 입력하세요';
+              }}
+              type="password"
+              name="password"
+              defaultValue={password}
+              onChange={onChange}
+            />
+          </div>
+        </div>
+        <div>
+          <div>
+            <span className="input-label">비밀번호 확인</span>
+            <span className="necessary unfollow">*</span>
+          </div>
+          <div>
+            <input
+              placeholder="비밀번호 확인"
+              onFocus={(e) => {
+                e.target.placeholder='';
+              }}
+              onBlur={(e) => {
+                e.target.placeholder='비밀번호 확인';
+              }}
+              type="password"
+              name="passwordCheck"
+              defaultValue={passwordCheck}
+              onChange={onChangePasswordCheck}
+            />
+          </div>
+        </div>
+
+
+        {/* 이메일 */}
+        <div>
+          <div>
+            <span className="input-label">이메일</span>
+            <span className="necessary unfollow">*</span>
+          </div>
+          <div>
+            <input
+              placeholder="이메일을 입력하세요"
+              onFocus={(e) => {
+                e.target.placeholder='';
+              }}
+              onBlur={(e) => {
+                e.target.placeholder='이메일을 입력하세요';
+              }}
+              type="email"
+              name="email"
+              defaultValue={email}
+              onChange={onChange}
+            />
+          </div>
+        </div>
+
+        {/* 위치 */}
+        <div className="user-location">
+          <div className="input-label d-flex align-items-center" name="addr">
+            저는&nbsp;&nbsp;<input type="text" defaultValue={changedAddr} readOnly className="user-location-input"/>&nbsp;&nbsp;주민입니다!
+          </div>
+          <div className="user-location-map">
+            <UserLocation></UserLocation>
+          </div>
+        </div>
+        <br />
+        
+        {/* 전화번호 */}
+        <div>
+          <div>
+            <span className="input-label">휴대전화 번호( - 없이)</span>
+            <span className="necessary unfollow"> *</span>
+          </div>
+          <div>
+            <input
+              placeholder="휴대전화 번호를 입력하세요( - 없이)"
+              onFocus={(e) => {
+                e.target.placeholder='';
+              }}
+              onBlur={(e) => {
+                e.target.placeholder='핸드폰 번호를 입력하세요( - 없이)';
+              }}
+              type="number"
+              name="phone"
+              defaultValue={phone}
+              onChange={onChange}
+            />
+          </div>
+        </div>
+
+        {/* 자취기간 */}
+        <div>
+          <div>
+            <span className="input-label">자취 경력</span>
+            <span className="necessary unfollow">*</span>
+          </div>
+          <div>
+            <div>
+              <div className="d-flex align-items-center">
+                <span className="homealone-no">&gt;&gt; 자취해본 적 없음!</span>
+                <input
+                  className="homealone-radio"
+                  type='radio' 
+                  name='homeAlone' 
+                  defaultValue="null" 
+                  onChange={onChange}
+                  ref={radioBtn}
+                /> 
+              </div>
+              <div className="d-flex align-items-center">
+                <span className="homealone-yes">&gt;&gt; </span>
+                <div>
+                  <InputGroup className="input-group">
+                    <FormSelect id="homeAlone" name="homeAlone" value={homeAlone} onChange={onChange} ref={selectInputs}>
+                      <option defaultValue value="undefined"> -- 연도를 선택해주세요 -- </option>
+                      <option value="2021">2021년</option>
+                      <option value="2020">2020년</option>
+                      <option value="2019">2019년</option>
+                      <option value="2018">2018년</option>
+                      <option value="2017">2017년</option>
+                      <option value="2016">2016년</option>
+                      <option value="2015">2015년</option>
+                      <option value="2014">2014년</option>
+                      <option value="2013">2013년</option>
+                      <option value="2012">2012년 이전</option>
+                    </FormSelect>
+                  </InputGroup>
+                </div>
+                <span>부터 자취하는 중</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            
+          </div>
+        </div>
+
+        {/* 회원가입 버튼 */}
+        <div className="button-group mb-5">
+            { userId === '' || nickname === '' || password === '' || passwordCheck === '' 
+              || email === '' || addr === '' || phone === '' || homeAlone === ''
+              ? <ShakeButton cclass="cbtn cbtn-lg cbtn-secondary" children="회원가입"/>
+              : <RippleButton type="submit" cclass="cbtn cbtn-lg cbtn-primary" children="회원가입"/>
+            } 
+        </div>
+      </form>
+    </div>
   )
   
 }

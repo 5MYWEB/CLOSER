@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.closer.model.mapper.AlarmMapper">
+    <select id="alarmList" parameterType="String" resultType="AlarmDto">
+        select *
+        from user_alarm
+        where userId=#{userId} and otherUserId!=#{userId};
+    </select>
+
+    <insert id="alarmBoardCreate" parameterType="AlarmDto" useGeneratedKeys="true" keyProperty="alarm_pk" keyColumn="alarm_pk">
+        insert into user_alarm(userId, category_pk, content, created_at, otherUserId, kind_pk, board_pk)
+        values (#{userId}, #{category_pk}, #{content}, #{created_at}, #{otherUserId}, #{kind_pk}, #{board_pk});
+    </insert>
+
+    <insert id="alarmFollowCreate" parameterType="AlarmDto" useGeneratedKeys="true" keyProperty="alarm_pk" keyColumn="alarm_pk">
+        insert into user_alarm(userId, category_pk, content, created_at, otherUserId)
+        values (#{userId}, #{category_pk}, #{content}, #{created_at}, #{otherUserId});
+    </insert>
+
+    <!-- 일정 요일 선택해서 알림 요청 -->
+    <insert id="alarmBotInsert" parameterType="BotDto" useGeneratedKeys="true" keyProperty="bot_pk" keyColumn="bot_pk">
+        insert into user_bot(userId, content, alarm_day, alarm_date)
+        values (#{userId}, #{content}, #{alarm_day}, #{alarm_date});
+    </insert>
+
+    <!-- 현재 요일에 해당하는 요일에 요청한 사람에게 메시지 뿌림 -->
+    <select id="alarmBotCreateDay" >
+--         select userId, content
+--         from user_bot
+--         where alarm_day = DAYOFWEEK(now());
+        INSERT INTO user_alarm (userId, content, category_pk, created_at, otherUserId)
+        SELECT userId, content, 5, now(), "closerbot"
+        FROM user_bot
+        where alarm_day = dayofweek(now())
+    </select>
+
+    <!-- 현재 날짜에 해당하는 날짜에 요청한 사람에게 메시지 뿌림 -->
+    <select id="alarmBotCreateDate" >
+--         select userId, content, day(alarm_date)
+--         from user_bot
+--         where day(alarm_date) = day(curdate());
+        INSERT INTO user_alarm (userId, content, category_pk, created_at, otherUserId)
+        SELECT userId, content, 5, now(), "closerbot"
+        FROM user_bot
+        where day(alarm_date) = day(curdate());
+    </select>
+
+    <select id="alarmUnread" parameterType="String" resultType="int">
+        select count(*)
+        from user_alarm
+        where userId=#{userId} and visited=false and otherUserId!=#{userId};
+    </select>
+
+    <update id="readAll" parameterType="String">
+        update user_alarm
+        set visited=true
+        where userId=#{userId} and visited=false
+    </update>
+
+</mapper>

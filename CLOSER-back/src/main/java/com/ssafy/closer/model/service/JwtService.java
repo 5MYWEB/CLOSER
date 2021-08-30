@@ -1,13 +1,21 @@
 package com.ssafy.closer.model.service;
 
+import com.sun.istack.NotNull;
+import com.sun.istack.Nullable;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Map;
 
 @Service
@@ -40,7 +48,7 @@ public class JwtService {
 
         // 3. Payload 설정 - claim 정보 포함
         builder.setSubject("로그인 토큰").setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * expireMin))
-                .claim("UserId", userId); // 토큰 payload에 유저 아이디만 넣는다.
+                .claim("user_id", userId); // 토큰 payload에 유저 아이디만 넣는다.
 
         // 4. Signature - Secret Key를 이용해 암호화한다
         builder.signWith(SignatureAlgorithm.HS256, salt.getBytes());
@@ -78,4 +86,19 @@ public class JwtService {
         System.out.println("JwtService : claims / " + claims);
         return claims.getBody();
     }
+    //챗토큰 생성
+    @NotNull
+    public static String createToken(
+            @NotNull String userId, @Nullable Date expiresAt, @Nullable Date issuedAt) {
+        String apiSecret = "khjmr5fft6getdd9a4ww9c7y4f5pgmuq436sqrv9hjcn6ehsssxa5uj4x8229w5r";
+        Key signingKey =
+                new SecretKeySpec(
+                        apiSecret.getBytes(StandardCharsets.UTF_8), SignatureAlgorithm.HS256.getJcaName());
+
+        return Jwts.builder()
+                .claim("user_id", userId)
+                .signWith(SignatureAlgorithm.HS256, signingKey)
+                .compact();
+    }
+
 }

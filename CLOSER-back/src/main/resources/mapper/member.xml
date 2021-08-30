@@ -10,22 +10,33 @@
         where userId = #{userId} and password = #{password}
     </select>
 
-    <!-- <select id="userList" resultType="memberDto">
-        select userid, userpwd, username, email, address, date_format(joindate, '%y.%m.%d') joindate
-        from ssafy_member
-        order by joindate desc;
-    </select> -->
-
+    <!-- 회원 정보 보기 -->
     <select id="userInfo" parameterType="String" resultType="MemberDto">
         select *
         from user
-        where userid = #{userid}
+        where userId = #{userId}
     </select>
 
+    <!-- 회원가입 -->
     <insert id="userRegister" parameterType="MemberDto">
-        insert into user (userId, password, nickname, phone, email, addr, homeAlone)
-        values (#{userId}, #{password}, #{nickname}, #{phone}, #{email}, #{addr}, #{homeAlone})
+        insert into user (userId, password, nickname, phone, email, addr, homeAlone, profileImg)
+        values (#{userId}, #{password}, #{nickname}, #{phone}, #{email}, #{addr}, #{homeAlone}, ' ')
     </insert>
+
+    <update id="usertoken" parameterType="String">
+        update user
+        set chattoken = #{chattoken}
+        where userId = #{userId}
+    </update>
+
+    <!-- 뱃지 담아 보내기 -->
+    <select id="userbadge" parameterType="String" resultType="int">
+        select ub.kind_pk As badge
+        from user As u
+        left join user_badge AS ub
+        on u.userId = ub.userId
+        where u.userId = #{userId}
+    </select>
 
     <!-- 아아디 중복 체크 -->
     <select id="userIdCheck" parameterType="String" resultType="int">
@@ -44,7 +55,7 @@
     <!-- 프로필 수정 -->
     <update id="userModify" parameterType="MemberDto">
         update user
-        set profileImg=#{profileImg},nickname=#{nickname},addr=#{addr}, intro=#{intro}
+        set profileImg=#{profileImg},nickname=#{nickname},homeAlone=#{homeAlone}, intro=#{intro}
         where userId = #{userId}
     </update>
 
@@ -53,4 +64,43 @@
         where userId = #{userId}
     </delete>
 
+    <!-- 내 포스트 -->
+    <select id="userPost" parameterType="String" resultType="BoardDto">
+        select *
+        from board
+        where userId=#{userId} and kind_pk &lt; 7
+        order by created_at desc;
+    </select>
+
+    <!-- 내 피드 -->
+    <select id="userFeed" parameterType="String" resultType="BoardDto">
+        select *
+        from board
+        where userId=#{userId} and kind_pk = 7
+        order by created_at desc;
+    </select>
+
+    <!-- 내 스크랩 -->
+    <select id="userBookmark" parameterType="String" resultType="BoardDto">
+        select *
+        from board
+        where board_pk in
+              ( select board_pk
+                from info
+                where userId=#{userId} and kind_pk = 3
+              )
+        order by board_pk desc
+    </select>
+
+    <update id="changeLocation" parameterType="MemberDto">
+        update user
+        set addr=#{addr}
+        where userId = #{userId}
+    </update>
+
+    <select id="countBoardByUser" parameterType="String" resultType="int">
+        select count(*)
+        from board
+        where userId = #{userId}
+    </select>
 </mapper>

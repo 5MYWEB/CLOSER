@@ -1,67 +1,220 @@
-/* 액션 타입 만들기 */
-// Ducks 패턴을 따를땐 액션의 이름에 접두사를 넣어주세요.
-// 이렇게 하면 다른 모듈과 액션 이름이 중복되는 것을 방지 할 수 있습니다.
-const SET_DIFF = 'user/SET_DIFF';
-const INCREASE = 'user/INCREASE';
-const DECREASE = 'user/DECREASE';
-const LOGIN = 'user/LOGIN';
-const LOGOUT = 'user/LOGOUT';
-
-/* 액션 생성함수 만들기 */
-// 액션 생성함수를 만들고 export 키워드를 사용해서 내보내주세요.
-export const setDiffAction = diff => ({ type: SET_DIFF, diff });
-export const increaseAction = () => ({ type: INCREASE });
-export const decreaseAction = () => ({ type: DECREASE });
-export const loginAction = (data) => ({
-  type: LOGIN,
-  data,
-  });
-export const logoutAction = () => ({ type: LOGOUT });
+import { StreamChat } from 'stream-chat';
 
 /* 초기 상태 선언 */
 const initialState = {
   isLoggedIn: false,
-  jwtAuthToken: '',
-  user: '',
-  number: 0,
-  diff: 1
+  userToken: null,
+  decodedToken: {
+    sub: null,
+    exp: null,
+    user_id: null,
+  },
+  userInfo: {
+    userId: '',
+    nickname: '',
+    password: '',
+    email:  '',
+    addr: '',
+    homeAlone: null,
+    intro: '',
+    profileImg: null,
+    phone: null,
+    badge: [],
+    following: 0,
+    follower: 0,
+    chattoken:'',
+  },
+  following: false,
+  postCount: 0,
+  changedAddr: '',
+  alarmList: null,
+  unreadAlarmCount: 0,
+  myNavbar: '/user-feed',
+  yourNavbar: '/user-feed',
 };
+
+/* 액션 타입 만들기 */
+// Ducks 패턴을 따를땐 액션의 이름에 접두사를 넣어주세요.
+// 이렇게 하면 다른 모듈과 액션 이름이 중복되는 것을 방지 할 수 있습니다.
+const LOGIN = 'LOGIN';
+const LOGOUT = 'LOGOUT';
+const GET_MY_INFO = 'GET_MY_INFO';
+const GET_POST_COUNT = 'GET_POST_COUNT';
+const FOLLOW = 'FOLLOW';
+const GET_FOLLOW_INFO = 'GET_FOLLOW_INFO';
+const CHANGE_ADDR = 'CHANGE_ADDR';
+const GET_ALARM_LIST = 'GET_ALARM_LIST';
+const GET_UNREAD_ALARM = 'GET_UNREAD_ALARM';
+const REFRESH_INFO = 'REFRESH_INFO';
+const CHANGE_USER_NAVBAR = 'CHANGE_USER_NAVBAR';
+const CHANGE_OTHER_NAVBAR = 'CHANGE_OTHER_NAVBAR';
+
+/* 액션 생성함수 만들기 */
+// 액션 생성함수를 만들고 export 키워드를 사용해서 내보내주세요.
+export const loginAction = (data) => ({
+  type: LOGIN,
+  data,
+});
+  
+export const logoutAction = () => ({
+  type: LOGOUT 
+});
+
+export const getMyInfoAction = (data) => ({
+  type: GET_MY_INFO,
+  data,
+});
+
+export const getPostCount = (data) => ({
+  type: GET_POST_COUNT,
+  data,
+});
+
+export const followAction = () => ({
+  type: FOLLOW,
+});
+
+export const getFollowInfoAction = () => ({
+  type: GET_FOLLOW_INFO,
+});
+
+export const changeAddr = (data) => ({
+  type: CHANGE_ADDR,
+  data,
+});
+
+export const getAlarmList = (data) => ({
+  type: GET_ALARM_LIST,
+  data,
+});
+
+export const getUnreadAlram = (data) => ({
+  type: GET_UNREAD_ALARM,
+  data,
+});
+
+export const refreshInfo = () => ({
+  type: REFRESH_INFO,
+})
+
+export const changeUserNavbar = (data) => ({
+  type: CHANGE_USER_NAVBAR,
+  data,
+})
+
+export const changeOtherNavbar = (data) => ({
+  type: CHANGE_OTHER_NAVBAR,
+  data,
+})
+
+
 
 /* 리듀서 선언 */
 // 리듀서는 export default 로 내보내주세요.
-export default function user(state = initialState, action) {
+  const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_DIFF:
-      return {
-        ...state,
-        diff: action.diff
-      };
-    case INCREASE:
-      return {
-        ...state,
-        number: state.number + state.diff
-      };
-    case DECREASE:
-      return {
-        ...state,
-        number: state.number - state.diff
-      };
     case LOGIN:
+      let jwt = require('jsonwebtoken');
+      let decodedToken = jwt.decode(action.data.jwtAuthToken)
+      localStorage.setItem("userToken", action.data.jwtAuthToken);
+      localStorage.setItem("decodedToken", decodedToken);
+      localStorage.setItem("isLoggedIn", true);
       return {
         ...state,
         isLoggedIn: true,
-        jwtAuthToken: action.data.jwtAuthToken,
-        // Decoded Token으로 정보 받아오기
-        user: 'unknown',
+        userToken: action.data.jwtAuthToken,
+        decodedToken: decodedToken,
       };
     case LOGOUT:
+      const client = StreamChat.getInstance('5gan2md896h2');
+      const disconnect = client.disconnectUser();
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("decodedToken");
+      localStorage.removeItem("isLoggedIn");
       return {
+        disconnect,
         ...state,
         isLoggedIn: false,
-        jwtAuthToken: '',
-        user: null,
+        userToken: null,
+        decodedToken: {
+          sub: null,
+          exp: null,
+          user_id: null,
+        },
+        userInfo: {
+          userId: '',
+          nickname: '',
+          password: '',
+          email:  '',
+          addr: '',
+          homeAlone: null,
+          intro: '',
+          profileImg: null,
+          phone: null,
+          badge: [],
+          following: 0,
+          follower: 0,
+          chattoken:'',
+        },
       };
+    case GET_MY_INFO:
+      return {
+        ...state,
+        userInfo: action.data
+      };
+    case GET_POST_COUNT:
+      return {
+        ...state,
+        postCount: action.data
+      };
+    case FOLLOW:
+      return {
+        ...state,
+        following: true,
+      };
+    case GET_FOLLOW_INFO:
+      return {
+        ...state,
+        following: false,
+      };
+    case CHANGE_ADDR:
+      return {
+        ...state,
+        changedAddr: action.data,
+      };
+    case GET_ALARM_LIST:
+      return {
+        ...state,
+        alarmList: action.data,
+      };
+    case GET_UNREAD_ALARM:
+      return {
+        ...state,
+        unreadAlarmCount: action.data,
+      };
+    case REFRESH_INFO:
+      const refreshedUserToken = localStorage.getItem("userToken");
+      const refreshedJwt = require('jsonwebtoken');
+      const refreshedDecodedToken = refreshedJwt.decode(refreshedUserToken)
+      return {
+        ...state,
+        isLoggedIn: true,
+        userToken: localStorage.getItem("userToken"),
+        decodedToken: refreshedDecodedToken,
+      }
+      case CHANGE_USER_NAVBAR:
+        return {
+          ...state,
+          myNavbar: action.data,
+        };
+      case CHANGE_OTHER_NAVBAR:
+        return {
+          ...state,
+          yourNavbar: action.data,
+        };
     default:
       return state;
   }
 }
+
+export default reducer;

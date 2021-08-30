@@ -2,17 +2,23 @@ import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux'
 import { loginAction } from '../modules/user'
+// import { getMyInfoAction, loginAction, getPostCount } from '../modules/user'
+import { RippleButton, ShakeButton } from '../styles/index';
+import '../styles/theme.css'
+import swal from 'sweetalert';
 
-function Login(props) {
+function Login({ history }) {
   // Redux store 접근 시 사용
   const dispatch = useDispatch();
-
+  
   const [userInputs, setUserInputs] = useState({
     userId: '',
     password: ''
   });
-
+  
   const { userId, password } = userInputs;
+
+  // const { decodedToken, isLoggedIn } = useSelector((state) => state.user);
 
   const onChange=useCallback(
     e => {
@@ -28,9 +34,11 @@ function Login(props) {
 
   // 데이터 빈 값 검사
   const checkExistData = (value, name) => {
-    console.log(value)
     if (value === '') {
-      alert(name + " 입력해주세요!")
+      setTimeout( function () {
+        // alert(name + " 입력해주세요!")
+        swal(name + " 입력해주세요!", "", "info");
+      }, 350);
       return false;
     }
     return true;
@@ -75,57 +83,114 @@ function Login(props) {
     return true;
   }
 
-  // 검사 통과 후 진행되는 로그인
-  // const login = () => {
-  //   // React Hook "useDispatch"은 콜백에서 부를 수 없음
-  //   const dispatch = useDispatch();
-  //   axios.post('http://localhost:8080/user/login', userInputs )
-  //     .then((response) =>{
-  //       console.log(response)
-  //       const jwtAuthToken = response.headers["jwt-auth-token"]
-  //       dispatch(loginAction({ jwtAuthToken }));
-  //     })
-  //   return null
-  // };
     
   // 제출 시 검사 함수 실행 후 로그인 함수 실행
   const onSubmit=(
     e => {
-      e.preventDefault();
-      // 검사 함수로 확인
-      if (checkAll() === true) {
+      setTimeout( function() {
+        // 검사 함수로 확인,
+        if (checkAll() === true) {
+        // 로그인 요청
         axios.post('http://localhost:8080/user/login', userInputs )
-          .then((response) =>{
-            console.log(response)
-            const jwtAuthToken = response.headers["jwt-auth-token"]
-            dispatch(loginAction({ jwtAuthToken }));
+          .then((res) => {
+            const jwtAuthToken = res.headers["jwt-auth-token"]
+            if(res.status === 200){
+              dispatch(loginAction({ jwtAuthToken }));
+              history.push('/')
+            } else{
+              // alert('존재하지 않는 회원정보입니다!')
+              swal('존재하지 않는 회원정보입니다!', "", "info");
+            }
           })
-        // return null
-      }
+          .catch((err) => {
+            console.log(err)
+          })
+        }
+      }, 350);
+      e.preventDefault();
+
     }
   )
+  
+  // App.js로 이전함
+  // 로그인에 성공했으면 로그인 유저 정보, 게시글 수 가져오기
+  // useEffect(() => {
+  //   if (isLoggedIn === true && decodedToken.user_id !== null){
+  //     axios.post(`http://localhost:8080/user/profileinfo?userId=${decodedToken.user_id}`)
+  //       .then((res) => {
+  //         dispatch(getMyInfoAction(res.data))
+  //         axios.get(`http://localhost:8080/user/totalBoard/${decodedToken.user_id}`)
+  //           .then((res) => {
+  //             dispatch(getPostCount(res.data))
+  //             history.push('/')
+  //           })
+  //           .catch((err) => {
+  //             console.log(err)
+  //           })
+  //       })
+  //       .catch((err) => {
+  //         console.log(err)
+  //       })
+  //     }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   }, [decodedToken])
+
+
+  // 회원가입 페이지로 이동
+  const goSignup = () => {
+    setTimeout( function () {
+      history.push('/signup')
+    }, 350);
+  }
+  
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          name="userId"
-          value={userId}
-          onChange={onChange}
-        />
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={onChange}
-        />
-        <button type="submit">
-          Login
-        </button>
+    <div className="wrap-group"> 
+      <h2 className="phrase">클로저에서 자취<br></br>200퍼센트 즐기기</h2>
+      <form onSubmit={onSubmit} className="type-group">
+      <div className="label-group">
+        <span className="input-label">아이디</span>
+        <span className="necessary unfollow">*</span>
+      </div>
+      <input
+        placeholder="아이디를 입력하세요"
+        onFocus={(e) => {
+          e.target.placeholder='';
+        }}
+        onBlur={(e) => {
+          e.target.placeholder='아이디를 입력하세요';
+        }}
+        type="text"
+        name="userId"
+        value={userId}
+        onChange={onChange}
+      />
+      <div className="label-group">
+        <span className="input-label">비밀번호</span>
+        <span className="necessary unfollow">*</span>
+      </div>
+      <input
+        placeholder="비밀번호를 입력하세요"
+        onFocus={(e) => {
+          e.target.placeholder='';
+        }}
+        onBlur={(e) => {
+          e.target.placeholder='비밀번호를 입력하세요';
+        }}
+        type="password"
+        name="password"
+        value={password}
+        onChange={onChange}
+      />
+      <div className="button-group">
+        { userId === '' || password === ''
+          ? <ShakeButton cclass="cbtn cbtn-lg cbtn-secondary" children="로그인"/>
+          : <RippleButton type="submit" cclass="cbtn cbtn-lg cbtn-primary" children="로그인"/>
+        } 
+        <RippleButton type="button" cclass="cbtn cbtn-none cbtn-lg" children="회원가입" onClick={goSignup}/>
+      </div>
       </form>
-      <button>회원가입</button>
-    </>
+    </div>
   )
 }
 

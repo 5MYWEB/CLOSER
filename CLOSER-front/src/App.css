@@ -1,38 +1,26 @@
-.App {
-  text-align: center;
+.view {
+  position: fixed;
+  display: block;
+  width: 100vw;
+  /* 100 - topappbar - navbar */
+  height: 82vh;
+  /* navbar */
+  /* bottom: 13vh; */
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.noTopview {
+  position: fixed;
+  display: block;
+  width: 100vw;
+  height: 92vh;
+  overflow-y: auto;
+  /* 기본설정 visible */
+  overflow-x: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+.noNavview{
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

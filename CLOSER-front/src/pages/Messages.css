@@ -1,0 +1,153 @@
+/* flex-direction: row-reverse;로 햄버거 위치 바꿈 */
+.str-chat__header-livestream {
+  /* padding: var(--xs-p) var(--xl-p); */
+  padding: var(--xs-p) 0;
+  height: 9vh;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  font-family: var(--second-font);
+  background: var(--white);
+  box-shadow: 0 1px 1px 0 var(--border);
+}
+
+.str-chat__header-livestream-left {
+  margin-left: 3rem;
+}
+
+
+/* .messaging.str-chat .str-chat__header-livestream {
+    padding-left: 0;
+    padding-right: var(--sm-p);
+} */
+
+.str-chat-channel-list .str-chat__channel-list-messenger {
+  padding: 0; }
+  .str-chat-channel-list .str-chat__channel-list-messenger__main {
+    /* 뒤로가기 버튼 위치 바꿀 때 조정해야하는 변수 */
+    padding: 8vh var(--sm-p) 0 var(--sm-p);
+    overflow-y: auto; }
+
+
+
+.str-chat-channel-list.messaging, .str-chat-channel-list.team, .str-chat-channel-list.commerce {
+  position: fixed;
+  left: -380px;
+  top: 0;
+  z-index: 1001;
+  min-height: 100vh;
+  width: 90vw;
+  overflow-y: auto;
+  box-shadow: 7px 0 9px 0 var(--black5), 1px 0 0 0 var(--black5);
+  transition: left 200ms ease-in-out; }
+.str-chat-channel-list--open.messaging, .str-chat-channel-list--open.team, .str-chat-channel-list--open.commerce {
+  left: 0px; }
+
+
+/* 리액트 로고 없애기 */
+.str-chat__header-hamburger + .str-chat__avatar {
+  display: none;
+}
+
+/* 이건 뭐지 크게 날짜가 찍히는거 일단 없앰 */
+.str-chat__date-separator {
+  /* display: none; */
+}
+
+/* .str-chat__date-separator {
+  display: flex;
+  padding: var(--xl-p);
+  align-items: center; }
+  .str-chat__date-separator-date {
+    font-size: var(--md-font);
+    font-weight: var(--font-weight-bold);
+    color: var(--overlay-dark);
+    font-family: var(--second-font); }
+  .str-chat__date-separator-line {
+    flex: 1;
+    background-color: var(--overlay);
+    height: 1px;
+    border: none; }
+  .str-chat__date-separator > *:not(:last-child) {
+    margin-right: var(--sm-m); } */
+
+/* 채팅창 위 공백 없애기 */
+.messaging.str-chat .str-chat__list .str-chat__reverse-infinite-scroll {
+  padding-top: 20px;
+}
+
+
+
+
+
+:root {
+  /* fonts */
+  --main-font: SqoqaHanSansNeo;
+  --second-font: SqoqaHanSansNeo;
+  /* font size */
+  /* --xs-font: 10px;
+  --sm-font: 12px;
+  --md-font: 14px;
+  --lg-font: 16px;
+  --xl-font: 22px;
+  --xxl-font: 26px;
+  --xxxl-font: 32px; */
+  /* fonts weight */
+  /* --font-weight-regular: 400;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700; */
+  /* colors */
+  --primary-color: #5552FF;
+  --primary-color-faded: #9392FF;
+    --magenta: #ff00ff;
+  --red: #ff0000;
+  --faded-red: #d0021b1a;
+  --dt-bg-team: #1d1f22;
+  --border-color: #00000014;
+  --lighten-black: #808080;
+  --lighten-grey: #858585;
+  --light-grey: #ebebeb;
+  --grey: #808080;
+  --dark-grey: #343434;
+  --green: #28ca42;
+  --faded-green: #02d0021a;
+  --white: #e3e1fa;
+  --white5: #ffffff0d;
+  --white10: #ffffff1a;
+  --white20: #ffffff33;
+  --white30: #ffffff4d;
+  --white40: #ffffff66;
+  --white50: #ffffff80;
+  --white60: #ffffff99;
+  --white70: #ffffffb3;
+  --white80: #ffffffcc;
+  --white90: #ffffffe6;
+  --white95: #fffffff2;
+  --black: rgb(12, 12, 44);
+}
+
+/* 전송버튼 색 바꾸기 */
+.str-chat__send-button svg path {
+  fill: #5552FF !important;
+}
+
+/* 읽음버튼 색 바꾸기 */
+.str-chat__message-simple-status svg path {
+  fill: #5552FF !important;
+}
+
+/* 이모티콘 입력버튼 색 바꾸기 */
+.str-chat__input-flat-emojiselect svg path {
+  fill: #5552FF !important;
+}
+
+/* 사진 업로드 버튼 (위치, 색상 바꾸기) */
+.str-chat__input-flat .rfu-file-upload-button {
+  position: absolute;
+  top: calc(100% - 2.8rem);
+  right: 25px;
+}
+
+.rfu-file-upload-button svg path{
+  fill: #5552FF !important;
+}
